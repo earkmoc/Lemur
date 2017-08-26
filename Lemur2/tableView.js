@@ -23,6 +23,14 @@ function SetCellOnClick()
 	});
 }
 
+function SetColOnClick()
+{
+	$('div.th-inner').on('click',function(){
+		col=$(this).parent().prevAll().length+1;
+		Color();
+	});
+}
+
 $('.table').on('load-success.bs.table', function () 
 {
 	$('.table-responsive').show();
@@ -36,6 +44,7 @@ $('.table').on('load-success.bs.table', function ()
 		ColorRowOn();
 	}
 	SetCellOnClick();
+	SetColOnClick();
 });
 
 $(window).on('focus',function()
