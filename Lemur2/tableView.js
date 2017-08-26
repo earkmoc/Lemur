@@ -23,6 +23,13 @@ function SetCellOnClick()
 	});
 }
 
+function EnterOnCellDoubleClick()
+{
+	$('td').on('dblclick',function(){
+		$("button[id=buttonEnter]").click();
+	});
+}
+
 function SetColOnClick()
 {
 	$('th').on('click',function(){
@@ -44,6 +51,7 @@ $('.table').on('load-success.bs.table', function ()
 		ColorRowOn();
 	}
 	SetCellOnClick();
+	EnterOnCellDoubleClick();
 	SetColOnClick();
 });
 
