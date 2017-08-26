@@ -38,6 +38,13 @@ function SetColOnClick()
 	});
 }
 
+function SzukajOnColDoubleClick()
+{
+	$('th').on('dblclick',function(){
+		$("button[id=buttonAltS]").click();
+	});
+}
+
 $('.table').on('load-success.bs.table', function () 
 {
 	$('.table-responsive').show();
@@ -53,6 +60,7 @@ $('.table').on('load-success.bs.table', function ()
 	SetCellOnClick();
 	EnterOnCellDoubleClick();
 	SetColOnClick();
+	SzukajOnColDoubleClick();
 });
 
 $(window).on('focus',function()
