@@ -15,18 +15,18 @@ $(document).ready(function()
 
 function SetCellOnClick()
 {
-	$('div.cell').on('click',function(){
+	$('td').on('click',function(){
 		$("tr[data-index="+(row-1)+"]").css('background','');
-		col=$(this).parent().prevAll().length+1;
-		row=$(this).parent().parent().prevAll().length+1;
+		col=$(this).prevAll().length+1;
+		row=$(this).parent().prevAll().length+1;
 		Color();
 	});
 }
 
 function SetColOnClick()
 {
-	$('div.th-inner').on('click',function(){
-		col=$(this).parent().prevAll().length+1;
+	$('th').on('click',function(){
+		col=$(this).prevAll().length+1;
 		Color();
 	});
 }
