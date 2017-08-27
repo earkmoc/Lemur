@@ -19,6 +19,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 mysqli_query($link, "ALTER TABLE `slownik` CHANGE `OPIS` `OPIS` text NOT NULL DEFAULT ''");
 mysqli_query($link, "ALTER TABLE `slownik` ADD UNIQUE `TST` (`TYP`, `SYMBOL`, `TRESC`)");
 
+$_POST['BO']=(@$_POST['BO']?$_POST['BO']:'');
 foreach($_POST as $key => $value)
 {
 	$value=AddSlashes($value);
@@ -64,7 +65,10 @@ $z="insert into zest2rr select 0, DOK, NR, DATA, LP, PZ, 0, KWOTA, WINIEN, NAZ1,
 
 mysqli_query($link,"truncate zest2r");
 
-$z="insert into zest2r select 0, 'BO', '', Date_Add('".$_POST['data1']."',interval -1 day ), '', '', sum(OBROTYWN), sum(OBROTYMA), '', '', concat(format(sum(OBROTYWN) - sum(OBROTYMA),2),' = wynik' ), 'Bilans otwarcia', $ido, 0 from zest2rr"; mysqli_query($link,$z);
+if($_POST['BO'])
+{
+	$z="insert into zest2r select 0, 'BO', '', Date_Add('".$_POST['data1']."',interval -1 day ), '', '', sum(OBROTYWN), sum(OBROTYMA), '', '', concat(format(sum(OBROTYWN) - sum(OBROTYMA),2),' = wynik' ), 'Bilans otwarcia', $ido, 0 from zest2rr"; mysqli_query($link,$z);
+}
 
 if (($_POST['gdzie']=='bufor')||($_POST['gdzie']=='ksiêgi i bufor')) 
 {

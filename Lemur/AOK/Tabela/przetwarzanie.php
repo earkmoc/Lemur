@@ -32,6 +32,7 @@ $_POST['data1']=(@$_POST['data1']?$_POST['data1']:date('Y-m-d'));
 $_POST['data2']=(@$_POST['data2']?$_POST['data2']:date('Y-m-d'));
 $_POST['gdzie']=(@$_POST['gdzie']?$_POST['gdzie']:'ksiêgi i bufor');
 $_POST['maska']=(@$_POST['maska']?$_POST['maska']:'131*');
+$_POST['BO']=(@$_POST['BO']?$_POST['BO']:'on');
 
 ?>
 
@@ -76,6 +77,15 @@ $_POST['maska']=(@$_POST['maska']?$_POST['maska']:'131*');
 			</div>
 			<div class="col-md-2">
 				<input type="text" class="form-control" name="maska" value="<?php echo $_POST['maska'];?>" />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-5 nag">
+				Uwzglêdniaæ B.O.?:
+			</div>
+			<div class="col-md-1">
+				<input type="checkbox" class="form-control" name="BO" <?php echo ($_POST['BO']?'checked':'');?> />
 			</div>
 		</div>
 
