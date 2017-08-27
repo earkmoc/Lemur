@@ -9,6 +9,16 @@ error_reporting(E_ERROR | E_PARSE);
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
+$saZapisyKPR=mysqli_fetch_row(mysqli_query($link,$q="
+				select count(*)
+				  from kpr
+"))[0];
+$saZapisyDG=mysqli_fetch_row(mysqli_query($link,$q="
+				select count(*)
+				  from nordpol
+"))[0];
+$klientNaKPR=($saZapisyKPR&&!$saZapisyDG);
+
 $dk='DK';
 $lp=0;
 $wynik=0;
@@ -56,122 +66,133 @@ for($dzien=1;$dzien<=31;++$dzien)
 			$na=$dokument['NAZWA'];
 			$dt2=$dokument['DDOKUMENTU'];
 
-			if(!$lp)
+			if($klientNaKPR)
 			{
-				$lp=mysqli_fetch_row(mysqli_query($link,$q="
-					select LP
-					  from nordpol
-					 where DOK='$dk'
-					   and NR='$nr'
-					 order by LP*1 desc
-					 limit 1
-				"))[0]+1;
+				$pz=mysqli_fetch_row(mysqli_query($link,$q="
+					select count(*)
+					  from kpr
+					 where ID_D=$dokument[ID]
+				"))[0];
 			}
-
-			$dekrety=mysqli_query($link,$q="
-				select *
-				  from dokumentk
-				 where ID_D=$dokument[ID]
-			  order by ID
-			");
-			if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-
-			$pz=0;
-			while($dekret=mysqli_fetch_array($dekrety))
+			else
 			{
-				++$pz;
-				$wa=$dekret['WINIEN'];
-				$wn=$dekret['KONTOWN'];
-				$ma=$dekret['KONTOMA'];
-				$op=$dekret['PRZEDMIOT'];
-				mysqli_query($link,$q="
-					insert 
-					  into nordpol 
-					values (0, '$dk', '$nr', '$dt', '$lp', '$pz', '$wa', '$wn', '$ma', '$do', '$na', '$dt2', '$op', '', $ido, Now())
+				if(!$lp)
+				{
+					$lp=mysqli_fetch_row(mysqli_query($link,$q="
+						select LP
+						  from nordpol
+						 where DOK='$dk'
+						   and NR='$nr'
+						 order by LP*1 desc
+						 limit 1
+					"))[0]+1;
+				}
+
+				$dekrety=mysqli_query($link,$q="
+					select *
+					  from dokumentk
+					 where ID_D=$dokument[ID]
+				  order by ID
 				");
 				if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-			}
 
-			if	( ($dokument['TYP']=='LP')
-				&&($pz>0)
-				)
-			{
-				$od=date('01.m.Y',strtotime($dt));
-				$do=date('t.m.Y',strtotime($dt));
-				$dowod="Listy p³ac z okresu: $od - $do";
-
-				$dekrety=mysqli_query($link, "
-				select *
-				  from nordpol
-				 where DATA='$dt' 
-				   and LP=$lp
-				order by PZ
-				");
-
-				$suma=0;
-				$idpracownika=0;
-				$danePracownika='';
+				$pz=0;
 				while($dekret=mysqli_fetch_array($dekrety))
 				{
-					if(substr($dekret['MA'],0,3)=='241')
+					++$pz;
+					$wa=$dekret['WINIEN'];
+					$wn=$dekret['KONTOWN'];
+					$ma=$dekret['KONTOMA'];
+					$op=$dekret['PRZEDMIOT'];
+					mysqli_query($link,$q="
+						insert 
+						  into nordpol 
+						values (0, '$dk', '$nr', '$dt', '$lp', '$pz', '$wa', '$wn', '$ma', '$do', '$na', '$dt2', '$op', '', $ido, Now())
+					");
+					if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+				}
+
+				if	( ($dokument['TYP']=='LP')
+					&&($pz>0)
+					)
+				{
+					$od=date('01.m.Y',strtotime($dt));
+					$do=date('t.m.Y',strtotime($dt));
+					$dowod="Listy p³ac z okresu: $od - $do";
+
+					$dekrety=mysqli_query($link, "
+					select *
+					  from nordpol
+					 where DATA='$dt' 
+					   and LP=$lp
+					order by PZ
+					");
+
+					$suma=0;
+					$idpracownika=0;
+					$danePracownika='';
+					while($dekret=mysqli_fetch_array($dekrety))
 					{
-						$idpracownika=str_replace('241-','',$dekret['MA']);
-						$danePracownika=mysqli_fetch_row(mysqli_query($link, "select NAZWISKOIMIE from pracownicy where ID=$idpracownika"))[0];
-					}
-					if(substr($dekret['WINIEN'],0,3)=='241')
-					{
-						$idpracownika=str_replace('241-','',$dekret['WINIEN']);
-						$danePracownika=mysqli_fetch_row(mysqli_query($link, "select NAZWISKOIMIE from pracownicy where ID=$idpracownika"))[0];
-					}
-					if(substr($dekret['WINIEN'],0,3)=='231')
-					{
-						$idpracownika=str_replace('231-','',$dekret['WINIEN']);
-						$danePracownika=mysqli_fetch_row(mysqli_query($link, "select NAZWISKOIMIE from pracownicy where ID=$idpracownika"))[0];
-					}
-					/*
-					if	( (substr($dekret['WINIEN'],0,3)=='404')
-						&&(substr($dekret['MA'],0,3)=='241')
-						)
-					{
-						$suma=0;
-					}
-					if	( (substr($dekret['WINIEN'],0,3)=='404')
-						||(substr($dekret['WINIEN'],0,3)=='405')
-						)
-					{
-						$suma+=$dekret['KWOTA'];
-					}
-					if	( (substr($dekret['WINIEN'],0,3)=='503')
-						)
-					{
+						if(substr($dekret['MA'],0,3)=='241')
+						{
+							$idpracownika=str_replace('241-','',$dekret['MA']);
+							$danePracownika=mysqli_fetch_row(mysqli_query($link, "select NAZWISKOIMIE from pracownicy where ID=$idpracownika"))[0];
+						}
+						if(substr($dekret['WINIEN'],0,3)=='241')
+						{
+							$idpracownika=str_replace('241-','',$dekret['WINIEN']);
+							$danePracownika=mysqli_fetch_row(mysqli_query($link, "select NAZWISKOIMIE from pracownicy where ID=$idpracownika"))[0];
+						}
+						if(substr($dekret['WINIEN'],0,3)=='231')
+						{
+							$idpracownika=str_replace('231-','',$dekret['WINIEN']);
+							$danePracownika=mysqli_fetch_row(mysqli_query($link, "select NAZWISKOIMIE from pracownicy where ID=$idpracownika"))[0];
+						}
+						/*
+						if	( (substr($dekret['WINIEN'],0,3)=='404')
+							&&(substr($dekret['MA'],0,3)=='241')
+							)
+						{
+							$suma=0;
+						}
+						if	( (substr($dekret['WINIEN'],0,3)=='404')
+							||(substr($dekret['WINIEN'],0,3)=='405')
+							)
+						{
+							$suma+=$dekret['KWOTA'];
+						}
+						if	( (substr($dekret['WINIEN'],0,3)=='503')
+							)
+						{
+							mysqli_query($link, $q="
+								update nordpol
+								   set KWOTA='$suma'
+								 where DATA='$dt'
+								   and LP=$lp
+								   and ID=$dekret[ID]
+							");
+							
+							if($suma<>($kw=mysqli_fetch_row(mysqli_query($link, $q="
+								select KWOTA
+								  from nordpol
+								 where DATA='$dt'
+								   and LP=$lp
+								   and ID=$dekret[ID]
+							"))[0]))
+							{
+								echo "Pracownik $idpracownika, $danePracownika: $suma <> $kw <br>";
+							}
+						}
+						*/
 						mysqli_query($link, $q="
 							update nordpol
-							   set KWOTA='$suma'
+							   set NAZ1='$dowod'
+								 , NAZ2='$danePracownika'
 							 where DATA='$dt'
 							   and LP=$lp
 							   and ID=$dekret[ID]
 						");
-						
-						if($suma<>($kw=mysqli_fetch_row(mysqli_query($link, $q="
-							select KWOTA
-							  from nordpol
-							 where DATA='$dt'
-							   and LP=$lp
-							   and ID=$dekret[ID]
-						"))[0]))
-						{
-							echo "Pracownik $idpracownika, $danePracownika: $suma <> $kw <br>";
-						}
 					}
-					*/
-					mysqli_query($link, $q="
-						update nordpol
-						   set NAZ1='$dowod'
-							 , NAZ2='$danePracownika'
-						 where DATA='$dt'
-						   and LP=$lp
-						   and ID=$dekret[ID]
-					");
 				}
 			}
 			
@@ -191,7 +212,7 @@ for($dzien=1;$dzien<=31;++$dzien)
 			");
 			if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
-			$mnoznik=(in_array($typ,array('ST','SU','WZ','MM','FV','FVK','RW','IR'))?-1:1);
+			$mnoznik=(in_array($typ,array('ST','SU','STU','WZ','MM','FV','FVK','RW','IR'))?-1:1);
 			$mnoznik=(in_array($typ,array('FZK','FVT','FVN','FVF','FVX','FVZ'))?0:$mnoznik);
 			
 			$pz=0;
