@@ -26,16 +26,20 @@ if (!@$_POST['LP'])
 if (!@$_POST['ADRES'])
 {
 	$w=mysqli_query($link, $q="select * from knordpol where NIP='$_POST[NIP]' and NAZWA='$_POST[NAZWA]' order by ID desc limit 1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	$r=mysqli_fetch_array($w);
-	$_POST['NRKONT']=$r['NUMER'];
-	$_POST['PSKONT']=$r['PSEUDO'];
-	$_POST['ADRES']=$r['KOD_POCZT'].' '.$r['MIASTO'].', '.$r['ULICA'];
+	if($r=mysqli_fetch_array($w))
+	{
+		$_POST['NRKONT']=$r['NUMER'];
+		$_POST['PSKONT']=$r['PSEUDO'];
+		$_POST['ADRES']=$r['KOD_POCZT'].' '.$r['MIASTO'].', '.$r['ULICA'];
+	}
 }
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveFormFields.php");
 
+$nowyDokument=false;
 if ($idd==0)
 {
+	$nowyDokument=true;
 	$idd=mysqli_insert_id($link);
 	$_SESSION["{$baza}DokumentyID_D"]=$idd;
 	mysqli_query($link, $q="update dokumentk set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
@@ -128,6 +132,9 @@ if ($idd)
 	$dtop=mysqli_fetch_row(mysqli_query($link, $q="select DOPERACJI from dokumenty where ID=$idd"))[0];
 	mysqli_query($link, $q="update dokumentr set OKRES='$dtop', KTO='$ido', CZAS=Now() where ID_D=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
-	require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/SetStrRow.php");
-	SetStrRow($link, $idd);
+	if($nowyDokument)
+	{
+		require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/SetStrRow.php");
+		SetStrRow($link, $idd);
+	}
 }
