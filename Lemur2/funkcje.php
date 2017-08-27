@@ -1,6 +1,27 @@
 <?php
 
-//require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
+//require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
+
+//***************************************************************************************
+//Zwraca nazwy pól od podanego numeru pola (dla ID $nrPola=0)
+
+function FieldsOd($link, $tabela, $nrPola)
+{
+	$wynik='';
+	$w=mysqli_query($link, $q="
+		show fields from $tabela
+	");
+	if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+	
+	$i=0;
+	while($r=mysqli_fetch_row($w))
+	{
+		$wynik.=(++$i>$nrPola?($wynik?', ':'').$r[0]:'');
+	}
+
+	return($wynik);
+}
+
 //***************************************************************************************
 
 function Grosz($value,$round=2){

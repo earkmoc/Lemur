@@ -343,6 +343,11 @@ if($cosJest)
 								"))[0];
 								
 								mysqli_query($link, $q="
+									create temporary table temp_dokumentk like dokumentk
+								");
+								if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+
+								mysqli_query($link, $q="
 									insert 
 									  into dokumenty
 									   set NUMER='WB Nr $nrWB'
@@ -427,7 +432,7 @@ if($cosJest)
 												case 'Przelew na rachunek':
 													mysqli_query($link, $q="
 														insert 
-														  into dokumentk
+														  into temp_dokumentk
 														   set ID_D='$idWB'
 															 , KTO='$ido'
 															 , CZAS='$czas'
@@ -443,7 +448,7 @@ if($cosJest)
 												case 'Przelew z rachunku':
 													mysqli_query($link, $q="
 														insert 
-														  into dokumentk
+														  into temp_dokumentk
 														   set ID_D='$idWB'
 															 , KTO='$ido'
 															 , CZAS='$czas'
@@ -459,7 +464,7 @@ if($cosJest)
 												case 'Przelew podatkowy':
 													mysqli_query($link, $q="
 														insert 
-														  into dokumentk
+														  into temp_dokumentk
 														   set ID_D='$idWB'
 															 , KTO='$ido'
 															 , CZAS='$czas'
@@ -477,7 +482,7 @@ if($cosJest)
 													$tytul.=($tytul!=''?' - ':'');
 													mysqli_query($link, $q="
 														insert 
-														  into dokumentk
+														  into temp_dokumentk
 														   set ID_D='$idWB'
 															 , KTO='$ido'
 															 , CZAS='$czas'
@@ -490,7 +495,7 @@ if($cosJest)
 
 													mysqli_query($link, $q="
 														insert 
-														  into dokumentk
+														  into temp_dokumentk
 														   set ID_D='$idWB'
 															 , KTO='$ido'
 															 , CZAS='$czas'
@@ -503,7 +508,7 @@ if($cosJest)
 
 													mysqli_query($link, $q="
 														insert 
-														  into dokumentk
+														  into temp_dokumentk
 														   set ID_D='$idWB'
 															 , KTO='$ido'
 															 , CZAS='$czas'
@@ -530,6 +535,13 @@ if($cosJest)
 										}
 									}
 								}
+
+								require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
+								$pola=FieldsOd($link, 'dokumentk', 1);
+								mysqli_query($link, $q="
+									insert into dokumentk select 0, $pola from temp_dokumentk order by ID desc
+								");
+								if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
 								break;
 						}
