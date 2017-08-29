@@ -198,8 +198,6 @@ for($dzien=1;$dzien<=31;++$dzien)
 			
 			if($pz>0)
 			{
-				++$lp;
-				++$wynik;
 				mysqli_query($link, $q="update dokumenty set GDZIE='ksiêgi', PK_DOK='$dk', PK_NR='$nr', DWPROWADZE='$dt' where ID=$dokument[ID]");
 				if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 			}
@@ -215,9 +213,27 @@ for($dzien=1;$dzien<=31;++$dzien)
 			$mnoznik=(in_array($typ,array('ST','SU','STU','WZ','MM','FV','FVK','RW','IR'))?-1:1);
 			$mnoznik=(in_array($typ,array('FZK','FVT','FVN','FVF','FVX','FVZ'))?0:$mnoznik);
 			
-			$pz=0;
 			while($towar=mysqli_fetch_array($towary))
 			{
+				if(mysqli_fetch_row(mysqli_query($link,$q="
+					select count(*)
+					  from towary
+					 where INDEKS='$towar[INDEKS]'
+				"))[0]==0)
+				{
+					mysqli_query($link,$q="
+						insert
+						  into towary
+						   set STATUS='{$towar['TYP']}'
+						     , NAZWA='{$towar['NAZWA']}'
+						     , INDEKS='{$towar['INDEKS']}'
+						     , PKWIU='{$towar['PKWIU']}'
+						     , JM='{$towar['JM']}'
+						     , CENA_S='{$towar['CENA']}'
+						     , CENA_Z='{$towar['CENA']}'
+						     , STAWKA='{$towar['STAWKA']}'
+					");
+				}
 				++$pz;
 				mysqli_query($link,$q="
 					update towary
