@@ -29,6 +29,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveTablePosition.php");
 
 $_POST['PSKONT']=explode('/',$_GET['next'])[3];
 $timestampLemur=mysqli_fetch_row(mysqli_query($link,"select CZAS from klienci where PSKONT='Lemur'"))[0];
+$timestampLemur=max($timestampLemur,file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/Lemur/timestamp.ver"));
 $timestampKlienta=mysqli_fetch_row(mysqli_query($link,"select CZAS from klienci where PSKONT='$_POST[PSKONT]'"))[0];
 
 if	( (!file_exists("{$_SERVER['DOCUMENT_ROOT']}/{$_POST['PSKONT']}/Menu/index.php"))

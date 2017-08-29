@@ -46,7 +46,9 @@ else
 
 		$_POST['PSKONT']=$r[1];
 		$timestampLemur=mysqli_fetch_row(mysqli_query($link,"select CZAS from Lemur.klienci where PSKONT='Lemur'"))[0];
+		$timestampLemur=max($timestampLemur,file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/Lemur/timestamp.ver"));
 		$timestampKlienta=mysqli_fetch_row(mysqli_query($link,"select CZAS from Lemur.klienci where PSKONT='$_POST[PSKONT]'"))[0];
+		//die("($timestampKlienta<=$timestampLemur)");
 
 		if	( (!file_exists("{$_SERVER['DOCUMENT_ROOT']}/{$_POST['PSKONT']}/Menu/index.php"))
 			||($timestampKlienta<=$timestampLemur)
