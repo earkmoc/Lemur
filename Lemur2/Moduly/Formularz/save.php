@@ -1,5 +1,26 @@
 <?php
 
+function recurse_copy($src,$dst) 
+{ 
+	$dir = opendir($src); 
+	@mkdir($dst); 
+	while(false !== ( $file = readdir($dir)) ) 
+	{ 
+		if (( $file != '.' ) && ( $file != '..' )) 
+		{ 
+			if ( is_dir($src . '/' . $file) ) { 
+				recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+			} 
+			else 
+			{ 
+				copy($src . '/' . $file,$dst . '/' . $file); 
+//echo "copy($src . '/' . $file,$dst . '/' . $file); <br>";
+			} 
+		} 
+	} 
+	closedir($dir); 
+}
+
 require("setup.php");
 if($ido==-1)
 {
@@ -71,6 +92,21 @@ else
 //					if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 				mysqli_query($link, $q="ALTER TABLE $_POST[PSKONT].$tabela ADD INDEX `TYP` (`TYP`)");
 //					if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
+				mysqli_query($link, $q="ALTER TABLE $_POST[PSKONT].towary ADD DATA date");
+				mysqli_query($link, $q="update Lemur2.tabele set STRUKTURA=replace(STRUKTURA,
+'STATUS char(1) not null default 0,
+PRIMARY KEY (ID)',
+'STATUS char(1) not null default 0,
+DATA date,
+PRIMARY KEY (ID)')
+
+, TABELA=replace(TABELA,
+'format(STAN*CENA_Z,2)|Warto¶æ netto w cenach zakupu|@Z+|style=\"text-align:right\"|
+from towary',
+'format(STAN*CENA_Z,2)|Warto¶æ netto w cenach zakupu|@Z+|style=\"text-align:right\"|
+DATA|Data nabycia|@Z|style=\"text-align:right\"|
+from towary') where ID=645");
+//					if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 			}
 		}
 		header("Location:/$r[1]/Menu");
@@ -89,26 +125,5 @@ else
 		}
 		header("Location:/Lemur/Klienci/Tabela");
 	}
-}
-
-function recurse_copy($src,$dst) 
-{ 
-	$dir = opendir($src); 
-	@mkdir($dst); 
-	while(false !== ( $file = readdir($dir)) ) 
-	{ 
-		if (( $file != '.' ) && ( $file != '..' )) 
-		{ 
-			if ( is_dir($src . '/' . $file) ) { 
-				recurse_copy($src . '/' . $file,$dst . '/' . $file); 
-			} 
-			else 
-			{ 
-				copy($src . '/' . $file,$dst . '/' . $file); 
-//echo "copy($src . '/' . $file,$dst . '/' . $file); <br>";
-			} 
-		} 
-	} 
-	closedir($dir); 
 }
 

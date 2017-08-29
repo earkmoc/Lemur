@@ -232,6 +232,7 @@ for($dzien=1;$dzien<=31;++$dzien)
 						     , CENA_S='{$towar['CENA']}'
 						     , CENA_Z='{$towar['CENA']}'
 						     , STAWKA='{$towar['STAWKA']}'
+						     , DATA='{$dt}'
 					");
 				}
 				++$pz;
