@@ -154,10 +154,13 @@ while($r=mysqli_fetch_row($w))
 	echo "<option>$r[0]";
 }
 ?></select></td></tr>
-<tr><td><a href="" id="2b">b) PZ</a></td></tr>
-<tr><td><a href="" id="2c">c) WZ</a></td></tr>
-<tr><td><a href="" id="2d">d) MM</a></td></tr>
-<tr><td><a href="" id="2e">e) Import/Export danych</a></td></tr>
+<tr><td><a href="" id="2b">b) PZ - Przyjêcie Zewnêtrzne</a></td></tr>
+<tr><td><a href="" id="2c">c) WZ - Wydanie Zewnêtrzne</a></td></tr>
+<tr><td><a href="" id="2d">d) PW - Przyjêcie Wewnêtrzne</a></td></tr>
+<tr><td><a href="" id="2e">e) RW - Rozchód Wewnêtrzny</a></td></tr>
+<tr><td><a href="" id="2f">f) MM - Miêdzy Magazynami</a></td></tr>
+<tr><td><a href="" id="2g">g) KPL - Kompletacja</a></td></tr>
+<tr><td><a href="" id="2h">h) Import/Export danych</a></td></tr>
 </table>
 </div>
 
