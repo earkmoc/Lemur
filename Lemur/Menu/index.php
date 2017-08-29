@@ -128,7 +128,7 @@ Klawisze&nbsp;lewo/prawo:&nbsp;zmiana&nbsp;menu<br>
 <div class="table-responsive" id="magazyny">
 <table class="table table-hover table-bordered table-striped">
 <tr><th><a href="" id="2">2. Magazyny</a></th></tr>
-<tr><td><a href="" id="2a">a) Wybrany magazyn:</a> <select name="magazyn"><?php
+<tr><td><a href="../Magazyn" id="2a">a) Wybrany magazyn:</a> <select name="magazyn"><?php
 if(mysqli_fetch_row(mysqli_query($link, $q="
 select count(*)
   from slownik
