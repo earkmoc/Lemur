@@ -3,11 +3,10 @@
 <?php
 if(!isset($bezLemurVer))
 {
-?>
-<div id="stopka" class="container-fluid" style="text-align: right; color: white;">
-   <p>Lemur&sup2; ver 2017-08-27 by ericom Arkadiusz Moch</p>
-</div>
-<?php
+	$timestampLemur=file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/Lemur/timestamp.ver");
+	echo '<div id="stopka" class="container-fluid" style="text-align: right; color: white;">';
+	echo '<p>Lemur&sup2; ver '.(substr($timestampLemur,0,10)).' by ericom Arkadiusz Moch</p>';
+	echo '</div>';
 }
 ?>
 
