@@ -2,7 +2,8 @@
 
 //die(print_r($_POST));
 
-$raport='';
+$raport='<table border="1" cellpadding="3" cellspacing="0">';
+$raport.="<tr><td>Nr dowodu</td><td>Data</td><td>KPR ID</td><td>KPR Kwota</td><td>Dokumenty ID</td><td>Rejestry Kwota</td><td>Ró¿nica</td></tr>";
 $czas=date('Y-m-d H:i:s');
 ini_set('max_execution_time', 600);
 error_reporting(E_ERROR | E_PARSE);
@@ -11,7 +12,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 $w=mysqli_query($link,"
 	  select PRZYCHOD3+ZAKUP_TOW+KOSZTY_UB+RAZEM
-		   , concat(NRDOW, ' z dnia ', DATA)
+		   , concat(NRDOW, '</td><td>', DATA)
 		   , ID_D
 		   , ID
 		from kpr
@@ -24,11 +25,18 @@ while($wynik=mysqli_fetch_row($w))
 			from dokumenty
 		   where ID='{$wynik[2]}'
 	"));
-	if(abs($delta=round($wynik[0]-$dokumenty[0],2))>=0.01)
+	$rejestry=mysqli_fetch_row(mysqli_query($link,"
+		  select sum(NETTO)
+			from dokumentr
+		   where ID_D='{$wynik[2]}'
+	"));
+	if	( (abs($deltr=round($wynik[0]-$rejestry[0],2))>=0.01)
+		)
 	{
-		$raport.="<br>$wynik[1]: KPR(ID={$wynik[3]})={$wynik[0]} <> Dokumenty(ID={$wynik[2]})={$dokumenty[0]}, ró¿nica=".($delta);
+		$raport.="<tr style='text-align:right'><td>$wynik[1]</td><td>{$wynik[3]}</td><td>{$wynik[0]}</td><td>{$wynik[2]}</td><td>{$rejestry[0]}</td><td>".($deltr)."</td></tr>";
 	}
 }
+$raport.='</table>';
 
 $title="Test: raport";
 $buttons=array();
