@@ -158,20 +158,40 @@ else
 	,'UWAGI' => 0
 	);
 
-	$sumyRazem=array(
-	 'PRZYCHOD1' => mysqli_fetch_row(mysqli_query($link, "select sum(PRZYCHOD1) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'PRZYCHOD2' => mysqli_fetch_row(mysqli_query($link, "select sum(PRZYCHOD2) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'PRZYCHOD3' => mysqli_fetch_row(mysqli_query($link, "select sum(PRZYCHOD3) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'ZAKUP_TOW' => mysqli_fetch_row(mysqli_query($link, "select sum(ZAKUP_TOW) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'KOSZTY_UB' => mysqli_fetch_row(mysqli_query($link, "select sum(KOSZTY_UB) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'WYNAGRODZENIA' => mysqli_fetch_row(mysqli_query($link, "select sum(WYNAGRODZENIA) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'POZOSTALE' => mysqli_fetch_row(mysqli_query($link, "select sum(POZOSTALE) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'RAZEM' => mysqli_fetch_row(mysqli_query($link, "select sum(RAZEM) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'INNE' => mysqli_fetch_row(mysqli_query($link, "select sum(INNE) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'OPISKOSZTU' => ''
-	,'WARTOSC' => mysqli_fetch_row(mysqli_query($link, "select sum(WARTOSC) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
-	,'UWAGI' => ''
-	);
+	if($_POST['calyrok'])
+	{
+		$sumyRazem=array(
+		 'PRZYCHOD1' => mysqli_fetch_row(mysqli_query($link, "select sum(PRZYCHOD1) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'PRZYCHOD2' => mysqli_fetch_row(mysqli_query($link, "select sum(PRZYCHOD2) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'PRZYCHOD3' => mysqli_fetch_row(mysqli_query($link, "select sum(PRZYCHOD3) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'ZAKUP_TOW' => mysqli_fetch_row(mysqli_query($link, "select sum(ZAKUP_TOW) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'KOSZTY_UB' => mysqli_fetch_row(mysqli_query($link, "select sum(KOSZTY_UB) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'WYNAGRODZENIA' => mysqli_fetch_row(mysqli_query($link, "select sum(WYNAGRODZENIA) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'POZOSTALE' => mysqli_fetch_row(mysqli_query($link, "select sum(POZOSTALE) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'RAZEM' => mysqli_fetch_row(mysqli_query($link, "select sum(RAZEM) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'INNE' => mysqli_fetch_row(mysqli_query($link, "select sum(INNE) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'OPISKOSZTU' => ''
+		,'WARTOSC' => mysqli_fetch_row(mysqli_query($link, "select sum(WARTOSC) from $baza.$tabela where DATA < '$_POST[odDnia]' and Year(DATA)='$_POST[rok]'"))[0]
+		,'UWAGI' => ''
+		);
+	}
+	else
+	{
+		$sumyRazem=array(
+		 'PRZYCHOD1' => 0
+		,'PRZYCHOD2' => 0
+		,'PRZYCHOD3' => 0
+		,'ZAKUP_TOW' => 0
+		,'KOSZTY_UB' => 0
+		,'WYNAGRODZENIA' => 0
+		,'POZOSTALE' => 0
+		,'RAZEM' => 0
+		,'INNE' => 0
+		,'OPISKOSZTU' => ''
+		,'WARTOSC' => 0
+		,'UWAGI' => ''
+		);
+	}
 
 	//strona 1 - lewa
 

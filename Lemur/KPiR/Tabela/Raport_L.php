@@ -55,7 +55,7 @@ for($col=7;$col<=9;++$col)
 echo "</tr>\n";
 
 echo "<tr style='font-size: $_POST[wielkosc]px;'>";
-echo "	<td align='left' nowrap>Razem od pocz±tku roku</td>\n";
+echo "	<td align='left' nowrap>Razem".($_POST['calyrok']?" od pocz±tku roku":"")."</td>\n";
 for($col=7;$col<=9;++$col)
 {
 	$pole=$polaL[$col-1];

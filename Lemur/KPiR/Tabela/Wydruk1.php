@@ -36,6 +36,7 @@ $_POST['doDnia']=(isset($_POST['doDnia'])?$_POST['doDnia']:mysqli_fetch_row(mysq
 
 $_POST['lewe']=(isset($_POST['lewe'])?$_POST['lewe']:1);
 $_POST['prawe']=(isset($_POST['prawe'])?$_POST['prawe']:1);
+$_POST['calyrok']=(isset($_POST['calyrok'])?$_POST['calyrok']:1);
 
 $_POST['syntetycznie']=(isset($_POST['syntetycznie'])?$_POST['syntetycznie']:1);
 
@@ -151,6 +152,15 @@ $_POST['wielkosc']=(@$_POST['wielkosc']?$_POST['wielkosc']:'10');
 			</div>
 			<div class="col-md-1">
 				<input type="checkbox" class="form-control" name="syntetycznie" value="1" <?php echo ($_POST['syntetycznie']?'checked':'');?> />
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-3 nag">
+				Razem od pocz±tku roku:
+			</div>
+			<div class="col-md-1">
+				<input type="checkbox" class="form-control" name="calyrok" value="1" <?php echo ($_POST['calyrok']?'checked':'');?> />
 			</div>
 		</div>
 
