@@ -85,6 +85,6 @@ $buttons[]=array('klawisz'=>'AltZ','nazwa'=>'Zamówienia','akcja'=>"");
 $buttons[]=array('klawisz'=>'AltS','nazwa'=>'','js'=>"$('#modalSzukaj').modal('show')");
 $buttons[]=array('klawisz'=>'AltU','nazwa'=>'Usuñ','js'=>"buttonsShow();return confirm('Czy na pewno chcesz usun±æ t± pozycjê?')",'akcja'=>"usun.php?$params'+GetID()+'");
 //$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?$params'+GetID()+'");
-$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"WydrukFakturyParametry.php?$params'+GetID()+'");
+$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"WydrukParametry.php?$params'+GetID()+'&typ='+GetCol(2)+'");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");

@@ -11,7 +11,7 @@ foreach($_GET as $key => $value)
 
 $title="Parametry wydruku";
 $buttons=array();
-$buttons[]=array('klawisz'=>'AltD','nazwa'=>'Enter=Drukuj','akcja'=>"WydrukFaktury.php?$parametry");
+$buttons[]=array('klawisz'=>'AltD','nazwa'=>'Enter=Drukuj','akcja'=>"Wydruk{$_GET['typ']}.php?$parametry");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"..");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
@@ -36,7 +36,7 @@ select *
 
 $_POST['miasto']=(isset($_POST['miasto'])?$_POST['miasto']:'£ód¼');
 $_POST['dataWystawienia']=$dokument['DDOKUMENTU'];
-$_POST['nazwaDokumentu']=(isset($_POST['nazwaDokumentu'])?$_POST['nazwaDokumentu']:'FAKTURA');
+$_POST['nazwaDokumentu']=$_GET['typ'];
 $_POST['numer']=$dokument['NUMER'];
 $_POST['zamowienie']=(isset($_POST['zamowienie'])?$_POST['zamowienie']:'');
 $_POST['srodekTransportu']=(isset($_POST['srodekTransportu'])?$_POST['srodekTransportu']:'');
@@ -78,7 +78,7 @@ $_POST['wielkosc']=(@$_POST['wielkosc']?$_POST['wielkosc']:'10');
 
 		<div class="row">
 			<div class="col-md-6">
-				<h1><input type="text" name="nazwaDokumentu" value="<?php echo $_POST['nazwaDokumentu'];?>" /></h1>
+				<h1><?php echo $_POST['nazwaDokumentu'];?></h1>
 			</div>
 			<div class="col-md-6" style="text-align: left">
 				<h1> Nr <?php echo $_POST['numer'];?></h1>
@@ -99,58 +99,10 @@ $_POST['wielkosc']=(@$_POST['wielkosc']?$_POST['wielkosc']:'10');
 				<input type="text" class="form-control" name="srodekTransportu" value="<?php echo $_POST['srodekTransportu'];?>" />
 			</div>
 			<div class="col-md-2 nag">
-				Data wykonania: 
+				Data Dostawy / Wykonania: 
 			</div>
 			<div class="col-md-2">
 				<input type="text" class="form-control" name="dataWykonania" value="<?php echo $_POST['dataWykonania'];?>" title="Data dokonania lub zakoñczenia dostawy lub wykonania us³ugi (zaliczki)" />
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-2 nag">
-				Sposób p³atno¶ci: 
-			</div>
-			<div class="col-md-2">
-				<input type="text" class="form-control" name="sposZapl" value="<?php echo $_POST['sposZapl'];?>" />
-			</div>
-			<div class="col-md-2 nag">
-				Termin: 
-			</div>
-			<div class="col-md-2">
-				<input type="text" class="form-control" name="termin" value="<?php echo $_POST['termin'];?>" placeholder="rrrr-mm-dd" />
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-2 nag">
-				Wp³acono (<?php echo $dokument['WARTOSC'];?>): 
-			</div>
-			<div class="col-md-2">
-				<input type="text" class="form-control" name="wplacono" align="right" value="<?php echo $_POST['wplacono'];?>" />
-			</div>
-			<div class="col-md-2 nag">
-				Bank: 
-			</div>
-			<div class="col-md-2">
-				<input type="text" class="form-control" name="bank" value="<?php echo $_POST['bank'];?>" />
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-6 nag">
-				Konto: 
-			</div>
-			<div class="col-md-3">
-				<input type="text" class="form-control" name="konto" value="<?php echo $_POST['konto'];?>" />
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="col-md-1 nag">
-				Uwagi: 
-			</div>
-			<div class="col-md-12">
-				<textarea class="form-control" name="uwagi" rows="5"><?php echo $_POST['uwagi'];?></textarea>
 			</div>
 		</div>
 
