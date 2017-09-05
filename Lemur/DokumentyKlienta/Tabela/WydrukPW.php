@@ -77,9 +77,9 @@ select *
  where PSKONT='$baza'
 "));
 
-$problemy.=(!$klient['NAZWA']?'Brak nazwy sprzedawcy. ':'');
-$problemy.=(!$klient['ADRES']?'Brak adresu sprzedawcy. ':'');
-$problemy.=(!$klient['NIP']?'Brak NIPu sprzedawcy. ':'');
+$problemy.=(!$klient['NAZWA']?'Brak nazwy nabywcy. ':'');
+$problemy.=(!$klient['ADRES']?'Brak adresu nabywcy. ':'');
+$problemy.=(!$klient['NIP']?'Brak NIPu nabywcy. ':'');
 
 $dokument=mysqli_fetch_array($q=mysqli_query($link,"
 select *
@@ -87,8 +87,8 @@ select *
  where ID='$_GET[id]'
 "));
 
-$problemy.=(!$dokument['NAZWA']?'Brak nazwy odbiorcy. ':'');
-$problemy.=(!$dokument['ADRES']?'Brak adresu odbiorcy. ':'');
+$problemy.=(!$dokument['NAZWA']?'Brak nazwy dostawcy. ':'');
+$problemy.=(!$dokument['ADRES']?'Brak adresu dostawcy. ':'');
 
 $problemy.=(!$dokument['NUMER']?'Brak numeru dokumentu. ':'');
 
@@ -116,7 +116,7 @@ $problemy.=(!$dokument['NUMER']?'Brak numeru dokumentu. ':'');
 		<td width="48%" valign="top">
 			<table cellspacing="0" cellpadding="3" rules="none" width="100%" border="1">
 				<tbody>
-					<tr align="left"><td>Sprzedawca:</td></tr>
+					<tr align="left"><td>Nabywca:</td></tr>
 					<tr align="middle"><td><font style="font-size:14pt"><?php echo $klient['NAZWA'];?></font></td></tr>
 					<tr align="middle"><td><?php echo $klient['ADRES'];?></td></tr>
 					<tr align="middle"><td><b>NIP: <?php echo $klient['NIP'];?></b></td></tr>
@@ -127,7 +127,7 @@ $problemy.=(!$dokument['NUMER']?'Brak numeru dokumentu. ':'');
 		<td width="48%" valign="top">
 			<table cellspacing="0" cellpadding="3" rules="none" width="100%" height="100%" border="1">
 				<tbody>
-					<tr align="left"><td>Odbiorca:</td></tr>
+					<tr align="left"><td>Dostawca:</td></tr>
 					<tr align="middle"><td><font style="font-size:14pt"><?php echo $dokument['NAZWA'];?></font></td></tr>
 					<tr align="middle"><td><?php echo $dokument['ADRES'];?></td></tr>
 					<tr align="middle"><td><b>NIP: <?php echo $dokument['NIP'];?></b></td></tr>
@@ -173,7 +173,11 @@ $problemy.=(!$dokument['NUMER']?'Brak numeru dokumentu. ':'');
 		<td rowspan="1" class="small">j.m.</td>
 	</tr>
 <?php 
-
+/*
+		<td rowspan="1" class="small">Cena netto</td>
+		<td rowspan="1" class="small">Cena brutto</td>
+		<td rowspan="1" class="small">Cena zakupu</td>
+*/
 $lp=0;
 
 $towary=mysqli_query($link,$q="
@@ -217,9 +221,9 @@ while($towar=mysqli_fetch_array($towary))
 
 <table border="0" width="100%" cellpadding="3" cellspacing="0">
 <tr>
-<td>Towar wyda³(a)</td>
+<td>Wystawi³(a)</td>
 <td>&nbsp;</td>
-<td>Towar odebra³(a)</td>
+<td>Sprawdzi³(a)</td>
 </tr>
 <tr>
 <td style="border-bottom:1px dotted black;">&nbsp</td>

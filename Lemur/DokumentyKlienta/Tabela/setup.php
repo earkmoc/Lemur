@@ -78,6 +78,7 @@ $buttons[]=array('klawisz'=>'Alt1','nazwa'=>'1. Sprzeda¿','akcja'=>"../Formularz
 $buttons[]=array('klawisz'=>'Alt2','nazwa'=>'2. Zakup','akcja'=>"../Formularz/?{$params}0&typy=zakup&typDefault=ZT'+'");
 $buttons[]=array('klawisz'=>'Alt3','nazwa'=>'3. WZ','akcja'=>"../Formularz/?{$params}0&typy=wydanie&typDefault=WZ'+'");
 $buttons[]=array('klawisz'=>'Alt4','nazwa'=>'4. PZ','akcja'=>"../Formularz/?{$params}0&typy=przyjêcie&typDefault=PZ'+'");
+$buttons[]=array('klawisz'=>'Alt5','nazwa'=>'5. PW','akcja'=>"../Formularz/?{$params}0&typy=przyjêcie&typDefault=PW'+'");
 $buttons[]=array('klawisz'=>'AltC','nazwa'=>'Cennik','akcja'=>"");
 $buttons[]=array('klawisz'=>'AltK','nazwa'=>'Kopiuj','akcja'=>"../Formularz/?$params-'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltR','nazwa'=>'Rozrachunki','akcja'=>"");

@@ -77,9 +77,9 @@ select *
  where PSKONT='$baza'
 "));
 
-$problemy.=(!$klient['NAZWA']?'Brak nazwy sprzedawcy. ':'');
-$problemy.=(!$klient['ADRES']?'Brak adresu sprzedawcy. ':'');
-$problemy.=(!$klient['NIP']?'Brak NIPu sprzedawcy. ':'');
+$problemy.=(!$klient['NAZWA']?'Brak nazwy nabywcy. ':'');
+$problemy.=(!$klient['ADRES']?'Brak adresu nabywcy. ':'');
+$problemy.=(!$klient['NIP']?'Brak NIPu nabywcy. ':'');
 
 $dokument=mysqli_fetch_array($q=mysqli_query($link,"
 select *
@@ -116,7 +116,7 @@ $problemy.=(!$dokument['NUMER']?'Brak numeru dokumentu. ':'');
 		<td width="48%" valign="top">
 			<table cellspacing="0" cellpadding="3" rules="none" width="100%" border="1">
 				<tbody>
-					<tr align="left"><td>Magazyn:</td></tr>
+					<tr align="left"><td>Nabywca:</td></tr>
 					<tr align="middle"><td><font style="font-size:14pt"><?php echo $klient['NAZWA'];?></font></td></tr>
 					<tr align="middle"><td><?php echo $klient['ADRES'];?></td></tr>
 					<tr align="middle"><td><b>NIP: <?php echo $klient['NIP'];?></b></td></tr>
