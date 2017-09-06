@@ -42,6 +42,7 @@ if($idPoprzedni<0)
 		,'zest1'
 		,'bilans'
 		,'bilansp'
+		,'rachwyn'
 		,'towary'
 	);
 
