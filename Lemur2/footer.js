@@ -21,16 +21,17 @@ $(document).ready(function() {
      ,weekStart: 1
      ,language: "pl"
    });
-   //$("[data-toggle='confirmation-singleton']").confirmation();
+   //set cursor position at the end
+   $('.datePicker').focusin(function(){
+	   var data=$(this).val();
+	   $(this).val('').val(data);
+   });
    $('input,select,textarea').focusin(function(){
-	   //$(this).parent().prev().css({'background':'#FF6600','font-weight':'bold'});
 	   $(this).parent().prev().css({'background':'#FF6600'});
    });
    $('input,select,textarea').focusout(function(){
-	   //$(this).parent().prev().css({'background':'','font-weight':'normal'});
 	   $(this).parent().prev().css({'background':''});
    });
-   //$('li.active').css('background','#FF6600');
 });
 
 function buttonsHide() {
