@@ -5,6 +5,11 @@ if(!$_POST['NAZWA'])
 	$_POST['NAZWA']=$_POST['PSEUDO'];
 }
 
+if(!$_POST['TRESC'])
+{
+	$_POST['TRESC']=$_POST['NAZWA'];
+}
+
 if($_POST['NUMER']*1==0)
 {
 	$tableInit='NUMER desc';

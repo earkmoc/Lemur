@@ -8,5 +8,5 @@
    margin-top: 3px;
 }
 .nag {
-   text-align: left; 
+   text-align: left !important; 
 }
