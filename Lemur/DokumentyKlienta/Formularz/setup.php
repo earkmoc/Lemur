@@ -123,38 +123,41 @@ else
 	$dane['WARTOSC-WPLACONO']=$dane['WARTOSC']-$dane['WPLACONO'];
 	if ($kopia)
 	{
-		mysqli_query($link, $q="
-			create temporary table dokmTmp like dokumentm
-		"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
-		mysqli_query($link, $q="
-			select * from dokmTmp
-		"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
-		mysqli_query($link, $q="
-			ALTER TABLE dokmTmp CHANGE `ID` `ID` INT(11) NOT NULL
-		"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
-		mysqli_query($link, $q="
-			alter table dokmTmp drop primary key
-		"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
-		mysqli_query($link, $q="
-			insert 
-			  into dokmTmp
-			select *
-			  from dokumentm
-			 where ID_D=abs($id)
-		"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
-		mysqli_query($link, $q="
-			update dokmTmp
-			   set ID=0
-				 , ID_D=-1
-				 , KTO=$ido
-		"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
-		mysqli_query($link, $q="
-			insert 
-			  into dokumentm
-			select *
-			  from dokmTmp
-		"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
-
+		if (!$_POST['CZAS'])		//pierwsze wywołanie "setup" tuż po wciśnięciu buttona opcji "Kopiuj"
+		{
+			mysqli_query($link, $q="
+				create temporary table dokmTmp like dokumentm
+			"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
+			mysqli_query($link, $q="
+				select * from dokmTmp
+			"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
+			mysqli_query($link, $q="
+				ALTER TABLE dokmTmp CHANGE `ID` `ID` INT(11) NOT NULL
+			"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
+			mysqli_query($link, $q="
+				alter table dokmTmp drop primary key
+			"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
+			mysqli_query($link, $q="
+				insert 
+				  into dokmTmp
+				select *
+				  from dokumentm
+				 where ID_D=abs($id)
+			"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
+			mysqli_query($link, $q="
+				update dokmTmp
+				   set ID=0
+					 , ID_D=-1
+					 , KTO=$ido
+			"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
+			mysqli_query($link, $q="
+				insert 
+				  into dokumentm
+				select *
+				  from dokmTmp
+			"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q.'<br>'.mysqli_affected_rows($link));}
+		}
+		
 		$id=0;
 		$dane['ID']=0;	//dopisanie nowej pozycji
 		$_SESSION["{$baza}DokumentyID_D"]=0;
