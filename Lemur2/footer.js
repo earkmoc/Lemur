@@ -1,6 +1,7 @@
 <script type="text/javascript" language="JavaScript">
 
 var szukanie=false;
+var reagujeNaKlawisze=true;
 
 $(document).ready(function() {
    $('.dateTimePicker').datetimepicker({
@@ -56,8 +57,16 @@ $(document).ready(function() {
 		echo "   $('#button{$button['klawisz']}').on('click',function(){"."\n";
 		if (@$button['akcja'])
 		{
+			echo "if (reagujeNaKlawisze)"."\n";
+			echo "{"."\n";
 			echo "      buttonsHide();"."\n";
 			echo "      $('#mainForm').attr('action','{$button['akcja']}');"."\n";
+			echo "      reagujeNaKlawisze=false;"."\n";
+			echo "}"."\n";
+			echo "else"."\n";
+			echo "{"."\n";
+			echo "      $(this).remove()"."\n";
+			echo "}"."\n";
 		};
 		if (@$button['js'])
 		{
