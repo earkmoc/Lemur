@@ -27,6 +27,25 @@ echo "<td>";
 
 echo "<br>";
 
+echo "Gdzie jest brak Nazwy lub NIP kontrahenta:";
+echo "<table border='1' cellspacing='0' cellpadding='5'>";
+
+$lp=0;
+$zDK=mysqli_query($link,"select * from $kl.$dk where NIP='' or NAZWA=''");
+while($dokument=mysqli_fetch_array($zDK))
+{
+	++$lp;
+	echo "<tr>";
+	echo "<td>$lp.</td><td>$dokument[ID]</td><td>$dokument[TYP]</td><td>$dokument[NUMER]</td><td>$dokument[DOPERACJI]</td><td>$rejestr[OKRES]</td>";
+	echo "</tr>";
+}
+if($lp==0) {echo "<tr><td>Wszystko OK.</td></tr>";}
+echo "</table>";
+
+//----------------------------------------------------------------------------------------------------------------------------------------------
+
+echo "<br>";
+
 echo "Gdzie jest niezgodno¶æ okresu sprawozdawczego dokumentu i zapisów w zak³adce rejestrów:";
 echo "<table border='1' cellspacing='0' cellpadding='5'>";
 
