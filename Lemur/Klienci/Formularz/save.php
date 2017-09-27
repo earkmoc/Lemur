@@ -59,3 +59,5 @@ if($idPoprzedni<0)
 		update $bazaNowa.menu set CZAS=Now()
 	");
 }
+
+require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/update_dump_all.php");
