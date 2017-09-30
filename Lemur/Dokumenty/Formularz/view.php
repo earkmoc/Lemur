@@ -6,7 +6,7 @@
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-body">
-				<iframe  id="iframeMagazyn" width='100%' height='700' src='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Magazyn/Tabela/";?>'></iframe>
+				<iframe  id="iframeMagazyn" width='100%' height='700' ssrc='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Magazyn/Tabela/";?>'></iframe>
          </div>
       </div>
    </div>
@@ -16,7 +16,7 @@
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-body">
-				<iframe  id="iframeKontaWn" width='100%' height='700' src='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/KontaWn/Tabela/";?>'></iframe>
+				<iframe  id="iframeKontaWn" width='100%' height='700' ssrc='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/KontaWn/Tabela/";?>'></iframe>
          </div>
       </div>
    </div>
@@ -26,7 +26,7 @@
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-body">
-				<iframe  id="iframeKontaMa" width='100%' height='700' src='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/KontaMa/Tabela/";?>'></iframe>
+				<iframe  id="iframeKontaMa" width='100%' height='700' ssrc='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/KontaMa/Tabela/";?>'></iframe>
          </div>
       </div>
    </div>
@@ -36,7 +36,7 @@
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-body">
-				<iframe  id="iframeKontrahenci" width='100%' height='700' src='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Kontrahenci/Tabela/";?>'></iframe>
+				<iframe  id="iframeKontrahenci" width='100%' height='700' ssrc='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Kontrahenci/Tabela/";?>'></iframe>
          </div>
       </div>
    </div>
@@ -46,7 +46,7 @@
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-body">
-				<iframe  id="iframePrzedmioty" width='100%' height='700' src='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Przedmioty/Tabela/";?>'></iframe>
+				<iframe  id="iframePrzedmioty" width='100%' height='700' ssrc='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Przedmioty/Tabela/";?>'></iframe>
          </div>
       </div>
    </div>
@@ -57,7 +57,7 @@
    <div class="modal-dialog modal-lg">
       <div class="modal-content">
          <div class="modal-body">
-				<iframe  id="iframeTypyRejestrow" width='100%' height='700' src='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/TypyRejestrow/Tabela/";?>'></iframe>
+				<iframe  id="iframeTypyRejestrow" width='100%' height='700' ssrc='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/TypyRejestrow/Tabela/";?>'></iframe>
          </div>
       </div>
    </div>
@@ -69,7 +69,7 @@
    <div class="modal-dialog modal-md">
       <div class="modal-content">
          <div class="modal-body" style="color: white; background-color:black;">
-				<iframe  id="iframeKlepacz" width='100%' height='700' src='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Klepacz/Formularz/";?>'></iframe>
+				<iframe  id="iframeKlepacz" width='100%' height='700' ssrc='<?php echo "http://{$_SERVER['HTTP_HOST']}/$baza/Klepacz/Formularz/";?>'></iframe>
          </div>
       </div>
    </div>
@@ -347,7 +347,7 @@
       <div class="container-fluid bs-docs-container">
          <div class="row">
             <div class="col-md-12">
-				<iframe id="iframeTowary" width='100%' height='400' src='<?php echo "/$baza/Towary/Tabela/index.php?id_d=$id";?>'></iframe>
+				<iframe id="iframeTowary" width='100%' height='400' ssrc='<?php echo "/$baza/Towary/Tabela/index.php?id_d=$id";?>'></iframe>
             </div>
          </div>
       </div>
@@ -357,7 +357,7 @@
       <div class="container-fluid bs-docs-container">
          <div class="row">
             <div class="col-md-12">
-				<iframe id="iframeDekrety" width='100%' height='400' src='<?php echo "/$baza/Dekrety/Tabela/index.php?id_d=$id";?>'></iframe>
+				<iframe id="iframeDekrety" width='100%' height='400' ssrc='<?php echo "/$baza/Dekrety/Tabela/index.php?id_d=$id";?>'></iframe>
             </div>
          </div>
       </div>
@@ -367,7 +367,7 @@
       <div class="container-fluid bs-docs-container">
          <div class="row">
             <div class="col-md-12">
-				<iframe  id="iframeKPiR" width='100%' height='400' src='<?php echo "/$baza/KPiR/Tabela/index.php?id_d=$id";?>'></iframe>
+				<iframe  id="iframeKPiR" width='100%' height='400' ssrc='<?php echo "/$baza/KPiR/Tabela/index.php?id_d=$id";?>'></iframe>
             </div>
          </div>
       </div>
@@ -377,7 +377,7 @@
       <div class="container-fluid bs-docs-container">
          <div class="row">
             <div class="col-md-12">
-				<iframe  id="iframeEwidSprz" width='100%' height='400' src='<?php echo "/$baza/ewidsprz/Tabela/index.php?id_d=$id";?>'></iframe>
+				<iframe  id="iframeEwidSprz" width='100%' height='400' ssrc='<?php echo "/$baza/ewidsprz/Tabela/index.php?id_d=$id";?>'></iframe>
             </div>
          </div>
       </div>
@@ -387,7 +387,7 @@
       <div class="container-fluid bs-docs-container">
          <div class="row">
             <div class="col-md-12">
-				<iframe  id="iframeEwidPrzeb" width='100%' height='400' src='<?php echo "/$baza/ewidprzeb/Tabela/index.php?id_d=$id";?>'></iframe>
+				<iframe  id="iframeEwidPrzeb" width='100%' height='400' ssrc='<?php echo "/$baza/ewidprzeb/Tabela/index.php?id_d=$id";?>'></iframe>
             </div>
          </div>
       </div>

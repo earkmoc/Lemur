@@ -1,9 +1,5 @@
 $(document).ready(function() {
 	$('select[name=TYP]').focus();
-	//$('input[name=LP]').focus();
-	$('#buttonTAK').on('click',function(){
-		alert('Akcja na "TAK"');
-	});
 	$('#myModal').on('shown.bs.modal', function () {
 		$('#iframeKontrahenci').focus();
 	});
@@ -13,9 +9,6 @@ $(document).ready(function() {
 	$('#myModalT').on('shown.bs.modal', function () {
 		$('#iframeTypyRejestrow').focus();
 	});
-//	$('#myModalKlepacz').on('shown.bs.modal', function () {
-//		$('#iframeKlepacz').focus();
-//	});
 	$('#myModalWn').on('shown.bs.modal', function () {
 		$('#iframeKontaWn').focus();
 	});
@@ -24,6 +17,17 @@ $(document).ready(function() {
 	});
 	$('#myModalMagazyn').on('shown.bs.modal', function () {
 		$('#iframeMagazyn').focus();
+	});
+	$('iframe').on('focus', function () {
+		if($(this).prop('src')=='')
+		{
+			$(this).hide();
+			$(this).prop('src',$(this).attr('ssrc'));
+			$(this).show();
+		}
+	});
+	$('.nav-tabs a').on('shown.bs.tab', function(event){
+		$('#'+$(this).parent().attr('id').replace('li','iframe')).focus();
 	});
 });
 
