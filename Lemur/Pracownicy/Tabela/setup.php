@@ -10,6 +10,8 @@ mysqli_query($link, "ALTER TABLE `pracownicy` ADD `NRDOWODU` char(50) NOT NULL D
 mysqli_query($link, "ALTER TABLE `pracownicy` ADD `NRTELEFONU` char(50) NOT NULL DEFAULT ''");
 mysqli_query($link, "ALTER TABLE `pracownicy` ADD `NAZWISKORODOWE` char(50) NOT NULL DEFAULT ''");
 
+mysqli_query($link, "ALTER TABLE `absencje` change `KOD` `KOD` char(2) NOT NULL DEFAULT ''");
+
 $id_d=@$_SESSION["{$baza}ListyPlacID_D"];
 
 // ----------------------------------------------

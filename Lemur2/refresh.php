@@ -15,7 +15,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 //----------------------------------------------
 
 $_SESSION['error']='';
-$_SESSION['wynik']='';
+//$_SESSION['wynik']='';
 
 $first = (! $_GET ['limit']);
 
@@ -114,11 +114,11 @@ if ($pola) {
 		$orderBy 
 		limit $_GET[offset],$_GET[limit]
 	" );
-	
-$_SESSION['Q']=$q;
-$_SESSION['GET']=$_GET;
-$_SESSION['POST']=$_POST;
-$_SESSION['REQUEST']=$_REQUEST;
+
+//$_SESSION['Q']=$q;
+//$_SESSION['GET']=$_GET;
+//$_SESSION['POST']=$_POST;
+//$_SESSION['REQUEST']=$_REQUEST;
 
 	$w = mysqli_query ( $link, $q ); if (mysqli_error($link)) {echo "Error: ".$_SESSION['error'].=mysqli_error($link)." in $q";}
 	while ( $r = mysqli_fetch_row ( $w ) ) {
@@ -149,14 +149,14 @@ $filtr = explode('where',$fromwhere)[1];
 $filtr=(json_encode($filtr)?$filtr:'');
 $wynik ['filtr'] = (($filtr=='')||($filtr=='1')||(strpos($filtr,'(1)'))?'':"<b>Filtr</b>: $filtr");//"<b>Filtr</b>: wszystko"
 
-$sortowanie = explode('order by',$orderBy)[1];
-$wynik ['sort'] .= (($sortowanie=='')?'':"<b>Sortowanie</b>: $sortowanie");
+$sortowanie=explode('order by',$orderBy)[1];
+$wynik['sort'].=(($sortowanie=='')?'':"<b>Sortowanie</b>: $sortowanie");
 
-$_SESSION['wynik']=$wynik;
-if ($wynik = json_encode ( $wynik ))
+//$_SESSION['wynik']=$wynik;
+if ($wynik=json_encode($wynik))
 {
 	echo $wynik;
-	$_SESSION['wynik2']=$wynik;
+//	$_SESSION['wynik2']=$wynik;
 } else {
-	$_SESSION['wynik']='problem z json_encode';
+//	$_SESSION['wynik']='problem z json_encode';
 }
