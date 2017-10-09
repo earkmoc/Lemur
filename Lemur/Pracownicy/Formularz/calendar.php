@@ -1,9 +1,6 @@
 <script type="text/javascript">
 
-var Urlopowe='lightgreen';
-var Zasilkowe='yellow';
-var Chorobowe='red';
-var aktywne='#FF6600';
+var aktywne='#FF6600';	//ceglaste
 
 </script>
 
@@ -48,6 +45,34 @@ $plMOY=array(
 ,'Pa¼dziernik'
 ,'Listopad'
 ,'Grudzieñ'
+);
+
+$typy=array(
+ "D"=>"dy¿ur"
+,"S"=>"podró¿ s³u¿bowa"
+,"Uw"=>"urlop wypoczynkowy"
+,"Um"=>"urlop macierzyñski"
+,"Ub"=>"urlop bezp³atny"
+,"W"=>"urlop wychowawczy"
+,"Ch"=>"choroba"
+,"Op"=>"opieka"
+,"Np"=>"inne nieobecno¶ci p³atne"
+,"N"=>"inne nieobecno¶ci niep³atne"
+,"Nn"=>"nieobecno¶æ nieusprawiedliwiona"
+);
+
+$typyKolory=array(
+ "D"=>"lightblue"
+,"S"=>"lightblue"
+,"Uw"=>"lightgreen"
+,"Um"=>"lightblue"
+,"Ub"=>"lightblue"
+,"W"=>"lightblue"
+,"Ch"=>"red"
+,"Op"=>"lightblue"
+,"Np"=>"lightblue"
+,"N"=>"lightblue"
+,"Nn"=>"lightblue"
 );
 
 //----------------------------------------------------------------------------------------------------------
@@ -96,7 +121,7 @@ $daty=mysqli_fetch_array($w);
 
 echo "<table class='table table-striped table-bordered table-hover table-condensed'>";
 echo '<tr  style="vertical-align:center">';
-echo '<th colspan="16" style="text-align:center">';
+echo '<th colspan="6" style="text-align:center">';
 
 echo '<h4>';
 
@@ -116,25 +141,14 @@ echo '</h4>';
 
 echo '</th>';
 
-echo '<th colspan="6" style="text-align:center">';
-echo ' <button name="Urlopowe" type="button" onclick="AktywujKolor(this)">';
-echo "Urlopowe";
-echo '</button>';
-echo " = <span id='Urlopowe'>0</span> dni";
-echo '</th>';
-
-echo '<th colspan="5" style="text-align:center">';
-echo ' <button name="Zasilkowe" type="button"  onclick="AktywujKolor(this)">';
-echo "Zasi³kowe";
-echo '</button>';
-echo " = <span id='Zasilkowe'>0</span> dni";
-echo '</th>';
-
-echo '<th colspan="5" style="text-align:center">';
-echo '<button name="Chorobowe" type="button" onclick="AktywujKolor(this)">';
-echo "Chorobowe";
-echo '</button>';
-echo " = <span id='Chorobowe'>0</span> dni";
+echo '<th colspan="26" style="text-align:center">';
+foreach($typy as $key => $value)
+{
+	echo "<span id='div{$key}' style='padding:5pt'>";
+	echo "<button name='{$key}' type='button' onclick='AktywujKolor(this)' title='{$value}'>{$key}</button>";
+	echo "= <span id='{$key}'>0</span>";
+	echo "</span> ";
+}
 echo '</th>';
 
 echo '</tr>';
@@ -188,8 +202,8 @@ echo "</table>";
 
 <script type="text/javascript">
 
-var aktywnyKolor=Urlopowe;
-var aktywnaLitera='U';
+var aktywnyKolor='lightgreen';
+var aktywnaLitera='Uw';
 
 function getCalendar($id,$idPracownika,$data) 
 {
@@ -230,20 +244,24 @@ function ZaznaczAbsencje(el)
 
 function PoliczAbsencje() 
 {
-	$("#Urlopowe").html($("input[value=U]").length);
-	$("#Zasilkowe").html($("input[value=Z]").length);
-	$("#Chorobowe").html($("input[value=C]").length);
+	<?php
+	foreach($typy as $key => $value)
+	{
+		echo "$('#{$key}').html($('input[value={$key}]').length);\n";
+	}
+	?>
 }
 
 function AktywujKolor(el) 
 {
 	aktywnyKolor=$("button[name="+el.name+"]").css("background-color");
-	aktywnaLitera=el.name.substring(0,1);
-
-	$("button[name=Urlopowe]").parent().css("background-color","");
-	$("button[name=Zasilkowe]").parent().css("background-color","");
-	$("button[name=Chorobowe]").parent().css("background-color","");
-
+	aktywnaLitera=el.name;	//el.name.substring(0,1);
+	<?php
+	foreach($typy as $key => $value)
+	{
+		echo "$('button[name={$key}]').parent().css('background-color','');\n";
+	}
+	?>
 	$("button[name="+el.name+"]").parent().css("background-color",aktywne);
 }
 
@@ -251,17 +269,23 @@ $(document).ready(function()
 {
 	$("input[weekend=1]").css("color","red");
 
-	$("input[value=U]").parent().css("background-color",Urlopowe).attr("kolor",Urlopowe);
-	$("input[value=Z]").parent().css("background-color",Zasilkowe).attr("kolor",Zasilkowe);
-	$("input[value=C]").parent().css("background-color",Chorobowe).attr("kolor",Chorobowe);
+	<?php
+	foreach($typyKolory as $key => $value)
+	{
+		echo "$('input[value={$key}]').parent().css('background-color','{$value}').attr('kolor','{$value}');\n";
+	}
+	?>
 
 	PoliczAbsencje();
 	
-	$("button[name=Urlopowe]").css("background-color",Urlopowe);
-	$("button[name=Zasilkowe]").css("background-color",Zasilkowe);
-	$("button[name=Chorobowe]").css("background-color",Chorobowe);
+	<?php
+	foreach($typyKolory as $key => $value)
+	{
+		echo "$('button[name={$key}]').css('background-color','{$value}');\n";
+	}
+	?>
 
-	$("button[name=Urlopowe]").parent().css("background-color",aktywne);
+	$("button[name=Uw]").parent().css("background-color",aktywne);
 });
 
 </script>

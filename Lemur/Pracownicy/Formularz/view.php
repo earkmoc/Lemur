@@ -26,6 +26,7 @@
 				<div id="Kalendarz"></div>
 				<script type="text/javascript">
 					var idPracownika=<?php echo $id;?>;
+					var data='<?php echo $data;?>';
 				</script>
 			</div>
 		</div>

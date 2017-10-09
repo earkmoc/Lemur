@@ -12,7 +12,7 @@ function getCalendar($id,$idPracownika,$data) {
 
 $(document).ready(function() {
 	$('input[name=NAZWISKOIMIE]').focus();
-	getCalendar('Kalendarz',idPracownika,'');
+	getCalendar('Kalendarz',idPracownika,data);
 });
 
 function valid($name,$validType) {

@@ -19,19 +19,15 @@ function Feed(data,kod)
 	var m=ArabskiMc(data);
 	var d=ArabskiDzien(data);
 	var s=RzymskiMc(m);
+	var dd=d+1;
+	var mm=m*2+2;
 	$('td:nth-child(1)').each(function(){
 		if($(this).text().substr(0,s.length)==s)
 		{
-			d=d+1;
-			m=m*2+2;
-			$('table tbody tr:nth-child('+m+') td:nth-child('+d+')').text(kod);
-//			$(this).parent().children(':not(td[bgcolor=lightgrey])').text('8');
-//			$(this).parent().next().children(':not(td[bgcolor=lightgrey])').text(kod);
+			$('table tbody tr:nth-child('+mm+') td:nth-child('+dd+')').text(kod);
+			$('table tbody tr:nth-child('+(mm-1)+') td:nth-child('+(dd+1)+')').text("8");
 		}
 	});
-//	$('table#tab tbody tr td:nth-child('+n+')').each(function(){
-//		var cur=$(this).text();
-//	});
 }
 
 $(document).ready(function() {
@@ -47,10 +43,10 @@ $(document).ready(function() {
 	$('table[width=2100]').load('ecpAbsencje.php',$params,function(){
 		wynik=$(this).html();
 		$(this).html('');
-		//alert(wynik);
 		wynik=jQuery.parseJSON(wynik);
 		jQuery.each(wynik,function(){
 			Feed(this.DATA,this.KOD);
 		});
+		print();
 	});
 });

@@ -139,17 +139,16 @@ fputs($file,'</STYLE>  '."\n");
 fputs($file,'</head>'."\n");
 
 fputs($file,'<body bgcolor="#FFFFFF" onload="');
-//echo '<body bgcolor="#FFFFFF" onload="';
-//if (($ido==4)||($ido==6)||($ido==7)) {	//Agata, Andrzej, Beata maja ig³ówki
-if ($spacje=='N') {	//$_SESSION['osoba_os']=='XP'
-	fputs($file,'window.print()');
-//	echo 'window.print()';
-} else {
-	fputs($file,"document.execCommand('SaveAs','','C:\\\Wydruki\\\Wydruk.htm')");
-//	echo "document.execCommand('SaveAs','','C:\\\Wydruki\\\Wydruk.htm')";
+if(@!$noPrint)
+{
+	if($spacje=='N')
+	{
+		fputs($file,'window.print()');
+	} else {
+		fputs($file,"document.execCommand('SaveAs','','C:\\\Wydruki\\\Wydruk.htm')");
+	}
 }
 fputs($file,'">'."\n");
-//echo '">';
 
 fputs($file,'<table width="2100">'."\n");
 

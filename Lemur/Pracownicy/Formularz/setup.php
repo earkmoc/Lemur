@@ -73,3 +73,5 @@ else
 		$dane['ID']=0;	//dopisanie nowej pozycji
 	}
 }
+
+$data=mysqli_fetch_row(mysqli_query($link, "Select left(CZAS,10) from menu where SKROT='Pracownicy'"))[0];
