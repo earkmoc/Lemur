@@ -243,7 +243,7 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../ZSY" id="9h">h) Zestawienie syntetyczne</td></tr>
 <tr><td><a href="../AOK" id="9i">i) Analityka konta</td></tr>
 <tr><td><a href="" id="9j">j) Importuj dane</td></tr>
-<tr><td><a href="" id="9k">k) Sprawozdawczo¶æ+</td></tr>
+<tr><td><a href="<?php echo "../JPK2/?baza=$baza";?>" id="9k">k) JPK(2)</td></tr>
 </table>
 </div>
 		
