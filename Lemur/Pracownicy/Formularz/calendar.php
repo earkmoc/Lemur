@@ -48,7 +48,8 @@ $plMOY=array(
 );
 
 $typy=array(
- "D"=>"dy¿ur"
+ "P"=>"praca"
+,"D"=>"dy¿ur"
 ,"S"=>"podró¿ s³u¿bowa"
 ,"Uw"=>"urlop wypoczynkowy"
 ,"Um"=>"urlop macierzyñski"
@@ -62,17 +63,18 @@ $typy=array(
 );
 
 $typyKolory=array(
- "D"=>"lightblue"
-,"S"=>"lightblue"
+ "P"=>"lightblue"
+,"D"=>"yellow"
+,"S"=>"yellow"
 ,"Uw"=>"lightgreen"
-,"Um"=>"lightblue"
-,"Ub"=>"lightblue"
-,"W"=>"lightblue"
+,"Um"=>"yellow"
+,"Ub"=>"yellow"
+,"W"=>"yellow"
 ,"Ch"=>"red"
-,"Op"=>"lightblue"
-,"Np"=>"lightblue"
-,"N"=>"lightblue"
-,"Nn"=>"lightblue"
+,"Op"=>"yellow"
+,"Np"=>"yellow"
+,"N"=>"yellow"
+,"Nn"=>"yellow"
 );
 
 //----------------------------------------------------------------------------------------------------------
@@ -130,7 +132,9 @@ echo " onclick=\"getCalendar('$id','$idPracownika','$daty[prevYear]')\">";
 echo '<span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>';
 echo '</button>';
 
-echo " $baseYear ";
+echo ' <button type="button" class="btn btn-default" title="Wpisz aktywny kod dla wszystkich dni roboczych w tym roku" onclick="ToggleYear(this)">';
+echo '<font color="gray">'.(" $baseYear ").'</font>';
+echo '</button> ';
 
 echo '<button type="button" class="btn btn-default btn-xs" aria-label="rok" title="rok wprzód"';
 echo " onclick=\"getCalendar('$id','$idPracownika','$daty[nextYear]')\">";
@@ -141,7 +145,8 @@ echo '</h4>';
 
 echo '</th>';
 
-echo '<th colspan="26" style="text-align:center">';
+echo '<th colspan="26" style="text-align:left">';
+echo 'Kod godzin: ';
 foreach($typy as $key => $value)
 {
 	echo "<span id='div{$key}' style='padding:5pt'>";
@@ -149,6 +154,7 @@ foreach($typy as $key => $value)
 	echo "= <span id='{$key}'>0</span>";
 	echo "</span> ";
 }
+echo "<br>Ilo¶æ godzin: <input name='godziny' value='8' size='1' /> na dzieñ";
 echo '</th>';
 
 echo '</tr>';
@@ -160,12 +166,13 @@ for($mc=0;$mc<=12;++$mc)
 	for($day=0;$day<=31;++$day) 
 	{
 		$day=($day<10?"0$day":$day);
-		echo "<td kolor=''>";
+		echo "<td kolor='' style='text-align:center'>";
 		switch (true)
 		{
 		case(	($mc==0) 
 			&&	($day==0)
 			):
+			echo "m-c \ dzieñ";
 			break;
 		case(	($mc==0)
 			):
@@ -173,7 +180,7 @@ for($mc=0;$mc<=12;++$mc)
 			break;
 		case(	($day==0)
 			):
-			echo '<button type="button" class="form-control btn btn-default" name="'.$mc.'" title="'.$plMOY[$mc-1].'" onclick="ToggleMonth(this)">';
+			echo '<button type="button" class="form-control btn btn-default" name="'.$mc.'" title="Wpisz aktywny kod dla wszystkich dni roboczych w tym miesi±cu" onclick="ToggleMonth(this)">';
 			echo '<font color="gray">'.$plMOY[$mc-1].'</font>';
 			echo '</button>';
 			break;
@@ -202,8 +209,8 @@ echo "</table>";
 
 <script type="text/javascript">
 
-var aktywnyKolor='lightgreen';
-var aktywnaLitera='Uw';
+var aktywnyKolor='lightblue';
+var aktywnaLitera='P';
 
 function getCalendar($id,$idPracownika,$data) 
 {
@@ -219,6 +226,7 @@ function getCalendar($id,$idPracownika,$data)
 function ToggleDay($this) 
 {
    ZaznaczAbsencje($("input[name="+$this.name+"]"));
+   PoliczAbsencje();
 }
 
 function ToggleMonth($btn) 
@@ -226,20 +234,46 @@ function ToggleMonth($btn)
    $("input[mc="+$btn.name+"]").each(function(){
       ZaznaczAbsencje($(this));
    });
+   PoliczAbsencje();
+}
+
+function ToggleYear($btn) 
+{
+<?php
+	for($mc=1;$mc<=12;++$mc) 
+	{
+		$mc=($mc<10?"0$mc":$mc);
+		echo "$('input[mc=$mc]').each(function(){";
+		echo "	ZaznaczAbsencje($(this));";
+		echo "});";
+   		echo "PoliczAbsencje();";
+	}
+?>
 }
 
 function ZaznaczAbsencje(el) 
 {
    if(el.parent().attr("kolor")!=aktywnyKolor) {
-      el.parent().css("background-color",aktywnyKolor);
-      el.parent().attr("kolor",aktywnyKolor);
-      el.attr('value',aktywnaLitera);
+	  var ok=true;
+	  if(( (el.attr('value')=='Nd')
+		 ||(el.attr('value')=='Sb')
+		 )
+//		&&(aktywnaLitera=='P')
+		)
+		{
+			ok=false;
+		}
+	  if(ok)
+	  {
+		el.parent().css("background-color",aktywnyKolor);
+		el.parent().attr("kolor",aktywnyKolor);
+		el.attr('value',aktywnaLitera+$('input[name=godziny]').val());
+	  }
    } else {
       el.parent().css("background-color","");
       el.parent().attr("kolor","");
       el.attr('value',el.attr('dow'));
    }
-   PoliczAbsencje();
 }
 
 function PoliczAbsencje() 
@@ -247,7 +281,7 @@ function PoliczAbsencje()
 	<?php
 	foreach($typy as $key => $value)
 	{
-		echo "$('#{$key}').html($('input[value={$key}]').length);\n";
+		echo "$('#{$key}').html($('input[value='+'$key'+$('input[name=godziny]').val()+']').length);\n";
 	}
 	?>
 }
@@ -285,7 +319,7 @@ $(document).ready(function()
 	}
 	?>
 
-	$("button[name=Uw]").parent().css("background-color",aktywne);
+	$("button[name=P]").parent().css("background-color",aktywne);
 });
 
 </script>

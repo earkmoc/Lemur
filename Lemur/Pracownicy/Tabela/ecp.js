@@ -24,8 +24,15 @@ function Feed(data,kod)
 	$('td:nth-child(1)').each(function(){
 		if($(this).text().substr(0,s.length)==s)
 		{
-			$('table tbody tr:nth-child('+mm+') td:nth-child('+dd+')').text(kod);
-			$('table tbody tr:nth-child('+(mm-1)+') td:nth-child('+(dd+1)+')').text("8");
+			cyfry=kod.substring(kod.length-1);
+			litery=kod.substring(0,kod.length-1);
+			if(isNaN(cyfry))
+			{
+				cyfry='';
+				litery=kod;
+			}
+			$('table tbody tr:nth-child('+(mm-1)+') td:nth-child('+(dd+1)+')').text(cyfry);
+			$('table tbody tr:nth-child('+mm+') td:nth-child('+dd+')').text(litery);
 		}
 	});
 }

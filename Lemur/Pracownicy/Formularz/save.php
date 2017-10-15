@@ -7,6 +7,8 @@ $_POST['KTO']=$_SESSION['osoba_id'];
 $_POST['CZAS']=date('Y-m-d H:i:s');
 $_POST['CZYROZLICZAC']=($_POST['CZYROZLICZAC']?1:'');
 
+unset($_POST['godziny']);
+
 $id=$_GET['id'];
 if($id)
 {

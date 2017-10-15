@@ -2,7 +2,7 @@
 
 <ul class="nav nav-tabs">
 <li class="active" id="liDane"     ><a href="#Dane"			data-toggle="tab">1. Dane</a></li>
-<li                id="liAbsencje">	<a href="#Absencje"		data-toggle="tab">2. Absencje</a></li>
+<li                id="liAbsencje">	<a href="#Absencje"		data-toggle="tab">2. Czas pracy i absencji</a></li>
 <li                id="liListyPlac"><a href="#ListyPlac"	data-toggle="tab">3. Listy P³ac</a></li>
 <li                id="liHistoriaP"><a href="#HistoriaP"	data-toggle="tab">4. Historia zatrudnienia</a></li>
 </ul>
