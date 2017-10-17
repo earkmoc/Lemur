@@ -26,10 +26,10 @@ if ($idTabeli)
 	$sets='';
 	$sets.=($str?($sets?', ':'')."NR_STR='$str'":'');
 	$sets.=($row?($sets?', ':'')."NR_ROW='$row'":'');
-	$sets.=($str?($sets?', ':'')."NR_COL='$col'":'');
-	$sets.=($str?($sets?', ':'')."ID_POZYCJI='$id'":'');
-	$sets.=($str?($sets?', ':'')."ID_TABELE='$idTabeli'":'');
-	$sets.=($str?($sets?', ':'')."ID_OSOBY='$ido'":'');
+	$sets.=($col?($sets?', ':'')."NR_COL='$col'":'');
+	$sets.=($id?($sets?', ':'')."ID_POZYCJI='$id'":'');
+	$sets.=($idTabeli?($sets?', ':'')."ID_TABELE='$idTabeli'":'');
+	$sets.=($ido?($sets?', ':'')."ID_OSOBY='$ido'":'');
 
 	if(@$tableInit)
 	{
