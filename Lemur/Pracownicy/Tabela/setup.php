@@ -15,6 +15,8 @@ mysqli_query($link, "update absencje set KOD='Uw' where KOD='U'");
 mysqli_query($link, "update absencje set KOD='Za' where KOD='Z'");
 mysqli_query($link, "update absencje set KOD='Ch' where KOD='C'");
 
+mysqli_query($link, "ALTER TABLE `absencje` change `DATA` `DATA` char(10) NOT NULL DEFAULT '0000-00-00'");
+
 $id_d=@$_SESSION["{$baza}ListyPlacID_D"];
 
 // ----------------------------------------------
