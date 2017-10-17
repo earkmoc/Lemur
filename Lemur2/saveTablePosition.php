@@ -37,20 +37,23 @@ if ($idTabeli)
 		$sets.=", SORTOWANIE='$tableInit'";
 	}
 
-	$innaBaza=($innaBaza?$innaBaza:'');
-	mysqli_query($link, $q="
-				 insert 
-				   into $innaBaza.tabeles
-					set $sets
-on duplicate key update $sets
-	");
-	if (mysqli_error($link)) {
-		die(mysqli_error($link).'<br>'.$q);
-	} else {
-		if ($_GET['next'])
+	if($sets)
+	{
+		$innaBaza=($innaBaza?$innaBaza:'');
+		mysqli_query($link, $q="
+						 insert
+						   into $innaBaza.tabeles
+							set $sets
+		on duplicate key update $sets
+		");
+		if (mysqli_error($link))
 		{
-			//echo 'header("location: '.$_GET[next].'");';die;
-			header("location: $_GET[next]");
-		}
+			die("File:<br>".__file__.'<br><br>Query:<br>'.nl2br($q).'<br>Message:<br>'.mysqli_error($link));
+		} 
+	}
+	if ($_GET['next'])
+	{
+		//echo 'header("location: '.$_GET[next].'");';die;
+		header("location: $_GET[next]");
 	}
 }

@@ -49,7 +49,7 @@ if (!isset($id_d))
 }
 
 $buttons[]=array('klawisz'=>'AltS','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').modal('show')");
-$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?wydruk=Raporta&natab=$widok&strona1=15&stronan=20");
+$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?wydruk=Raporta&natab=$widok&strona1=15&stronan=20&$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'Alt1','nazwa'=>'','js'=>"
 	parent.$('li').removeClass('active');
 	parent.$('div.tab-pane:not(#home)').removeClass('active');
