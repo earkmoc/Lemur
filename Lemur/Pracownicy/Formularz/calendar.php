@@ -91,7 +91,7 @@ $typyKolory=array(
 
 $sumy=array(
  "O"=>"Ogó³em"
-,"N¦"=>"Niedziele i ¦wiêta"
+,"NS"=>"Niedziele i ¦wiêta"
 ,"N"=>"Nocne"
 ,"GN"=>"Godziny Nadliczbowe"
 ,"DW"=>"w Dni Wolne"

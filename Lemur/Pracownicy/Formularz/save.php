@@ -45,7 +45,7 @@ foreach($_POST as $key => $value)
 {
 	if($key*1>0)
 	{
-		if(!in_array($value,$plDOW))
+		if($value&&(!in_array($value,$plDOW)))
 		{
 			mysqli_query($link, $q="
 				insert into absencje set ID_D=$id, DATA='$key', KOD='$value'

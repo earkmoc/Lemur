@@ -10,6 +10,10 @@ function ArabskiDzien(data)
 {
 	return data.substr(8,2)*1;
 }
+function KodDaty(data)
+{
+	return data.substr(8,2);
+}
 function RzymskiMc(mc)
 {
 	return mce[mc-1];
@@ -18,21 +22,46 @@ function Feed(data,kod)
 {
 	var m=ArabskiMc(data);
 	var d=ArabskiDzien(data);
+	var k=KodDaty(data);
 	var s=RzymskiMc(m);
 	var dd=d+1;
 	var mm=m*2+2;
 	$('td:nth-child(1)').each(function(){
 		if($(this).text().substr(0,s.length)==s)
 		{
-			cyfry=kod.substring(kod.length-1);
-			litery=kod.substring(0,kod.length-1);
-			if(isNaN(cyfry))
+			if(dd>1)
 			{
-				cyfry='';
-				litery=kod;
+				cyfry=kod.substring(kod.length-1);
+				litery=kod.substring(0,kod.length-1);
+				if(isNaN(cyfry))
+				{
+					cyfry='';
+					litery=kod;
+				}
+				$('table tbody tr:nth-child('+(mm-1)+') td:nth-child('+(dd+1)+')').text(cyfry);
+				$('table tbody tr:nth-child('+mm+') td:nth-child('+dd+')').text(litery);
 			}
-			$('table tbody tr:nth-child('+(mm-1)+') td:nth-child('+(dd+1)+')').text(cyfry);
-			$('table tbody tr:nth-child('+mm+') td:nth-child('+dd+')').text(litery);
+			else
+			{
+				switch(k) {
+					case 'O':
+						$('table tbody tr:nth-child('+(mm-1)+') td:nth-child(34)').text(kod);
+						break;
+					case 'NS':
+						$('table tbody tr:nth-child('+(mm-1)+') td:nth-child(35)').text(kod);
+						break;
+					case 'N':
+						$('table tbody tr:nth-child('+(mm-1)+') td:nth-child(36)').text(kod);
+						break;
+					case 'GN':
+						$('table tbody tr:nth-child('+(mm-1)+') td:nth-child(37)').text(kod);
+						break;
+					case 'DW':
+						$('table tbody tr:nth-child('+(mm-1)+') td:nth-child(38)').text(kod);
+						break;
+					default:
+				}
+			}
 		}
 	});
 }

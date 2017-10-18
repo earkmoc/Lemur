@@ -10,7 +10,8 @@ $q="
 select *
   from absencje
  where ID_D='$id'
-   and Year(DATA)='$rok'
+   and left(DATA,4)='$rok'
+   and KOD<>''
 ";
 $w=mysqli_query($link,$q); if(mysqli_error($link)) {echo "Error: ".$_SESSION['error'].=mysqli_error($link)." in $q";}
 while($r=mysqli_fetch_array($w))
@@ -24,5 +25,5 @@ if($wynik=json_encode($wynik))
 } 
 else 
 {
-	echo 'brak';
+	echo 'Error: json_encode';
 }
