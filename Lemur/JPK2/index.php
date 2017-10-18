@@ -44,7 +44,7 @@ else
 $title="JPK(2) - generowanie pliku dla $baza";
 $buttons=array();
 $buttons[]=array('klawisz'=>'AltG','nazwa'=>'Enter=Generuj','akcja'=>"generuj.php?baza=$baza");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Klienci");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Menu");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 ?>
