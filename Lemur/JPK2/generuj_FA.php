@@ -52,7 +52,7 @@ else
 	fputs($file,'<?xml version="1.0" encoding="UTF-8"?>
 <JPK xmlns="http://jpk.mf.gov.pl/wzor/2016/03/09/03095/" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2016/01/25/eD/DefinicjeTypy/">
 	<Naglowek>
-		<KodFormularza kodSystemowy="JPK_FA(1)" wersjaSchemy="1-0">JPK_FA</KodFormularza>
+		<KodFormularza kodSystemowy="JPK_FA (1)" wersjaSchemy="1-0">JPK_FA</KodFormularza>
 		<WariantFormularza>1</WariantFormularza>');
 	fputs($file,"\n".'		<CelZlozenia>'.(substr($_POST['cel'],0,1)).'</CelZlozenia>');
 	fputs($file,"\n".'		<DataWytworzeniaJPK>'.(date('Y-m-d').'T'.date('H:i:s')).'</DataWytworzeniaJPK>');
@@ -71,15 +71,20 @@ else
 	fputs($file,"\n"."			<etd:REGON>$klient[REGON]</etd:REGON>");
 	fputs($file,"\n"."		</IdentyfikatorPodmiotu>");
 	fputs($file,"\n"."		<AdresPodmiotu>");
-	fputs($file,"\n"."			<KodKraju>$klient[KRAJ]</KodKraju>");
-	fputs($file,"\n"."			<Wojewodztwo>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['WOJEWODZTWO'])))."</Wojewodztwo>");
-	fputs($file,"\n"."			<Powiat>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['POWIAT'])))."</Powiat>");
-	fputs($file,"\n"."			<Gmina>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['GMINA'])))."</Gmina>");
-	fputs($file,"\n"."			<Ulica>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['ULICA'])))."</Ulica>");
-	fputs($file,"\n"."			<NrDomu>$klient[NRDOMU]</NrDomu>");
-	fputs($file,"\n"."			<Miejscowosc>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['MIEJSCOWOSC'])))."</Miejscowosc>");
-	fputs($file,"\n"."			<KodPocztowy>$klient[KOD]</KodPocztowy>");
-	fputs($file,"\n"."			<Poczta>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['POCZTA'])))."</Poczta>");
+	fputs($file,"\n"."			<etd:KodKraju>$klient[KRAJ]</etd:KodKraju>");
+	fputs($file,"\n"."			<etd:Wojewodztwo>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['WOJEWODZTWO'])))."</etd:Wojewodztwo>");
+	fputs($file,"\n"."			<etd:Powiat>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['POWIAT'])))."</etd:Powiat>");
+	fputs($file,"\n"."			<etd:Gmina>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['GMINA'])))."</etd:Gmina>");
+	fputs($file,"\n"."			<etd:Ulica>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['ULICA'])))."</etd:Ulica>");
+	fputs($file,"\n"."			<etd:NrDomu>$klient[NRDOMU]</etd:NrDomu>");
+	$nrLokalu='';
+	if($nrLokalu)
+	{
+		fputs($file,"\n"."			<etd:NrLokalu>$nrLokalu</etd:NrLokalu>");
+	}
+	fputs($file,"\n"."			<etd:Miejscowosc>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['MIEJSCOWOSC'])))."</etd:Miejscowosc>");
+	fputs($file,"\n"."			<etd:KodPocztowy>$klient[KOD]</etd:KodPocztowy>");
+	fputs($file,"\n"."			<etd:Poczta>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['POCZTA'])))."</etd:Poczta>");
 	fputs($file,"\n"."		</AdresPodmiotu>");
 	fputs($file,"\n"."	</Podmiot1>");
 
@@ -119,9 +124,15 @@ else
 		fputs($file,"\n"."		<P_3B>$adres</P_3B>");
 		fputs($file,"\n"."		<P_3C>$klient[NAZWA]</P_3C>");
 		fputs($file,"\n"."		<P_3D>$klient[ADRES]</P_3D>");
-		fputs($file,"\n"."		<P_4A>$prefiksS</P_4A>");
+		if($prefiksS)
+		{
+			fputs($file,"\n"."		<P_4A>$prefiksS</P_4A>");
+		}
 		fputs($file,"\n"."		<P_4B>$klient[NIP]</P_4B>");
-		fputs($file,"\n"."		<P_5A>$prefiksN</P_5A>");
+		if($prefiksN)
+		{
+			fputs($file,"\n"."		<P_5A>$prefiksN</P_5A>");
+		}
 		fputs($file,"\n"."		<P_5B>$nip</P_5B>");
 		
 		//Data dokonania lub zakoñczenia dostawy towarów lub wykonania us³ugi lub data otrzymania zap³aty, o której mowa w art. 106b ust. 1 pkt 4, o ile taka data jest okre¶lona i ró¿ni siê od daty wystawienia faktury
@@ -130,6 +141,32 @@ else
 			fputs($file,"\n"."		<P_6>$r[DOPERACJI]</P_6>");
 		}
 		
+		$brutto=0;
+
+		$n23=0;
+		$n22=0;
+
+		$v23=0;
+		$v22=0;
+
+		$n7=0;
+		$n8=0;
+
+		$v7=0;
+		$v8=0;
+
+		$n5=0;
+		$n3=0;
+
+		$v5=0;
+		$v3=0;
+
+		$n4=0;
+		$n0=0;
+		$nzw=0;
+
+		$v4=0;
+
 		//Suma warto¶ci sprzeda¿y netto ze stawk± podstawow± - aktualnie 23% albo 22%
 		if($n22||$n23)
 		{
@@ -202,7 +239,10 @@ else
 			fputs($file,"\n"."		<P_13_7>".($nzw)."</P_13_7>");
 		}
 
-		fputs($file,"\n"."		<P_15>$brutto</P_15>");
+		if($brutto)
+		{
+			fputs($file,"\n"."		<P_15>$brutto</P_15>");
+		}
 
 		$Art19aUst5Pkt1LubArt21Ust1='false';
 		fputs($file,"\n"."		<P_16>$Art19aUst5Pkt1LubArt21Ust1</P_16>");	//W przypadku dostawy towarów lub ¶wiadczenia us³ug, w odniesieniu do których obowi±zek podatkowy powstaje zgodnie z art. 19a ust. 5 pkt 1 lub art. 21 ust. 1 - wyrazy "metoda kasowa", nale¿y podaæ warto¶æ "true"; w przeciwnym przypadku - warto¶æ - "false"
@@ -308,7 +348,7 @@ else
 			fputs($file,"\n"."		<P_22C>$Art2Pkt10bic</P_22C>");	//Liczba godzin roboczych u¿ywania nowego ¶rodka transportu - w przypadku jednostek p³ywaj±cych, o których mowa w art. 2 pkt 10 lit. b, oraz statków powietrznych, o których mowa w art. 2 pkt 10 lit. c ustawy
 		}
 
-		$Art135Ust1Pkt4bic='';
+		$Art135Ust1Pkt4bic='false';
 		if($Art135Ust1Pkt4bic)
 		{
 			fputs($file,"\n"."		<P_23>$Art135Ust1Pkt4bic</P_23>");	//W przypadku faktur wystawianych przez drugiego w kolejno¶ci podatnika, o którym mowa w art. 135 ust. 1 pkt 4 lit. b i c, w wewn±trzwspólnotowej transakcji trójstronnej (procedurze uproszczonej) - dane okre¶lone w art. 136, nale¿y podaæ warto¶æ "true"; w przeciwnym przypadku - warto¶æ - "false"
@@ -334,23 +374,38 @@ else
 			fputs($file,"\n"."		<P_106E_3A>$Art120Ust4i5Opis</P_106E_3A>");	//Je¿eli pole P_106E_3 równa siê warto¶ci "true", nale¿y podaæ wyrazy: "procedura mar¿y - towary u¿ywane" lub "procedura mar¿y - dzie³a sztuki" lub "procedura mar¿y - przedmioty kolekcjonerskie i antyki"
 		}
 
-		$rodzajFaktury='';
+		$rodzajFaktury='VAT';
 		fputs($file,"\n"."		<RodzajFaktury>$rodzajFaktury</RodzajFaktury>");	//Rodzaj faktury: VAT - podstawowa; KOREKTA - koryguj±ca; ZAL - faktura dokumentuj±ca otrzymanie zap³aty lub jej czê¶ci przed dokonaniem czynno¶ci (art.106b ust. 1 pkt 4 ustawy); POZ - pozosta³e
 
 		$przyczynaKorekty='';
-		fputs($file,"\n"."		<PrzyczynaKorekty>$przyczynaKorekty</PrzyczynaKorekty>");	//Przyczyna korekty dla faktur koryguj±cych
-
+		if($przyczynaKorekty)
+		{
+			fputs($file,"\n"."		<PrzyczynaKorekty>$przyczynaKorekty</PrzyczynaKorekty>");	//Przyczyna korekty dla faktur koryguj±cych
+		}
+		
 		$nrFaKorygowanej='';
-		fputs($file,"\n"."		<NrFaKorygowanej>$nrFaKorygowanej</NrFaKorygowanej>");	//Numer faktury korygowanej
-
+		if($nrFaKorygowanej)
+		{
+			fputs($file,"\n"."		<NrFaKorygowanej>$nrFaKorygowanej</NrFaKorygowanej>");	//Numer faktury korygowanej
+		}
+		
 		$okresFaKorygowanej='';
-		fputs($file,"\n"."		<OkresFaKorygowanej>$okresFaKorygowanej</OkresFaKorygowanej>");	//Dla faktury koryguj±cej - okres, do którego odnosi siê udzielany opust lub obni¿ka, w przypadku gdy podatnik udziela opustu lub obni¿ki ceny w odniesieniu do wszystkich dostaw towarów lub us³ug dokonanych lub ¶wiadczonych na rzecz jednego odbiorcy w danym okresie
-
+		if($okresFaKorygowanej)
+		{
+			fputs($file,"\n"."		<OkresFaKorygowanej>$okresFaKorygowanej</OkresFaKorygowanej>");	//Dla faktury koryguj±cej - okres, do którego odnosi siê udzielany opust lub obni¿ka, w przypadku gdy podatnik udziela opustu lub obni¿ki ceny w odniesieniu do wszystkich dostaw towarów lub us³ug dokonanych lub ¶wiadczonych na rzecz jednego odbiorcy w danym okresie
+		}
+		
 		$zalZaplata='';
-		fputs($file,"\n"."		<ZALZaplata>$zalZaplata</ZALZaplata>");	//Dla faktury zaliczkowej - otrzymana kwota zap³aty
-
+		if($zalZaplata)
+		{
+			fputs($file,"\n"."		<ZALZaplata>$zalZaplata</ZALZaplata>");	//Dla faktury zaliczkowej - otrzymana kwota zap³aty
+		}
+		
 		$zalPodatek='';
-		fputs($file,"\n"."		<ZALPodatek>$zalPodatek</ZALPodatek>");	//Dla faktury zaliczkowej - kwota podatku wyliczona wed³ug wzoru z art.106f ust. 1 pkt 3 ustawy
+		if($zalPodatek)
+		{
+			fputs($file,"\n"."		<ZALPodatek>$zalPodatek</ZALPodatek>");	//Dla faktury zaliczkowej - kwota podatku wyliczona wed³ug wzoru z art.106f ust. 1 pkt 3 ustawy
+		}
 
 		fputs($file,"\n"."	</Faktura>");
 		
@@ -370,19 +425,19 @@ else
 
 		fputs($file,"\n"."	<StawkiPodatku>");	//Zestawienie stawek podatku, w okresie którego dotyczy JPK_FA
 
-		$stawka1='';
+		$stawka1='0.23';
 		fputs($file,"\n"."		<Stawka1>$stawka1</Stawka1>");	//Warto¶æ stawki podstawowej
 
-		$stawka2='';
+		$stawka2='0.08';
 		fputs($file,"\n"."		<Stawka2>$stawka2</Stawka2>");	//Warto¶æ stawki obni¿onej pierwszej
 
-		$stawka3='';
+		$stawka3='0.05';
 		fputs($file,"\n"."		<Stawka3>$stawka3</Stawka3>");	//Warto¶æ stawki obni¿onej drugiej
 
-		$stawka4='';
+		$stawka4='0.00';
 		fputs($file,"\n"."		<Stawka4>$stawka4</Stawka4>");	//Warto¶æ stawki obni¿onej trzeciej - pole rezerwowe
 
-		$stawka5='';
+		$stawka5='0.00';
 		fputs($file,"\n"."		<Stawka5>$stawka5</Stawka5>");	//Warto¶æ stawki obni¿onej czwartej - pole rezerwowe
 
 		fputs($file,"\n"."	</StawkiPodatku>");
@@ -460,8 +515,14 @@ echo date('Y-m-d H:i:s').' czas zakoñczenia';
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/footer.tpl");
 
+$xml = new DOMDocument();
+$xml->load($filename);
+echo ($xml->schemaValidate("Schemat_JPK_FA_v1-0.xsd")?"OK":"NO");
+  
 echo '<pre>';
 echo "<h2>Podgl±d kontrolny fragmentu zawarto¶ci pliku $filename:</h2>";
 echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename,null,null,0,6000))).' [...]';
 //echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename)));
 echo '</pre>';
+
+
