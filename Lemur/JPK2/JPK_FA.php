@@ -31,7 +31,7 @@ else
 	$odDaty=substr($doDaty,0,8).'01';
 }
 
-$title="JPK_FA - generowanie pliku dla $baza";
+$title="JPK_FA (1) - generowanie pliku dla $baza";
 $buttons=array();
 $buttons[]=array('klawisz'=>'AltG','nazwa'=>'Enter=Generuj','akcja'=>"generuj_FA.php?baza=$baza");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Menu");

@@ -242,8 +242,8 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../ZOS" id="9g">g) Zestawienie obrotów i sald</td></tr>
 <tr><td><a href="../ZSY" id="9h">h) Zestawienie syntetyczne</td></tr>
 <tr><td><a href="../AOK" id="9i">i) Analityka konta</td></tr>
-<tr><td><a href="" id="9j">j) Importuj dane</td></tr>
-<tr><td><a href="<?php echo "../JPK2/?baza=$baza";?>" id="9k">k) JPK(2)</td></tr>
+<tr><td><a href="<?php echo "../JPK2/JPK_FA.php?baza=$baza";?>" id="9j">j) JPK_FA (1)</td></tr>
+<tr><td><a href="<?php echo "../JPK2/?baza=$baza";?>" id="9k">k) JPK_VAT (2)</td></tr>
 </table>
 </div>
 		

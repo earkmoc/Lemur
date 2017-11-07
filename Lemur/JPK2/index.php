@@ -41,7 +41,7 @@ else
 	$odDaty=substr($doDaty,0,8).'01';
 }
 
-$title="JPK(2) - generowanie pliku dla $baza";
+$title="JPK_VAT (2) - generowanie pliku dla $baza";
 $buttons=array();
 $buttons[]=array('klawisz'=>'AltG','nazwa'=>'Enter=Generuj','akcja'=>"generuj.php?baza=$baza");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Menu");
@@ -86,10 +86,17 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 		<div class="row">
 			<div class="col-md-3 nag">
 				Kod urzêdu skarbowego
-<a href='http://www.mf.gov.pl/documents/764034/1497829/Dane+teleadresowe+Administracja+Podatkowa+16+12+2016.xls'>(lista kodów)</a>
 			</div>
-			<div class="col-md-1">
-				<input type="text" class="form-control" name="kodUS" value="<?php echo $klient['KODUS'];?>" />
+			<div class="col-md-5">
+				<select class="form-control" name="kodUS">
+					<?php
+					require('kodyUS.php');
+					foreach($kodyUS as $key => $value)
+					{
+						echo "<option".($key==$klient['KODUS']?' selected':'').">$key - $value";
+					}
+					?>
+				</select>
 			</div>
 		</div>
 

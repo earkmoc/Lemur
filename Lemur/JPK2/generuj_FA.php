@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 $raport='';
@@ -42,6 +45,10 @@ if	( ($klient['NAZWA']=='')
 }
 else
 {
+	$klient['NAZWA']=iconv('ISO-8859-2','UTF-8',StripSlashes($klient['NAZWA']));
+	$klient['ADRES']=iconv('ISO-8859-2','UTF-8',StripSlashes($klient['ADRES']));
+	$klient['NIP']=preg_replace('/\D/', '', $klient['NIP']);
+
 	mysqli_query($link,$q="update Lemur.klienci set KODUS='$_POST[kodUS]' where PSKONT='$baza'");
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 
@@ -89,37 +96,37 @@ else
 	fputs($file,"\n"."	</Podmiot1>");
 
 	$lp=0;
-	$w=mysqli_query($link,"
+	$liczbaFaktur=0;
+	$wartoscFaktur=0;
+	$faktury=mysqli_query($link,"
 		select *
 		  from $baza.dokumenty
 		 where DOPERACJI between '$_POST[OdDaty]' and '$_POST[DoDaty]'
 		   and NUMER<>''
 	  order by DOPERACJI, ID
 	");
-	while($r=mysqli_fetch_array($w))
+	while($faktura=mysqli_fetch_array($faktury))
 	{
+		++$liczbaFaktur;
 		++$lp;
 		$prefiksN='';
-		$nip=preg_replace('/\D/', '', $r['NIP']);
+		$nip=preg_replace('/\D/', '', $faktura['NIP']);
 		$nip=(!$nip?'brak':$nip);
-		$nazwa=iconv('ISO-8859-2','UTF-8',StripSlashes($r['NAZWA']));
+		$nazwa=iconv('ISO-8859-2','UTF-8',StripSlashes($faktura['NAZWA']));
 		if(strpos($nazwa,'&')>0)
 		{
 			$nazwa=str_replace('&',' and ',$nazwa);
 		}
-		$adres=iconv('ISO-8859-2','UTF-8',StripSlashes($r['ADRES']));
-		$numer=iconv('ISO-8859-2','UTF-8',StripSlashes($r['NUMER']));
+		$adres=iconv('ISO-8859-2','UTF-8',StripSlashes($faktura['ADRES']));
+		$numerFaktury=iconv('ISO-8859-2','UTF-8',StripSlashes($faktura['NUMER']));
 		
 		$prefiksS='';
-		$klient['NAZWA']=iconv('ISO-8859-2','UTF-8',StripSlashes($klient['NAZWA']));
-		$klient['ADRES']=iconv('ISO-8859-2','UTF-8',StripSlashes($klient['ADRES']));
-		$klient['NIP']=preg_replace('/\D/', '', $klient['NIP']);
 
 //--------------------------------------------------------------------------------------------------------------------------------
 
 		fputs($file,"\n".'	<Faktura typ="G">');
-		fputs($file,"\n"."		<P_1>$r[DDOKUMENTU]</P_1>");
-		fputs($file,"\n"."		<P_2A>$numer</P_2A>");
+		fputs($file,"\n"."		<P_1>$faktura[DDOKUMENTU]</P_1>");
+		fputs($file,"\n"."		<P_2A>$numerFaktury</P_2A>");
 		fputs($file,"\n"."		<P_3A>$nazwa</P_3A>");
 		fputs($file,"\n"."		<P_3B>$adres</P_3B>");
 		fputs($file,"\n"."		<P_3C>$klient[NAZWA]</P_3C>");
@@ -136,12 +143,13 @@ else
 		fputs($file,"\n"."		<P_5B>$nip</P_5B>");
 		
 		//Data dokonania lub zakoñczenia dostawy towarów lub wykonania us³ugi lub data otrzymania zap³aty, o której mowa w art. 106b ust. 1 pkt 4, o ile taka data jest okre¶lona i ró¿ni siê od daty wystawienia faktury
-		if($r['DDOKUMENTU']<>$r['DOPERACJI'])
+		if($faktura['DDOKUMENTU']<>$faktura['DOPERACJI'])
 		{
-			fputs($file,"\n"."		<P_6>$r[DOPERACJI]</P_6>");
+			fputs($file,"\n"."		<P_6>$faktura[DOPERACJI]</P_6>");
 		}
 		
-		$brutto=0;
+		$brutto=$faktura['WARTOSC'];
+		$wartoscFaktur+=$brutto;
 
 		$n23=0;
 		$n22=0;
@@ -408,89 +416,85 @@ else
 		}
 
 		fputs($file,"\n"."	</Faktura>");
-		
-//--------------------------------------------------------------------------------------------------------------------------------
-
-		fputs($file,"\n"."	<FakturaCtrl>");	//Sumy kontrolne dla faktur
-
-		$liczbaFaktur='';
-		fputs($file,"\n"."		<LiczbaFaktur>$liczbaFaktur</LiczbaFaktur>");	//Liczba faktur, w okresie którego dotyczy JPK_FA
-
-		$wartoscFaktur='';
-		fputs($file,"\n"."		<WartoscFaktur>$wartoscFaktur</WartoscFaktur>");	//£±czna warto¶æ kwot brutto faktur w okresie, którego dotyczy JPK_FA
-
-		fputs($file,"\n"."	</FakturaCtrl>");
-
-//--------------------------------------------------------------------------------------------------------------------------------
-
-		fputs($file,"\n"."	<StawkiPodatku>");	//Zestawienie stawek podatku, w okresie którego dotyczy JPK_FA
-
-		$stawka1='0.23';
-		fputs($file,"\n"."		<Stawka1>$stawka1</Stawka1>");	//Warto¶æ stawki podstawowej
-
-		$stawka2='0.08';
-		fputs($file,"\n"."		<Stawka2>$stawka2</Stawka2>");	//Warto¶æ stawki obni¿onej pierwszej
-
-		$stawka3='0.05';
-		fputs($file,"\n"."		<Stawka3>$stawka3</Stawka3>");	//Warto¶æ stawki obni¿onej drugiej
-
-		$stawka4='0.00';
-		fputs($file,"\n"."		<Stawka4>$stawka4</Stawka4>");	//Warto¶æ stawki obni¿onej trzeciej - pole rezerwowe
-
-		$stawka5='0.00';
-		fputs($file,"\n"."		<Stawka5>$stawka5</Stawka5>");	//Warto¶æ stawki obni¿onej czwartej - pole rezerwowe
-
-		fputs($file,"\n"."	</StawkiPodatku>");
-
-//--------------------------------------------------------------------------------------------------------------------------------
-
-		fputs($file,"\n"."	<FakturaWiersz>");	//Szczegó³owe pozycje faktur
-
-		$numerFaktury='';
-		fputs($file,"\n"."		<P_2B>$numerFaktury</P_2B>");	//Kolejny numer faktury, nadany w ramach jednej lub wiêcej serii, który w sposób jednoznaczny indentyfikuje fakturê
-
-		$nazwaTowaru='';
-		fputs($file,"\n"."		<P_7>$nazwaTowaru</P_7>");	//Nazwa (rodzaj) towaru lub us³ugi. Pole opcjonalne wy³±cznie dla przypadku okre¶lonego w art 106j ust.3 pkt 2 ustawy (faktura korekta)
-
-		$jm='';
-		fputs($file,"\n"."		<P_8A>$jm</P_8A>");	//Miara dostarczonych towarów lub zakres wykonanych us³ug. Pole opcjonalne dla przypadku okre¶lonego w art 106e ust. 5 pkt 3 ustawy
-
-		$ilosc='';
-		fputs($file,"\n"."		<P_8B>$ilosc</P_8B>");	//Ilo¶æ (liczba) dostarczonych towarów lub zakres wykonanych us³ug. Pole opcjonalne dla przypadku okre¶lonego w art 106e ust. 5 pkt 3 ustawy
-
-		$cena='';
-		fputs($file,"\n"."		<P_9A>$cena</P_9A>");	//Cena jednostkowa towaru lub us³ugi bez kwoty podatku (cena jednostkowa netto). Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true") oraz dla przypadku okre¶lonego w art 106e ust. 5 pkt 3 ustawy
-
-		$cenaBrutto='';
-		fputs($file,"\n"."		<P_9B>$cenaBrutto</P_9B>");	//W przypadku zastosowania art.106e ustawy, cena wraz z kwot± podatku (cena jednostkowa brutto
-
-		$kwotaRabatow='';
-		fputs($file,"\n"."		<P_10>$kwotaRabatow</P_10>");	//Kwoty wszelkich opustów lub obni¿ek cen, w tym w formie rabatu z tytu³u wcze¶niejszej zap³aty, o ile nie zosta³y one uwzglêdnione w cenie jednostkowej netto. Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true") oraz dla przypadku okre¶lonego w art. 106e ust. 5 pkt 1 ustawy
-
-		$netto='';
-		fputs($file,"\n"."		<P_11>$netto</P_11>");	//Warto¶æ dostarczonych towarów lub wykonanych us³ug, objêtych transakcj±, bez kwoty podatku (warto¶æ sprzeda¿y netto). Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true") oraz dla przypadku okre¶lonego w art. 106e ust. 5 pkt 3 ustawy
-
-		$brutto='';
-		fputs($file,"\n"."		<P_11A>$brutto</P_11A>");	//W przypadku zastosowania art. 106e ust.7 i 8 ustawy, warto¶æ sprzeda¿y brutto
-
-		$stawkaVAT='';	//Max 2 znaki: 23, 22, 8, 7, 5, 3, 0, zw
-		fputs($file,"\n"."		<P_12>$stawkaVAT</P_12>");	//Stawka podatku. Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true"), a tak¿e art. 106e ust.4 pkt 3 i ust. 5 pkt 1-3 ustawy
-
-		fputs($file,"\n"."	</FakturaWiersz>");
-
-//--------------------------------------------------------------------------------------------------------------------------------
-
-		fputs($file,"\n"."	<FakturaWierszCtrl>");	//Sumy kontrolne dla wierszy faktur
-
-		$liczbaWierszyFaktur='';
-		fputs($file,"\n"."		<LiczbaWierszyFaktur>$liczbaWierszyFaktur</LiczbaWierszyFaktur>");	//Liczba wierszy faktur, w okresie którego dotyczy JPK_FA
-
-		$wartoscWierszyFaktur='';
-		fputs($file,"\n"."		<WartoscWierszyFaktur>$wartoscWierszyFaktur</WartoscWierszyFaktur>");	//£±czna warto¶æ kolumny P_11 tabeli FakturaWiersz w okresie, którego dotyczy JPK_FA
-
-		fputs($file,"\n"."	</FakturaWierszCtrl>");
-
 	}
+	
+//--------------------------------------------------------------------------------------------------------------------------------
+
+	fputs($file,"\n"."	<FakturaCtrl>");	//Sumy kontrolne dla faktur
+	fputs($file,"\n"."		<LiczbaFaktur>$liczbaFaktur</LiczbaFaktur>");	//Liczba faktur, w okresie którego dotyczy JPK_FA
+	fputs($file,"\n"."		<WartoscFaktur>$wartoscFaktur</WartoscFaktur>");	//£±czna warto¶æ kwot brutto faktur w okresie, którego dotyczy JPK_FA
+	fputs($file,"\n"."	</FakturaCtrl>");
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+	fputs($file,"\n"."	<StawkiPodatku>");	//Zestawienie stawek podatku, w okresie którego dotyczy JPK_FA
+
+	$stawka1='0.23';
+	fputs($file,"\n"."		<Stawka1>$stawka1</Stawka1>");	//Warto¶æ stawki podstawowej
+
+	$stawka2='0.08';
+	fputs($file,"\n"."		<Stawka2>$stawka2</Stawka2>");	//Warto¶æ stawki obni¿onej pierwszej
+
+	$stawka3='0.05';
+	fputs($file,"\n"."		<Stawka3>$stawka3</Stawka3>");	//Warto¶æ stawki obni¿onej drugiej
+
+	$stawka4='0.00';
+	fputs($file,"\n"."		<Stawka4>$stawka4</Stawka4>");	//Warto¶æ stawki obni¿onej trzeciej - pole rezerwowe
+
+	$stawka5='0.00';
+	fputs($file,"\n"."		<Stawka5>$stawka5</Stawka5>");	//Warto¶æ stawki obni¿onej czwartej - pole rezerwowe
+
+	fputs($file,"\n"."	</StawkiPodatku>");
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+	$liczbaWierszyFaktur=0;
+	$wartoscWierszyFaktur=0;
+	$faktury=mysqli_query($link,"
+		select *
+		  from $baza.dokumenty
+		 where DOPERACJI between '$_POST[OdDaty]' and '$_POST[DoDaty]'
+		   and NUMER<>''
+	  order by DOPERACJI, ID
+	");
+	while($faktura=mysqli_fetch_array($faktury))
+	{
+		$towary=mysqli_query($link,"
+			select *
+			  from $baza.dokumentm
+			 where ID_D='$faktura[ID]'
+		  order by ID
+		");
+		while($towar=mysqli_fetch_array($towary))
+		{
+			++$liczbaWierszyFaktur;
+			$towar['NAZWA']=iconv('ISO-8859-2','UTF-8',StripSlashes($towar['NAZWA']));
+			$towar['JM']=iconv('ISO-8859-2','UTF-8',StripSlashes($towar['JM']));
+
+			fputs($file,"\n".'	<FakturaWiersz typ="G">');	//Szczegó³owe pozycje faktur
+			fputs($file,"\n"."		<P_2B>$numerFaktury</P_2B>");	//Kolejny numer faktury, nadany w ramach jednej lub wiêcej serii, który w sposób jednoznaczny indentyfikuje fakturê
+			fputs($file,"\n"."		<P_7>{$towar['NAZWA']}</P_7>");	//Nazwa (rodzaj) towaru lub us³ugi. Pole opcjonalne wy³±cznie dla przypadku okre¶lonego w art 106j ust.3 pkt 2 ustawy (faktura korekta)
+			fputs($file,"\n"."		<P_8A>{$towar['JM']}</P_8A>");	//Miara dostarczonych towarów lub zakres wykonanych us³ug. Pole opcjonalne dla przypadku okre¶lonego w art 106e ust. 5 pkt 3 ustawy
+			fputs($file,"\n"."		<P_8B>{$towar['ILOSC']}</P_8B>");	//Ilo¶æ (liczba) dostarczonych towarów lub zakres wykonanych us³ug. Pole opcjonalne dla przypadku okre¶lonego w art 106e ust. 5 pkt 3 ustawy
+			fputs($file,"\n"."		<P_9A>{$towar['CENA']}</P_9A>");	//Cena jednostkowa towaru lub us³ugi bez kwoty podatku (cena jednostkowa netto). Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true") oraz dla przypadku okre¶lonego w art 106e ust. 5 pkt 3 ustawy
+//			fputs($file,"\n"."		<P_9B>$cenaBrutto</P_9B>");	//W przypadku zastosowania art.106e ustawy, cena wraz z kwot± podatku (cena jednostkowa brutto)
+//			fputs($file,"\n"."		<P_10>$kwotaRabatow</P_10>");	//Kwoty wszelkich opustów lub obni¿ek cen, w tym w formie rabatu z tytu³u wcze¶niejszej zap³aty, o ile nie zosta³y one uwzglêdnione w cenie jednostkowej netto. Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true") oraz dla przypadku okre¶lonego w art. 106e ust. 5 pkt 1 ustawy
+			fputs($file,"\n"."		<P_11>{$towar['NETTO']}</P_11>");	//Warto¶æ dostarczonych towarów lub wykonanych us³ug, objêtych transakcj±, bez kwoty podatku (warto¶æ sprzeda¿y netto). Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true") oraz dla przypadku okre¶lonego w art. 106e ust. 5 pkt 3 ustawy
+			$wartoscWierszyFaktur+=$towar['NETTO'];
+
+			fputs($file,"\n"."		<P_11A>{$towar['BRUTTO']}</P_11A>");	//W przypadku zastosowania art. 106e ust.7 i 8 ustawy, warto¶æ sprzeda¿y brutto
+			$stawkaVAT=str_replace('%','',substr($towar['STAWKA'],0,2));	//Max 2 znaki: 23, 22, 8, 7, 5, 3, 0, zw
+			fputs($file,"\n"."		<P_12>$stawkaVAT</P_12>");	//Stawka podatku. Pole opcjonalne dla przypadków okre¶lonych w art. 106e ust.2 i 3 ustawy (gdy przynajmniej jedno z pól P_106E_2 i P_106E_3 przyjmuje warto¶æ "true"), a tak¿e art. 106e ust.4 pkt 3 i ust. 5 pkt 1-3 ustawy
+			fputs($file,"\n"."	</FakturaWiersz>");
+		}
+	}
+
+//--------------------------------------------------------------------------------------------------------------------------------
+
+	fputs($file,"\n"."	<FakturaWierszCtrl>");	//Sumy kontrolne dla wierszy faktur
+	fputs($file,"\n"."		<LiczbaWierszyFaktur>$liczbaWierszyFaktur</LiczbaWierszyFaktur>");	//Liczba wierszy faktur, w okresie którego dotyczy JPK_FA
+	fputs($file,"\n"."		<WartoscWierszyFaktur>$wartoscWierszyFaktur</WartoscWierszyFaktur>");	//£±czna warto¶æ kolumny P_11 tabeli FakturaWiersz w okresie, którego dotyczy JPK_FA
+	fputs($file,"\n"."	</FakturaWierszCtrl>");
 
 	fputs($file,"\n".'</JPK>');
 	fclose($file);
