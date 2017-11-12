@@ -151,29 +151,31 @@ else
 		$brutto=$faktura['WARTOSC'];
 		$wartoscFaktur+=$brutto;
 
-		$n23=0;
-		$n22=0;
+		$kwota=KwotyWgStawek($link, $baza, $faktura['ID']);
 
-		$v23=0;
-		$v22=0;
+		$n23=$kwota['n23'];
+		$n22=$kwota['n22'];
 
-		$n7=0;
-		$n8=0;
+		$v23=$kwota['v23'];
+		$v22=$kwota['v22'];
 
-		$v7=0;
-		$v8=0;
+		$n7=$kwota['n7'];
+		$n8=$kwota['n8'];
 
-		$n5=0;
-		$n3=0;
+		$v7=$kwota['v7'];
+		$v8=$kwota['v8'];
 
-		$v5=0;
-		$v3=0;
+		$n5=$kwota['n5'];
+		$n3=$kwota['n3'];
 
-		$n4=0;
-		$n0=0;
-		$nzw=0;
+		$v5=$kwota['v5'];
+		$v3=$kwota['v3'];
 
-		$v4=0;
+		$n4=$kwota['n4'];
+		$n0=$kwota['n0'];
+		$nzw=$kwota['nzw'];
+
+		$v4=$kwota['v4'];
 
 		//Suma warto¶ci sprzeda¿y netto ze stawk± podstawow± - aktualnie 23% albo 22%
 		if($n22||$n23)
@@ -382,23 +384,29 @@ else
 			fputs($file,"\n"."		<P_106E_3A>$Art120Ust4i5Opis</P_106E_3A>");	//Je¿eli pole P_106E_3 równa siê warto¶ci "true", nale¿y podaæ wyrazy: "procedura mar¿y - towary u¿ywane" lub "procedura mar¿y - dzie³a sztuki" lub "procedura mar¿y - przedmioty kolekcjonerskie i antyki"
 		}
 
-		$rodzajFaktury='VAT';
+		$rodzajFaktury=((substr($faktura['TYP'],-1,1)=='K')?'KOREKTA':'VAT');
 		fputs($file,"\n"."		<RodzajFaktury>$rodzajFaktury</RodzajFaktury>");	//Rodzaj faktury: VAT - podstawowa; KOREKTA - koryguj±ca; ZAL - faktura dokumentuj±ca otrzymanie zap³aty lub jej czê¶ci przed dokonaniem czynno¶ci (art.106b ust. 1 pkt 4 ustawy); POZ - pozosta³e
 
-		$przyczynaKorekty='';
-		if($przyczynaKorekty)
+		$przyczynaKorekty=$faktura['UWAGI'];
+		if( ($rodzajFaktury=='KOREKTA')
+		  &&$przyczynaKorekty
+		  )
 		{
 			fputs($file,"\n"."		<PrzyczynaKorekty>$przyczynaKorekty</PrzyczynaKorekty>");	//Przyczyna korekty dla faktur koryguj±cych
 		}
 		
-		$nrFaKorygowanej='';
-		if($nrFaKorygowanej)
+		$nrFaKorygowanej=((substr($faktura['NUMERFD'],0,2)='FV')?substr($faktura['NUMERFD'],3),$faktura['NUMERFD']);
+		if( ($rodzajFaktury=='KOREKTA')
+		  &&$nrFaKorygowanej
+		  )
 		{
 			fputs($file,"\n"."		<NrFaKorygowanej>$nrFaKorygowanej</NrFaKorygowanej>");	//Numer faktury korygowanej
 		}
 		
-		$okresFaKorygowanej='';
-		if($okresFaKorygowanej)
+		$okresFaKorygowanej=$faktura['DATAO'];
+		if( ($rodzajFaktury=='KOREKTA')
+		  &&$okresFaKorygowanej
+		  )
 		{
 			fputs($file,"\n"."		<OkresFaKorygowanej>$okresFaKorygowanej</OkresFaKorygowanej>");	//Dla faktury koryguj±cej - okres, do którego odnosi siê udzielany opust lub obni¿ka, w przypadku gdy podatnik udziela opustu lub obni¿ki ceny w odniesieniu do wszystkich dostaw towarów lub us³ug dokonanych lub ¶wiadczonych na rzecz jednego odbiorcy w danym okresie
 		}
@@ -509,8 +517,17 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 
 echo "<h2>Raport generowania pliku $filename:</h2>";
 echo "<hr>";
+
+$raport.='<input style="text-align:right" value="'.number_format($wartoscFaktur,2,'.',',').'"/> = Suma warto¶ci brutto faktur<br>';
+$raport.='<input style="text-align:right" value="'.number_format($wartoscWierszyFaktur,2,'.',',').'"/> = Suma warto¶ci netto wierszy faktur<br>';
+$raport.='<input style="text-align:right" value="'.number_format(($wartoscFaktur-$wartoscWierszyFaktur),2,'.',',').'"/> = Ró¿nica<br>';
+
 echo '<h3>'.nl2br($raport).'</h3>';
 
+$xml = new DOMDocument();
+$xml->load($filename);
+echo "Walidacja zgodno¶ci z XSD: ".($xml->schemaValidate("Schemat_JPK_FA_v1-0.xsd")?"OK":"NO");
+  
 echo '<hr>';
 
 echo $czas.' czas rozpoczêcia';
@@ -519,14 +536,54 @@ echo date('Y-m-d H:i:s').' czas zakoñczenia';
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/footer.tpl");
 
-$xml = new DOMDocument();
-$xml->load($filename);
-echo ($xml->schemaValidate("Schemat_JPK_FA_v1-0.xsd")?"OK":"NO");
-  
 echo '<pre>';
 echo "<h2>Podgl±d kontrolny fragmentu zawarto¶ci pliku $filename:</h2>";
 echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename,null,null,0,6000))).' [...]';
 //echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename)));
 echo '</pre>';
 
+function KwotyWgStawek($link, $baza, $fakturaID)
+{
+	$kwota=array();
 
+	$kwota['n23']=0;
+	$kwota['n22']=0;
+
+	$kwota['v23']=0;
+	$kwota['v22']=0;
+
+	$kwota['n7']=0;
+	$kwota['n8']=0;
+
+	$kwota['v7']=0;
+	$kwota['v8']=0;
+
+	$kwota['n5']=0;
+	$kwota['n3']=0;
+
+	$kwota['v5']=0;
+	$kwota['v3']=0;
+
+	$kwota['n4']=0;
+	$kwota['v4']=0;
+
+	$kwota['n0']=0;
+	$kwota['nzw']=0;
+
+	$kwota['v0']=0;
+	$kwota['vzw']=0;
+
+	$towary=mysqli_query($link,"
+		select *
+		  from $baza.dokumentm
+		 where ID_D='$fakturaID'
+	  order by ID
+	");
+	while($towar=mysqli_fetch_array($towary))
+	{
+		$stawkaVAT=str_replace('%','',substr($towar['STAWKA'],0,2));	//Max 2 znaki: 23, 22, 8, 7, 5, 3, 0, zw
+		$kwota["n$stawkaVAT"]+=$towar['NETTO'];
+		$kwota["v$stawkaVAT"]+=$towar['VAT'];
+	}
+	return $kwota;
+}
