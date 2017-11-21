@@ -1,5 +1,8 @@
 <?php
 
+//error_reporting(E_ALL);
+//ini_set('display_errors', 1);
+
 ini_set('max_execution_time', 600);
 error_reporting(E_ERROR | E_PARSE);
 
@@ -72,6 +75,22 @@ if($cosJest)
 			$wyniki[$skrot]=0;
 			
 			$file=$_POST['path'].'\\'.$_POST[$skrot];
+/*
+			$i=0;
+			$encoding = "UTF-8";
+			$afile = fopen($file,"r");
+			while(!feof($afile))
+			{
+				++$i;
+				$line=fgets($afile);
+				if(!mb_check_encoding($line,$encoding))
+				{
+					echo "$i. $line";
+				}
+			}
+			fclose($afile);
+			die("Linii: $i");
+*/			
 			$xml = simplexml_load_file($file);
 			foreach($xml->children() as $zapis)
 			{

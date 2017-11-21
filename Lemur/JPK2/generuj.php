@@ -1,5 +1,8 @@
 <?php
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 $raport='';
@@ -26,7 +29,7 @@ foreach($_POST as $key => $value)
 
 $klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur.klienci where PSKONT='$baza'"));
 
-$klient['KODUS']=$_POST['kodUS'];
+$klient['KODUS']=substr($_POST['kodUS'],0,4);
 
 if	( ($klient['NAZWA']=='')
 	||($klient['NIP']=='')
@@ -260,6 +263,11 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 
 echo "<h2>Raport generowania pliku $filename:</h2>";
 echo "<hr>";
+
+$xml = new DOMDocument();
+$xml->load($filename);
+echo "Walidacja zgodno¶ci z XSD: ".($xml->schemaValidate("Schemat_JPK_VAT_v1-0.xsd")?"OK":"NO");
+
 echo '<h3>'.nl2br($raport).'</h3>';
 
 echo '<hr>';
