@@ -4,8 +4,8 @@ function AddToFile($fileName,$klient)
 {
 	$fileHandler="{$_SERVER['DOCUMENT_ROOT']}/$fileName";
 	$fileContent=file_get_contents($fileHandler);
-	$search='call dump.bat Lemur2'."\n";
-	$replace="call dump.bat $klient"."\n";
+	$search='call dump.bat Lemur2';
+	$replace="\r\ncall dump.bat $klient";
 	if(!stripos($fileContent,$replace))
 	{
 		$fileContent=str_replace($search,$search.$replace,$fileContent);
