@@ -42,6 +42,7 @@ while($r=mysqli_fetch_row($w)) {
 		$szerokosc=(str_replace('@Z','',$kolumny[2])*1);
 		$wysokosc=((explode('/',$kolumny[2])[1])*1);
 		$query=(explode('option:',$kolumny[2])[1]);
+		$style=(strpos($kolumny[3],'style')!==false?$kolumny[3]:'');
 		$align=(strpos($kolumny[3],'right')!==false?'right':'');
 		$grid=($kolumny[4]*1);
 		$gridLabel=(explode(',',$kolumny[4])[1]*1);
@@ -67,6 +68,7 @@ while($r=mysqli_fetch_row($w)) {
 			,'bezZer'=>$bezZer
 			,'szerokosc'=>$szerokosc
 			,'wysokosc'=>$wysokosc
+			,'style'=>$style
 			,'align'=>$align
 			,'query'=>$query
 			,'grid'=>$grid

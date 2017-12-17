@@ -56,7 +56,7 @@ function ShowField($field,$row,$dane,$szerokoscPola,$link)
 				echo '<select 
 						 name="'.($field['pole']).'" 
 						 ';
-				echo "Query='".$field['query']."'";
+//				echo 'Query="'.$field['query'].'"';
 			} else
 			{
 				echo "<input 
@@ -83,12 +83,10 @@ function ShowField($field,$row,$dane,$szerokoscPola,$link)
 			   echo ' readonly';
 			}
 
-			if ($field['align']) {
+			if ($field['style']) {
+			   echo ' '.($field['style']);
+			} elseif ($field['align']) {
 			   echo ' style="text-align: '.($field['align']).'"';
-			}
-
-			if ($field['len']) {
-			   echo ' maxlength="'.$field['len'].'"';
 			}
 
 			if ($field['valid']) {
@@ -137,6 +135,11 @@ function ShowField($field,$row,$dane,$szerokoscPola,$link)
 				echo '</select>';
 			} else
 			{
+
+				if ($field['szerokosc']) {
+				   echo ' maxlength="'.$field['szerokosc'].'"';
+				}
+
 				echo ' />';
 			}
 		echo '
@@ -161,7 +164,7 @@ function ShowLabel($field,$row,$dane,$szerokoscOpisu,$right)
 	}
 }
 
-function ShowLabelOrField($field,$row,$dane,$szerokoscOpisu,$szerokoscPola)
+function ShowLabelOrField($field,$row,$dane,$szerokoscOpisu,$szerokoscPola,$link)
 {
 	if(isLabelWithFieldInOneRow($field))
 	{
@@ -176,14 +179,14 @@ function ShowLabelOrField($field,$row,$dane,$szerokoscOpisu,$szerokoscPola)
 
 if ($poziomo)
 {
-	for($row=1;$row<=15;++$row)
+	for($row=1;$row<=20;++$row)
 	{
 		if(isFieldInRow($fields,$row))
 		{
 			echo '<div class="row">';
 			foreach($fields as $field)
 			{
-				ShowLabelOrField($field,$row,$dane,0,$szerokoscPola);
+				ShowLabelOrField($field,$row,$dane,0,$szerokoscPola,$link);
 			}
 			echo '</div>';
 			
