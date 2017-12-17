@@ -80,9 +80,24 @@ $(document).ready(function() {
 		wynik=$(this).html();
 		$(this).html('');
 		wynik=jQuery.parseJSON(wynik);
+		var uwagi='';
 		jQuery.each(wynik,function(){
-			Feed(this.DATA,this.KOD);
+			if(this.DATA)
+			{
+				Feed(this.DATA,this.KOD);
+			}
+			else
+			{
+				uwagi=this;
+			}
 		});
+		for(i=0;i<20;++i)
+		{
+			uwagi=uwagi.replace(String.fromCharCode(13),"<br>");
+		}
+		uwagi=uwagi+"<br><br>";
+		uwagi=$('table tbody tr td[colspan=33]').text().replace('UWAGI:',uwagi);
+		$('table tbody tr td[colspan=33]').html(uwagi);
 		print();
 	});
 });
