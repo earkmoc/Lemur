@@ -58,7 +58,7 @@ $z=("
 ");
 $w=mysqli_query($linkLemur,$z);
 if (!$w||(mysqli_num_rows($w)==0)) {
-	$w=substr($_GET['wzor'],0,2);							//krÛtsza nazwa dokumentu
+	$w=substr($_GET['wzor'],0,2);							//kr√≥tsza nazwa dokumentu
 //	$z="Select TEKST, ID, SPACJE, WIERSZE from wzoryumow where NAZWA='$w'";
    $z=("
        Select TEKST, ID, SPACJE, WIERSZE 
@@ -88,7 +88,7 @@ $w=mysqli_fetch_row($w);
 $z=$w[1];
 $spacje=$w[2];
 $blokmax=$w[3];		//max ile pozycji na stronie
-$w=StripSlashes($w[0]);	//tekst do zmiany (ten zapis musi byÊ na koÒcu)
+$w=StripSlashes($w[0]);	//tekst do zmiany (ten zapis musi byƒá na ko≈Ñcu)
 
 fputs($file,'<html>'."\n");
 fputs($file,'<head>'."\n");
@@ -144,15 +144,18 @@ if(@!$noPrint)
 	if($spacje=='N')
 	{
 		fputs($file,'window.print()');
-	} else {
-		fputs($file,"document.execCommand('SaveAs','','C:\\\Wydruki\\\Wydruk.htm')");
+	} 
+	else 
+	{
+		fputs($file,'window.print()');
+//		fputs($file,"document.execCommand('SaveAs','','C:\\\Wydruki\\\Wydruk.htm')");
 	}
 }
 fputs($file,'">'."\n");
 
 fputs($file,'<table width="2100">'."\n");
 
-$blokn='';		//nag≥Ûwek
+$blokn='';		//nag≈Ç√≥wek
 $bloks='';		//stopka
 $blokstr=1;		//strona
 $blokbreak=false;	//page break
@@ -170,24 +173,24 @@ while ($wiersz=mysqli_fetch_array($wynik)) {
 	$z=str_replace('zaznaczone',@$_POST['zaznaczone'],$z);
 	$naglow=($f=='n');
 	$stopka=($f=='s');
-	if ($f=='+'||$naglow||$stopka) {	//subtabela, np.: specyfikacja, nag≥Ûwek, stopka
+	if ($f=='+'||$naglow||$stopka) {	//subtabela, np.: specyfikacja, nag≈Ç√≥wek, stopka
 		$lps=0;				//l.p. w subtabeli
 		$lps2=0;			//l.p. w subsubtabeli
 		$bloklp=0;			//l.p. w ramach bloku
-		if (trim($z)=='') {	//nie by≥o øadnych zapytaÒ, wiÍc jeden wiersz (pewnie nag≥Ûwek lub stopka)
+		if (trim($z)=='') {	//nie by≈Ço ≈ºadnych zapyta≈Ñ, wiƒôc jeden wiersz (pewnie nag≈Ç√≥wek lub stopka)
 			$lpsmax=1;
 		} else {
 			require('WydrukWzorSeria.php');
-			if (count($qs)>1) {	//wiÍcej pÛl wyniku, to znaczy, øe sπ tam pola dla specyfikacji w formacie [1], [2], itd.
-				$lpsmax=-1;	//i nie wiadomo ile bÍdzie wierszy
-				$blok0=$qs[0];	//wartoúÊ poprzedniego wiersza w ramach bloku
-				$blok1=$qs[0];	//wartoúÊ bieøπcego wiersza w ramach bloku
-			} else {		//tylko jedno pole wyniku, to znaczy, øe 
-				$lpsmax=$qs[0];	//wynik ostatniego zapytania to iloúÊ wierszy do obrÛbki
+			if (count($qs)>1) {	//wiƒôcej p√≥l wyniku, to znaczy, ≈ºe sƒÖ tam pola dla specyfikacji w formacie [1], [2], itd.
+				$lpsmax=-1;	//i nie wiadomo ile bƒôdzie wierszy
+				$blok0=$qs[0];	//warto≈õƒá poprzedniego wiersza w ramach bloku
+				$blok1=$qs[0];	//warto≈õƒá bie≈ºƒÖcego wiersza w ramach bloku
+			} else {		//tylko jedno pole wyniku, to znaczy, ≈ºe 
+				$lpsmax=$qs[0];	//wynik ostatniego zapytania to ilo≈õƒá wierszy do obr√≥bki
 			}
 		}	//if (trim($z)!='')
 
-		$fvs=$n;	//s≥owo: FVspec
+		$fvs=$n;	//s≈Çowo: FVspec
 
 	   while ($lpsmax==-1 ? (1==1) : ($lps<$lpsmax)) {
 		$zs="Select TEKST, ID from wzoryumow where NAZWA='$fvs'";	// tekst FVspec
@@ -196,22 +199,22 @@ while ($wiersz=mysqli_fetch_array($wynik)) {
 		$zs=$ws[1];			//ID definicji FVspec
 		$ws=StripSlashes($ws[0]);	//linia z tekstami do zamiany
 
-		if (count(explode('[lp]',$ws))>0) {	//jeúli '[lp]' jest juø w tekúcie g≥Ûwnym specyfikacji
+		if (count(explode('[lp]',$ws))>0) {	//je≈õli '[lp]' jest ju≈º w tek≈õcie g≈Ç√≥wnym specyfikacji
 			$ws=str_replace('[lp]',$lps+1,$ws);
 		}
 
-		if ($lpsmax<0) {		//wiÍcej pÛl wyniku, to znaczy, øe sπ tam pola dla specyfikacji w formacie [1], [2], itd.
-			for ($j=0;$j<count($qs);$j++) {		//korzysta z wynikÛw zapytania g≥Ûwnego specyfikacji
+		if ($lpsmax<0) {		//wiƒôcej p√≥l wyniku, to znaczy, ≈ºe sƒÖ tam pola dla specyfikacji w formacie [1], [2], itd.
+			for ($j=0;$j<count($qs);$j++) {		//korzysta z wynik√≥w zapytania g≈Ç√≥wnego specyfikacji
 				$ws=str_replace('['.$j.']',$qs[$j],$ws);
 			}
 			$blok1=$qs[0];
-			if ($blok0!=$blok1&&!$blokbreak) {	//zmieni≥ siÍ numer bloku i nie ≥ama≥ strony ledwo co
+			if ($blok0!=$blok1&&!$blokbreak) {	//zmieni≈Ç siƒô numer bloku i nie ≈Çama≈Ç strony ledwo co
 				$bloklp=0;			//liczymy od nowa
 				$blokstr++;			//next strona dla nowego bloku
 				$ws=str_replace('[str]',$blokstr-1,$bloks).'<P CLASS="breakhere">'.str_replace('[str]',$blokstr,$blokn).$ws;
 			}
 			$blok0=$qs[0];
-			if (count(explode('[bloklp]',$ws))>0) {//jeúli '[bloklp]' jest juø w tekúcie g≥Ûwnym specyfikacji
+			if (count(explode('[bloklp]',$ws))>0) {//je≈õli '[bloklp]' jest ju≈º w tek≈õcie g≈Ç√≥wnym specyfikacji
 				$ws=str_replace('[bloklp]',$bloklp+1,$ws);
 			}
 		}
@@ -226,9 +229,9 @@ while ($wiersz=mysqli_fetch_array($wynik)) {
 			$z=StripSlashes($wierszs['TEKST']);
 			if ($f=='+') {		//subraport2
 				require('WydrukWzorSeria.php');
-				$fvs2=$n;	//s≥owo: FakturaPS1Spec
+				$fvs2=$n;	//s≈Çowo: FakturaPS1Spec
 				$lps2=0;
-				$lps2max=$qs[0];//iloúÊ wierszy do obrÛbki
+				$lps2max=$qs[0];//ilo≈õƒá wierszy do obr√≥bki
 				while ($lps2<$lps2max) {
 					$zs="Select TEKST, ID from wzoryumow where NAZWA='$fvs2'";// tekst FakturaPS1Spec
 					$ws2=mysqli_query($linkLemur,$zs); $ws2=mysqli_fetch_row($ws2);
@@ -251,15 +254,15 @@ while ($wiersz=mysqli_fetch_array($wynik)) {
 			}
 		}
 
-		$bloklp++;					// nastÍpny wiersz
-		$lps++;						// nastÍpny wiersz
+		$bloklp++;					// nastƒôpny wiersz
+		$lps++;						// nastƒôpny wiersz
 
 		if ($blokmax<>0 && $bloklp%$blokmax==0) {
 			$blokstr++;
 			$blokbreak=true;	//page break przy zmianie strony
 		}
 
-		if ($lpsmax<0) {		//wiÍcej pÛl wyniku, to znaczy, øe sπ tam pola dla specyfikacji w formacie [1], [2], itd.
+		if ($lpsmax<0) {		//wiƒôcej p√≥l wyniku, to znaczy, ≈ºe sƒÖ tam pola dla specyfikacji w formacie [1], [2], itd.
 			if ($qs=mysqli_fetch_row($qqs)) {
 				if ($blokbreak) {
 					$ws=$ws.str_replace('[str]',$blokstr-1,$bloks).'<P CLASS="breakhere">'.str_replace('[str]',$blokstr,$blokn);
@@ -283,8 +286,8 @@ while ($wiersz=mysqli_fetch_array($wynik)) {
 	   }	//while ($lpsmax==-1 ? (1==1) : ($lps<$lpsmax))
 	   $w=str_replace($fvs,'',$w);		//koniec FVspec
 	   $w=str_replace('[str]',$blokstr,$w);	//numer strony na pierwszej stronie
-	   if ($naglow) {$blokn=$ws;}		//mamy nag≥Ûwek
-	   if ($stopka) {$bloks=$ws;}		//mamy stopkÍ
+	   if ($naglow) {$blokn=$ws;}		//mamy nag≈Ç√≥wek
+	   if ($stopka) {$bloks=$ws;}		//mamy stopkƒô
 	}	//if ($f=='+')
 	else {
 		$wr=$w;require('WydrukWzorSeria.php');$w=$wr;
@@ -294,6 +297,7 @@ while ($wiersz=mysqli_fetch_array($wynik)) {
 if ($spacje!='N') {$w=str_replace(' ','&nbsp;',$w);$w=nl2br($w);}
 
 $w=str_replace('^','&nbsp;',$w);
+$w=str_replace('<font_style','<font style',$w);
 
 fputs($file,'<font style="font-family: Courier">'."\n");
 //     echo '<font style="font-family: Courier">';
