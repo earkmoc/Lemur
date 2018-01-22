@@ -50,7 +50,7 @@ if ($_SESSION['osoba_upr']) {
 #glowka2 {POSITION: absolute; VISIBILITY: visible; TOP:10px; right: 10px; Z-INDEX:3;}
 #glowka3 {POSITION: absolute; VISIBILITY: visible; TOP:80px; right: 10px; Z-INDEX:4;}
 
-<?php														// jeœli to nie Raport, to ukryj mastera
+<?php														// jeÅ“li to nie Raport, to ukryj mastera
 if (!($_GET['wydruk']=='Raport')) {
 	echo '#master {POSITION: absolute; VISIBILITY: hidden; TOP:10px; LEFT: 10px; Z-INDEX:5;}';
 }
@@ -68,7 +68,7 @@ var r, rr, rrr, c, cc, str, tnag, cnag, twie, cwie;
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 $sqlaa=$baza;
 
-if ($_GET['natab']) {								//druk z tabeli obcej (powy¿szej)
+if ($_GET['natab']) {								//druk z tabeli obcej (powyÂ¿szej)
 	$_POST['natab']=$_GET['natab'];
 	$_POST['batab']=($_GET['batab']?$_GET['batab']:$_GET['natab']);
 	//$_POST['batab']=$_GET['batab'];
@@ -91,7 +91,7 @@ if ($_GET['natab']) {								//druk z tabeli obcej (powy¿szej)
 
 	$w=mysqli_query($link,$z);
 	$w=mysqli_fetch_row($w);
-	$_POST['ipole']=$w[0];							//mamy ostatnio u¿yty ID obcej
+	$_POST['ipole']=$w[0];							//mamy ostatnio uÂ¿yty ID obcej
 
 }
 
@@ -120,18 +120,18 @@ echo "\n";
 //require('Save_Tabela.php');
 
 //********************************************************************
-//zmienne PHP i Java Script steruj±ce dalszym zachowaniem
+//zmienne PHP i Java Script sterujÂ±ce dalszym zachowaniem
 if ($_POST['sutab']) {                                         // tryb Master/Slave (SubTab=podtabela)
-        if ($opole=="S") {                                                                // suwanie siê po tej samej tabeli
+        if ($opole=="S") {                                                                // suwanie siÃª po tej samej tabeli
                 $tabela=$_POST['natab'];                        // tabela slave aktywna
                 $tabelaa=$_POST['sutab'];                        // tabela master nieaktywna
-                $tabelap=$_POST['sutabpol'];                // pole ³±cznik do tabeli slave
+                $tabelap=$_POST['sutabpol'];                // pole Â³Â±cznik do tabeli slave
                 $tabelai=$_POST['sutabmid'];                 // identyfikator pozycji w master
         }
         else {
                 $tabela=$_POST['sutab'];                        // tabela slave aktywna
                 $tabelaa=$_POST['natab'];                        // tabela master nieaktywna
-                $tabelap=$_POST['sutabpol'];                // pole ³±cznik do tabeli slave
+                $tabelap=$_POST['sutabpol'];                // pole Â³Â±cznik do tabeli slave
                 $tabelai=$_POST['ipole'];                         // identyfikator pozycji w master
         }
 } else {
@@ -140,19 +140,19 @@ if ($_POST['sutab']) {                                         // tryb Master/Sl
 	if (!$tabela) {$tabela='tabele';};
 }
 if (!$tabela) {                // brak podanej tabeli
-        $tabela='tabele'; // => l±duj w tabeli g³ównej
+        $tabela='tabele'; // => lÂ±duj w tabeli gÂ³Ã³wnej
         $tabelaa="";                // tabela master nieaktywna
-        $tabelap="";                // pole ³±cznik do tabeli slave
+        $tabelap="";                // pole Â³Â±cznik do tabeli slave
         $tabelai="";                 // identyfikator pozycji w master
 };
 
-//if (!$_SESSION['osoba_upr']) {$tabela='osoby';}; // niezalogowany l±duje w osoby
+//if (!$_SESSION['osoba_upr']) {$tabela='osoby';}; // niezalogowany lÂ±duje w osoby
 
 //********************************************************************
-// mo¿e tryb Master/Slave jest okre¶lony w definicji tabeli ?
+// moÂ¿e tryb Master/Slave jest okreÂ¶lony w definicji tabeli ?
 
-if ($opole!="S") {                                        // nie suwanie siê
-//$tabela mo¿e byæ liczb± ID tabeli lub nazw± tabeli
+if ($opole!="S") {                                        // nie suwanie siÃª
+//$tabela moÂ¿e byÃ¦ liczbÂ± ID tabeli lub nazwÂ± tabeli
 $z=ord(substr($tabela,0,1));
 if (48<=$z && $z<=57) {
         $z="select * from tabele where ID='";
@@ -179,13 +179,13 @@ if ($w){
                         $tabela=$w[0];              // tabela slave aktywna
                         $tabelaa=$w[1];             // tabela master nieaktywna
 			if (substr($tabelaa,0,10)=='tab_master') {$tabelaa=$ntab_master;}
-                        $tabelap=trim($w[2]);       // pole ³±cznik do tabeli slave
-                        $tabelai='';                // ID pozycji w Master za chwilê ...
+                        $tabelap=trim($w[2]);       // pole Â³Â±cznik do tabeli slave
+                        $tabelai='';                // ID pozycji w Master za chwilÃª ...
                   }
         }
 }
 }
-// mo¿e tryb Master/Slave jest okre¶lony w definicji tabeli ?
+// moÂ¿e tryb Master/Slave jest okreÂ¶lony w definicji tabeli ?
 //********************************************************************
 
 echo '$tabela="'.$tabela.'";';
@@ -212,7 +212,7 @@ echo "\n";
 
 if ($tabelaa) {
 //********************************************************************
-// wariant z tabel± MASTER (nieaktywn±)
+// wariant z tabelÂ± MASTER (nieaktywnÂ±)
 
 $zprequery=0;
 $prequery=array();
@@ -250,7 +250,7 @@ if ($wa){
                 $sqla='';
 
                 if (count($bazaa=explode(",",$wa[0]))>1) {        // jest przecinek
-	             if (count($bazaa=explode(",",$wa[0]))>3) {   // s¹ nawet 3: abonenciG,grupy,[1].[2],abonenci
+	             if (count($bazaa=explode(",",$wa[0]))>3) {   // sÂ¹ nawet 3: abonenciG,grupy,[1].[2],abonenci
 	                $bazaa=trim($bazaa[3]);
 		     }
 		     else {
@@ -281,7 +281,7 @@ if ($wa){
                                 }
                                 $z.=$la[0];
                                 if(!$la[1]) {$tna[$i-1]=trim($la[0]);} else {$tna[$i-1]=trim($la[1]);};
-                                $szera[$mca]=$la[2];                //szeroko¶æ
+                                $szera[$mca]=$la[2];                //szerokoÂ¶Ã¦
                                 if (substr($szera[$mca],0,1)=='+') {$ca=$mca+1;};
                                 $styla[$mca]=$la[3];                //style="font-size: 70pt; color: red; font-weight: normal"
                                 $styna[$mca]=$la[4];                //font-family: serif; font-size: 18pt; text-align: center
@@ -305,23 +305,23 @@ if ($zgroup) {
         $z.=' '.$zgroup;                 // "group by" zamiast "where"
         if ($zhaving) {                // "having" za "group by"
                 $z.="$zhaving";
-                if (substr($tabelap,0,1)=='[') {        // odwo³anie do pól mastera
+                if (substr($tabelap,0,1)=='[') {        // odwoÂ³anie do pÃ³l mastera
                         $tr=explode('.',$tabelap);                // [1],[2]
                         for($i=0;$i<count($tr);$i++) {
-                                $j=substr($tr[$i],1)*1;	//mo¿e mieæ 2 cyfry i wiêcej
+                                $j=substr($tr[$i],1)*1;	//moÂ¿e mieÃ¦ 2 cyfry i wiÃªcej
                                 $z=str_replace($tr[$i],$tra[$j],$z);
                         }
                 }
                 else {$z.=" and $bazaa.ID=$tabelai";};
         }
-        else {                                          // nie ma "having", wiêc ma byæ
+        else {                                          // nie ma "having", wiÃªc ma byÃ¦
                 $z.=" having $bazaa.ID=$tabelai";
         }
 }
 else {
         if ($zwhere) {                                                                                // jest "where"
-                if (substr($tabelap,0,1)=='[') {        // odwo³anie do pól mastera
-                	$z.=" where $bazaa.ID=$tabelai";	//master nie odwo³uje siê do mastera tylko polega na ID
+                if (substr($tabelap,0,1)=='[') {        // odwoÂ³anie do pÃ³l mastera
+                	$z.=" where $bazaa.ID=$tabelai";	//master nie odwoÂ³uje siÃª do mastera tylko polega na ID
                 }
                 else {$z.="$zwhere and $bazaa.ID=$tabelai";};
         }
@@ -356,14 +356,14 @@ $na=mysqli_num_rows($wa);
 $tra=mysqli_fetch_row($wa);
 for($j=0;$j<Count($tra);$j++) {$tra[$j]=StripSlashes($tra[$j]);}
 
-// wariant z tabel± MASTER (nieaktywn±)
+// wariant z tabelÂ± MASTER (nieaktywnÂ±)
 //********************************************************************
 }
 
 //********************************************************************
 // tabela Slave (aktywna)
 
-$zwhere="";                // zerowanie zmiennych, które za chwilê znów bêd± u¿yte
+$zwhere="";                // zerowanie zmiennych, ktÃ³re za chwilÃª znÃ³w bÃªdÂ± uÂ¿yte
 $zorder="";
 $zgroup="";
 $zhaving="";
@@ -377,15 +377,15 @@ $sumy=array();
 $sumyp=array();
 $sumyok=false;
 $grupi=0;	//indeks kolumny grupowanej
-$grupw='';	//wartoœæ z kolumny grupowanej
+$grupw='';	//wartoÅ“Ã¦ z kolumny grupowanej
 $grupt=array();	//tablica np. stawek VAT
-$grupy=array();	//sumy poszczególnych stawek
+$grupy=array();	//sumy poszczegÃ³lnych stawek
 $grupa=array();	//kwoty z danego wiersza
 $grupyok=false;
 $mc=$cc;
 $sql='';
 
-//$tabela mo¿e byæ liczb± ID tabeli lub nazw± tabeli
+//$tabela moÂ¿e byÃ¦ liczbÂ± ID tabeli lub nazwÂ± tabeli
 $z=ord(substr($tabela,0,1));
 if (48<=$z && $z<=57) {
         $z="select * from tabele where ID='";
@@ -414,7 +414,7 @@ else {
         $tyt=StripSlashes($w['OPIS']);
         $sql=StripSlashes($w['TABELA']);
         $fun=StripSlashes($w['FUNKCJE']);
-//wydruk nie ma ogranicznika na ilo¶æ wierszy na stronie
+//wydruk nie ma ogranicznika na iloÂ¶Ã¦ wierszy na stronie
         $rr=99999999;
 //        $rr=$w['MAXROWS'];
 //        if ($rr==0) {$rr=20;}
@@ -427,7 +427,7 @@ else {
         $ww=mysqli_query($link, $z);
         if ($ww and mysqli_num_rows($ww)>0) {
 			$ww=mysqli_fetch_array($ww);
-			$warunek=StripSlashes($ww['WARUNKI']);
+			$warunek=StripSlashes($ww['WARUNKI']).($mandatory?($ww['WARUNKI']?" and ":'')."($mandatory)":'');
 			$sortowanie=StripSlashes($ww['SORTOWANIE']);
 			$r=$ww['NR_ROW'];
 			$str=$ww['NR_STR'];
@@ -443,7 +443,7 @@ else {
                 if ($str>0) {$r=1;};        //jak dodaje strony, to najpierw staje na pierwszym wierszu
         }
         else {
-                if ($tabelaa) {                // po wej¶ciu do Slave w trybie Maste/Slave stoi na szczycie
+                if ($tabelaa) {                // po wejÂ¶ciu do Slave w trybie Maste/Slave stoi na szczycie
 //                        $r=1;
                         $str=1;
                 }
@@ -473,7 +473,7 @@ else {
                 $z='Select';
 
                 if (count($baza=explode(",",$w[0]))>1) {        // jest przecinek
-	             if (count($baza=explode(",",$w[0]))>3) {   // s¹ nawet 3: abonenciG,grupy,[1].[2],abonenci
+	             if (count($baza=explode(",",$w[0]))>3) {   // sÂ¹ nawet 3: abonenciG,grupy,[1].[2],abonenci
                         $baza=trim($baza[3]);
 		     }
 		     else {
@@ -512,7 +512,7 @@ else {
 				}
 				else {
 					$tn[$i-1]=trim($l[1]);
-					if (count(explode("[",$tn[$i-1]))>1) {	//s¹ jakieœ odwo³ania w nazwie kolumny
+					if (count(explode("[",$tn[$i-1]))>1) {	//sÂ¹ jakieÅ“ odwoÂ³ania w nazwie kolumny
 						$zz=explode('.',$tabelap);	//[1].[2]
 						for($ii=0;$ii<count($zz);$ii++) {
 							$jj=substr($zz[$ii],1)*1;
@@ -520,7 +520,7 @@ else {
 						}
 					}
 				}
-                                $szer[$mc]=$l[2];                //szeroko¶æ
+                                $szer[$mc]=$l[2];                //szerokoÂ¶Ã¦
                                 if (substr($szer[$mc],0,1)=='+') {$c=$mc+1;};
                                 $sumy[$mc]='';
                                 if (strpos($szer[$mc],'+')>0) {        //"+" z prawej
@@ -546,7 +546,7 @@ if ($tabelaa) {                                // tryb Master/Slave
                 $z.=' '.$zgroup;                 // "group by" zamiast "where"
                 if ($zhaving) {                // "having" za "group by"
                         $z.="$zhaving";
-                        if (substr($tabelap,0,1)=='[') {        // odwo³anie do pól mastera
+                        if (substr($tabelap,0,1)=='[') {        // odwoÂ³anie do pÃ³l mastera
                                 $tr=explode('.',$tabelap);                // [1],[2]
                                 for($i=0;$i<count($tr);$i++) {
 					$j=substr($tr[$i],1)*1;
@@ -555,7 +555,7 @@ if ($tabelaa) {                                // tryb Master/Slave
                         }
                         else {$z.=" and ($baza.$tabelap=$tabelai)";};
                 }
-                else {                                          // nie ma "having", wiêc ma byæ
+                else {                                          // nie ma "having", wiÃªc ma byÃ¦
 //                        $z.=" having $baza.$tabelap=$tabelai";
                 }
 			if ($warunek) {
@@ -568,10 +568,10 @@ if ($tabelaa) {                                // tryb Master/Slave
 			};
         }
         else {
-                if ($zwhere) {                        // jest "where", wiêc "and"
+                if ($zwhere) {                        // jest "where", wiÃªc "and"
                         $z.="$zwhere";
 						$sqla.=$tabelap;
-                        if (substr($tabelap,0,1)=='[') {        // odwo³anie do pól mastera
+                        if (substr($tabelap,0,1)=='[') {        // odwoÂ³anie do pÃ³l mastera
                                 $tr=explode('.',$tabelap);                // [1],[2]
                                 for($i=0;$i<count($tr);$i++) {
 					$j=substr($tr[$i],1)*1;
@@ -588,7 +588,7 @@ if ($tabelaa) {                                // tryb Master/Slave
 				$zorder='';
 			};
                 }
-                else {                                          // nie ma "where", wiêc ma byæ
+                else {                                          // nie ma "where", wiÃªc ma byÃ¦
 			if ($warunek) {
 				$warunek="($warunek)";
 				$z.=" where ($baza.$tabelap=$tabelai) and $warunek";
@@ -609,7 +609,7 @@ else {                                                // tryb Slave
                 $z.=' '.$zgroup;                                                                          // "group by" zamiast "where"
                 if ($zhaving) {                // "having" za "group by"
 	                $z.="$zhaving";
-                        if (substr($tabelap,0,1)=='[') {        // odwo³anie do pól mastera
+                        if (substr($tabelap,0,1)=='[') {        // odwoÂ³anie do pÃ³l mastera
                             $tr=explode('.',$tabelap);                // [1].[2]
                             for($i=0;$i<count($tr);$i++) {
                                $j=substr($tr[$i],1)*1;
@@ -618,7 +618,7 @@ else {                                                // tryb Slave
                         }
                         elseif ($tabelap) {$z.=" and $baza.$tabelap=$tabelai";};
                 }
-                else {                                          // nie ma "having", wiêc ma byæ
+                else {                                          // nie ma "having", wiÃªc ma byÃ¦
 //                        $z.=" ...having $baza.$tabelap=$tabelai";
                 }
 			if ($warunek) {
@@ -636,11 +636,11 @@ else {                                                // tryb Slave
                 }
                 else {                                        // nic ne szukamy
                    if (count($w=explode("[1]",$zwhere))>1) {  // definicja SQL jest przeznaczona do szukania
-                      $zwhere=''; // trzeba zrezygnowaæ z ograniczeñ
-                      $zorder=''; // trzeba zrezygnowaæ z uporz¹dkowania "po nazwie" na rzecz "po ID", bo po "Dopisz" by siê na nim nie ustawia³
+                      $zwhere=''; // trzeba zrezygnowaÃ¦ z ograniczeÃ±
+                      $zorder=''; // trzeba zrezygnowaÃ¦ z uporzÂ¹dkowania "po nazwie" na rzecz "po ID", bo po "Dopisz" by siÃª na nim nie ustawiaÂ³
                    }
                 };
-                $z.="$zwhere";                        // trzeba w koñcu uwzglêdniæ warunek "where"
+                $z.="$zwhere";                        // trzeba w koÃ±cu uwzglÃªdniÃ¦ warunek "where"
 					if ($warunek) {
 						$warunek="($warunek)";
                 if ($zwhere) {$z.=" and $warunek";} else {$z.=" where $warunek";}
@@ -652,18 +652,18 @@ else {                                                // tryb Slave
         }
 }
 if ($zorder) {$z.=' '.$zorder;}                // "order by" za "where"
-elseif (!$sortowanie) {$z.=" order by $baza.ID";}	// "order by" obowi¹zkowy gdy niesprecyzowany
+elseif (!$sortowanie) {$z.=" order by $baza.ID";}	// "order by" obowiÂ¹zkowy gdy niesprecyzowany
 if ($zunion) {
 	$z='('.$z.')';
 	for($i=0;$i<$zunion;$i++) {
 		$z.=' '.$uniony[$i];
 	}
 }
-if (substr($tabelap,0,1)=='[') {        // odwo³anie do pól mastera
+if (substr($tabelap,0,1)=='[') {        // odwoÂ³anie do pÃ³l mastera
 	$sql.="...$tabelap...";
 	$tr=explode('.',$tabelap);                // [1].[2]
 	for($i=0;$i<count($tr);$i++) {
-		$j=substr($tr[$i],1)*1;				// 1 lub 2, a nawet 25 i wiêksze
+		$j=substr($tr[$i],1)*1;				// 1 lub 2, a nawet 25 i wiÃªksze
 		$z=str_replace($tr[$i],$tra[$j],$z);
 		if ($zprequery) {
 			for($k=0;$k<count($prequery);$k++) {
@@ -672,13 +672,13 @@ if (substr($tabelap,0,1)=='[') {        // odwo³anie do pól mastera
 		}
 	}
 }
-$z.=" limit ";                                                                // "limit" na koñcu
+$z.=" limit ";                                                                // "limit" na koÃ±cu
 $z.=sprintf("%d",($str-1)*$rr).",";
 $z.=sprintf("%d",$rr);
 
-$z=str_replace('$osoba_gr',$osoba_gr,$z);  // wra¿liwo¶æ na grupê usera
-$z=str_replace('$osoba_pu',$osoba_pu,$z);  // wra¿liwo¶æ na punkt usera
-$z=str_replace('osoba_id',$_SESSION['osoba_id'],$z);  // wra¿liwo¶æ na ID usera
+$z=str_replace('$osoba_gr',$osoba_gr,$z);  // wraÂ¿liwoÂ¶Ã¦ na grupÃª usera
+$z=str_replace('$osoba_pu',$osoba_pu,$z);  // wraÂ¿liwoÂ¶Ã¦ na punkt usera
+$z=str_replace('osoba_id',$_SESSION['osoba_id'],$z);  // wraÂ¿liwoÂ¶Ã¦ na ID usera
 
 $sql=$z.';';
 if ($zprequery) {
@@ -771,13 +771,13 @@ function PlikPHP($ko,$h,$pa,$f02){
 	f0.odswiez.click();
 }
 function Adres($ko){
-        f0.sutab.value="";                                        //czy¶æ, bo to koniec chodzenia po subtabeli slave
+        f0.sutab.value="";                                        //czyÂ¶Ã¦, bo to koniec chodzenia po subtabeli slave
 if (isNaN($ko)) {                                                        // nazwa tabeli
         f0.natab.value=$ko;
         f0.action="Tabela.php";
         f0.odswiez.click();
 }
-else { // $ko=1 => numer kolumny zawieraj±cej id tabeli
+else { // $ko=1 => numer kolumny zawierajÂ±cej id tabeli
         f0.natab.value=f0.ipole.value;
         f0.action="Tabela.php";
         f0.odswiez.click();
@@ -785,7 +785,7 @@ else { // $ko=1 => numer kolumny zawieraj±cej id tabeli
 function Start(){
 <?php
 	//include($_GET['wydruk']."_p.html");
-	include("Raport_p.php");
+	require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/Raport_p.php");
 ?>
 };
 -->
@@ -844,7 +844,7 @@ echo '<input id="sutabmid" type="hidden" name="sutabmid" value="'.$tabelai.'"/>'
                         }
                 }
                 if (!$ok_esc) {
-                        echo '<input type="button" value="Esc=wyj¶cie" onclick="window.close()"/>';echo "\n";
+                        echo '<input type="button" value="Esc=wyjÂ¶cie" onclick="window.close()"/>';echo "\n";
                 }
         }
 ?>
@@ -878,7 +878,7 @@ if ($tabelaa) { // tabela master nieaktywna
         echo "\n";
         echo '<tr bordercolor="black">';
         echo "\n";
-// wydruk ma nag³ówki bez pierwszej kolumny (Nr 0) z ID tabeli
+// wydruk ma nagÂ³Ã³wki bez pierwszej kolumny (Nr 0) z ID tabeli
         for($j=1;$j<=$mca-1;$j++) {
                 echo '<td ';
                 echo 'align="center" CLASS="';
@@ -894,9 +894,9 @@ if ($tabelaa) { // tabela master nieaktywna
                 echo "\n";
                 echo '<tr height=1 bgcolor='.$twie.'>';
                 echo "\n";
-// wydruk ma nag³ówki bez pierwszej kolumny (Nr 0) z ID tabeli
+// wydruk ma nagÂ³Ã³wki bez pierwszej kolumny (Nr 0) z ID tabeli
                 for($j=1;$j<$mca;$j++){
-// wydruk nie tnie tre¶ci kolumn tabeli  "nowrap "
+// wydruk nie tnie treÂ¶ci kolumn tabeli  "nowrap "
                         echo '<td id="taba_'.$i.'_'.$j.'" width='.($szera[$j]*12);
                         echo ' align="center" CLASS="';
 			if (($szera[$j]==='0')||($szera[$j]=='.')) {echo 'bez" ';} else {echo 'nor" ';}
@@ -940,7 +940,7 @@ if ($_GET['wydruk']=='Raport') {
 }
 
 $strona=1;
-$sumyj=0;	//na którym miejscu jest napis Suma:
+$sumyj=0;	//na ktÃ³rym miejscu jest napis Suma:
 
 $strona1=(@$_GET['strona1']?$_GET['strona1']:17);
 $stronan=(@$_GET['stronan']?$_GET['stronan']:20);
@@ -969,7 +969,7 @@ if($osobneStrony)
 	$stronan=1;
 	$naglowkiKolumn.= '<tr bordercolor="black">'."\n";
 	$naglowkiKolumn.= '<td align="center" CLASS="nag" style="border: 2px solid black" width="50%" nowrap>Opis pola</td>'."\n";
-	$naglowkiKolumn.= '<td align="center" CLASS="nag" style="border: 2px solid black">Warto¶æ</td>'."\n";
+	$naglowkiKolumn.= '<td align="center" CLASS="nag" style="border: 2px solid black">WartoÂ¶Ã¦</td>'."\n";
 	$naglowkiKolumn.= '</tr>'."\n";
 }
 else
@@ -982,7 +982,7 @@ else
 		$naglowkiKolumn.= "\n";
 	}
 
-	// wydruk ma nag³ówki bez pierwszej kolumny (Nr 0) z ID tabeli
+	// wydruk ma nagÂ³Ã³wki bez pierwszej kolumny (Nr 0) z ID tabeli
 	for($j=$startkol;$j<=$mc-1;$j++) {
 			if ($szer[$j]==='0')    {$naglowkiKolumn.= '<td id="tab_0'.($j+1).'" nowrap class="bez" ';}
 			elseif ($szer[$j]=='.') {$naglowkiKolumn.= '<td id="tab_0'.($j+1).'" nowrap class="bez" ';}	//width=0 style="font-size:0"
@@ -1014,10 +1014,10 @@ if (false&&($mr==0))
         echo "\n";
         echo '<tr id="tab_'.($i+1).'" height=1 bgcolor='.$twie.'>';
         echo "\n";
-		// wydruk ma nag³ówki bez pierwszej kolumny (Nr 0) z ID tabeli
+		// wydruk ma nagÂ³Ã³wki bez pierwszej kolumny (Nr 0) z ID tabeli
         for($j=$startkol;$j<$mc;$j++)
 		{
-			// wydruk nie tnie tre¶ci kolumn tabeli  "nowrap "
+			// wydruk nie tnie treÂ¶ci kolumn tabeli  "nowrap "
 			if ($szer[$j]==='0')    {echo '<td id="tab_'.$i.'_'.$j.'" class="bez" ';}
 			elseif ($szer[$j]=='.') {echo '<td id="tab_'.$i.'_'.$j.'" class="bez" ';}
 			elseif(strpos('.'.$szer[$j],'@s')) {echo '<td id="tab_'.$i.'_'.$j.'" class="bez" ';}
@@ -1052,7 +1052,7 @@ else
 					echo "\n";
 					if($tn[$startkol]!=='LP')
 					{
-						echo "<td></td>";	//LP: wszystkie strony prócz ostatniej
+						echo "<td></td>";	//LP: wszystkie strony prÃ³cz ostatniej
 						echo "\n";
 					}
 				}
@@ -1155,7 +1155,7 @@ else
 						echo '</td>';
 						echo "\n";
 					}
-//£amanie sumy pozycji
+//Â£amanie sumy pozycji
 			if(in_array($j,explode(',',$lamanie)))
 			{
 				echo '</tr><tr><td></td>';
@@ -1174,7 +1174,7 @@ else
 
 					if($tn[$startkol]!=='LP')
 					{
-						echo "<td></td>";	//LP: wszystkie strony prócz ostatniej
+						echo "<td></td>";	//LP: wszystkie strony prÃ³cz ostatniej
 						echo "\n";
 					}
 				}
@@ -1235,7 +1235,7 @@ else
 						echo '</td>';
 						echo "\n";
 					}
-					//£amanie koñcowej sumy pozycji
+					//Â£amanie koÃ±cowej sumy pozycji
 					if(in_array($j,explode(',',$lamanie)))
 					{
 						echo '</tr><tr><td></td>';
@@ -1252,7 +1252,7 @@ else
 
 					if($tn[$startkol]!=='LP')
 					{
-						echo "<td></td>";	//LP: wszystkie strony prócz ostatniej
+						echo "<td></td>";	//LP: wszystkie strony prÃ³cz ostatniej
 						echo "\n";
 					}
 				}
@@ -1313,7 +1313,7 @@ else
 						echo '</td>';
 						echo "\n";
 					}
-					//£amanie koñcowej sumy pozycji
+					//Â£amanie koÃ±cowej sumy pozycji
 					if(in_array($j,explode(',',$lamanie)))
 					{
 						echo '</tr><tr><td></td>';
@@ -1376,7 +1376,7 @@ else
 					echo '<td class="nor" align="right" style="border: '.$borderPol.'px solid black;">';
 					echo '&nbsp;'.($i+1).'&nbsp;';
 					echo '</td>';	//LP
-					echo "\n";// wydruk ma nag³ówki bez pierwszej kolumny (Nr 0) z ID tabeli
+					echo "\n";// wydruk ma nagÂ³Ã³wki bez pierwszej kolumny (Nr 0) z ID tabeli
 				}
 			}
 		}
@@ -1421,7 +1421,7 @@ else
 						if ($z[0]&&$z[1]) echo '<img src="'.$tr[$j].'" alt="" width='.$z[0].' height='.$z[1].'>';
 				} else 
 				{                                                                                                                  //tekst
-					// wydruk nie tnie tre¶ci kolumn tabeli  "nowrap "
+					// wydruk nie tnie treÂ¶ci kolumn tabeli  "nowrap "
 					$buf=$szer[$j];
 					if (count($z=explode("@Z",$buf))>1) 
 					{		// bez zer
@@ -1457,7 +1457,7 @@ else
 				echo '</tr>';
 			}
 
-//£amanie pozycji
+//Â£amanie pozycji
 			if(in_array($j,explode(',',$lamanie)))
 			{
 				echo '</tr><tr><td></td>';
@@ -1613,7 +1613,7 @@ else
 				}
 			}
 
-//£amanie koñcowej sumy pozycji
+//Â£amanie koÃ±cowej sumy pozycji
 			if(in_array($j,explode(',',$lamanie)))
 			{
 				echo '</tr><tr><td></td>';
@@ -1693,7 +1693,7 @@ else
 					echo "\n";
 				}
 			}
-			//£amanie koñcowej sumy pozycji
+			//Â£amanie koÃ±cowej sumy pozycji
 			if(in_array($j,explode(',',$lamanie)))
 			{
 				echo '</tr><tr><td></td>';
@@ -1741,10 +1741,10 @@ $wazne=false;
 				$linia.=' bgcolor='.$tnag.'>';
 				
 				if	( $osobneStrony
-					&&	( $tn[$j]=='Ogó³em przychód'
-						||$tn[$j]=='Sk³adki pracownika razem'
-						||substr($tn[$j],0,7)=='Nale¿na'
-						||$tn[$j]=='Do wyp³aty'
+					&&	( $tn[$j]=='OgÃ³Â³em przychÃ³d'
+						||$tn[$j]=='SkÂ³adki pracownika razem'
+						||substr($tn[$j],0,7)=='NaleÂ¿na'
+						||$tn[$j]=='Do wypÂ³aty'
 						)
 					)
 				{
@@ -1823,7 +1823,7 @@ $wazne=false;
 			{
 				$linia.='</tr>'."\n"."\n";
 			}
-			//£amanie koñcowej sumy pozycji
+			//Â£amanie koÃ±cowej sumy pozycji
 			if(in_array($j,explode(',',$lamanie)))
 			{
 				$linia.='</tr><tr><td></td>';
@@ -1966,7 +1966,7 @@ if($w) {mysqli_free_result($w);}
 //require('dbdisconnect.inc');
 
 echo '<tr>';
-//echo '<td colspan='.$mc.'>Strona Nr '.$strona++.'. Koniec wydruku. Data: '.(@$_POST['data']?$_POST['data']:date('Y.m.d')).', godzina: '.(@$_POST['czas']?$_POST['czas']:date('G.i.s'));//.'. Wykona³: ......................................';
+//echo '<td colspan='.$mc.'>Strona Nr '.$strona++.'. Koniec wydruku. Data: '.(@$_POST['data']?$_POST['data']:date('Y.m.d')).', godzina: '.(@$_POST['czas']?$_POST['czas']:date('G.i.s'));//.'. WykonaÂ³: ......................................';
 echo '<td colspan='.($osobneStrony?2:$mc).'>Koniec wydruku.';
 
 //$x=strtoupper(trim($_SESSION['osoba_upr']));
@@ -1979,7 +1979,7 @@ echo '</tr>'."\n";
 echo '</table>'."\n";
 
 //include($_GET['wydruk']."_s.html");
-include("Raport_s.php");
+require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/Raport_s.php");
 //echo "<hr>$sqlaa<hr>";
 //echo "<hr>$sqla<hr>";
 //echo "<hr>$sql<hr>";
