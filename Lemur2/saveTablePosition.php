@@ -1,8 +1,6 @@
 <?php
 
-error_reporting(E_ERROR | E_PARSE | E_WARNING);//E_NOTICE | 
-
-//print_r($_GET);die;
+error_reporting(E_ERROR | E_PARSE | E_WARNING);
 
 if ($_GET['next'])
 {
@@ -21,6 +19,9 @@ if ($_GET['col']) {$col=$_GET['col'];}
 if ($_GET['id'])  {$id=$_GET['id'];}
 if ($_GET['idTabeli'])  {$idTabeli=$_GET['idTabeli'];}
 
+if ($_GET['warunki'])    {$warunki=$_GET['warunki'];}
+if ($_GET['sortowanie']) {$sortowanie=$_GET['sortowanie'];}
+
 if ($idTabeli)
 {
 	$sets='';
@@ -30,6 +31,12 @@ if ($idTabeli)
 	$sets.=($id?($sets?', ':'')."ID_POZYCJI='$id'":'');
 	$sets.=($idTabeli?($sets?', ':'')."ID_TABELE='$idTabeli'":'');
 	$sets.=($ido?($sets?', ':'')."ID_OSOBY='$ido'":'');
+
+	$sets.=(@$warunki && !@$resetWarunki?($sets?', ':'')."WARUNKI='".AddSlashes($warunki)."'":'');
+	$sets.=(@$sortowanie && !@$resetSortowanie?($sets?', ':'')."SORTOWANIE='".AddSlashes($sortowanie)."'":'');
+
+	$sets.=(@$resetWarunki?($sets?', ':'')."WARUNKI=''":'');
+	$sets.=(@$resetSortowanie?($sets?', ':'')."SORTOWANIE=''":'');
 
 	if(@$tableInit)
 	{
@@ -53,7 +60,6 @@ if ($idTabeli)
 	}
 	if ($_GET['next'])
 	{
-		//echo 'header("location: '.$_GET[next].'");';die;
 		header("location: $_GET[next]");
 	}
 }
