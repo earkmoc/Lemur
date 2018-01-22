@@ -11,3 +11,7 @@ li > span {
 div.modal-body {
 	padding-bottom:0;
 }
+
+.col-md-12 {
+	padding:0;
+}
