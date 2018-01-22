@@ -20,5 +20,7 @@ function SetStrRow($link, $id)
 	}
 
 	$row-=floor(($str-1)*(($ido==10)?20:15));
-	require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveTablePosition.php");
+	$resetWarunki=true;
+	$resetSortowanie=true;
+ 	require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveTablePosition.php");
 }
