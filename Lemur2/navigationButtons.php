@@ -2,11 +2,20 @@
 $buttons[]=array('klawisz'=>'PgUp','nazwa'=>'','js'=>'Page(-1)' );
 $buttons[]=array('klawisz'=>'PgDown','nazwa'=>'','js'=>'Page(1)' );
 
+$buttons[]=array('klawisz'=>'AltUp','nazwa'=>'','js'=>'Page(-1)' );
+$buttons[]=array('klawisz'=>'AltDown','nazwa'=>'','js'=>'Page(1)' );
+
 $buttons[]=array('klawisz'=>'AltPgUp','nazwa'=>'','js'=>'PageFirst()' );
 $buttons[]=array('klawisz'=>'AltPgDown','nazwa'=>'','js'=>'PageLast()' );
 
+$buttons[]=array('klawisz'=>'CtrlUp','nazwa'=>'','js'=>'PageFirst()' );
+$buttons[]=array('klawisz'=>'CtrlDown','nazwa'=>'','js'=>'PageLast()' );
+
 $buttons[]=array('klawisz'=>'End','nazwa'=>'','js'=>'Col(maxcol)' );
 $buttons[]=array('klawisz'=>'Home','nazwa'=>'','js'=>'Col(-maxcol)' );
+
+$buttons[]=array('klawisz'=>'CtrlRight','nazwa'=>'','js'=>'Col(maxcol)' );
+$buttons[]=array('klawisz'=>'CtrlLeft','nazwa'=>'','js'=>'Col(-maxcol)' );
 
 $buttons[]=array('klawisz'=>'Left','nazwa'=>'','js'=>'Col(-1)' );
 $buttons[]=array('klawisz'=>'Right','nazwa'=>'','js'=>'Col(1)' );
