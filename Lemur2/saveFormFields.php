@@ -1,5 +1,6 @@
 <?php
 
+$drugiRaz=true;
 require("setup.php");
 
 $set='';
