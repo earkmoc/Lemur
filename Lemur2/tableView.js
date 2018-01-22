@@ -11,12 +11,13 @@ $(document).ready(function()
 		Focus();
 		szukanie=false;
 	});
+	setTimeout('Focus()',400);
 });
 
 function SetCellOnClick()
 {
 	$('td').on('click',function(){
-		$("tr[data-index="+(row-1)+"]").css('background','');
+		ColorRowOff();
 		col=$(this).prevAll().length+1;
 		row=$(this).parent().prevAll().length+1;
 		Color();
@@ -50,7 +51,7 @@ $('.table').on('load-success.bs.table', function ()
 	$('.table-responsive').show();
 	maxcol=$("table.table thead tr th").length;
 	Check();
-	if (mandatory=='')	//je¶li tabela nie ma "mandatory", to jest g³ówna i ma mieæ focus(), subtabele maj± "mandatory" i s± bez focus()
+	if (mandatory=='')	//jeÂ¶li tabela nie ma "mandatory", to jest gÂ³Ã³wna i ma mieÃ¦ focus(), subtabele majÂ± "mandatory" i sÂ± bez focus()
 	{
 		Focus();
 	} else {
@@ -112,7 +113,7 @@ function Sumator(delta)
 
 function Color() 
 {
-//#EFEFDF-warm gray, #FF6600-ceg³a
+//#EFEFDF-warm gray, #FF6600-cegÂ³a
 	ColorNagOff();
 	ColorNagOn();
 	ColorRowOn();
@@ -128,6 +129,11 @@ function ColorNagOn()
 	$("th[data-field="+(col-1)+"]").css('background','#FF6600');
 }
 
+function ColorRowOff()
+{
+	$("tr[data-index="+(row-1)+"]").css('background','');
+}
+
 function ColorRowOn()
 {
 	$("tr[data-index="+(row-1)+"]").css('background','#FFCC66');
@@ -139,7 +145,7 @@ function Page(delta)
 	{
 		if ($(".page-pre.disabled").length==0)
 		{
-			$(".page-pre").click()
+			$(".page-pre").click();
 		}
 		else
 		{
@@ -148,7 +154,7 @@ function Page(delta)
 	} else {
 		if ($(".page-next.disabled").length==0)
 		{
-			$(".page-next").click()
+			$(".page-next").click();
 		}
 		else
 		{
@@ -159,25 +165,32 @@ function Page(delta)
 
 function PageFirst()
 {
-	$(".page-first").click()
+	row=0;
+	$(".page-first").click();
+	Check();
+	Focus();
 }
 
 function PageLast()
 {
-	$(".page-last").click()
+	ColorRowOff();
+	row=1000;
+	$(".page-last").click();
+	Check();
+	Focus();
 }
 
 function Row(delta) 
 {
-	$("tr[data-index="+(row-1)+"]").css('background','');
-	row=row+delta;
+	ColorRowOff();
+ 	row=row+delta;
 	Check();
 	Focus();
 }
 
 function Col(delta) 
 {
-	$("th[data-field="+(col-1)+"]").css('background','');
+	ColorNagOff();
 	col=col+delta;
 	Check();
 	Focus();
