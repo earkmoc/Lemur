@@ -65,7 +65,7 @@ $(document).ready(function() {
 			echo "}"."\n";
 			echo "else"."\n";
 			echo "{"."\n";
-			echo "      $(this).remove()"."\n";
+			echo "      $(this).remove();"."\n";
 			echo "}"."\n";
 		};
 		if (@$button['js'])
