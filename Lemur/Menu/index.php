@@ -33,6 +33,7 @@ $buttons[]=array('klawisz'=>'H','nazwa'=>'','js'=>'SubMenu("h")');
 $buttons[]=array('klawisz'=>'I','nazwa'=>'','js'=>'SubMenu("i")');
 $buttons[]=array('klawisz'=>'J','nazwa'=>'','js'=>'SubMenu("j")');
 $buttons[]=array('klawisz'=>'K','nazwa'=>'','js'=>'SubMenu("k")');
+$buttons[]=array('klawisz'=>'L','nazwa'=>'','js'=>'SubMenu("l")');
 $buttons[]=array('klawisz'=>'Up','nazwa'=>'','js'=>'Prev()');
 $buttons[]=array('klawisz'=>'Down','nazwa'=>'','js'=>'Next()');
 $buttons[]=array('klawisz'=>'Right','nazwa'=>'','js'=>'Prawo()');
@@ -244,6 +245,7 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../AOK" id="9i">i) Analityka konta</td></tr>
 <tr><td><a href="<?php echo "../JPK2/JPK_FA.php?baza=$baza";?>" id="9j">j) JPK_FA (1)</td></tr>
 <tr><td><a href="<?php echo "../JPK2/?baza=$baza";?>" id="9k">k) JPK_VAT (2)</td></tr>
+<tr><td><a href="<?php echo "../JPK_VAT3/?baza=$baza";?>" id="9l">l) JPK_VAT (3)</td></tr>
 </table>
 </div>
 		
