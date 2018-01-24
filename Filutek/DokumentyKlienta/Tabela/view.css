@@ -1,0 +1,16 @@
+.panel {
+   margin-bottom: 2px;
+}
+.container {
+    width: 300px;
+}
+.row {
+   margin-top: 3px;
+   text-align: right; 
+}
+.nag {
+   text-align: right; 
+   height: 34px;
+   padding: 6px 0px;
+   line-height: 1.42857;
+}
