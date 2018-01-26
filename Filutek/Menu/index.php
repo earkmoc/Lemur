@@ -37,11 +37,11 @@ $buttons[]=array('klawisz'=>'Up','nazwa'=>'','js'=>'Prev()');
 $buttons[]=array('klawisz'=>'Down','nazwa'=>'','js'=>'Next()');
 $buttons[]=array('klawisz'=>'Right','nazwa'=>'','js'=>'Prawo()');
 $buttons[]=array('klawisz'=>'Left','nazwa'=>'','js'=>'Lewo()');
-//$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur/Klienci/?baza='.$baza);
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>($ido==1?'/Lemur/Klienci/Tabela/?baza='.$baza:'/Lemur2/Logowanie/Tabela/logout.php'));
+//$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur2/Klienci/?baza='.$baza);
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>($ido==1?'/Lemur2/Klienci/Tabela/?baza='.$baza:'/Lemur2/Logowanie/Tabela/logout.php'));
 $buttons[]=array('klawisz'=>'AltO','nazwa'=>'Old menu','akcja'=>'Tabela');
 
-$title=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur.klienci where PSKONT='$baza'"))['NAZWA'];
+$title=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur2.klienci where PSKONT='$baza'"))['NAZWA'];
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 
 $w=mysqli_query($link, $q="

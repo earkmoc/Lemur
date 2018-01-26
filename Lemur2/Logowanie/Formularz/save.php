@@ -31,15 +31,29 @@ else
 		}
 
 		$w=mysqli_query($link,$q.=" where ID=$id limit 1");
-		mysqli_error($link)? die(mysqli_error($link).'<br>'.$q): header('Location:/Lemur2/Moduly');
+		if(mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
-		//------------------------------------------------------------------------------------------------------------
+		//zmiana lokalizacji tabeli klientów
+		require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
+		if	( !FieldsOd($link, 'klienci', 1)
+			||(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from klienci"))[0]==0)
+			)
+		{
+			mysqli_query($link,$q="create table if not exists klienci like Lemur.klienci");
+			mysqli_query($link,$q="insert into  klienci select * from Lemur.klienci");
+		}
 
+		//określenie docelowego menu
+		$klient='Lemur2/Moduly';
+		$klient=(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from Lemur2.klienci where PSKONT='Batory'"))[0]?'Batory/Menu/index.php':$klient);
+		$klient=(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from Lemur2.klienci where PSKONT='Filutek'"))[0]?'Filutek/Menu/index.php':$klient);
+
+		header("Location:/$klient");
+
+		//aktualizacja baz danych do archiwizacji
 		require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/update_dump_all.php");
-
-		//------------------------------------------------------------------------------------------------------------
-
-	} else
+	} 
+	else
 	{
 		header('Location:/Lemur2/Logowanie/Tabela/logout.php');
 	}

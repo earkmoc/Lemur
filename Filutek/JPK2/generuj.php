@@ -20,14 +20,14 @@ foreach($_POST as $key => $value)
 	";
 	mysqli_query($link,$q="
 					  insert 
-						into Lemur.slownik
+						into $baza.slownik
 						 set $sets
 	 on duplicate key update $sets
 	");
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 }
 
-$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur.klienci where PSKONT='$baza'"));
+$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur2.klienci where PSKONT='$baza'"));
 
 $klient['KODUS']=substr($_POST['kodUS'],0,4);
 
@@ -43,7 +43,7 @@ if	( ($klient['NAZWA']=='')
 }
 else
 {
-	mysqli_query($link,$q="update Lemur.klienci set KODUS='$_POST[kodUS]' where PSKONT='$baza'");
+	mysqli_query($link,$q="update Lemur2.klienci set KODUS='$_POST[kodUS]' where PSKONT='$baza'");
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 
 	$file=fopen($filename,"w");

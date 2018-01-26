@@ -5,12 +5,12 @@ $path='C:\Archiwa';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 $baza=$_GET['baza'];
-$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur.klienci where PSKONT='$baza'"));
+$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur2.klienci where PSKONT='$baza'"));
 
 $w=mysqli_query($link,$q="
 	select TRESC
 		 , OPIS
-	  from Lemur.slownik
+	  from $baza.slownik
 	 where TYP='parametry'
 	   and SYMBOL='JPK'
 ");

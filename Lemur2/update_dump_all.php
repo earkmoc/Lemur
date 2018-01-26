@@ -15,7 +15,7 @@ function AddToFile($fileName,$klient)
 
 $w=mysqli_query($link,$q="
 	select PSKONT 
-	  from Lemur.klienci
+	  from Lemur2.klienci
 ");
 while($r=mysqli_fetch_row($w))
 {

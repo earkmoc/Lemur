@@ -1,6 +1,6 @@
 <?php
 
-$innaBaza='Lemur';
+$innaBaza='Lemur2';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 $q=mysqli_query($link,"

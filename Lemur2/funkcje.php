@@ -3,6 +3,30 @@
 //require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
 
 //***************************************************************************************
+//Kopia katalogu z podkatalogami
+//recurse_copy("{$_SERVER['DOCUMENT_ROOT']}/Lemur","{$_SERVER['DOCUMENT_ROOT']}/$_POST[PSKONT]");
+
+function recurse_copy($src,$dst) 
+{ 
+	$dir = opendir($src); 
+	@mkdir($dst); 
+	while(false !== ( $file = readdir($dir)) ) 
+	{ 
+		if (( $file != '.' ) && ( $file != '..' )) 
+		{ 
+			if ( is_dir($src . '/' . $file) ) { 
+				recurse_copy($src . '/' . $file,$dst . '/' . $file); 
+			} 
+			else 
+			{ 
+				copy($src . '/' . $file,$dst . '/' . $file); 
+} 
+		} 
+	} 
+	closedir($dir); 
+}
+
+//***************************************************************************************
 //Zwraca nazwy pól od podanego numeru pola (dla ID $nrPola=0)
 
 function FieldsOd($link, $tabela, $nrPola)
@@ -11,7 +35,7 @@ function FieldsOd($link, $tabela, $nrPola)
 	$w=mysqli_query($link, $q="
 		show fields from $tabela
 	");
-	if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+//	if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	
 	$i=0;
 	while($r=mysqli_fetch_row($w))

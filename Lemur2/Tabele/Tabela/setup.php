@@ -14,7 +14,7 @@ $mandatory='';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 
 $params="idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
-$enter="saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/Lemur/'+GetCol(2)+'/&$params'+GetID()+'";
+$enter="saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/Lemur2/'+GetCol(2)+'/&$params'+GetID()+'";
 $formularz="../Formularz/?$params'+GetID()+'";
 $dopisz="../Formularz/?{$params}0'+'";
 $kopia="../Formularz/?$params-'+GetID()+'";

@@ -57,11 +57,11 @@ if ($id<>0)
 	}
 }
 
-$idKlienta=mysqli_fetch_row(mysqli_query($link,$q="select ID_POZYCJI from Lemur.tabeles where ID_TABELE=841 and ID_OSOBY=$ido"))[0];
-$dane['KLIENT']=mysqli_fetch_row(mysqli_query($link,$q="select NAZWA from Lemur.klienci where ID=$idKlienta"))[0];
+$idKlienta=mysqli_fetch_row(mysqli_query($link,$q="select ID_POZYCJI from Lemur2.tabeles where ID_TABELE=841 and ID_OSOBY=$ido"))[0];
+$dane['KLIENT']=mysqli_fetch_row(mysqli_query($link,$q="select NAZWA from Lemur2.klienci where ID=$idKlienta"))[0];
 
-$dane['ROK']=preg_replace('/[^0-9]/', '', mysqli_fetch_row(mysqli_query($link,$q="select PSKONT from Lemur.klienci where ID=$idKlienta"))[0]);
+$dane['ROK']=preg_replace('/[^0-9]/', '', mysqli_fetch_row(mysqli_query($link,$q="select PSKONT from Lemur2.klienci where ID=$idKlienta"))[0]);
 
-$skrotKlienta=mysqli_fetch_row(mysqli_query($link,$q="select PSKONT from Lemur.klienci where ID=$idKlienta"))[0];
+$skrotKlienta=mysqli_fetch_row(mysqli_query($link,$q="select PSKONT from Lemur2.klienci where ID=$idKlienta"))[0];
 $idModulu=mysqli_fetch_row(mysqli_query($link,$q="select ID_POZYCJI from {$skrotKlienta}.tabeles where ID_TABELE=868 and ID_OSOBY=$ido"))[0];
 $dane['NAZWA']=($w=mysqli_query($link,$q="select NAZWA from Lemur2.moduly where ID=$idModulu")?mysqli_fetch_row($w)[0]:'');

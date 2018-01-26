@@ -3,7 +3,7 @@
 <?php
 if(!isset($bezLemurVer))
 {
-	$timestampLemur=file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/Lemur/timestamp.ver");
+	$timestampLemur=file_get_contents("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/timestamp.ver");
 	echo '<div id="stopka" class="container-fluid" style="text-align: right; color: white;">';
 	echo '<p>Lemur&sup2; ver '.(substr($timestampLemur,0,10)).' by ericom Arkadiusz Moch</p>';
 	echo '</div>';
