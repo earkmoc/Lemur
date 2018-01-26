@@ -166,11 +166,14 @@ else
 	$value=($value?number_format($value,2,'.',','):'');
 	$raport.="Podatek nale¿ny=<input style='text-align:right' value='$value' /> z³\n";
 
-	fputs($file,"\n"."	<SprzedazCtrl>");
-	fputs($file,"\n"."		<LiczbaWierszySprzedazy>$lp</LiczbaWierszySprzedazy>");
-	fputs($file,"\n"."		<PodatekNalezny>$podatekNalezny</PodatekNalezny>");
-	fputs($file,"\n"."	</SprzedazCtrl>");
-
+	if($lp>0)
+	{
+		fputs($file,"\n"."	<SprzedazCtrl>");
+		fputs($file,"\n"."		<LiczbaWierszySprzedazy>$lp</LiczbaWierszySprzedazy>");
+		fputs($file,"\n"."		<PodatekNalezny>$podatekNalezny</PodatekNalezny>");
+		fputs($file,"\n"."	</SprzedazCtrl>");
+	}
+	
 	$lp=0;
 	$w=mysqli_query($link,"
 		select *
@@ -236,10 +239,14 @@ else
 		fputs($file,"\n".'	</ZakupWiersz>');
 	}
 	
-	fputs($file,"\n"."	<ZakupCtrl>");
-	fputs($file,"\n"."		<LiczbaWierszyZakupow>$lp</LiczbaWierszyZakupow>");
-	fputs($file,"\n"."		<PodatekNaliczony>$podatekNaliczony</PodatekNaliczony>");
-	fputs($file,"\n"."	</ZakupCtrl>");
+	if($lp>0)
+	{
+		fputs($file,"\n"."	<ZakupCtrl>");
+		fputs($file,"\n"."		<LiczbaWierszyZakupow>$lp</LiczbaWierszyZakupow>");
+		fputs($file,"\n"."		<PodatekNaliczony>$podatekNaliczony</PodatekNaliczony>");
+		fputs($file,"\n"."	</ZakupCtrl>");
+	}
+	
 	fputs($file,"\n"."</JPK>");
 
 	fclose($file);
