@@ -150,6 +150,7 @@ $_SESSION["{$baza}Menu"]='';
 <tr><td><a id="5d" href="">d) </td></tr>
 <tr><td><a id="5e" href="">e) </td></tr>
 <tr><td><a id="5f" href="../JPK2/?baza=Filutek">f) JPK_VAT (2)</td></tr>
+<tr><td><a id="5g" href="../JPK_VAT3/?baza=Filutek">g) JPK_VAT (3)</td></tr>
 </table>
 </div>
 
