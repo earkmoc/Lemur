@@ -53,7 +53,10 @@ else
 	fputs($file,"\n"."	<Podmiot1>");
 	fputs($file,"\n"."		<NIP>".(preg_replace('/\D/', '', $klient['NIP']))."</NIP>");
 	fputs($file,"\n"."		<PelnaNazwa>".(iconv('ISO-8859-2','UTF-8',StripSlashes($klient['NAZWA'])))."</PelnaNazwa>");
-	fputs($file,"\n"."		<Email>".(iconv('ISO-8859-2','UTF-8',StripSlashes($_POST['email'])))."</Email>");
+	if($_POST['email'])
+	{
+		fputs($file,"\n"."		<Email>".(iconv('ISO-8859-2','UTF-8',StripSlashes($_POST['email'])))."</Email>");
+	}
 	fputs($file,"\n"."	</Podmiot1>");
 
 	$lp=0;
