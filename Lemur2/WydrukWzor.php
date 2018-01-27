@@ -298,6 +298,7 @@ if ($spacje!='N') {$w=str_replace(' ','&nbsp;',$w);$w=nl2br($w);}
 
 $w=str_replace('^','&nbsp;',$w);
 $w=str_replace('<font_style','<font style',$w);
+$w=str_replace('"EJE"','<div style="height:1px"></div><div style="page-break-after:always;height:1px"></div>',$w);
 
 fputs($file,'<font style="font-family: Courier">'."\n");
 //     echo '<font style="font-family: Courier">';
