@@ -48,12 +48,12 @@ else
 }
 
 
-//if($brutto!=0)
-//{
+if($brutto!=0)
+{
 	mysqli_query($link, $q="update dokumenty set WARTOSC='$brutto', NETTOVAT='$netto', PODATEK_VAT='$vat', KTO='$ido', CZAS=Now() where ID=$idd");
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	$brutto=number_format($brutto,2,'.','');
-//}
+}
 ?>
 
 <script type="text/javascript">

@@ -2,6 +2,8 @@
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
+$_SESSION['od_netto']=true;
+
 // ----------------------------------------------
 // Parametry widoku
 
@@ -51,6 +53,7 @@ $title='Dokumenty';
 $tabela='dokumenty';
 $widok=$tabela;
 $mandatory='';
+$sortowanie='DOPERACJI desc, ID desc';
 
 mysqli_query($link, "ALTER TABLE $tabela CHANGE `SPOSZAPL` `SPOSZAPL` char(30) NOT NULL DEFAULT 'przelew'");
 mysqli_query($link, "ALTER TABLE $tabela CHANGE `PRZEDMIOT` `PRZEDMIOT` char(99) NOT NULL DEFAULT ''");

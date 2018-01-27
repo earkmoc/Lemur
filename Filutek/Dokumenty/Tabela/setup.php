@@ -67,6 +67,7 @@ $title='Dokumenty'.($typ?" typu \"{$typ}\"":'');
 $tabela='dokumenty';
 $widok=$tabela;
 $mandatory=($typ?"TYP='{$typ}'":'');
+$sortowanie='DOPERACJI desc, ID desc';
 
 mysqli_query($link, "ALTER TABLE $tabela CHANGE `SPOSZAPL` `SPOSZAPL` char(30) NOT NULL DEFAULT 'przelew'");
 mysqli_query($link, "ALTER TABLE $tabela CHANGE `PRZEDMIOT` `PRZEDMIOT` char(99) NOT NULL DEFAULT ''");

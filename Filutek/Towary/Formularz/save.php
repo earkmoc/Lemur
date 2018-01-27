@@ -41,5 +41,12 @@ else
 $_POST['OG_WA_PRZ']=$_POST['BRUTTO'];
 
 $noHeader=true;
+$nowaPozycja=($_GET['id']==0);
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveFormFields.php");
 require("../przelicz.php");
+
+if($nowaPozycja)
+{
+	require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/SetStrRow.php");
+	SetStrRow($link, $id, 5);
+}

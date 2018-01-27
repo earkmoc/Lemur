@@ -25,12 +25,21 @@ if (!@$_POST['LP'])
 
 if (!@$_POST['ADRES'])
 {
-	$w=mysqli_query($link, $q="select * from knordpol where NIP='$_POST[NIP]' and NAZWA='$_POST[NAZWA]' order by ID desc limit 1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	if($r=mysqli_fetch_array($w))
+	if($_POST['NAZWA'])
 	{
-		$_POST['NRKONT']=$r['NUMER'];
-		$_POST['PSKONT']=$r['PSEUDO'];
-		$_POST['ADRES']=$r['KOD_POCZT'].' '.$r['MIASTO'].', '.$r['ULICA'];
+		$w=mysqli_query($link, $q="select * from knordpol where NIP='$_POST[NIP]' and NAZWA='$_POST[NAZWA]' order by ID desc limit 1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+		if($r=mysqli_fetch_array($w))
+		{
+			$_POST['NRKONT']=$r['NUMER'];
+			$_POST['PSKONT']=$r['PSEUDO'];
+			$_POST['ADRES']=$r['KOD_POCZT'].' '.$r['MIASTO'].', '.$r['ULICA'];
+		}
+	}
+	else
+	{
+		$_POST['NRKONT']='';
+		$_POST['PSKONT']='';
+		$_POST['ADRES']='';
 	}
 }
 
@@ -97,36 +106,8 @@ if ($idd)
 	}
 	else
 	{
-		$towary=mysqli_query($link,$q="
-		select *
-		  from dokumentm
-		 where if('$idd'*1<=0,ID_D<=0 and KTO=$ido,ID_D='$idd')
-		 order by ID
-		");
-
-		$nettos=array();
-		$vats=array();
-		$bruttos=array();
-		while($towar=mysqli_fetch_array($towary))
-		{
-			$nettos[$towar['STAWKA']]=((@!isset($nettos[$towar['STAWKA']]))?$towar['NETTO']:1*$nettos[$towar['STAWKA']]+$towar['NETTO']);
-		}
-
-		$vat=0;
-		$netto=0;
-		foreach($nettos as $key => $value)
-		{
-			$netto+=$value;
-			$vat+=round($value*$key*0.01,2);
-		}
-
-		$brutto=$netto+$vat;
-
-		if($brutto!=0)
-		{
-			mysqli_query($link, $q="update dokumenty set WARTOSC='$brutto', NETTOVAT='$netto', PODATEK_VAT='$vat', KTO='$ido', CZAS=Now() where ID=$idd");
-			if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-		}
+		$od_netto=$_SESSION['od_netto'];
+		require("{$_SERVER['DOCUMENT_ROOT']}/Lemur/Towary/przelicz.php");
 	}
 	
 	$dtop=mysqli_fetch_row(mysqli_query($link, $q="select DOPERACJI from dokumenty where ID=$idd"))[0];
