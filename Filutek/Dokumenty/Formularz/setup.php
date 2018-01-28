@@ -22,13 +22,7 @@ $title.=($id?"ID=".abs($id):"nowa pozycja");
 $buttons=array();
 $buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Tabela");
-$buttons[]=array('klawisz'=>'Alt1','nazwa'=>'','js'=>"
-	$('li').removeClass('active');
-	$('div.tab-pane:not(#home)').removeClass('active');
-	$('#liTowary').addClass('active');
-	$('#Towary').addClass('active');
-	$('#iframeTowary').focus();
-");
+require('zakladkiButtons.php');
 $buttons[]=array('klawisz'=>'AltN'
                 ,'nazwa'=>'Alt+N=Nabywcy'
 				,'js'=>"$('#myModalN').modal('show')"
@@ -57,14 +51,13 @@ if ($id==0)
 			$dane[$k]=StripSlashes($v);
 		}
 	}
+
 	if(substr($ostatnio['NUMER'],-2,2)<>date('y'))
 	{
-		$dane['NUMER']='0001'.'-'.date('y');
+		$ostatnio['NUMER']=0;
 	}
-	else
-	{
-		$dane['NUMER']=substr('000'.($ostatnio['NUMER']+1),-4,4).'-'.date('y');
-	}
+	$dane['NUMER']=substr('000'.($ostatnio['NUMER']+1),-4,4).'-'.date('y');
+
 	$dane['TYP']=$typ;
 	$dane['DWPROWADZE']=date('Y-m-d');
 	$dane['DDOKUMENTU']=date('Y-m-d');
@@ -84,8 +77,53 @@ else
 		$dane[$k]=StripSlashes($v);
 	}
 	$dane['WARTOSC-WPLACONO']=$dane['WARTOSC']-$dane['WPLACONO'];
+
 	if ($kopia)
 	{
+		if(!@$drugiRaz)
+		{
+			require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
+
+			$pola="0, -1, $ido, Now(),".FieldsOd($link, 'dokumentm', 4);
+			mysqli_query($link, "
+			insert
+			  into dokumentm
+			select $pola
+			  from dokumentm
+			 where ID_D=abs($id)
+			");
+
+			$pola="0, -1, $ido, Now(),".FieldsOd($link, 'dokumentr', 4);
+			mysqli_query($link, "
+			insert
+			  into dokumentr
+			select $pola
+			  from dokumentr
+			 where ID_D=abs($id)
+			");
+		}
+		
+		$ostatnio=mysqli_fetch_array(mysqli_query($link, "
+		select *
+		  from $tabela
+		 where TYP='$typ'
+	  order by ID desc
+		 limit 1
+		"));
+
+		if(substr($ostatnio['NUMER'],-2,2)<>date('y'))
+		{
+			$ostatnio['NUMER']=0;
+		}
+		$dane['NUMER']=substr('000'.($ostatnio['NUMER']+1),-4,4).'-'.date('y');
+
+		$dane['TYP']=$typ;
+		$dane['DWPROWADZE']=date('Y-m-d');
+		$dane['DDOKUMENTU']=date('Y-m-d');
+		$dane['DOPERACJI']=date('Y-m-d');
+		$dane['DTERMIN']=date('Y-m-d');
+		$dane['WPLACONO']='';
+
 		$id=0;
 		$dane['ID']=0;	//dopisanie nowej pozycji
 		$_SESSION["{$baza}DokumentyID_D"]=0;
@@ -102,6 +140,7 @@ else
 	}
 }
 
+//sprawdzenie/dopisanie typu w słowniku
 if($dane['TYP'])
 {
 	if(!mysqli_fetch_row(mysqli_query($link, $q="

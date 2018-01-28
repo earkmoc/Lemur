@@ -75,11 +75,13 @@ if ($id==0)
 			$dane[$k]=StripSlashes($v);
 		}
 	}
+	
 	if(substr($ostatnio['NUMER'],-4,4)<>date('Y'))
 	{
 		$ostatnio['NUMER']=0;
 	}
 	$dane['NUMER']=($ostatnio['NUMER']+1).($typ=='FV'?'/'.date('m'):($typ=='FJ'?'/'.'J':'')).'/'.date('Y');
+
 	$dane['TYP']=$typ;
 	$dane['DWPROWADZE']=date('Y-m-d');
 	$dane['DDOKUMENTU']=date('Y-m-d');
@@ -138,6 +140,7 @@ else
 			$ostatnio['NUMER']=0;
 		}
 		$dane['NUMER']=($ostatnio['NUMER']+1).($typ=='FV'?'/'.date('m'):($typ=='FJ'?'/'.'J':'')).'/'.date('Y');
+
 		$dane['TYP']=$typ;
 		$dane['DWPROWADZE']=date('Y-m-d');
 		$dane['DDOKUMENTU']=date('Y-m-d');
