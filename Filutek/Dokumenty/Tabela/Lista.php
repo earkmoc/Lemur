@@ -11,7 +11,7 @@ foreach($_GET as $key => $value)
 
 $title="Parametry wydruku listy dokumentów";
 $buttons=array();
-$buttons[]=array('klawisz'=>'AltL','nazwa'=>'Enter=drukuj Liste','akcja'=>"drukuj.php?$parametry");
+$buttons[]=array('klawisz'=>'AltL','nazwa'=>'Enter=drukuj Listê','akcja'=>"drukuj.php?$parametry");
 $buttons[]=array('klawisz'=>'Enter','nazwa'=>'','akcja'=>"drukuj.php?$parametry");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"..");
 
@@ -48,7 +48,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 
 		<div class="row">
 			<div class="col-md-2 nag">
-				Nag3ówek na pierwszej stronie
+				Nag³ówek na pierwszej stronie
 			</div>
 			<div class="col-md-4">
 				<textarea disabled class="form-control" name="naglowek1" rows="5" style="text-align:center"><?php echo $_POST['naglowek1'];?></textarea>
@@ -69,7 +69,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 
 		<div class="row">
 			<div class="col-md-2 nag">
-				Tytu3 wydruku
+				Tytu³ wydruku
 			</div>
 			<div class="col-md-10">
 				<input type="text" class="form-control" name="tytul" value="<?php echo $_POST['tytul'];?>" />
@@ -78,7 +78,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 
 		<div class="row">
 			<div class="col-md-2 nag">
-				Ilo?a pozycji na pierwszej stronie
+				Ilo¶æ pozycji na pierwszej stronie
 			</div>
 			<div class="col-md-1">
 				<input type="text" class="form-control" name="strona1" value="<?php echo $_POST['strona1'];?>" />
@@ -87,7 +87,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 
 		<div class="row">
 			<div class="col-md-2 nag">
-				Nag3ówek na kolejnych stronach
+				Nag³ówek na kolejnych stronach
 			</div>
 			<div class="col-md-4">
 				<textarea class="form-control" name="naglowekN" rows="5"><?php echo $_POST['naglowekN'];?></textarea>
@@ -96,7 +96,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 
 		<div class="row">
 			<div class="col-md-2 nag">
-				Ilo?a pozycji na kolejnych stronach
+				Ilo¶æ pozycji na kolejnych stronach
 			</div>
 			<div class="col-md-1">
 				<input type="text" class="form-control" name="stronaN" value="<?php echo $_POST['stronaN'];?>" />
@@ -111,7 +111,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 				<input type="text" class="form-control" name="czcionka" value="<?php echo $_POST['czcionka'];?>" />
 			</div>
 			<div class="col-md-1 nag">
-				Wielko?a czcionki
+				Wielko¶æ czcionki
 			</div>
 			<div class="col-md-1">
 				<input type="text" class="form-control" name="wielkosc" value="<?php echo $_POST['wielkosc'];?>" />
@@ -120,7 +120,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 
 		<div class="row">
 			<div class="col-md-2 nag">
-				Zawijanie d3ugich linii? 
+				Zawijanie d³ugich linii? 
 			</div>
 			<div class="col-md-1">
 				<input type="checkbox" class="form-control" name="zawijanie" value="1" <?php echo ($_POST['zawijanie']?'checked':'');?> />
@@ -129,7 +129,7 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 
 		<div class="row">
 			<div class="col-md-2 nag">
-				Obramowania nag3ówków? 
+				Obramowania nag³ówków? 
 			</div>
 			<div class="col-md-1">
 				<input type="checkbox" class="form-control" name="borderNag" value="1" <?php echo ($_POST['borderNag']?'checked':'');?> />
