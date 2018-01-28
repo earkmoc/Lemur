@@ -66,7 +66,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 $title='Dokumenty'.($typ?" typu \"{$typ}\"":'');
 $tabela='dokumenty';
 $widok=$tabela;
-$mandatory=($typ?"TYP='{$typ}'":'');
+$mandatory=($typ?"$tabela.TYP='{$typ}'":'');
 $sortowanieDoLiczenia='DOPERACJI desc, ID desc';
 
 mysqli_query($link, "ALTER TABLE $tabela CHANGE `SPOSZAPL` `SPOSZAPL` char(30) NOT NULL DEFAULT 'przelew'");
@@ -81,10 +81,17 @@ $buttons=array();
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/$baza/Menu/&$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'Enter','nazwa'=>'','akcja'=>$formularz);
 $buttons[]=array('klawisz'=>'F','nazwa'=>'Enter=Formularz','akcja'=>$formularz);
-$buttons[]=array('klawisz'=>'D','nazwa'=>'Dopisz','akcja'=>"../Formularz/?{$params}0'+'");
+if($typ)
+{
+	$buttons[]=array('klawisz'=>'D','nazwa'=>'Dopisz','akcja'=>"../Formularz/?{$params}0'+'");
+	$buttons[]=array('klawisz'=>'C','nazwa'=>'Copy','akcja'=>"../Formularz/?{$params}-'+GetID()+'");
+}
+$buttons[]=array('klawisz'=>'Z','nazwa'=>'Zamknij/Otwórz','akcja'=>"otworz.php?$params'+GetID()+'");
+$buttons[]=array('klawisz'=>'O','nazwa'=>'','akcja'=>"otworz.php?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'S','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').modal('show')");
 $buttons[]=array('klawisz'=>'U','nazwa'=>'Usuñ','js'=>"buttonsShow();return confirm('Czy na pewno chcesz usun±æ t± pozycjê?')",'akcja'=>"usun.php?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'W','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?$params'+GetID()+'");
+$buttons[]=array('klawisz'=>'L','nazwa'=>'Lista','akcja'=>"Lista.php?wydruk=Raporta&natab=$widok&strona1=15&stronan=16&tytul=Lista dokumentów&typ=$typ");
 $buttons[]=array('klawisz'=>'K','nazwa'=>'KP','akcja'=>"Wydruk.php?wzor=KP&$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'O','nazwa'=>'','akcja'=>"otworz.php?$params'+GetID()+'");
 
