@@ -22,7 +22,7 @@ mysqli_query($link, "ALTER TABLE `$tabela` CHANGE `ID_D` `ID_D` INT(11) NOT NULL
 $widok=$tabela;//.(!isset($id_d)?'':'H');
 $mandatory="if('$id_d'='0',$tabela.ID_D=-1 and KTO='$ido',$tabela.ID_D='$id_d')";
 $mandatory=(!isset($id_d)?'':$mandatory);
-$sortowanie='ID desc';
+$sortowanieDoLiczenia='ID desc';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 
 $params="idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
