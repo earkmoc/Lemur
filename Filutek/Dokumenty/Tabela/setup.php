@@ -13,7 +13,7 @@ else
 }
 
 $_SESSION['od_netto']=false;
-if(in_array($typ,array('FZ','FZK','PZ','PZK','WZ','WZK','MM','PW','RW')))
+if(in_array($typ,array('FZ','FZK','PZ','PZK','WZ','WZK','MM','PW','RW','INW')))
 {
 	$_SESSION['od_netto']=true;
 }

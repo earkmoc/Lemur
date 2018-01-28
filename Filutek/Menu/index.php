@@ -70,7 +70,7 @@ $_SESSION["{$baza}Menu"]='';
         <div class="col-md-12" role="main">
            <div class="bs-docs-section" id="menu">
 		   
-                 <div class="col-md-3">
+                 <div class="col-md-6">
 
 <div class="table-responsive" id="menu1">
 <table class="table table-hover table-bordered table-striped">
@@ -90,7 +90,7 @@ $_SESSION["{$baza}Menu"]='';
 </div>
                  </div>
 				 
-                 <div class="col-md-2">
+                 <div class="col-md-6">
 				 
 <div class="table-responsive" id="menu2">
 <table class="table table-hover table-bordered table-striped">
@@ -100,57 +100,12 @@ $_SESSION["{$baza}Menu"]='';
 <tr><td><a id="2c" href="..\Slownik">c) S³ownik</td></tr>
 </table>
 </div>
-                 </div>
 
-                 <div class="col-md-4">
-				 
 <div class="table-responsive" id="menu3">
 <table class="table table-hover table-bordered table-striped">
-<tr><th><a id="3" href="">3. Analizy</a></th></tr>
-<tr><td><a id="3a" href="index.php">a) </td></tr>
-<tr><td><a id="3b" href="">b) </td></tr>
-<tr><td><a id="3c" href="">c) </td></tr>
-<tr><td><a id="3d" href="">d) </td></tr>
-<tr><td><a id="3e" href="">e) </td></tr>
-<tr><td><a id="3f" href="">f) </td></tr>
-<tr><td><a id="3g" href="">g) </td></tr>
-<tr><td><a id="3h" href="">h) </td></tr>
-<tr><td><a id="3i" href="">i) </td></tr>
-<tr><td><a id="3j" href="">j) </td></tr>
-<tr><td><a id="3k" href="">k) </td></tr>
-<tr><td><a id="3l" href="">l) </td></tr>
-<tr><td><a id="3m" href="">m) </td></tr>
-<tr><td><a id="3n" href="">n) </td></tr>
-<tr><td><a id="3o" href="">o) </td></tr>
-<tr><td><a id="3p" href="">p) </td></tr>
-</table>
-</div>
-				</div>
-
-                 <div class="col-md-3">
-				 
-<div class="table-responsive" id="menu4">
-<table class="table table-hover table-bordered table-striped">
-<tr><th><a id="4" href="">4. Rozliczenia</a></th></tr>
-<tr><td><a id="4a" href="">a) </td></tr>
-<tr><td><a id="4b" href="">b) </td></tr>
-<tr><td><a id="4c" href="">c) </td></tr>
-<tr><td><a id="4d" href="">d) </td></tr>
-<tr><td><a id="4e" href="">e) </td></tr>
-<tr><td><a id="4f" href="">f) </td></tr>
-</table>
-</div>
-
-<div class="table-responsive" id="menu5">
-<table class="table table-hover table-bordered table-striped">
-<tr><th><a id="5" href="">5. Ksiêgowo¶æ</a></th></tr>
-<tr><td><a id="5a" href="">a) </td></tr>
-<tr><td><a id="5b" href="">b) </td></tr>
-<tr><td><a id="5c" href="">c) </td></tr>
-<tr><td><a id="5d" href="">d) </td></tr>
-<tr><td><a id="5e" href="">e) </td></tr>
-<tr><td><a id="5f" href="../JPK2/?baza=Filutek">f) JPK_VAT (2)</td></tr>
-<tr><td><a id="5g" href="../JPK_VAT3/?baza=Filutek">g) JPK_VAT (3)</td></tr>
+<tr><th><a id="3" href="">3. Ksiêgowo¶æ</a></th></tr>
+<tr><td><a id="3a" href="../JPK2/?baza=Filutek">a) JPK_VAT (2) do 2017-12-31</td></tr>
+<tr><td><a id="3b" href="../JPK_VAT3/?baza=Filutek">b) JPK_VAT (3) od 2018-01-31</td></tr>
 </table>
 </div>
 
