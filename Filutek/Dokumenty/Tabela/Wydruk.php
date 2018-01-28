@@ -1,6 +1,7 @@
 <?php
 
 require("setup.php");
+$sortowanie='';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveTablePosition.php");
 
 mysqli_query($link, $q="update $tabela set GDZIE='ksiêgi', KTO='$ido', CZAS=Now() where ID=$id");
