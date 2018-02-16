@@ -253,8 +253,7 @@ echo "<h2>Raport generowania pliku $filename:</h2>";
 echo "<hr>";
 
 $xml = new DOMDocument();
-//$xml->load($filename);
-$xml->load('C:\Archiwa\JPK_VATKM.XML');
+$xml->load($filename);
 echo "Walidacja zgodno¶ci z XSD: ".($xml->schemaValidate("Schemat_JPK_VAT3_v1-1.xsd")?"OK":"NO");
 
 echo '<h3>'.nl2br($raport).'</h3>';
