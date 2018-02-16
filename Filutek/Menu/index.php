@@ -79,7 +79,7 @@ $_SESSION["{$baza}Menu"]='';
 <tr><td><a id="1a" href="../Dokumenty/Tabela/?typ=FV">a) Faktury VAT (FV)</a></td></tr>
 <tr><td><a id="1b" href="../Dokumenty/Tabela/?typ=FVK">b) Faktury VAT koryguj±ce (FVK)</a></td></tr>
 <tr><td><a id="1c" href="../Dokumenty/Tabela/?typ=FZ">c) Faktury zakupu (FZ)</a></td></tr>
-<tr><td><a id="1d" href="../Dokumenty/Tabela/?typ=FVK">d) Faktury zakupu koryguj±ce (FZK)</a></td></tr>
+<tr><td><a id="1d" href="../Dokumenty/Tabela/?typ=FZK">d) Faktury zakupu koryguj±ce (FZK)</a></td></tr>
 <tr><td><a id="1e" href="../Dokumenty/Tabela/?typ=PZ">e) Dokumenty PZ</a></td></tr>
 <tr><td><a id="1f" href="../Dokumenty/Tabela/?typ=WZ">f) Dokumenty WZ</a></td></tr>
 <tr><td><a id="1g" href="../Dokumenty/Tabela/?typ=MM">g) Dokumenty MM</a></td></tr>
@@ -105,8 +105,9 @@ $_SESSION["{$baza}Menu"]='';
 <div class="table-responsive" id="menu3">
 <table class="table table-hover table-bordered table-striped">
 <tr><th><a id="3" href="">3. Ksiêgowo¶æ</a></th></tr>
-<tr><td><a id="3a" href="../JPK2/?baza=Filutek">a) JPK_VAT (2) do 2017-12-31</td></tr>
-<tr><td><a id="3b" href="../JPK_VAT3/?baza=Filutek">b) JPK_VAT (3) od 2018-01-31</td></tr>
+<tr><td><a id="3a" href="../Rejestry/?baza=Filutek">a) Rejestry VAT</td></tr>
+<tr><td><a id="3b" href="../JPK2/?baza=Filutek">b) JPK_VAT (2) do 2017-12-31</td></tr>
+<tr><td><a id="3c" href="../JPK_VAT3/?baza=Filutek">c) JPK_VAT (3) od 2018-01-31</td></tr>
 </table>
 </div>
 

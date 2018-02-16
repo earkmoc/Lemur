@@ -25,10 +25,16 @@ $_POST['BRUTTO']=str_replace(',','.',$_POST['BRUTTO']);
 
 if($od_netto)
 {
-	//od cen netto
-	$_POST['NETTO']=round($_POST['ILOSC']*$_POST['CENA'],2);
-	$_POST['VAT']=round($_POST['NETTO']*$_POST['STAWKA']*0.01,2);
-	$_POST['BRUTTO']=($_POST['NETTO']+$_POST['VAT']);
+	if	( !$_POST['NETTO']
+		||!$_POST['VAT']
+		||!$_POST['BRUTTO']
+		)
+	{
+		//od cen netto
+		$_POST['NETTO']=round($_POST['ILOSC']*$_POST['CENA'],2);
+		$_POST['VAT']=round($_POST['NETTO']*$_POST['STAWKA']*0.01,2);
+		$_POST['BRUTTO']=($_POST['NETTO']+$_POST['VAT']);
+	}
 }
 else
 {

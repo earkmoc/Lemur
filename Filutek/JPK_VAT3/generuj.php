@@ -4,6 +4,7 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
+require("{$_SERVER['DOCUMENT_ROOT']}/Filutek/Rejestry/Tabela/update_dokumentr.php");
 
 $raport='';
 $czas=date('Y-m-d H:i:s');
@@ -84,9 +85,9 @@ else
 	$w=mysqli_query($link,"
 		select *
 		  from $baza.dokumenty
-		 where DOPERACJI between '$_POST[OdDaty]' and '$_POST[DoDaty]'
+		 where DDOKUMENTU between '$_POST[OdDaty]' and '$_POST[DoDaty]'
 		   and NUMER<>''
-	  order by DOPERACJI, ID
+	  order by DDOKUMENTU, ID
 	");
 	while($r=mysqli_fetch_array($w))
 	{
@@ -94,7 +95,7 @@ else
 		$ok=false;
 		for($i=10;$i<=39;++$i)
 		{
-			if($kwota=Formula($i,$_POST["K$i"],$r))
+			if($kwota=Formula($link,$i,$_POST["K$i"],$r))
 			{
 				$ok=true;
 				$KS["K_$i"]=$kwota;
@@ -158,9 +159,9 @@ else
 	$w=mysqli_query($link,"
 		select *
 		  from $baza.dokumenty
-		 where DOPERACJI between '$_POST[OdDaty]' and '$_POST[DoDaty]'
+		 where DDOKUMENTU between '$_POST[OdDaty]' and '$_POST[DoDaty]'
 		   and NUMER<>''
-	  order by DOPERACJI, ID
+	  order by DDOKUMENTU, ID
 	");
 	while($r=mysqli_fetch_array($w))
 	{
@@ -168,7 +169,7 @@ else
 		$ok=false;
 		for($i=43;$i<=46;++$i)
 		{
-			if($kwota=Formula($i,$_POST["K$i"],$r))
+			if($kwota=Formula($link,$i,$_POST["K$i"],$r))
 			{
 				$ok=true;
 				$KZ["K_$i"]=$kwota;
@@ -194,7 +195,7 @@ else
 			$nazwa=str_replace('&','and',$nazwa);
 		}
 		$adres=iconv('ISO-8859-2','UTF-8',StripSlashes($r['ADRES']));
-		$numer=iconv('ISO-8859-2','UTF-8',StripSlashes($r['NUMER']));
+		$numer=iconv('ISO-8859-2','UTF-8',StripSlashes($r['DODOK']?$r['DODOK']:$r['NUMER']));
 
 		fputs($file,"\n".'	<ZakupWiersz>');
 		fputs($file,"\n"."		<LpZakupu>$lp</LpZakupu>");
@@ -202,8 +203,8 @@ else
 		fputs($file,"\n"."		<NazwaDostawcy>$nazwa</NazwaDostawcy>");
 		fputs($file,"\n"."		<AdresDostawcy>$adres</AdresDostawcy>");
 		fputs($file,"\n"."		<DowodZakupu>$numer</DowodZakupu>");
-		fputs($file,"\n"."		<DataZakupu>".($r['DDOKUMENTU'])."</DataZakupu>");
-		fputs($file,"\n"."		<DataWplywu>".($r['DOPERACJI'])."</DataWplywu>");
+		fputs($file,"\n"."		<DataZakupu>".($r['DOPERACJI'])."</DataZakupu>");
+		fputs($file,"\n"."		<DataWplywu>".($r['DDOKUMENTU'])."</DataWplywu>");
 		$jestK45=false;
 		$jestK46=false;
 		foreach($KZ as $key => $value)
@@ -252,7 +253,8 @@ echo "<h2>Raport generowania pliku $filename:</h2>";
 echo "<hr>";
 
 $xml = new DOMDocument();
-$xml->load($filename);
+//$xml->load($filename);
+$xml->load('C:\Archiwa\JPK_VATKM.XML');
 echo "Walidacja zgodno¶ci z XSD: ".($xml->schemaValidate("Schemat_JPK_VAT3_v1-1.xsd")?"OK":"NO");
 
 echo '<h3>'.nl2br($raport).'</h3>';
@@ -271,7 +273,7 @@ echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),
 //echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename)));
 echo '</pre>';
 
-function Formula($i,$formula,$dokument)
+function Formula($link,$i,$formula,$dokument)
 {
 	if(!$formula)
 	{
@@ -279,14 +281,18 @@ function Formula($i,$formula,$dokument)
 	}
 	$formula=str_replace('"',"'",$formula);
 	$formula=str_replace('`',"'",$formula);
-	$formula=str_replace('Netto(','Netto($dokument,',$formula);
-	$formula=str_replace('VAT(','VAT($dokument,',$formula);
+	$formula=str_replace('Netto(','Netto($link,$dokument,',$formula);
+	$formula=str_replace('VAT(','VAT($link,$dokument,',$formula);
 
 	return eval('return '.$formula.';');
 }
 
-function Netto($dokument,$typDokumentu)
+function Netto($link,$dokument,$typDokumentu,$stawka)
 {
+	if($stawka)
+	{
+		$dokument['NETTOVAT']=mysqli_fetch_row(mysqli_query($link,$q="select NETTO from dokumentr where ID_D=$dokument[ID] and STAWKA='$stawka'"))[0];
+	}
 	if($gwiazdka=strpos($typDokumentu,'*'))
 	{
 		return ((substr($dokument['TYP'],0,$gwiazdka)==substr($typDokumentu,0,$gwiazdka))?$dokument['NETTOVAT']:0);
@@ -297,8 +303,12 @@ function Netto($dokument,$typDokumentu)
 	}
 }
 
-function VAT($dokument,$typDokumentu)
+function VAT($link,$dokument,$typDokumentu,$stawka)
 {
+	if($stawka)
+	{
+		$dokument['PODATEK_VAT']=mysqli_fetch_row(mysqli_query($link,$q="select VAT from dokumentr where ID_D=$dokument[ID] and STAWKA='$stawka'"))[0];
+	}
 	if($gwiazdka=strpos($typDokumentu,'*'))
 	{
 		return ((substr($dokument['TYP'],0,$gwiazdka)==substr($typDokumentu,0,$gwiazdka))?$dokument['PODATEK_VAT']:0);

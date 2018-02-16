@@ -84,16 +84,16 @@ else
 
 if ($rejestr)
 {
-	$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?wydruk=Raporta&natab=$widok&strona1=15&stronan=16&tytul=$title");
+	$buttons[]=array('klawisz'=>'W','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?wydruk=Raporta&natab=$widok&strona1=15&stronan=16&tytul=$title");
 } 
 elseif (!$readonly)
 {
 	$buttons[]=array('klawisz'=>'Enter','nazwa'=>'','akcja'=>$formularz);
-	$buttons[]=array('klawisz'=>'AltF','nazwa'=>'Enter=Formularz','akcja'=>$formularz);
-	$buttons[]=array('klawisz'=>'AltD','nazwa'=>'Dopisz','akcja'=>$dopisz);
-	$buttons[]=array('klawisz'=>'AltC','nazwa'=>'Copy','akcja'=>$kopia);
-	$buttons[]=array('klawisz'=>'AltU','nazwa'=>'Usuñ','akcja'=>$usun);
-	$buttons[]=array('klawisz'=>'AltA','nazwa'=>'Automat','akcja'=>$automat);
+	$buttons[]=array('klawisz'=>'F','nazwa'=>'Enter=Formularz','akcja'=>$formularz);
+	$buttons[]=array('klawisz'=>'D','nazwa'=>'Dopisz','akcja'=>$dopisz);
+	$buttons[]=array('klawisz'=>'C','nazwa'=>'Copy','akcja'=>$kopia);
+	$buttons[]=array('klawisz'=>'U','nazwa'=>'Usuñ','akcja'=>$usun);
+	$buttons[]=array('klawisz'=>'A','nazwa'=>'Automat','akcja'=>$automat);
 }
 
 if (isset($id_d))
@@ -143,7 +143,7 @@ if (isset($id_d))
 } 
 else
 {
-	$buttons[]=array('klawisz'=>'AltS','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').modal('show')");
+	$buttons[]=array('klawisz'=>'S','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').modal('show')");
 }
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");

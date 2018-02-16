@@ -117,3 +117,4 @@ else
 }
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");
+$buttons[]=array('klawisz'=>'AltQ','nazwa'=>'','akcja'=>'dosprawdzenia.php');
