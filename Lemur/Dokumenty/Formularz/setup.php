@@ -25,48 +25,7 @@ $title.=($id?"ID=".abs($id):"nowa pozycja");
 $buttons=array();
 $buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Tabela");
-$buttons[]=array('klawisz'=>'Alt1','nazwa'=>'','js'=>"
-	$('li').removeClass('active');
-	$('div.tab-pane:not(#home)').removeClass('active');
-	$('#liRejestryVAT').addClass('active');
-	$('#RejestryVAT').addClass('active');
-	$('#iframeRejestryVAT').focus();
-");
-$buttons[]=array('klawisz'=>'Alt2','nazwa'=>'','js'=>"
-	$('li').removeClass('active');
-	$('div.tab-pane:not(#home)').removeClass('active');
-	$('#liTowary').addClass('active');
-	$('#Towary').addClass('active');
-	$('#iframeTowary').focus();
-");
-$buttons[]=array('klawisz'=>'Alt3','nazwa'=>'','js'=>"
-	$('li').removeClass('active');
-	$('div.tab-pane:not(#home)').removeClass('active');
-	$('#liDekrety').addClass('active');
-	$('#Dekrety').addClass('active');
-	$('#iframeDekrety').focus();
-");
-$buttons[]=array('klawisz'=>'Alt4','nazwa'=>'','js'=>"
-	$('li').removeClass('active');
-	$('div.tab-pane:not(#home)').removeClass('active');
-	$('#liKPiR').addClass('active');
-	$('#KPiR').addClass('active');
-	$('#iframeKPiR').focus();
-");
-$buttons[]=array('klawisz'=>'Alt5','nazwa'=>'','js'=>"
-	$('li').removeClass('active');
-	$('div.tab-pane:not(#home)').removeClass('active');
-	$('#liEwidSprz').addClass('active');
-	$('#EwidSprz').addClass('active');
-	$('#iframeEwidSprz').focus();
-");
-$buttons[]=array('klawisz'=>'Alt6','nazwa'=>'','js'=>"
-	$('li').removeClass('active');
-	$('div.tab-pane:not(#home)').removeClass('active');
-	$('#liEwidPrzeb').addClass('active');
-	$('#EwidPrzeb').addClass('active');
-	$('#iframeEwidPrzeb').focus();
-");
+require('../../Dokumenty/Formularz/zakladkiButtons.php');
 $buttons[]=array('klawisz'=>'AltK'
                 ,'nazwa'=>'Kontrahenci'
 				,'js'=>"$('#myModal').modal('show')"
