@@ -54,7 +54,7 @@ select NR_ROW
    and ID_OSOBY='$ido'
 ");
 $row='8';
-$col='d';
+$col='a';
 $nip='';
 $nazwa='';
 while ($r=mysqli_fetch_row($w))
@@ -223,10 +223,10 @@ while($r=mysqli_fetch_row($w))
 <div class="table-responsive" id="analityka">
 <table class="table table-hover table-bordered table-striped">
 <tr><th><a href="" id="8">8. Ksiêgowo¶æ i analityka</a></th></tr>
-<tr><td><a href="" id="8a">a) Ksiêguj</td></tr>
-<tr><td><a href="../Dokumenty" id="8b">b) Dokumenty ogó³em</td></tr>
-<tr><td><a href="../Rejestry" id="8c">c) Rejestry VAT / inne rejestry</td></tr>
-<tr><td><a href="../KPIR" id="8d">d) KPiR</td></tr>
+<tr><td><a href="../Dokumenty" id="8a">a) Dokumenty</td></tr>
+<tr><td><a href="../Rejestry" id="8b">b) Rejestry VAT / inne rejestry</td></tr>
+<tr><td><a href="../KPIR" id="8c">c) KPiR</td></tr>
+<tr><td><a href="../EwidencjaWyposazenia" id="8d">d) Ewidencja Wyposa¿enia</td></tr>
 <tr><td><a href="../Sprawozdawczosc" id="8e">e) Sprawozdawczo¶æ</td></tr>
 </table>
 </div>
@@ -242,10 +242,9 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../BilansPasywa" id="9f">f) Bilans Pasywa</td></tr>
 <tr><td><a href="../ZOS" id="9g">g) Zestawienie obrotów i sald</td></tr>
 <tr><td><a href="../ZSY" id="9h">h) Zestawienie syntetyczne</td></tr>
-<tr><td><a href="../AOK" id="9i">i) Analityka konta</td></tr>
-<tr><td><a href="<?php echo "../JPK2/JPK_FA.php?baza=$baza";?>" id="9j">j) JPK_FA (1)</td></tr>
-<tr><td><a href="<?php echo "../JPK2/?baza=$baza";?>" id="9k">k) JPK_VAT (2)</td></tr>
-<tr><td><a href="<?php echo "../JPK_VAT3/?baza=$baza";?>" id="9l">l) JPK_VAT (3)</td></tr>
+<tr><td><a href="<?php echo "../JPK2/JPK_FA.php?baza=$baza";?>" id="9i">i) JPK_FA (1)</td></tr>
+<tr><td><a href="<?php echo "../JPK2/?baza=$baza";?>" id="9j">j) JPK_VAT (2)</td></tr>
+<tr><td><a href="<?php echo "../JPK_VAT3/?baza=$baza";?>" id="9k">k) JPK_VAT (3)</td></tr>
 </table>
 </div>
 		

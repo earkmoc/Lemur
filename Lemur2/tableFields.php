@@ -75,6 +75,7 @@ while($r=mysqli_fetch_row($w)) {
 					)
 					&&!((substr(trim($pole),-4)=='CZAS')&&($ido!=1))
 					&&!((substr(trim($pole),-3)=='KTO')&&($ido!=1))
+					&&!((substr(trim($nazwa),-4)=='ID_D')&&($ido!=1)&&($visible))
 				)
 			  {
 				@$fields[]=array(

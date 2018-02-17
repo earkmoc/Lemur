@@ -15,9 +15,8 @@ if ($_GET['id_d'])
 @$id_d=$_SESSION["{$baza}DokumentyID_D"];
 
 $titleBase='Ewidencja sprzeda¿y';
-$title=(isset($id_d)?'Ewid. Sprz. ':$titleBase.' ');
-$title.=($kopia=($id_d<0)?"do kopii ":"");
-$title.=($id_d?"dokumentu o ID=".abs($id_d):'');
+$title=$titleBase;
+$kopia=($id_d<0);
 
 $tabela='ewidsprz';
 

@@ -327,8 +327,9 @@
 <li                id="liTowary">     <a href="#Towary"			data-toggle="tab">2. Towary</a></li>
 <li                id="liDekrety">    <a href="#Dekrety"		data-toggle="tab">3. Dekrety</a></li>
 <li                id="liKPiR">       <a href="#KPiR"			data-toggle="tab">4. KPiR</a></li>
-<li                id="liEwidSprz">   <a href="#EwidSprz"		data-toggle="tab">5. Ewid. Sprz.</a></li>
-<li                id="liEwidPrzeb">  <a href="#EwidPrzeb"		data-toggle="tab">6. Ewid. Przeb. Pojazdu</a></li>
+<li                id="liEwidSprz">   <a href="#EwidSprz"		data-toggle="tab">5. Ewidencja Sprzeda¿y</a></li>
+<li                id="liEwidPrzeb">  <a href="#EwidPrzeb"		data-toggle="tab">6. Ewidencja Przebiegu Pojazdu</a></li>
+<li                id="liEwidWypo">   <a href="#EwidWypo"		data-toggle="tab">7. Ewidencja Wyposa¿enia</a></li>
 </ul>
 
 <div class="tab-content">
@@ -388,6 +389,16 @@
          <div class="row">
             <div class="col-md-12">
 				<iframe  id="iframeEwidPrzeb" width='100%' height='400' ssrc='<?php echo "/$baza/ewidprzeb/Tabela/index.php?id_d=$id";?>'></iframe>
+            </div>
+         </div>
+      </div>
+   </div>
+
+   <div class="tab-pane" id="EwidWypo" style="margin: 20px 0px 20px 0px; padding: 0px;">
+      <div class="container-fluid bs-docs-container">
+         <div class="row">
+            <div class="col-md-12">
+				<iframe  id="iframeEwidWypo" width='100%' height='400' ssrc='<?php echo "/$baza/EwidencjaWyposazenia/Tabela/index.php?id_d=$id";?>'></iframe>
             </div>
          </div>
       </div>

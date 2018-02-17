@@ -57,6 +57,7 @@ if ($idd==0)
 	mysqli_query($link, $q="update kpr       set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	mysqli_query($link, $q="update ewidsprz  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	mysqli_query($link, $q="update ewidprzeb set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+	mysqli_query($link, $q="update ewidwypo  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 }
 
 mysqli_query($link, $q="

@@ -42,3 +42,10 @@ $buttons[]=array('klawisz'=>'Alt6','nazwa'=>'','js'=>"
 	parent.$('#EwidPrzeb').addClass('active');
 	parent.$('#iframeEwidPrzeb').focus();
 ");
+$buttons[]=array('klawisz'=>'Alt7','nazwa'=>'','js'=>"
+	parent.$('li').removeClass('active');
+	parent.$('div.tab-pane:not(#home)').removeClass('active');
+	parent.$('#liEwidWypo').addClass('active');
+	parent.$('#EwidWypo').addClass('active');
+	parent.$('#iframeEwidWypo').focus();
+");
