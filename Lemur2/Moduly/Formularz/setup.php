@@ -63,5 +63,5 @@ $dane['KLIENT']=mysqli_fetch_row(mysqli_query($link,$q="select NAZWA from Lemur2
 $dane['ROK']=preg_replace('/[^0-9]/', '', mysqli_fetch_row(mysqli_query($link,$q="select PSKONT from Lemur2.klienci where ID=$idKlienta"))[0]);
 
 $skrotKlienta=mysqli_fetch_row(mysqli_query($link,$q="select PSKONT from Lemur2.klienci where ID=$idKlienta"))[0];
-$idModulu=mysqli_fetch_row(mysqli_query($link,$q="select ID_POZYCJI from {$skrotKlienta}.tabeles where ID_TABELE=868 and ID_OSOBY=$ido"))[0];
+$idModulu=($w=mysqli_query($link,$q="select ID_POZYCJI from {$skrotKlienta}.tabeles where ID_TABELE=868 and ID_OSOBY=$ido")?mysqli_fetch_row($w)[0]:'');
 $dane['NAZWA']=($w=mysqli_query($link,$q="select NAZWA from Lemur2.moduly where ID=$idModulu")?mysqli_fetch_row($w)[0]:'');
