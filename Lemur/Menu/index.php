@@ -38,7 +38,7 @@ $buttons[]=array('klawisz'=>'Up','nazwa'=>'','js'=>'Prev()');
 $buttons[]=array('klawisz'=>'Down','nazwa'=>'','js'=>'Next()');
 $buttons[]=array('klawisz'=>'Right','nazwa'=>'','js'=>'Prawo()');
 $buttons[]=array('klawisz'=>'Left','nazwa'=>'','js'=>'Lewo()');
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur/Klienci/?baza='.$baza);
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur2/Klienci/?baza='.$baza);
 $buttons[]=array('klawisz'=>'AltO','nazwa'=>'Old menu','akcja'=>'Tabela');
 
 $title="Menu";
