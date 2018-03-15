@@ -46,7 +46,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 $params="idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
 
 $buttons=array();
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur2/Moduly');
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur2/Logowanie');
 $buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=wej¶cie','akcja'=>"saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/'+GetCol(2)+'/Menu/&$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltF','nazwa'=>'Formularz','akcja'=>"../Formularz/?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltD','nazwa'=>'Dopisz','akcja'=>"../Formularz/?{$params}0'+'");
@@ -56,8 +56,8 @@ $buttons[]=array('klawisz'=>'AltS','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').mo
 $buttons[]=array('klawisz'=>'AltU','nazwa'=>'Usuñ','js'=>"buttonsShow();return confirm('Czy na pewno chcesz usun±æ t± pozycjê?')",'akcja'=>"usun.php?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltP','nazwa'=>'Programy','akcja'=>"/Lemur/Programy/");
 $buttons[]=array('klawisz'=>'AltI','nazwa'=>'Import','akcja'=>"/$baza/ImportMAX/");
-$buttons[]=array('klawisz'=>'AltE','nazwa'=>'Export','akcja'=>"/$baza/Export/?baza='+GetCol(2)+'");
-//$buttons[]=array('klawisz'=>'AltB','nazwa'=>'Bilans','akcja'=>"/$baza/Bilans/?klient='+GetCol(2)+'");
-$buttons[]=array('klawisz'=>'AltJ','nazwa'=>'JPK(2)','akcja'=>"/$baza/JPK2/?baza='+GetCol(2)+'");
+//$buttons[]=array('klawisz'=>'AltE','nazwa'=>'Export','akcja'=>"/$baza/Export/?baza='+GetCol(2)+'");
+$buttons[]=array('klawisz'=>'Alt2','nazwa'=>'2=JPK_VAT(2)','akcja'=>"/$baza/JPK2/?baza='+GetCol(2)+'");
+$buttons[]=array('klawisz'=>'Alt3','nazwa'=>'3=JPK_VAT(3)','akcja'=>"/$baza/JPK_VAT3/?baza='+GetCol(2)+'");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");

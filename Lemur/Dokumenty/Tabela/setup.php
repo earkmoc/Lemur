@@ -77,9 +77,9 @@ $buttons[]=array('klawisz'=>'AltI','nazwa'=>'Import XML','akcja'=>"/$baza/Import
 $buttons[]=array('klawisz'=>'AltT','nazwa'=>'Test','akcja'=>"test.php?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltM','nazwa'=>'Masowo dekretuj','akcja'=>"dekretowanie.php?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltZ','nazwa'=>'Zamykaj','akcja'=>"zamykanie.php?$params'+GetID()+'");
-$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?$params'+GetID()+'");
-$buttons[]=array('klawisz'=>'AltG','nazwa'=>'Gofin','akcja'=>"WydrukFakturyParametry.php?$params'+GetID()+'");
+//$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?$params'+GetID()+'");
+$buttons[]=array('klawisz'=>'AltW','nazwa'=>'Wydruk','akcja'=>"WydrukFakturyParametry.php?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltO','nazwa'=>'','akcja'=>"otworz.php?$params'+GetID()+'");
-$buttons[]=array('klawisz'=>'AltX','nazwa'=>'','akcja'=>"generowanie.php?$params'+GetID()+'");
+//$buttons[]=array('klawisz'=>'AltX','nazwa'=>'','akcja'=>"generowanie.php?$params'+GetID()+'");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");

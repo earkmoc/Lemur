@@ -24,11 +24,18 @@ if (($idd=@$_SESSION["{$baza}DokumentyID_D"])!==null)
 	{
 		$dokument['TYP']=trim(explode('-',$_GET['typ'])[0]);
 	}
-	
-//	$rejestr=mysqli_fetch_row(mysqli_query($link, "select sum(NETTO) from dokumentr where ID_D=$idd"));
 
-	$typRejestru=mysqli_fetch_row(mysqli_query($link, "select TYP from dokumentr where ID_D=$idd and if(1*'$idd'=-1,KTO='$ido',1) order by ID limit 1"))[0];
-	$rejestr=mysqli_fetch_row(mysqli_query($link, "select sum(NETTO) from dokumentr where ID_D=$idd and TYP='$typRejestru' and if(1*'$idd'=-1,KTO='$ido',1)"));
+	$wPozostale=false;
+	$typRejestru=mysqli_fetch_row(mysqli_query($link, "select TYP from dokumentr where ID_D=$idd order by ID limit 1"))[0];
+	if($typRejestru=='RPZ')
+	{
+		$rejestr=mysqli_fetch_row(mysqli_query($link, "select BRUTTO-VAT from dokumentr where ID_D=$idd and TYP='RZM'"));
+		$wPozostale=true;
+	}
+	else
+	{
+		$rejestr=mysqli_fetch_row(mysqli_query($link, "select sum(NETTO) from dokumentr where ID_D=$idd"));
+	}
 
 	if(!$rejestr[0])
 	{
@@ -63,7 +70,7 @@ if (($idd=@$_SESSION["{$baza}DokumentyID_D"])!==null)
 		$_POST['PRZYCHOD1']=$rejestr[0];
 	} else
 	{
-		if($stawka=='brak')
+		if($wPozostale||($stawka=='brak'))
 		{
 			$_POST['POZOSTALE']=$rejestr[0];
 		}

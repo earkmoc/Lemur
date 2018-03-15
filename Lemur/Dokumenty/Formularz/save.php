@@ -3,12 +3,12 @@
 //die(print_r($_POST));
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
-
+/*
 if($_POST['DOPERACJI']<$_POST['DDOKUMENTU'])
 {
 	$_POST['DOPERACJI']=$_POST['DDOKUMENTU'];
 }
-
+*/
 $_POST['KTO']=$_SESSION['osoba_id'];
 $_POST['CZAS']=date('Y-m-d H:i:s');
 $_POST['GDZIE']='bufor';
@@ -102,7 +102,7 @@ if ($idd)
 
 	if($brutto!=0)
 	{
-		mysqli_query($link, $q="update dokumenty set WARTOSC='$brutto', NETTOVAT='$netto', PODATEK_VAT='$vat', KTO='$ido', CZAS=Now() where ID=$idd");
+		mysqli_query($link, $q="update dokumenty set WARTOSC='$brutto', NETTOVAT='$netto', if((PODATEK_VAT<>0)and('$vat'*1<>0),PODATEK_VAT,'$vat'), KTO='$ido', CZAS=Now() where ID=$idd");
 		if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	}
 	else
@@ -110,7 +110,7 @@ if ($idd)
 		$od_netto=$_SESSION['od_netto'];
 		require("{$_SERVER['DOCUMENT_ROOT']}/Lemur/Towary/przelicz.php");
 	}
-	
+
 	$dtop=mysqli_fetch_row(mysqli_query($link, $q="select DOPERACJI from dokumenty where ID=$idd"))[0];
 	mysqli_query($link, $q="update dokumentr set OKRES='$dtop', KTO='$ido', CZAS=Now() where ID_D=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 

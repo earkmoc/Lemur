@@ -3,6 +3,9 @@
 //die(print_r($_POST));
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
+mysqli_query($link, "ALTER TABLE `slownik` CHANGE `OPIS` `OPIS` text NOT NULL DEFAULT ''");
+mysqli_query($link, "ALTER TABLE `slownik` ADD UNIQUE `TST` (`TYP`, `SYMBOL`, `TRESC`)");
+
 $_POST['zawijanie']=(@$_POST['zawijanie']?$_POST['zawijanie']:'');
 $_POST['borderNag']=(@$_POST['borderNag']?$_POST['borderNag']:'');
 $_POST['borderPol']=(@$_POST['borderPol']?$_POST['borderPol']:'');

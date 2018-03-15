@@ -1,8 +1,5 @@
 $(document).ready(function() {
    $('input[name=PRZEDMIOT]').focus();
-   $('#buttonTAK').on('click',function(){
-		alert('Akcja na "TAK"');
-   });
 });
 
 function valid($name,$validType) {

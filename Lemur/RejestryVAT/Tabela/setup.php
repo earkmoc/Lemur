@@ -32,6 +32,8 @@ $title.=($kopia=($id_d<0)?"do kopii ":"");
 //$title.=($id_d?"dokumentu o ID=".abs($id_d):'');
 
 $tabela='dokumentr';
+mysqli_query($link, "ALTER TABLE `$tabela` CHANGE `ID_D` `ID_D` INT(11) NOT NULL DEFAULT '-1'");
+mysqli_query($link, "ALTER TABLE `$tabela` CHANGE `TYP` `TYP` char(10) NOT NULL DEFAULT ''");
 
 if ($rejestr)
 {
@@ -62,6 +64,7 @@ $dopisz="../Formularz/?{$params}0'+'";
 $kopia="../Formularz/?$params-'+GetID()+'";
 $usun="usun.php?$params'+GetID()+'";
 $automat="automat.php?idd=$id_d&typ='+parent.$('select[name=TYP] option:selected').val()+'&data='+parent.$('input[name=DOPERACJI]').val()+'&brutto='+parent.$('input[name=WARTOSC]').val()+'";
+$automatP="automatP.php?idd=$id_d&typ='+parent.$('select[name=TYP] option:selected').val()+'&data='+parent.$('input[name=DOPERACJI]').val()+'&brutto='+parent.$('input[name=WARTOSC]').val()+'";
 
 $readonly=false;
 $buttons=array();
@@ -94,6 +97,7 @@ elseif (!$readonly)
 	$buttons[]=array('klawisz'=>'AltC','nazwa'=>'Copy','akcja'=>$kopia);
 	$buttons[]=array('klawisz'=>'AltU','nazwa'=>'Usuñ','akcja'=>$usun);
 	$buttons[]=array('klawisz'=>'AltA','nazwa'=>'Automat','akcja'=>$automat);
+	$buttons[]=array('klawisz'=>'AltP','nazwa'=>'Podzia³','akcja'=>$automatP);
 }
 
 if (isset($id_d))

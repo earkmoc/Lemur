@@ -189,9 +189,9 @@ function valid($name,$validType)
 	  ||($validType=='DDOKUMENTU')
       )
 	{
-		$title="Zachowaj regu³ê:<br>Data wystawienia <= Data Operacji";
-		RegulaMR('DDOKUMENTU','DOPERACJI',$title);
-		RegulaWR('DOPERACJI','DDOKUMENTU',$title);
+//		$title="Zachowaj regu³ê:<br>Data wystawienia <= Data Operacji";
+//		RegulaMR('DDOKUMENTU','DOPERACJI',$title);
+//		RegulaWR('DOPERACJI','DDOKUMENTU',$title);
 	}
 	if($validType=='NIP') 		{GetKontrahentByNIP($name,$validType);}
 	if($validType=='NAZWA') 	{GetKontrahentByNAZWA($name,$validType);}

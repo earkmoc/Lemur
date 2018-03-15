@@ -114,7 +114,7 @@ else
 		$ok=false;
 		for($i=10;$i<=39;++$i)
 		{
-			if($kwota=Formula($i,$_POST["K$i"],$r))
+			if($kwota=Formula($link,$baza,$r,$i,$_POST["K$i"]))
 			{
 				$ok=true;
 				$KS["K_$i"]=$kwota;
@@ -166,11 +166,14 @@ else
 	$value=($value?number_format($value,2,'.',','):'');
 	$raport.="Podatek nale¿ny=<input style='text-align:right' value='$value' /> z³\n";
 
-	fputs($file,"\n"."	<SprzedazCtrl>");
-	fputs($file,"\n"."		<LiczbaWierszySprzedazy>$lp</LiczbaWierszySprzedazy>");
-	fputs($file,"\n"."		<PodatekNalezny>$podatekNalezny</PodatekNalezny>");
-	fputs($file,"\n"."	</SprzedazCtrl>");
-
+	if($lp)
+	{
+		fputs($file,"\n"."	<SprzedazCtrl>");
+		fputs($file,"\n"."		<LiczbaWierszySprzedazy>$lp</LiczbaWierszySprzedazy>");
+		fputs($file,"\n"."		<PodatekNalezny>$podatekNalezny</PodatekNalezny>");
+		fputs($file,"\n"."	</SprzedazCtrl>");
+	}
+	
 	$lp=0;
 	$w=mysqli_query($link,"
 		select *
@@ -185,7 +188,7 @@ else
 		$ok=false;
 		for($i=43;$i<=46;++$i)
 		{
-			if($kwota=Formula($i,$_POST["K$i"],$r))
+			if($kwota=Formula($link,$baza,$r,$i,$_POST["K$i"]))
 			{
 				$ok=true;
 				$KZ["K_$i"]=$kwota;
@@ -236,10 +239,14 @@ else
 		fputs($file,"\n".'	</ZakupWiersz>');
 	}
 	
-	fputs($file,"\n"."	<ZakupCtrl>");
-	fputs($file,"\n"."		<LiczbaWierszyZakupow>$lp</LiczbaWierszyZakupow>");
-	fputs($file,"\n"."		<PodatekNaliczony>$podatekNaliczony</PodatekNaliczony>");
-	fputs($file,"\n"."	</ZakupCtrl>");
+	if($lp)
+	{
+		fputs($file,"\n"."	<ZakupCtrl>");
+		fputs($file,"\n"."		<LiczbaWierszyZakupow>$lp</LiczbaWierszyZakupow>");
+		fputs($file,"\n"."		<PodatekNaliczony>$podatekNaliczony</PodatekNaliczony>");
+		fputs($file,"\n"."	</ZakupCtrl>");
+	}
+	
 	fputs($file,"\n"."</JPK>");
 
 	fclose($file);
@@ -257,7 +264,7 @@ else
 
 $title="JPK(2) - generowanie pliku: raport";
 $buttons=array();
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Menu");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"/Lemur/Klienci");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 
@@ -284,7 +291,7 @@ echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),
 //echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename)));
 echo '</pre>';
 
-function Formula($i,$formula,$dokument)
+function Formula($link,$baza,$dokument,$i,$formula)
 {
 	if(!$formula)
 	{
@@ -292,14 +299,47 @@ function Formula($i,$formula,$dokument)
 	}
 	$formula=str_replace('"',"'",$formula);
 	$formula=str_replace('`',"'",$formula);
-	$formula=str_replace('Netto(','Netto($dokument,',$formula);
-	$formula=str_replace('VAT(','VAT($dokument,',$formula);
+	$formula=str_replace('Netto(','Netto($link,$baza,$dokument,',$formula);
+	$formula=str_replace('VAT(',    'VAT($link,$baza,$dokument,',$formula);
 
 	return eval('return '.$formula.';');
 }
 
-function Netto($dokument,$typDokumentu)
+function Netto($link,$baza,$dokument,$typDokumentu,$stawki)
 {
+	if($stawki)
+	{
+		if(substr($stawki,0,1)=='-')
+		{//stawka pomijana
+			$stawki=str_replace('-','',$stawki);	//wyrzuæ ten minus
+			$bez=mysqli_fetch_row(mysqli_query($link,"
+				select sum(NETTO)
+				  from $baza.dokumentr
+				 where ID_D='$dokument[ID]'
+				   and STAWKA like '%$stawki%'
+			"))[0];
+			$dokument['NETTOVAT']-=$bez;
+		}
+		else
+		{
+			$tylko=mysqli_fetch_row(mysqli_query($link,"
+				select sum(NETTO)
+				  from $baza.dokumentr
+				 where ID_D='$dokument[ID]'
+				   and STAWKA like '%$stawki%'
+			"))[0];
+			$dokument['NETTOVAT']=$tylko;
+		}
+	}
+	if(substr($typDokumentu,0,1)=='R')	//Rejestr, a nie typ dokumentu
+	{
+		return mysqli_fetch_row(mysqli_query($link,"
+			select sum(NETTO)
+			  from $baza.dokumentr
+			 where ID_D='$dokument[ID]'
+			   and TYP='$typDokumentu'
+		"))[0];
+	}
 	if($gwiazdka=strpos($typDokumentu,'*'))
 	{
 		return ((substr($dokument['TYP'],0,$gwiazdka)==substr($typDokumentu,0,$gwiazdka))?$dokument['NETTOVAT']:0);
@@ -310,8 +350,41 @@ function Netto($dokument,$typDokumentu)
 	}
 }
 
-function VAT($dokument,$typDokumentu)
+function VAT($link,$baza,$dokument,$typDokumentu,$stawki)
 {
+	if($stawki)
+	{
+		if(substr($stawki,0,1)=='-')
+		{//stawka pomijana
+			$stawki=str_replace('-','',$stawki);	//wyrzuæ ten minus
+			$bez=mysqli_fetch_row(mysqli_query($link,"
+				select sum(VAT)
+				  from $baza.dokumentr
+				 where ID_D='$dokument[ID]'
+				   and STAWKA like '%$stawki%'
+			"))[0];
+			$dokument['PODATEK_VAT']-=$bez;
+		}
+		else
+		{
+			$tylko=mysqli_fetch_row(mysqli_query($link,"
+				select sum(VAT)
+				  from $baza.dokumentr
+				 where ID_D='$dokument[ID]'
+				   and STAWKA like '%$stawki%'
+			"))[0];
+			$dokument['PODATEK_VAT']=$tylko;
+		}
+	}
+	if(substr($typDokumentu,0,1)=='R')	//Rejestr a nie typ dokumentu
+	{
+		return mysqli_fetch_row(mysqli_query($link,"
+			select sum(VAT)
+			  from $baza.dokumentr
+			 where ID_D='$dokument[ID]'
+			   and TYP='$typDokumentu'
+		"))[0];
+	}
 	if($gwiazdka=strpos($typDokumentu,'*'))
 	{
 		return ((substr($dokument['TYP'],0,$gwiazdka)==substr($typDokumentu,0,$gwiazdka))?$dokument['PODATEK_VAT']:0);

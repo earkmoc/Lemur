@@ -40,6 +40,6 @@ if ($idd)
 	$brutto=mysqli_fetch_row(mysqli_query($link, $q="select sum(BRUTTO) from dokumentr where ID_D=$idd"))[0];
 	$netto =mysqli_fetch_row(mysqli_query($link, $q="select sum(NETTO) from dokumentr where ID_D=$idd"))[0];
 	$vat   =mysqli_fetch_row(mysqli_query($link, $q="select sum(VAT) from dokumentr where ID_D=$idd"))[0];
-	mysqli_query($link, $q="update dokumenty set WARTOSC='$brutto', NETTOVAT='$netto', PODATEK_VAT='$vat' where ID=$idd");
+	mysqli_query($link, $q="update dokumenty set WARTOSC='$brutto', NETTOVAT='$netto', PODATEK_VAT=if((PODATEK_VAT<>0)and('$vat'*1<>0),PODATEK_VAT,'$vat') where ID=$idd");
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 }
