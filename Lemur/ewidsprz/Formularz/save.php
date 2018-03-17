@@ -6,8 +6,8 @@ if ($idd=@$_SESSION["{$baza}DokumentyID_D"])
 {
 	$_POST['ID_D']=$idd;
 	$dokument=mysqli_fetch_array(mysqli_query($link, "select * from dokumenty where ID=$idd"));
-	$_POST['DATAW']=$dokument['DOPERACJI'];
-	$_POST['DATA']=$dokument['DDOKUMENTU'];
+//	$_POST['DATAW']=$dokument['DOPERACJI'];
+//	$_POST['DATA']=$dokument['DDOKUMENTU'];
 	$_POST['NRDOW']=$dokument['NUMER'];
 	$_POST['NRKONT']=$dokument['NRKONT'];
 	$_POST['PSKONT']=$dokument['PSKONT'];

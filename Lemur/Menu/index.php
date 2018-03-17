@@ -38,7 +38,7 @@ $buttons[]=array('klawisz'=>'Up','nazwa'=>'','js'=>'Prev()');
 $buttons[]=array('klawisz'=>'Down','nazwa'=>'','js'=>'Next()');
 $buttons[]=array('klawisz'=>'Right','nazwa'=>'','js'=>'Prawo()');
 $buttons[]=array('klawisz'=>'Left','nazwa'=>'','js'=>'Lewo()');
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur/Klienci/?baza='.$baza);
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur2/Klienci/?baza='.$baza);
 $buttons[]=array('klawisz'=>'AltO','nazwa'=>'Old menu','akcja'=>'Tabela');
 
 $title="Menu";
@@ -226,8 +226,9 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../Dokumenty" id="8a">a) Dokumenty</td></tr>
 <tr><td><a href="../Rejestry" id="8b">b) Rejestry VAT / inne rejestry</td></tr>
 <tr><td><a href="../KPIR" id="8c">c) KPiR</td></tr>
-<tr><td><a href="../EwidencjaWyposazenia" id="8d">d) Ewidencja Wyposa¿enia</td></tr>
-<tr><td><a href="../Sprawozdawczosc" id="8e">e) Sprawozdawczo¶æ</td></tr>
+<tr><td><a href="../ewidsprz" id="8d">d) Ewidencja Sprzeda¿y</td></tr>
+<tr><td><a href="../EwidencjaWyposazenia" id="8e">e) Ewidencja Wyposa¿enia</td></tr>
+<tr><td><a href="../Sprawozdawczosc" id="8f">f) Sprawozdawczo¶æ</td></tr>
 </table>
 </div>
 

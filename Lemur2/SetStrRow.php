@@ -8,7 +8,7 @@ function SetStrRow($link, $id, $ileNaStrone=15)
 
 	$mandatory=($mandatory?$mandatory:'1');
 	$q="select ID from $tabela where $mandatory order by $sortowanieDoLiczenia";
-	$w=mysqli_query($link, $q);
+	$w=mysqli_query($link, $q);	//if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	$row=mysqli_num_rows($w);
 	while($r=mysqli_fetch_row($w))
 	{

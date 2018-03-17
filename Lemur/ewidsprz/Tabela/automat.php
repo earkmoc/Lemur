@@ -11,8 +11,8 @@ if (($idd=@$_SESSION["{$baza}DokumentyID_D"])!==null)
 	$_POST['ID_D']=$idd;
 
 	$dokument=mysqli_fetch_array(mysqli_query($link, "select * from dokumenty where ID=$idd"));
-	$_POST['DATA']=$dokument['DOPERACJI'];
-	$_POST['DATAW']=$dokument['DDOKUMENTU'];
+	$_POST['DATA']=$_GET['ddokumentu'];
+	$_POST['DATAW']=$_GET['doperacji'];
 	$_POST['NRDOW']=$dokument['NUMER'];
 	$_POST['NRKONT']=$dokument['NRKONT'];
 	$_POST['PSKONT']=$dokument['PSKONT'];
@@ -26,7 +26,21 @@ if (($idd=@$_SESSION["{$baza}DokumentyID_D"])!==null)
 		$dokument['TYP']=trim(explode('-',$_GET['typ'])[0]);
 	}
 	
-	$rejestr=mysqli_fetch_row(mysqli_query($link, "select sum(NETTO) from dokumentr where ID_D=$idd"));
+	$podzial=mysqli_fetch_row(mysqli_query($link, $q="select count(*) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+	if($podzial)
+	{
+		$brutto=mysqli_fetch_row(mysqli_query($link, $q="select sum(BRUTTO) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+		$netto =mysqli_fetch_row(mysqli_query($link, $q="select sum(NETTO) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+		$vat   =mysqli_fetch_row(mysqli_query($link, $q="select sum(VAT) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+	}
+	else
+	{
+		$typ=mysqli_fetch_row(mysqli_query($link, $q="select TYP from dokumentr where ID_D=$idd order by ID limit 1"))[0];
+		$brutto=mysqli_fetch_row(mysqli_query($link, $q="select sum(BRUTTO) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
+		$netto =mysqli_fetch_row(mysqli_query($link, $q="select sum(NETTO) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
+		$vat   =mysqli_fetch_row(mysqli_query($link, $q="select sum(VAT) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
+	}
+	$rejestr[0]=$netto;
 
 	if(!$rejestr[0])
 	{
@@ -56,10 +70,10 @@ if (($idd=@$_SESSION["{$baza}DokumentyID_D"])!==null)
 		$rejestr[0]=$netto=$brutto-$vat;
 	}
 	
-	if(substr($dokument['TYP'],0,1)=='S')
-	{
+//	if(substr($dokument['TYP'],0,1)=='S')
+//	{
 		$_POST['PRZYCHOD1']=$rejestr[0];
-	}
+//	}
 
 	//usuniecie dotychczasowych zapisów
 	mysqli_query($link,$q="

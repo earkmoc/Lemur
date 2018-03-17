@@ -53,7 +53,8 @@ $title='Dokumenty';
 $tabela='dokumenty';
 $widok=$tabela;
 $mandatory='';
-$sortowanie='DOPERACJI desc, ID desc';
+$sortowanie="$tabela.DOPERACJI, $tabela.ID";
+$sortowanieDoLiczenia="$tabela.DOPERACJI desc, $tabela.ID desc";
 
 mysqli_query($link, "ALTER TABLE $tabela CHANGE `SPOSZAPL` `SPOSZAPL` char(30) NOT NULL DEFAULT 'przelew'");
 mysqli_query($link, "ALTER TABLE $tabela CHANGE `PRZEDMIOT` `PRZEDMIOT` char(99) NOT NULL DEFAULT ''");
