@@ -32,4 +32,5 @@ else
 	mysqli_query($link, $q="delete from dokumentm where ID_D='$id'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	mysqli_query($link, $q="delete from dokumentr where ID_D='$id'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	mysqli_query($link, $q="delete from kpr       where ID_D='$id'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+	mysqli_query($link, $q="delete from ewidsprz  where ID_D='$id'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 }

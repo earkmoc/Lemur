@@ -43,6 +43,7 @@ if (!@$_POST['ADRES'])
 	}
 }
 
+//$noHeader=true;
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveFormFields.php");
 
 $nowyDokument=false;
@@ -57,7 +58,7 @@ if ($idd==0)
 	mysqli_query($link, $q="update kpr       set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	mysqli_query($link, $q="update ewidsprz  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 	mysqli_query($link, $q="update ewidprzeb set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	mysqli_query($link, $q="update ewidwypo  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+	mysqli_query($link, $q="update ewidwypo  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");//if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 }
 
 mysqli_query($link, $q="
@@ -80,8 +81,8 @@ mysqli_query($link, $q="
 	update ewidsprz
  left join dokumenty 
 		on dokumenty.ID=ewidsprz.ID_D
-	   set ewidsprz.DATAW=DOPERACJI
-		 , ewidsprz.DATA=DDOKUMENTU
+	   set ewidsprz.DATAW=if(ewidsprz.DATAW*1=0,dokumenty.DOPERACJI,ewidsprz.DATAW)
+		 , ewidsprz.DATA=if(ewidsprz.DATA*1=0,dokumenty.DDOKUMENTU,ewidsprz.DATA)
 		 , ewidsprz.NRDOW=dokumenty.NUMER
 		 , ewidsprz.NRKONT=dokumenty.NRKONT
 		 , ewidsprz.PSKONT=dokumenty.PSKONT
@@ -95,10 +96,20 @@ if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
 if ($idd)
 {
-	$typ=mysqli_fetch_row(mysqli_query($link, $q="select TYP from dokumentr where ID_D=$idd order by ID limit 1"))[0];
-	$brutto=mysqli_fetch_row(mysqli_query($link, $q="select sum(BRUTTO) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
-	$netto =mysqli_fetch_row(mysqli_query($link, $q="select sum(NETTO) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
-	$vat   =mysqli_fetch_row(mysqli_query($link, $q="select sum(VAT) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
+	$podzial=mysqli_fetch_row(mysqli_query($link, $q="select count(*) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+	if($podzial)
+	{
+		$brutto=mysqli_fetch_row(mysqli_query($link, $q="select sum(BRUTTO) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+		$netto =mysqli_fetch_row(mysqli_query($link, $q="select sum(NETTO) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+		$vat   =mysqli_fetch_row(mysqli_query($link, $q="select sum(VAT) from dokumentr where ID_D=$idd and TYP like 'RZM%'"))[0];
+	}
+	else
+	{
+		$typ=mysqli_fetch_row(mysqli_query($link, $q="select TYP from dokumentr where ID_D=$idd order by ID limit 1"))[0];
+		$brutto=mysqli_fetch_row(mysqli_query($link, $q="select sum(BRUTTO) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
+		$netto =mysqli_fetch_row(mysqli_query($link, $q="select sum(NETTO) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
+		$vat   =mysqli_fetch_row(mysqli_query($link, $q="select sum(VAT) from dokumentr where ID_D=$idd and TYP='$typ'"))[0];
+	}
 
 	if($brutto!=0)
 	{

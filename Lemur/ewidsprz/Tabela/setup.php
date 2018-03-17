@@ -57,7 +57,7 @@ if (isset($id_d))
 {
 	if (!$readonly)
 	{
-		$buttons[]=array('klawisz'=>'AltA','nazwa'=>'Automat','akcja'=>"automat.php?idd=$id_d&typ='+parent.$('select[name=TYP] option:selected').val()+'&brutto='+parent.$('input[name=WARTOSC]').val()+'");
+		$buttons[]=array('klawisz'=>'AltA','nazwa'=>'Automat','akcja'=>"automat.php?idd=$id_d&typ='+parent.$('select[name=TYP] option:selected').val()+'&brutto='+parent.$('input[name=WARTOSC]').val()+'&ddokumentu='+parent.$('input[name=DDOKUMENTU]').val()+'&doperacji='+parent.$('input[name=DOPERACJI]').val()+'");
 	}
 	require('../../Dokumenty/Formularz/zakladkiButtons.php');
 } 

@@ -47,6 +47,7 @@ else
 		$klient='Lemur2/Moduly';
 		$klient=(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from Lemur2.klienci where PSKONT='Batory'"))[0]?'Batory/Menu/index.php':$klient);
 		$klient=(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from Lemur2.klienci where PSKONT='Filutek'"))[0]?'Filutek/Menu/index.php':$klient);
+//		$klient='Lemur2/Klienci/Tabela/index.php';
 
 		header("Location:/$klient");
 
