@@ -248,7 +248,7 @@ else
 
 $title="JPK_VAT (3) - generowanie pliku: raport";
 $buttons=array();
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"/Lemur/Klienci");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Menu");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 
