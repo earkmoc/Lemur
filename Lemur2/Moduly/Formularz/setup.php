@@ -3,6 +3,16 @@
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveTablePosition.php");
 
+mysqli_query($link,$q="
+	update Lemur2.tabele 
+	   set FORMULARZ='moduly
+KLIENT|Klient|50,option:select NAZWA from Lemur2.klienci group by NAZWA|50|
+ROK|Rok|10||2||
+from moduly
+where ID=' 
+	 where NAZWA='moduly'
+");
+
 //----------------------------------------------
 
 $buttons=array();
