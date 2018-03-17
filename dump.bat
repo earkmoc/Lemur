@@ -14,7 +14,7 @@ echo ***************************************************************************
 echo DUMP bazy: %baza%
 echo ******************************************************************************
 
-C:\wamp\bin\mysql\mysql5.7.14\bin\mysqldump.exe -u%u% -p%p% %baza% > %sql%
+C:\wamp64\bin\mysql\mysql5.7.11\bin\mysqldump.exe -u%u% -p%p% %baza% > %sql%
 "C:\Program Files\7-Zip\7z.exe" a %arch% %sql% -pEla!@#223#@!
 del %sql%
 
