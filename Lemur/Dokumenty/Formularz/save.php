@@ -52,13 +52,13 @@ if ($idd==0)
 	$nowyDokument=true;
 	$idd=mysqli_insert_id($link);
 	$_SESSION["{$baza}DokumentyID_D"]=$idd;
-	mysqli_query($link, $q="update dokumentk set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	mysqli_query($link, $q="update dokumentm set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	mysqli_query($link, $q="update dokumentr set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	mysqli_query($link, $q="update kpr       set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	mysqli_query($link, $q="update ewidsprz  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	mysqli_query($link, $q="update ewidprzeb set ID_D='$idd' where ID_D=-1 and KTO='$ido'");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-	mysqli_query($link, $q="update ewidwypo  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");//if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+	mysqli_query($link, $q="update dokumentk set ID_D='$idd' where ID_D=-1 and KTO='$ido'");
+	mysqli_query($link, $q="update dokumentm set ID_D='$idd' where ID_D=-1 and KTO='$ido'");
+	mysqli_query($link, $q="update dokumentr set ID_D='$idd' where ID_D=-1 and KTO='$ido'");
+	mysqli_query($link, $q="update kpr       set ID_D='$idd' where ID_D=-1 and KTO='$ido'");
+	mysqli_query($link, $q="update ewidsprz  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");
+	mysqli_query($link, $q="update ewidprzeb set ID_D='$idd' where ID_D=-1 and KTO='$ido'");
+	mysqli_query($link, $q="update ewidwypo  set ID_D='$idd' where ID_D=-1 and KTO='$ido'");
 }
 
 mysqli_query($link, $q="
