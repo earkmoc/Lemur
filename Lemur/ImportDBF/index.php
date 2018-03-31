@@ -6,7 +6,7 @@ $title="Import plików DBF";
 
 $innaBaza='Lemur';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
-$path=mysqli_fetch_row(mysqli_query($link, "select OPIS from klienci where PSKONT='$baza'"))[0];
+$path=mysqli_fetch_row(mysqli_query($link, "select OPIS from Lemur2.klienci where PSKONT='$baza'"))[0];
 $path=str_replace("/","\\",$path);
 
 $buttons=array();

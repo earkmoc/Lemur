@@ -14,7 +14,7 @@ $buttons=array();
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Klienci");
 
 $iluKlientow=mysqli_fetch_row(mysqli_query($link, $q="
-	select count(*) from klienci where PSKONT='$klient'
+	select count(*) from Lemur2.klienci where PSKONT='$klient'
 "))[0];
 
 if	( ($baza==$klient)

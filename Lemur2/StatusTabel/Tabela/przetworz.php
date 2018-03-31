@@ -7,7 +7,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 mysqli_query($link,"truncate table Status");
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	mysqli_query($link,"

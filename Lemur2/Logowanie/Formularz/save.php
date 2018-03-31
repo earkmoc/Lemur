@@ -36,7 +36,7 @@ else
 		//zmiana lokalizacji tabeli klientów
 		require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
 		if	( !FieldsOd($link, 'klienci', 1)
-			||(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from klienci"))[0]==0)
+			||(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from Lemur2.klienci"))[0]==0)
 			)
 		{
 			mysqli_query($link,$q="create table if not exists klienci like Lemur.klienci");

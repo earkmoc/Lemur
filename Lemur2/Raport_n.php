@@ -5,7 +5,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 $q=mysqli_query($link,"
 select *
-  from klienci
+  from Lemur2.klienci
  where PSKONT='$baza'
 ");
 while($r=mysqli_fetch_array($q))

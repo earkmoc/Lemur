@@ -9,12 +9,12 @@ if($idPoprzedni<0)
 {
 	$idPoprzedni=abs($idPoprzedni);
 	$bazaPoprzednia=mysqli_fetch_row(mysqli_query($link, $q="
-		select PSKONT from klienci where ID=$idPoprzedni
+		select PSKONT from Lemur2.klienci where ID=$idPoprzedni
 	"))[0];
 
 	//źródło skryptów musi być aktualne
 	mysqli_query($link,$q="
-		update klienci set CZAS=Now() where PSKONT='Lemur'
+		update Lemur2.klienci set CZAS=Now() where PSKONT='Lemur'
 	");
 
 	//utworzenie nowej bazy danych

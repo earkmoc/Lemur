@@ -27,7 +27,7 @@ foreach($_POST as $key => $value)
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 }
 
-$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur.klienci where PSKONT='$baza'"));
+$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur2.klienci where PSKONT='$baza'"));
 
 if	( ($klient['NAZWA']=='')
 	||($klient['NIP']=='')

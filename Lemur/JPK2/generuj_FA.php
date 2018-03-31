@@ -29,7 +29,7 @@ foreach($_POST as $key => $value)
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 }
 
-$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur.klienci where PSKONT='$baza'"));
+$klient=mysqli_fetch_array(mysqli_query($link,$q="select * from Lemur2.klienci where PSKONT='$baza'"));
 
 $klient['KODUS']=$_POST['kodUS'];
 
@@ -49,7 +49,7 @@ else
 	$klient['ADRES']=iconv('ISO-8859-2','UTF-8',StripSlashes($klient['ADRES']));
 	$klient['NIP']=preg_replace('/\D/', '', $klient['NIP']);
 
-	mysqli_query($link,$q="update Lemur.klienci set KODUS='$_POST[kodUS]' where PSKONT='$baza'");
+	mysqli_query($link,$q="update Lemur2.klienci set KODUS='$_POST[kodUS]' where PSKONT='$baza'");
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br><br>'.$q);}
 
 	$file=fopen($filename,"w");

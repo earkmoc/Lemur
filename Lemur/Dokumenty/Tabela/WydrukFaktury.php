@@ -81,7 +81,7 @@ $(document).keydown(function(e)
 
 $klient=mysqli_fetch_array($q=mysqli_query($link,"
 select *
-  from Lemur.klienci
+  from Lemur2.klienci
  where PSKONT='$baza'
 "));
 

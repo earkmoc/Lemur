@@ -31,7 +31,7 @@ $_POST['path']=str_replace("\\","/",$_POST['path']);
 //$_POST['path']=AddSlashes($_POST['path']);
 $value=AddSlashes($value);
 
-mysqli_query($link, "insert into klienci set CZAS=Now(), OPIS='$_POST[path]', UWAGI='$value'");
+mysqli_query($link, "insert into Lemur2.klienci set CZAS=Now(), OPIS='$_POST[path]', UWAGI='$value'");
 
 $title="Import pliku MAX: raport";
 $buttons=array();

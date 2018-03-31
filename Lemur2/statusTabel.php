@@ -8,7 +8,7 @@ $tabela='kpr';
 
 echo '<hr>masowe testowanie "kpr.DATA"<br>';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -21,7 +21,7 @@ while($klient=mysqli_fetch_array($klienci))
 
 echo '<hr>masowe testowanie "kpr.ADRES"<br>';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -36,7 +36,7 @@ echo '<hr>masowe testowanie rejestrów: zapisy bez po³±czenia z dokumentem"<br>';
 
 $tabela='dokumentr';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -65,7 +65,7 @@ echo '<hr>masowe testowanie "dekretów: zapisy z und"<br>';
 $slowo='undefi';
 $tabela='dokumentk';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -94,7 +94,7 @@ echo '<hr>Duble w planie kont<br>';
 
 $tabela='knordpol';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -124,7 +124,7 @@ echo '<hr>Stawki -1 wmagazynie<br>';
 
 $tabela='towary';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -146,7 +146,7 @@ echo '<hr>masowa zmiana "srodkitr" na "SrodkiTr" w menu<br>';
 
 $tabela='menu';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -168,7 +168,7 @@ echo '<hr>masowa zmiana "ewidsprz" na "EwidSprz" w menu<br>';
 
 $tabela='menu';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -190,7 +190,7 @@ echo '<hr>masowa zmiana "ewidprzeb" na "EwidPrzeb" w menu<br>';
 
 $tabela='menu';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -212,7 +212,7 @@ echo '<hr>masowa zmiana "SKROT=Rejestry" na "NAZWA=Rejestry VAT" w menu<br>';
 
 $tabela='menu';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -234,7 +234,7 @@ echo '<hr>masowe usuwanie "TypyDokKs" w menu<br>';
 
 $tabela='menu';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
@@ -256,7 +256,7 @@ echo '<hr>masowe testowanie i zmiana "nordpol.KWOTA"<br>';
 
 $tabela='nordpol';
 
-$klienci=mysqli_query($link,"select * from Lemur.klienci order by PSKONT");
+$klienci=mysqli_query($link,"select * from Lemur2.klienci order by PSKONT");
 while($klient=mysqli_fetch_array($klienci))
 {
 	$ile=mysqli_fetch_row(mysqli_query($link,"
