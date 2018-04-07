@@ -1,0 +1,12 @@
+body {
+	margin: 0;
+}
+canvas {
+	border: 0px solid black;
+	height: 100%;
+	width: 100%;
+	background: white;
+	background-image: url("20180327_171001.jpg");
+	background-size: 1900px;
+	background-repeat: no-repeat;
+}
