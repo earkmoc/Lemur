@@ -18,20 +18,20 @@ function draw()
 		{
 			var p=(x+y*data.width)*4;
 //			alert(data.data[p+0]+', '+data.data[p+1]+', '+data.data[p+2]+', '+data.data[p+3]);	//235,0,9,227
-			if(data.data[p+3]>128)
+			if(data.data[p+3]>0)
 			{
 				var particle={
 					 x0:x+png.height/2
 					,y0:y+png.width/4
-					,x1:Math.random()*png.width+png.width/2
-					,y1:Math.random()*png.height+png.height/2
+					,x1:png.width-png.width/3
+					,y1:png.height-png.height/3
 					,speed: Math.random()*10
-					,color: 'rgb('+data.data[p+0]+','+data.data[p+1]+','+data.data[p+2]+')'
+					,color: 'rgba('+data.data[p+0]+','+data.data[p+1]+','+data.data[p+2]+','+data.data[p+3]/227+')'
 				}
 				TweenMax.to(particle, particle.speed, {
 					x1:particle.x0,
 					y1:particle.y0,
-//					delay: x/5,
+					delay: x/5,
 					ease: Elastic.easeOut
 				});
 				particles.push(particle);
@@ -49,10 +49,12 @@ function render()
 	{
 		context.fillStyle=particles[i].color;
 		context.strokeStyle = particles[i].color;
-//		context.fillRect(particles[i].x1*2,particles[i].y1*2,2,2);
-		context.beginPath();
-		context.arc(particles[i].x1*2,particles[i].y1*2,2,0,2*Math.PI);
-		context.fill();
-		context.stroke();
+//		context.strokeStyle = 'white';
+//		context.strokeStyle = 'black';
+		context.fillRect(particles[i].x1*2,particles[i].y1*2,3,3);
+//		context.beginPath();
+//		context.arc(particles[i].x1*2,particles[i].y1*2,2,0,2*Math.PI);
+//		context.fill();
+//		context.stroke();
 	}
 }
