@@ -212,9 +212,9 @@ while($r=mysqli_fetch_row($w))
 <div class="table-responsive" id="kartoteka">
 <table class="table table-hover table-bordered table-striped">
 <tr><th><a href="" id="7">7. Kartoteka firmy</a></th></tr>
-<tr><td><a href="" id="7a">a) Samochody</td></tr>
-<tr><td><a href="" id="7b">b) Analizy sprzeda¿y itp.</td></tr>
-<tr><td><a href="" id="7c">c) Inne wa¿ne rzeczy dla prezesa</td></tr>
+<tr><td><a href="../ParticlesAnimation" id="7a">a) Particles Animation</td></tr>
+<tr><td><a href="../Particles" id="7b">b) Particles</td></tr>
+<tr><td><a href="../Wipers" id="7c">c) Wipers</td></tr>
 </table>
 </div>
                  </div>
@@ -227,8 +227,8 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../Rejestry" id="8b">b) Rejestry VAT / inne rejestry</td></tr>
 <tr><td><a href="../KPIR" id="8c">c) KPiR</td></tr>
 <tr><td><a href="../ewidsprz" id="8d">d) Ewidencja Sprzeda¿y</td></tr>
-<tr><td><a href="../EwidencjaWyposazenia" id="8e">e) Ewidencja Wyposa¿enia</td></tr>
-<tr><td><a href="../Sprawozdawczosc" id="8f">f) Sprawozdawczo¶æ</td></tr>
+<tr><td><a href="../ewidprzeb" id="8e">e) Ewidencja Przebiegu Pojazdów</td></tr>
+<tr><td><a href="../EwidencjaWyposazenia" id="8f">f) Ewidencja Wyposa¿enia</td></tr>
 </table>
 </div>
 
