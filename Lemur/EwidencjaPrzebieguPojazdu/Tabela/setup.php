@@ -24,6 +24,8 @@ $tabela='ewidprzeb';
 $widok=$tabela.(!isset($id_d)?'':'H');
 $mandatory="if('$id_d'='0',$tabela.ID_D=-1 and KTO='$ido',$tabela.ID_D='$id_d')";
 $mandatory=(!isset($id_d)?'':$mandatory);
+
+require('init.php');
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 
 $params="idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
