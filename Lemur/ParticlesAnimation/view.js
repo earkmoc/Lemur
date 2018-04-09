@@ -3,10 +3,11 @@ var context=canvas.getContext('2d');
 var particles=[];
 
 var png=document.images[0];
-png.onload=draw();
+png.onload=draw(png.width-png.width/3,png.height-png.height/3);
 
-function draw()
+function draw(xx,yy)
 {
+	particles=[];
 	canvas.width=png.width*4;
 	canvas.height=png.height*4;
 	context.drawImage(png, 0, 0);
@@ -23,8 +24,8 @@ function draw()
 				var particle={
 					 x0:x+png.height/2
 					,y0:y+png.width/4
-					,x1:png.width-png.width/3
-					,y1:png.height-png.height/3
+					,x1:xx
+					,y1:yy
 					,speed: Math.random()*10
 					,color: 'rgba('+data.data[p+0]+','+data.data[p+1]+','+data.data[p+2]+','+data.data[p+3]/227+')'
 				}
@@ -53,8 +54,28 @@ function render()
 //		context.strokeStyle = 'black';
 		context.fillRect(particles[i].x1*2,particles[i].y1*2,3,3);
 //		context.beginPath();
-//		context.arc(particles[i].x1*2,particles[i].y1*2,2,0,2*Math.PI);
+//		context.arc(particles[i].x1*2,particles[i].y1*2,4,0,2*Math.PI);
 //		context.fill();
 //		context.stroke();
 	}
 }
+
+function Mouse()
+{
+	this.x=undefined;
+	this.y=undefined;
+	this.update=function(event)
+	{
+		this.x=event.x;
+		this.y=event.y;
+	}
+}
+
+var mouse=new Mouse();
+window.addEventListener('mousemove',function(event) {
+	mouse.update(event);
+});
+
+window.addEventListener('click',function(event) {
+	draw((mouse.x-5)/7,(mouse.y-40)/7);
+});
