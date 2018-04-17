@@ -27,7 +27,19 @@ class BookController extends AbstractActionController
 	}
 	public function editAction()
 	{
+		$form=new BookForm();
+		//$form->bind($book);
+		$form->get('submit')->setAttribute('value','Edit');
 		
+		$request=$this->getRequest();
+		if($request->isPost())
+		{
+			
+		}
+		return array(
+			'id'=>$id,
+			'form'=>$form,
+		);
 	}
 	public function deleteAction()
 	{
