@@ -22,18 +22,18 @@ function draw(xx,yy)
 			if(data.data[p+3]>0)
 			{
 				var particle={
-					 x0:x+png.height/2
-					,y0:y+png.width/4
-					,x1:xx
+					 x1:xx
 					,y1:yy
+					,x2:x+png.height/2
+					,y2:y+png.width/4
 					,speed: Math.random()*10
 					,color: 'rgba('+data.data[p+0]+','+data.data[p+1]+','+data.data[p+2]+','+data.data[p+3]/227+')'
 				}
 				TweenMax.to(particle, particle.speed, {
-					x1:particle.x0,
-					y1:particle.y0,
-					delay: x/5,
-					ease: Elastic.easeOut
+					x1:particle.x2,
+					y1:particle.y2,
+//					delay: x/5,
+//					ease: Elastic.easeOut
 				});
 				particles.push(particle);
 			}
