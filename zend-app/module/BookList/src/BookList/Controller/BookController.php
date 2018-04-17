@@ -43,6 +43,21 @@ class BookController extends AbstractActionController
 	}
 	public function deleteAction()
 	{
+		$id=(int)$this->params()->fromRoute('id',0);
+		if(!$id)
+		{
+			return $this->redirect()->toRoute('book');
+		}
 		
+		$request=$this->getRequest();
+		if($request->isPost())
+		{
+			
+		}
+		
+		return array(
+			'id'=>$id,
+			//'book'=>,
+		);
 	}
 }
