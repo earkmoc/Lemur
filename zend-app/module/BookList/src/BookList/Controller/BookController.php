@@ -4,6 +4,7 @@ namespace BookList\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use BookList\Form\BookForm;
+use BookList\Model\Book;
 
 class BookController extends AbstractActionController
 {
@@ -23,7 +24,18 @@ class BookController extends AbstractActionController
 		$request=$this->getRequest();
 		if($request->isPost())
 		{
+			$book=newBook();
+			$form-setInputFilter($book->getInputFilter());
+			$form->setData($request->getPost());
 			
+			if($form->isValid())
+			{
+				$book->exchangeArray($form->getData());
+				$this->getBookTable()->saveBook($book);
+			}
+			
+			//Redirect to list of books
+			return $this->redirect()->toRoute('book');
 		}
 		return array('form'=>$form);
 	}
