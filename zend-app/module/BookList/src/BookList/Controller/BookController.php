@@ -78,12 +78,21 @@ class BookController extends AbstractActionController
 		$request=$this->getRequest();
 		if($request->isPost())
 		{
+			$del=$request->getPost('del','No');
 			
+			if($del=='Yes')
+			{
+				$id=(int)$request->getPost('id');
+				$this->getBookTable()->deleteBook($id);
+			}
+			
+			//Redirect to list of books
+			return $this->redirect()->toRoute('book');
 		}
 		
 		return array(
 			'id'=>$id,
-			// 'book'=>,
+			'book'=>$this->getBookTable()->getBook($id)
 		);
 	}
 	
