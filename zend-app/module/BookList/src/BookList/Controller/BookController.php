@@ -7,6 +7,8 @@ use BookList\Form\BookForm;
 
 class BookController extends AbstractActionController
 {
+	protected $bookTable;
+	
 	public function indexAction()
 	{
 		return new ViewModel(array(
@@ -57,7 +59,17 @@ class BookController extends AbstractActionController
 		
 		return array(
 			'id'=>$id,
-			//'book'=>,
+			// 'book'=>,
 		);
+	}
+	
+	public function getBookTable()
+	{
+		if(!$this->bookTable)
+		{
+			$sm=$this->getServiceLocator();
+			$this->bookTable=$sm->get('BookList\Model\BookTable');
+		}
+		return $this->bookTable;
 	}
 }
