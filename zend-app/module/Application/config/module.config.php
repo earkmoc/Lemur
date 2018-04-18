@@ -36,9 +36,39 @@ return [
             ],
         ],
     ],
+	'navigation'=>array(
+		'default'=>array(
+			array(
+				'label'=>'Home',
+				'route'=>'Home',
+			),
+			array(
+				'label'=>'Book',
+				'route'=>'book',
+				'pages'=>array(
+					array(
+						'label'=>'Add',
+						'route'=>'book',
+						'action'=>'add',
+					),
+					array(
+						'label'=>'Edit',
+						'route'=>'book',
+						'action'=>'edit',
+					),
+					array(
+						'label'=>'Delete',
+						'route'=>'book',
+						'action'=>'delete',
+					),
+				),
+			),
+		),
+	),
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
+			'navigation'=>'Zend\Navigation\Service\DefaultNavigationFactory',
         ],
     ],
     'view_manager' => [
