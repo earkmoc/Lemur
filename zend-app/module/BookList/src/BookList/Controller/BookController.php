@@ -41,15 +41,27 @@ class BookController extends AbstractActionController
 	}
 	public function editAction()
 	{
+		$id=(int)$this->params()->fromRoute('id',0);
+		$book=$this->getBookTable()->getBook($id);
 		$form=new BookForm();
-		//$form->bind($book);
+		$form->bind($book);
 		$form->get('submit')->setAttribute('value','Edit');
 		
 		$request=$this->getRequest();
 		if($request->isPost())
 		{
+			$form-setInputFilter($book->getInputFilter());
+			$form->setData($request->getPost());
 			
+			if($form->isValid())
+			{
+				$this->getBookTable()->saveBook($book);
+
+				//Redirect to list of books
+				return $this->redirect()->toRoute('book');
+			}	
 		}
+
 		return array(
 			'id'=>$id,
 			'form'=>$form,
