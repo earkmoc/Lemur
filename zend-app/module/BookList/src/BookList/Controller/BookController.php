@@ -12,7 +12,7 @@ class BookController extends AbstractActionController
 	public function indexAction()
 	{
 		return new ViewModel(array(
-			'books'=>[]
+			'books'=>$this->getBookTable()->fetchAll(),
 		));
 	}
 	public function addAction()
