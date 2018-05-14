@@ -12,7 +12,7 @@ if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
 $title="Renumeracja dokumentów";
 $buttons=array();
-$buttons[]=array('klawisz'=>'AltR','nazwa'=>'Enter=Renumeruj','akcja'=>"renumeruj.php");
+$buttons[]=array('klawisz'=>'AltR','nazwa'=>'Enter=Renumeruj','akcja'=>"renumeruj.php?rejestracja={$_GET['rejestracja']}");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"..");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
@@ -23,7 +23,7 @@ echo "<td>";
 
 echo '<div class="form-group">';
 echo '<span class="btn btn-default btn-file">';
-echo 'Okres sprawozdawczy: <input class="form-control" name="okres" value="'.$okres.'" size="7">';
+echo 'Okres sprawozdawczy: <input class="form-control" name="okres" placeholder="yyyy-mm" value="'.$okres.'" size="7">';
 echo '</span>';
 echo '</div>';
 

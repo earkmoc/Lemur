@@ -8,19 +8,25 @@ error_reporting(E_ERROR | E_PARSE);
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
-$nr=mysqli_fetch_row(mysqli_query($link,$q="
-	select LP
-	  from ewidprzeb
-	 where left(ewidprzeb.DATAW,7)<'$_POST[okres]'
-	 order by LP*1 desc
-	 limit 1
-"))[0];
-if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+$nr=0;
+if($_POST['okres']!='')
+{
+	$nr=mysqli_fetch_row(mysqli_query($link,$q="
+		select LP
+		  from ewidprzeb
+		 where left(ewidprzeb.DATAW,7)<'$_POST[okres]'
+		   and ewidprzeb.REJESTRACJA='{$_GET['rejestracja']}'
+		 order by LP*1 desc
+		 limit 1
+	"))[0];
+	if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+}
 
 $w=mysqli_query($link,$q="
 	select ID
 	  from ewidprzeb
-	 where left(ewidprzeb.DATAW,7)='$_POST[okres]'
+	 where if('$_POST[okres]'='',1,left(ewidprzeb.DATAW,7)='$_POST[okres]')
+	   and ewidprzeb.REJESTRACJA='{$_GET['rejestracja']}'
 	 order by DATAW, ID
 ");
 if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
@@ -29,13 +35,13 @@ $wynik=0;
 while($r=mysqli_fetch_row($w))
 {
 	++$nr;
-	++$wynik;
 	mysqli_query($link,$q="
 		update ewidprzeb
 		   set ewidprzeb.LP=$nr
 		 where ID=$r[0]
 	");
 	if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+	$wynik+=mysqli_affected_rows($link);
 }
 
 $title="Renumeracja dokumentów: raport";

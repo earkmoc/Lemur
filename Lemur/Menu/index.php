@@ -227,7 +227,7 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../Rejestry" id="8b">b) Rejestry VAT / inne rejestry</td></tr>
 <tr><td><a href="../KPIR" id="8c">c) KPiR</td></tr>
 <tr><td><a href="../ewidsprz" id="8d">d) Ewidencja Sprzeda¿y</td></tr>
-<tr><td><a href="../ewidprzeb" id="8e">e) Ewidencja Przebiegu Pojazdów</td></tr>
+<tr><td><a href="../EwidPojazdow" id="8e">e) Ewidencja Pojazdów i Przebiegu</td></tr>
 <tr><td><a href="../EwidencjaWyposazenia" id="8f">f) Ewidencja Wyposa¿enia</td></tr>
 </table>
 </div>

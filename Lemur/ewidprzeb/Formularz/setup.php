@@ -8,7 +8,7 @@ $_SESSION["{$baza}EwidPrzebID_D"]=$id;
 // ----------------------------------------------
 // Parametry widoku
 
-@$id_d=$_SESSION["{$baza}DokumentyID_D"];
+@$id_d=$_SESSION["{$baza}PojazdID_D"];
 
 $tabela='ewidprzeb';
 $widok=$tabela.(!isset($id_d)?'':'H');
@@ -21,21 +21,13 @@ $title.=($id?"ID=".abs($id):"nowa pozycja");
 //----------------------------------------------
 
 $buttons=array();
-$buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Tabela");
+$buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id&rejestracja={$_GET['rejestracja']}");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Tabela");
 
 //----------------------------------------------
 
 $dane=array();
-$dane['LPDZ']=$_GET['lp'];
-$dane['DATAW']=$_GET['ddokumentu'];
-$dane['DATADZ']=$_GET['ddokumentu'];
-$dane['NRDZ']=$_GET['numer'];
-$dane['WARTOSCDZ']=$_GET['wartosc'];
-$dane['RODZAJ']=$_GET['przedmiot'];
-
-$dane['OPIS']="Maratoñska--Maratoñska";
-$dane['CEL']="Badania profilaktyczne";
+$dane['DATAW']=date('Y-m-d');
 $dane['STAWKA']=0.8358;
 
 if ($id<>0)
@@ -54,5 +46,6 @@ if ($id<>0)
 	{
 		$id=0;
 		$dane['ID']=0;	//dopisanie nowej pozycji
+		$dane['LP']++;
 	}
 }

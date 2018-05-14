@@ -11,7 +11,7 @@ foreach($_GET as $key => $value)
 
 $title="Parametry wydruku";
 $buttons=array();
-$buttons[]=array('klawisz'=>'AltR','nazwa'=>'Enter=Drukuj','akcja'=>"drukuj.php?$parametry");
+$buttons[]=array('klawisz'=>'AltR','nazwa'=>'Enter=Drukuj','akcja'=>"drukuj.php?$parametry&rejestracja={$_GET['rejestracja']}&okres={$_GET['okres']}");
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"..");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
@@ -31,7 +31,7 @@ while($r=mysqli_fetch_array($w))
 $_POST['naglowek1']=(@$_POST['naglowek1']?$_POST['naglowek1']:$baza);
 $_POST['naglowekN']=(@$_POST['naglowekN']?$_POST['naglowekN']:$baza);
 //$_POST['tytul']=(@$_GET['tytul']?$_GET['tytul']:@$_POST['tytul']);
-//$_POST['tytul']=(@$_POST['tytul']?$_POST['tytul']:@$_GET['tytul']);
+//$_POST['tytul'].=", rejestracja: {$_GET['rejestracja']}, pojemno¶æ: {$_GET['pojemnosc']} cm3, kierowca: {$_GET['opis']}";
 $_POST['czcionka']=(@$_POST['czcionka']?$_POST['czcionka']:'Courier New');
 $_POST['wielkosc']=(@$_POST['wielkosc']?$_POST['wielkosc']:'10');
 $_POST['strona1']=(@$_POST['strona1']?$_POST['strona1']:'15');
@@ -70,6 +70,42 @@ $_POST['stronaN']=(@$_POST['stronaN']?$_POST['stronaN']:'20');
 			</div>
 			<div class="col-md-10">
 				<input type="text" class="form-control" name="tytul" value="<?php echo $_POST['tytul'];?>" />
+			</div>
+		</div>
+
+		<div class="row" hidden>
+			<div class="col-md-2 nag">
+				Numer rejestracyjny
+			</div>
+			<div class="col-md-10">
+				<input type="text" class="form-control" name="rejestracja" value="<?php echo $_GET['rejestracja'];?>" />
+			</div>
+		</div>
+
+		<div class="row" hidden>
+			<div class="col-md-2 nag">
+				Pojemno¶æ silnika
+			</div>
+			<div class="col-md-10">
+				<input type="text" class="form-control" name="pojemnosc" value="<?php echo $_GET['pojemnosc'];?>" />
+			</div>
+		</div>
+
+		<div class="row" hidden>
+			<div class="col-md-2 nag">
+				Opis:
+			</div>
+			<div class="col-md-10">
+				<textarea class="form-control" name="opis" rows="5"><?php echo $_GET['opis'];?></textarea>
+			</div>
+		</div>
+
+		<div class="row" hidden>
+			<div class="col-md-2 nag">
+				Okres
+			</div>
+			<div class="col-md-10">
+				<input type="text" class="form-control" name="okres" value="<?php echo $_GET['okres'];?>" />
 			</div>
 		</div>
 

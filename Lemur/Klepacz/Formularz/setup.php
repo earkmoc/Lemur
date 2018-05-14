@@ -19,7 +19,7 @@ $widok=$tabela;
 
 $buttons=array();
 $buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','js'=>"parent.$('#myModalKlepacz').modal('hide');parent.$('input[name=NUMER]').focus();");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','js'=>"parent.$('#myModalKlepacz').modal('hide');parent.$('input[name=NUMER]').focus();");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','js'=>"parent.$('#myModalKlepacz').modal('hide');parent.$('input[name=NUMER]').focus();");
 
 //----------------------------------------------
 
