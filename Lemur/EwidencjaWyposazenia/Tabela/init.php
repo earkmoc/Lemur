@@ -43,7 +43,6 @@ from $tabela
 order by LP*1";
 
 		$formularzDef="$tabela
-ewidwypo
 DATANABYCIA|Data Nabycia|10||2|1|
 NUMERDOK|Numer dokumentu|30||2|1|
 NAZWA|Nazwa|99/1||4|1|

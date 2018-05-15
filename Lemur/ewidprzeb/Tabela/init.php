@@ -34,11 +34,9 @@ PRIMARY KEY (ID)
 
 if(isset($id_d))
 {
-	$tabelaDef="$tabela
+	$tabelaDef="ewidprzeb
 ID|ID|0|
-REJESTRACJA|Numer rejestracyjny pojazdu
-POJEMNOSC|Pojemno뜻 silnika [cm3]
-KIEROWCA|Dane osoby u퓓waj켧ej pojazd
+LP|LP|10||1|1|
 DATAW|Data wyjazdu||style=\"white-space:nowrap;text-align:center\"|
 OPIS|Opis trasy
 CEL|Cel wyjazdu
@@ -46,34 +44,20 @@ KM|km|@Z+|style=\"text-align:right\"|
 STAWKA|Stawka|@Z|style=\"text-align:right\"|
 WARTOSC|Warto뜻|@Z+|style=\"text-align:right\"|
 UWAGI|Uwagi
-LPDZ|LP|@Z|
-NRDZ|Numer dokumentu zakupu
-DATADZ|Data dokumentu zakupu|@Z|style=\"white-space:nowrap;text-align:center\"|
-RODZAJ|Rodzaj wydatku
-WARTOSCDZ|Warto뜻 wydatku|@Z+|style=\"text-align:right\"|
 from ewidprzeb
-order by DATAW, LP*1
-";
+order by DATAW, LP*1";
 
-	$formularzDef="$tabela
-REJESTRACJA|Numer rejestracyjny pojazdu|10||2|1|
-POJEMNOSC|Pojemno뜻 silnika [cm3]|10||2|1|
-KIEROWCA|Dane osoby u퓓waj켧ej pojazd|240||8|1|
-DATAW|Data wyjazdu|10|style=\"white-space:nowrap;text-align:center\"|2|2|
-OPIS|Opis trasy|240||3|2|
-CEL|Cel wyjazdu|240||2|2|
-KM|km|@Z15+|style=\"text-align:right\"|2|2|
-STAWKA|Stawka|@Z15+|style=\"text-align:right\"|1|2|
-WARTOSC|Warto뜻|@Z15+|right|2|2|
-UWAGI|Uwagi|240||2|3|
-LPDZ|LP|10||1|3|
-NRDZ|Numer dokumentu zakupu|10||3|3|
-DATADZ|Data dokumentu zakupu|10||2|3|
-RODZAJ|Rodzaj wydatku|240||2|3|
-WARTOSCDZ|Warto뜻 wydatku|@Z15+|style=\"text-align:right\"|2|3|
+	$formularzDef="ewidprzeb
+LP|LP|10||1|1|
+DATAW|Data wyjazdu|10|style=\"white-space:nowrap;text-align:center\"|2|1|
+OPIS|Opis trasy|240||3|1|
+CEL|Cel wyjazdu|240||2|1|
+KM|km|@Z15+|style=\"text-align:right\"|1|1|
+STAWKA|Stawka|@Z15+|style=\"text-align:right\"|1|1|
+WARTOSC|Warto뜻|@Z15+|right|2|1|
+UWAGI|Uwagi|240||12|2|
 from ewidprzeb
-where ID=
-";
+where ID=";
 }
 else
 {

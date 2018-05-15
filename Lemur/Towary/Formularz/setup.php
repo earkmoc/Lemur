@@ -24,7 +24,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/formFields.php");
 
 $buttons=array();
 $buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Tabela");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Tabela");
 $buttons[]=array('klawisz'=>'AltM'
                 ,'nazwa'=>'Magazyn'
 				,'js'=>"parent.$('#myModalMagazyn').modal('show')"

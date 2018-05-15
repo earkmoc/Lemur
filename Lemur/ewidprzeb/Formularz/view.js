@@ -1,5 +1,5 @@
 $(document).ready(function() {
-   $('input[name=DATAW]').focus();
+   $('input[name=LP]').focus();
 });
 
 function valid($name,$validType) {

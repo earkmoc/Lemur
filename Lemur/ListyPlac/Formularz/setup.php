@@ -20,7 +20,7 @@ $title.=($id?"ID=".abs($id):"nowa lista");
 
 $buttons=array();
 $buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Tabela");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Tabela");
 $buttons[]=array('klawisz'=>'Alt1','nazwa'=>'','js'=>"
 	$('li').removeClass('active');
 	$('div.tab-pane:not(#home)').removeClass('active');

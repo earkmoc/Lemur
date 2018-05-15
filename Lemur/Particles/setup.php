@@ -11,6 +11,6 @@ $title='Particles';
 //----------------------------------------------
 
 $buttons=array();
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Menu");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Menu");
 
 //----------------------------------------------

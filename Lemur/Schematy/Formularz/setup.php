@@ -20,7 +20,7 @@ $title.=($id?"ID=".abs($id):"nowa pozycja");
 
 $buttons=array();
 $buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Tabela");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Tabela");
 $buttons[]=array('klawisz'=>'AltS','nazwa'=>'Specyfikacja','js'=>"$('a[href=#Specyfikacja]').click();$('#iframePozycje').focus()");
 //$buttons[]=array('klawisz'=>'AltP','nazwa'=>'Pracownicy','js'=>"$('#myModal').modal('show')");
 

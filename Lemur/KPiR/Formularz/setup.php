@@ -22,7 +22,7 @@ $title.=($id?"ID=".abs($id):"nowa pozycja");
 
 $buttons=array();
 $buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=Anuluj','akcja'=>"../Tabela");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Tabela");
 if	(!isset($id_d))
 {
 $buttons[]=array('klawisz'=>'AltK'
