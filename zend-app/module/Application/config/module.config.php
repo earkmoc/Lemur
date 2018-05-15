@@ -19,7 +19,7 @@ return [
                 'options' => [
                     'route'    => '/',
                     'defaults' => [
-						'controller'=>'BookList\Controller\Book',
+                        'controller' => Controller\BookListController::class,
                         'action'     => 'index',
                     ],
                 ],

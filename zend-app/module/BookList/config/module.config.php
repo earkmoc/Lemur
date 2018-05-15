@@ -1,8 +1,14 @@
 <?php
+namespace BookList;
+
+use BookList\Controller;
+/*
+*/
 return array(
 	'controllers'=>array(
-		'invokables'=>array(
-			'BookList\Controller\Book'=>'BookList\Controller\BookController',
+		'factories'=>array(
+			BookList\Controller\Book::class => BookList\Controller\BookController::class,
+			BookController::class => BookControllerFactory::class
 		),
 	),
 	'router'=>array(
@@ -16,7 +22,7 @@ return array(
 						'id'=>'[0-9]+',
 					),
 					'defaults'=>array(
-						'controller'=>'BookList\Controller\Book',
+						'controller'=>Controller\BookList\Controller::class,
 						'action'=>'index',
 					),
 				),
