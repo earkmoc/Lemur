@@ -1,3 +1,3 @@
 <?php
 
-header("location:Klienci");
+header("location:../Lemur2/Klienci");
