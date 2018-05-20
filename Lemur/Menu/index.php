@@ -215,6 +215,7 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="../ParticlesAnimation" id="7a">a) Particles Animation</td></tr>
 <tr><td><a href="../Particles" id="7b">b) Particles</td></tr>
 <tr><td><a href="../Wipers" id="7c">c) Wipers</td></tr>
+<tr><td><a href="../Ukladanka" id="7d">d) Uk³adanka</td></tr>
 </table>
 </div>
                  </div>
