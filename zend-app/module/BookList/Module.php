@@ -6,6 +6,7 @@ use BookList\Model\Book;
 use BookList\Model\BookTable;
 use Zend\Db\ResultSet\ResultSet;
 use Zend\Db\TableGateway\TableGateway;
+use Zend\ModuleManager\Feature\ConfigProviderInterface;
 
 class Module
 {
@@ -27,7 +28,7 @@ class Module
 	{
 		return include __DIR__.'/config/module.config.php';
 	}
-	
+
 	public function getServiceConfig()
 	{
 		return array(

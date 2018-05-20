@@ -4,12 +4,18 @@ namespace BookList\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use BookList\Form\BookForm;
+use BookList\Model\BookTable;
 use BookList\Model\Book;
 
 class BookController extends AbstractActionController
 {
 	protected $bookTable;
-	
+
+	public function __construct(BookTable $bookTable)
+	{
+		$this->bookTable=$bookTable;
+	}
+
 	public function indexAction()
 	{
 		return new ViewModel(array(
@@ -98,11 +104,14 @@ class BookController extends AbstractActionController
 	
 	public function getBookTable()
 	{
+		//https://zendframework.github.io/zend-mvc/migration/to-v2-7/#servicelocatoraware-initializers
+		/*
 		if(!$this->bookTable)
 		{
 			$sm=$this->getServiceLocator();
 			$this->bookTable=$sm->get('BookList\Model\BookTable');
 		}
+		*/
 		return $this->bookTable;
 	}
 }
