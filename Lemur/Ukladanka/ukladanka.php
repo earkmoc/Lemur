@@ -26,9 +26,12 @@ class Klocek {
 	}
 	// jeśli po ruchu trafi w zajęte pole, to cofnij ruch
 	function Zajete($tablica) {
-		for($r = $this->r; $r < $this->r + $this->h; ++ $r) {
-			for($c = $this->c; $c < $this->c + $this->w; ++ $c) {
-				if ($tablica [$r] [$c]) {
+		for($r = $this->r; $r < $this->r + $this->h; ++ $r) 
+		{
+			for($c = $this->c; $c < $this->c + $this->w; ++ $c) 
+			{
+				if (@$tablica[$r][$c]) 
+				{
 					return true;
 				}
 			}
@@ -165,7 +168,7 @@ class Ukladanka {
 	function Aktywuj($numerKlocka) {
 		$this->klocekAktywny = $numerKlocka - 1;
 		$_SESSION ['klocekAktywny'] = $this->klocekAktywny;
-		$this->Show ();
+		$this->Show('');
 	}
 	function Akcja($akcja) {
 		if ($akcja == 'clear') {
@@ -176,7 +179,7 @@ class Ukladanka {
 			unset($_SESSION['counter']);
 			$this->Start ();
 		}
-		$this->Show ();
+		$this->Show(0);
 	}
 	function Show($counter) {
 		foreach ( $this->klocki as $klocek ) {
