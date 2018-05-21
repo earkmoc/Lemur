@@ -2,19 +2,12 @@
 
 class Site
 {
-
     public $author = 'Lemur² ver 2015-12-09 by ericom Arkadiusz Moch';
-
     public $title = 'title';
-
     public $dirApp = '/Lemur2';
-
     public $includePath = '';
-
     public $buttons = array();
-
     public $columns = array();
-
     public $rows = array();
 
     function __construct ($title)

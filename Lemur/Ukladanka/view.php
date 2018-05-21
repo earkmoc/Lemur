@@ -4,6 +4,10 @@ $site->addButton ( 'Up', '', '', '$("#tabela").load("refresh.php","kierunek=up")
 $site->addButton ( 'Down', '', '', '$("#tabela").load("refresh.php","kierunek=down")' );
 $site->addButton ( 'Left', '', '', '$("#tabela").load("refresh.php","kierunek=left")' );
 $site->addButton ( 'Right', '', '', '$("#tabela").load("refresh.php","kierunek=right")' );
+$site->addButton ( 'W', '', '', '$("#tabela").load("refresh.php","kierunek=up")' );
+$site->addButton ( 'S', '', '', '$("#tabela").load("refresh.php","kierunek=down")' );
+$site->addButton ( 'A', '', '', '$("#tabela").load("refresh.php","kierunek=left")' );
+$site->addButton ( 'D', '', '', '$("#tabela").load("refresh.php","kierunek=right")' );
 $site->addButton ( '1', '', '', '$("#tabela").load("refresh.php","aktywacja=1")' );
 $site->addButton ( '2', '', '', '$("#tabela").load("refresh.php","aktywacja=2")' );
 $site->addButton ( '3', '', '', '$("#tabela").load("refresh.php","aktywacja=3")' );
@@ -35,9 +39,12 @@ $site->header ();
 </td>
 
 <td style="text-align:center">
+<div style="position:absolute; top:50px">
+	<h1>Ruchów: <span id="counter">0</span></h1>
+</div>
 Przeprowad¼ czerwony klocek do wyj¶cia.<br>
 <img style="opacity:0.3" src="red.png" />
-Wskazuj klocki myszk± i przesuwaj je klawiszami strza³ek
+Wskazuj klocki myszk± i przesuwaj je klawiszami strza³ek. Aktywny klocek ma czarne naro¿niki.
 </td>
 
 </td>

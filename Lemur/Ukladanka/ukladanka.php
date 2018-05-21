@@ -85,6 +85,10 @@ class Klocek {
 		}
 		
 		$this->Ustaw ( $tablica );
+
+		return  ( ($prev_r != $this->r)
+				||($prev_c != $this->c)
+				?1:0);
 	}
 	function Trafiony($row, $col) {
 		if (($row >= $this->r) && ($row <= $this->r + $this->h - 1) && ($col >= $this->c) && ($col <= $this->c + $this->w - 1)) {
@@ -152,10 +156,11 @@ class Ukladanka {
 		$_SESSION ['klocki'] = serialize ( $this->klocki );
 	}
 	function Move($kierunek) {
-		$this->klocki [$this->klocekAktywny]->Move ( $kierunek, $this->tablica, $this->maxRow, $this->maxCol );
-		$_SESSION ['tablica'] = serialize ( $this->tablica );
-		$_SESSION ['klocki'] = serialize ( $this->klocki );
-		$this->Show ();
+		$ruch=$this->klocki[$this->klocekAktywny]->Move( $kierunek, $this->tablica, $this->maxRow, $this->maxCol );
+		$_SESSION['tablica'] = serialize ( $this->tablica );
+		$_SESSION['klocki'] = serialize ( $this->klocki );
+		@$_SESSION['counter']+=$ruch;
+		$this->Show($_SESSION['counter']);
 	}
 	function Aktywuj($numerKlocka) {
 		$this->klocekAktywny = $numerKlocka - 1;
@@ -164,15 +169,16 @@ class Ukladanka {
 	}
 	function Akcja($akcja) {
 		if ($akcja == 'clear') {
-			unset ( $this->tablica );
-			unset ( $this->klocki );
-			unset ( $_SESSION ['tablica'] );
-			unset ( $_SESSION ['klocki'] );
+			unset($this->tablica);
+			unset($this->klocki);
+			unset($_SESSION ['tablica']);
+			unset($_SESSION ['klocki']);
+			unset($_SESSION['counter']);
 			$this->Start ();
 		}
 		$this->Show ();
 	}
-	function Show() {
+	function Show($counter) {
 		foreach ( $this->klocki as $klocek ) {
 			echo "<div ";
 			$border = "";
@@ -189,7 +195,10 @@ class Ukladanka {
 							$border
 						'>
 						<img src='{$klocek->picture}'/>
-			</div>\n";
+			</div>\n
+			<script type='text/javascript'>\n
+				$('#counter').text($counter);\n
+			</script>\n";
 		}
 	}
 }
