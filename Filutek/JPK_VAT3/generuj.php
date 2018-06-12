@@ -195,7 +195,7 @@ else
 			$nazwa=str_replace('&','and',$nazwa);
 		}
 		$adres=iconv('ISO-8859-2','UTF-8',StripSlashes($r['ADRES']));
-		$numer=iconv('ISO-8859-2','UTF-8',StripSlashes($r['DODOK']?$r['DODOK']:$r['NUMER']));
+		$numer=iconv('ISO-8859-2','UTF-8',StripSlashes($r['NUMER']));
 
 		fputs($file,"\n".'	<ZakupWiersz>');
 		fputs($file,"\n"."		<LpZakupu>$lp</LpZakupu>");

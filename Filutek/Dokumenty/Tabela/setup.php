@@ -93,5 +93,6 @@ $buttons[]=array('klawisz'=>'U','nazwa'=>'Usuñ','js'=>"buttonsShow();return conf
 $buttons[]=array('klawisz'=>'W','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'L','nazwa'=>'Lista','akcja'=>"Lista.php?wydruk=Raporta&natab=$widok&strona1=15&stronan=16&tytul=Lista dokumentów&typ=$typ");
 $buttons[]=array('klawisz'=>'K','nazwa'=>'KP','akcja'=>"Wydruk.php?wzor=KP&$params'+GetID()+'");
+//$buttons[]=array('klawisz'=>'P','nazwa'=>'PZ','akcja'=>"NumeryPZ.php");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");

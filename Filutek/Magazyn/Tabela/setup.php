@@ -32,6 +32,7 @@ if	( (isset($_SESSION["{$baza}DokumentyID_D"]))
 		parent.$('#iframeTowary').focus();
 		parent.$('input[name=NAZWA]',parent.$('#iframeTowary').contents()).focus();
 	");
+	$kolumnaCeny=($_SESSION['od_netto']?6:7);
 	$buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=wybór','js'=>"
 		parent.$('#myModalMagazyn').modal('hide');
 		parent.$('select[name=TYP]',parent.$('#iframeTowary').contents()).val(parent.$('select[name=TYP] option:contains(\"'+$('tr[data-index='+(row-1)+']>td:nth-child(5)').text()+' -\")',parent.$('#iframeTowary').contents()).text());
@@ -40,7 +41,7 @@ if	( (isset($_SESSION["{$baza}DokumentyID_D"]))
 		parent.$('input[name=PKWIU]',parent.$('#iframeTowary').contents()).val($('tr[data-index='+(row-1)+']>td:nth-child(4)').text());
 		parent.$('input[name=JM]',parent.$('#iframeTowary').contents()).val($('tr[data-index='+(row-1)+']>td:nth-child(9)').text());
 		parent.$('select[name=STAWKA]',parent.$('#iframeTowary').contents()).val(parent.$('select[name=STAWKA] option:contains(\"'+$('tr[data-index='+(row-1)+']>td:nth-child(10)').text()+' -\")',parent.$('#iframeTowary').contents()).text());
-		parent.$('input[name=CENABEZR]',parent.$('#iframeTowary').contents()).val($('tr[data-index='+(row-1)+']>td:nth-child(7)').text());
+		parent.$('input[name=CENABEZR]',parent.$('#iframeTowary').contents()).val($('tr[data-index='+(row-1)+']>td:nth-child($kolumnaCeny)').text());
 		parent.$('input[name=RABAT]',parent.$('#iframeTowary').contents()).val('');
 		parent.$('input[name=CENA]',parent.$('#iframeTowary').contents()).val('');
 		parent.$('input[name=NETTO]',parent.$('#iframeTowary').contents()).val('');
@@ -59,17 +60,19 @@ if	( (isset($_SESSION["{$baza}DokumentyID_D"]))
 		parent.$('input[name=ILOSC]',parent.$('#iframeTowary').contents()).select();
 	");
 	$buttons[]=array('klawisz'=>'F','nazwa'=>'Formularz','akcja'=>$formularz);
-} else
+} 
+else
 {
 	$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>$esc);
 	$buttons[]=array('klawisz'=>'Enter','nazwa'=>'','akcja'=>$formularz);
 	$buttons[]=array('klawisz'=>'F','nazwa'=>'Enter=Formularz','akcja'=>$formularz);
+	$buttons[]=array('klawisz'=>'A','nazwa'=>'Aktualizacja stanów','akcja'=>'aktualizuj.php');
 	$buttons[]=array('klawisz'=>'W','nazwa'=>'Wydruk','akcja'=>"Wydruk.php?wydruk=Raporta&natab=$tabela&strona1=15&stronan=20");
 }
 $buttons[]=array('klawisz'=>'D','nazwa'=>'Dopisz','akcja'=>$dopisz);
 $buttons[]=array('klawisz'=>'C','nazwa'=>'Copy','akcja'=>$kopia);
 $buttons[]=array('klawisz'=>'U','nazwa'=>'Usuñ','akcja'=>$usun);
 $buttons[]=array('klawisz'=>'S','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').modal('show')");
-$buttons[]=array('klawisz'=>'A','nazwa'=>'Aktywne','akcja'=>"aktywne.php?$params'+GetID()+'");
+//$buttons[]=array('klawisz'=>'A','nazwa'=>'Aktywne','akcja'=>"aktywne.php?$params'+GetID()+'");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");

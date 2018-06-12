@@ -10,13 +10,6 @@ $buttons[]=array('klawisz'=>'Alt1','nazwa'=>'','js'=>"
 $buttons[]=array('klawisz'=>'Alt2','nazwa'=>'','js'=>"
 	parent.$('li').removeClass('active');
 	parent.$('div.tab-pane:not(#home)').removeClass('active');
-	parent.$('#liWplaty').addClass('active');
-	parent.$('#Wplaty').addClass('active');
-	parent.$('#iframeWplaty').focus();
-");
-$buttons[]=array('klawisz'=>'Alt3','nazwa'=>'','js'=>"
-	parent.$('li').removeClass('active');
-	parent.$('div.tab-pane:not(#home)').removeClass('active');
 	parent.$('#liRejestryVAT').addClass('active');
 	parent.$('#RejestryVAT').addClass('active');
 	parent.$('#iframeRejestryVAT').focus();

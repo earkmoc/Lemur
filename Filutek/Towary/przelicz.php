@@ -4,6 +4,7 @@ $towary=mysqli_query($link,$q="
 select *
   from dokumentm
  where if('$idd'*1<=0,ID_D<=0 and KTO=$ido,ID_D='$idd')
+   and ILOSC<>0
  order by ID
 ");
 

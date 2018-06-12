@@ -127,26 +127,49 @@ if ($idd)
 	$dtop=mysqli_fetch_row(mysqli_query($link, $q="select DOPERACJI from dokumenty where ID=$idd"))[0];
 	mysqli_query($link, $q="update dokumentr set OKRES='$dtop', KTO='$ido', CZAS=Now() where ID_D=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
-	if($_POST['WPLACONO']*1>0)
+	if($_POST['TYP']=='FZ')
 	{
-		$kp=mysqli_fetch_row(mysqli_query($link, $q="select DODOK from dokumenty where ID=$idd"))[0];
-		if(!$kp)
+		$pz=mysqli_fetch_row(mysqli_query($link, $q="select DODOK from dokumenty where ID=$idd"))[0];
+		if(!$pz)
 		{
-			$kp=mysqli_fetch_row(mysqli_query($link, $q="select DODOK from dokumenty where ID<$idd and TYP='FV' and DODOK<>'' order by ID desc limit 1"))[0];
-			if(substr($kp,-2,2)<>date('y'))
+			$pz=mysqli_fetch_row(mysqli_query($link, $q="select DODOK from dokumenty where ID<$idd and TYP='FZ' and DODOK<>'' order by ID desc limit 1"))[0];
+			if(substr($pz,-2,2)<>date('y'))
 			{
-				$kp='0001'.'-'.date('y');
+				$pz='0001'.'-'.date('y');
 			}
 			else
 			{
-				$kp=substr('000'.($kp+1),-4,4).'-'.date('y');
+				$pz=substr('000'.($pz+1),-4,4).'-'.date('y');
 			}
-			mysqli_query($link, $q="update dokumenty set DODOK='$kp', SPOSZAPL='Gotówka', DTERMIN=DDOKUMENTU, KTO='$ido', CZAS=Now() where ID=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+			$sposzap=($_POST['WPLACONO']*1>0?'Gotówka':'Przelew');
+			$sposzap=($_POST['SPOSZAPL']?$_POST['SPOSZAPL']:$sposzap);
+			$termin=($_POST['DTERMIN']*1>0?$_POST['DTERMIN']:$_POST['DDOKUMENTU']);
+			mysqli_query($link, $q="update dokumenty set DODOK='PZ $pz', SPOSZAPL='$sposzap', DTERMIN='$termin', KTO='$ido', CZAS=Now() where ID=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 		}
 	}
 	else
 	{
-		mysqli_query($link, $q="update dokumenty set DODOK='', SPOSZAPL='Przelew', DTERMIN=if(DTERMIN*1=0,Date_Add(DDOKUMENTU,interval 7 day),DTERMIN), KTO='$ido', CZAS=Now() where ID=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+		if($_POST['WPLACONO']*1>0)
+		{
+			$kp=mysqli_fetch_row(mysqli_query($link, $q="select DODOK from dokumenty where ID=$idd"))[0];
+			if(!$kp)
+			{
+				$kp=mysqli_fetch_row(mysqli_query($link, $q="select DODOK from dokumenty where ID<$idd and TYP='FV' and DODOK<>'' order by ID desc limit 1"))[0];
+				if(substr($kp,-2,2)<>date('y'))
+				{
+					$kp='0001'.'-'.date('y');
+				}
+				else
+				{
+					$kp=substr('000'.($kp+1),-4,4).'-'.date('y');
+				}
+				mysqli_query($link, $q="update dokumenty set DODOK='$kp', SPOSZAPL='Gotówka', DTERMIN=DDOKUMENTU, KTO='$ido', CZAS=Now() where ID=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+			}
+		}
+		else
+		{
+			mysqli_query($link, $q="update dokumenty set SPOSZAPL='Przelew', DTERMIN=if(DTERMIN*1=0,Date_Add(DDOKUMENTU,interval 7 day),DTERMIN), KTO='$ido', CZAS=Now() where ID=$idd");if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+		}
 	}
 	
 	if($nowyDokument)

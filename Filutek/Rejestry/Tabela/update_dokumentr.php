@@ -1,8 +1,8 @@
 <?php
 
-mysqli_query($link, $q="
-	truncate dokumentr
-");
+//mysqli_query($link, $q="
+//	truncate dokumentr
+//");
 mysqli_query($link, $q="
 	insert 
 	  into dokumentr
@@ -22,7 +22,10 @@ mysqli_query($link, $q="
 	  from dokumentm
  left join dokumenty
         on dokumenty.ID=dokumentm.ID_D
-	 where dokumenty.TYP like '%FV%'
+ left join dokumentr
+        on dokumentr.ID_D=dokumenty.ID
+	 where isnull(dokumentr.ID) 
+	   and dokumenty.TYP like '%FV%'
   group by dokumentm.ID_D, dokumentm.STAWKA
 ");
 mysqli_query($link, $q="
@@ -44,6 +47,9 @@ mysqli_query($link, $q="
 	  from dokumentm
  left join dokumenty
         on dokumenty.ID=dokumentm.ID_D
-	 where dokumenty.TYP like '%FZ%'
+ left join dokumentr
+        on dokumentr.ID_D=dokumenty.ID
+	 where isnull(dokumentr.ID) 
+	   and dokumenty.TYP like '%FZ%'
   group by dokumentm.ID_D, dokumentm.STAWKA
 ");
