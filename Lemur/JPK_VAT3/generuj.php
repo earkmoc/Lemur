@@ -86,7 +86,6 @@ else
 		select *
 		  from $baza.dokumenty
 		 where DOPERACJI between '$_POST[OdDaty]' and '$_POST[DoDaty]'
-		   and NUMER<>''
 	  order by DOPERACJI, ID
 	");
 	while($r=mysqli_fetch_array($w))
@@ -114,7 +113,7 @@ else
 		++$lp;
 
 //		$nip=preg_replace('/\D/', '', $r['NIP']);
-		$nip=(str_replace('-','',str_replace(' ','',$klient['NIP'])));
+		$nip=(str_replace('-','',str_replace(' ','',$r['NIP'])));
 		$nip=(!$nip?'brak':$nip);
 		$nazwa=iconv('ISO-8859-2','UTF-8',StripSlashes($r['NAZWA']));
 		if(strpos($nazwa,'&')>0)
@@ -161,7 +160,6 @@ else
 		select *
 		  from $baza.dokumenty
 		 where DOPERACJI between '$_POST[OdDaty]' and '$_POST[DoDaty]'
-		   and NUMER<>''
 	  order by DOPERACJI, ID
 	");
 	while($r=mysqli_fetch_array($w))
