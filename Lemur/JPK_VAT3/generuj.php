@@ -33,7 +33,7 @@ if	( ($klient['NAZWA']=='')
 	||($klient['NIP']=='')
 	)
 {
-	$raport="B£¡D! UZUPE£NIJ OBOWI¡ZKOWE DANE:\nSprawd¼: NIP, nazwa";
+	$raport="BÂ£Â¡D! UZUPEÂ£NIJ OBOWIÂ¡ZKOWE DANE:\nSprawdÂ¼: NIP, nazwa";
 }
 else
 {
@@ -114,7 +114,7 @@ else
 		++$lp;
 
 //		$nip=preg_replace('/\D/', '', $r['NIP']);
-		$nip=(str_replace('-','',str_replace(' ','',$klient['NIP'])));
+		$nip=(str_replace('-','',str_replace(' ','',$r['NIP'])));
 		$nip=(!$nip?'brak':$nip);
 		$nazwa=iconv('ISO-8859-2','UTF-8',StripSlashes($r['NAZWA']));
 		if(strpos($nazwa,'&')>0)
@@ -138,15 +138,15 @@ else
 		fputs($file,"\n".'	</SprzedazWiersz>');
 	}
 
-	$raport.="Sprzeda¿: $lp szt.\n";
+	$raport.="SprzedaÂ¿: $lp szt.\n";
 	foreach($sumaKS as $key => $value)
 	{
 		$value=($value?number_format($value,2,'.',','):'');
-		$raport.="$key=<input style='text-align:right' value='$value' /> z³\n";
+		$raport.="$key=<input style='text-align:right' value='$value' /> zÂ³\n";
 	}
 	$value=$podatekNalezny;
 	$value=($value?number_format($value,2,'.',','):'');
-	$raport.="Podatek nale¿ny=<input style='text-align:right' value='$value' /> z³\n";
+	$raport.="Podatek naleÂ¿ny=<input style='text-align:right' value='$value' /> zÂ³\n";
 
 	if($lp>0)
 	{
@@ -170,7 +170,7 @@ else
 		$ok=false;
 		for($i=43;$i<=50;++$i)
 		{
-			if($kwota=Formula($link,$baza,$r,$i,$_POST["K$i"]))
+			if(($kwota=Formula($link,$baza,$r,$i,$_POST["K$i"]))<>0.00)
 			{
 				$ok=true;
 				$KZ["K_$i"]=$kwota;
@@ -239,16 +239,16 @@ else
 	foreach($sumaKZ as $key => $value)
 	{
 		$value=($value?number_format($value,2,'.',','):'');
-		$raport.="$key=<input style='text-align:right' value='$value' /> z³\n";
+		$raport.="$key=<input style='text-align:right' value='$value' /> zÂ³\n";
 	}
 	$value=$podatekNaliczony;
 	$value=($value?number_format($value,2,'.',','):'');
-	$raport.="Podatek naliczony=<input style='text-align:right' value='$value' /> z³\n";
+	$raport.="Podatek naliczony=<input style='text-align:right' value='$value' /> zÂ³\n";
 }
 
 $title="JPK_VAT (3) - generowanie pliku: raport";
 $buttons=array();
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrót','akcja'=>"../Menu");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=powrÃ³t','akcja'=>"../Menu");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 
@@ -257,20 +257,20 @@ echo "<hr>";
 
 $xml = new DOMDocument();
 $xml->load($filename);
-echo "Walidacja zgodno¶ci z XSD: ".($xml->schemaValidate("Schemat_JPK_VAT3_v1-1.xsd")?"OK":"NO");
+echo "Walidacja zgodnoÂ¶ci z XSD: ".($xml->schemaValidate("Schemat_JPK_VAT3_v1-1.xsd")?"OK":"NO");
 
 echo '<h3>'.nl2br($raport).'</h3>';
 
 echo '<hr>';
 
-echo $czas.' czas rozpoczêcia';
+echo $czas.' czas rozpoczÃªcia';
 echo '<br>';
-echo date('Y-m-d H:i:s').' czas zakoñczenia';
+echo date('Y-m-d H:i:s').' czas zakoÃ±czenia';
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/footer.tpl");
 
 echo '<pre>';
-echo "<h2>Podgl±d kontrolny fragmentu zawarto¶ci pliku $filename:</h2>";
+echo "<h2>PodglÂ±d kontrolny fragmentu zawartoÂ¶ci pliku $filename:</h2>";
 echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename,null,null,0,6000))).' [...]';
 //echo iconv('UTF-8','ISO-8859-2',str_replace(array('<','>'),array('&lt;','&gt;'),file_get_contents($filename)));
 echo '</pre>';
@@ -295,7 +295,7 @@ function Netto($link,$baza,$dokument,$typDokumentu,$stawki)
 	{
 		if(substr($stawki,0,1)=='-')
 		{//stawka pomijana
-			$stawki=str_replace('-','',$stawki);	//wyrzuæ ten minus
+			$stawki=str_replace('-','',$stawki);	//wyrzuÃ¦ ten minus
 			$bez=mysqli_fetch_row(mysqli_query($link,"
 				select sum(NETTO)
 				  from $baza.dokumentr
@@ -340,7 +340,7 @@ function VAT($link,$baza,$dokument,$typDokumentu,$stawki)
 	{
 		if(substr($stawki,0,1)=='-')
 		{//stawka pomijana
-			$stawki=str_replace('-','',$stawki);	//wyrzuæ ten minus
+			$stawki=str_replace('-','',$stawki);	//wyrzuÃ¦ ten minus
 			$bez=mysqli_fetch_row(mysqli_query($link,"
 				select sum(VAT)
 				  from $baza.dokumentr
