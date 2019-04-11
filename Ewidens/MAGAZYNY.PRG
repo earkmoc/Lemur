@@ -4,6 +4,37 @@
 #include 'Inkey.ch'
 
 ******************************************************************************
+* Aktualizacja cen z. unettowienie
+
+procedure AktCZVAT()
+
+local idp := MAGAZYNY->ID
+
+odp:=Alarm('Jaki zakres unettowienia cen podmagazynów ?', {'wszystkie', 'tylko biex`a`cy' })
+if (odp = NIL .or. odp = 0); return; endif
+
+Czek(1)
+go top
+while !Eof()
+   if (odp = 1)
+      ok := .t.
+   else
+      ok := (idp = MAGAZYNY->ID) 
+   endif
+   if ok
+      st := GetPole(1,'MAGAZYNY->ID_T','VAT','TOWARY',,,1,,,'STAROCIE\TOWARY')
+      MAGAZYNY->(Blokuj_R())
+      MAGAZYNY->CENA_Z := Netto( MAGAZYNY->CENA_Z, st )
+      MAGAZYNY->(OdBlokuj_R())
+   endif
+   DBSkip()
+enddo
+go top
+Czek(0)
+
+wy:=2
+
+******************************************************************************
 * Aktualizacja wszystkich ISBN'ów w TOWARK
 
 procedure AktISBNs()
@@ -2184,7 +2215,7 @@ return .t.
 
 function FGP( x, y, a, b )
 
-local r := Row(), c := Col()
+local r := Row(), c := Col(), pole
 
 if a = NIL; a := 'FIRMY,firmyh.txt,,1,vp[4]'; endif
 
@@ -2193,8 +2224,11 @@ if &x = -1
 
    ViewDBF( a,.t.)
 elseif y # NIL
-   &y := Firmy->( GetPole( 1, x, 'INDEKS' ))
-
+   pole := Firmy->( GetPole( 1, x, 'INDEKS' ))
+   if ValType( pole ) == 'C'
+      pole := Konwert(pole,maz,lat,.t.)
+   endif
+   &y := pole
 endif
 
 
@@ -3357,9 +3391,9 @@ if x .or. y
       vp[ k     ] := FIRMY->ID_F
    endif
    if !incydent
-      vp[ k + 2 ] := FIRMY->NAZWA1
-      vp[ k + 3 ] := FIRMY->NAZWA2
-      vp[ k + 4 ] := FIRMY->NAZWA3
+      vp[ k + 2 ] := Konwert(FIRMY->NAZWA1,maz,lat,.t.)
+      vp[ k + 3 ] := Konwert(FIRMY->NAZWA2,maz,lat,.t.)
+      vp[ k + 4 ] := Konwert(FIRMY->NAZWA3,maz,lat,.t.)
       i := 5
       if TypyKonZmi
          if zmk
@@ -3369,8 +3403,8 @@ if x .or. y
          i++
       endif
       vp[ k + i++ ] := FIRMY->KOD
-      vp[ k + i++ ] := FIRMY->MIASTO
-      vp[ k + i++ ] := if( u = NIL, FIRMY->ADRES, &u )
+      vp[ k + i++ ] := Konwert(FIRMY->MIASTO,maz,lat,.t.)
+      vp[ k + i++ ] := Konwert(if( u = NIL, FIRMY->ADRES, &u ),maz,lat,.t.)
       vp[ k + i++ ] := FIRMY->NIP
    endif
 endif
@@ -3384,7 +3418,7 @@ return .t.
 
 function IloscMG( mode )
 
-local bb := Alias()
+local bb := Alias()             
 
 if Jest_baza( 'TOWARYBU' )
    Jest_baza( bb )
@@ -3427,7 +3461,7 @@ if nn = NIL; nn := 6; endif
 vp[2] := RunCommand( a )
 zmid := !Empty( vp[ 1 ]) .and. ( vp[ 1 ] # TOWARY->ID )
 vp[1] := TOWARY->ID
-vp[3] := TOWARY->NAZWA
+vp[3] := Konwert(TOWARY->NAZWA,maz,lat,.t.)
 
 cs := GetCS( bb )
 
@@ -5923,7 +5957,7 @@ if NewSysForm( a )
    if Empty( inp )
       nrp := -0.1
       DOKUM->( DBSetOrder( 3 ))    && DtoS(DATAS)+TYP+INDEKS
-      DOKUM->( DBSeek( DtoS( data1 )))
+      DOKUM->( DBSeek( DtoS( data1 ), .t.))
    else
       DOKUM->( DBSetOrder( 4 ))    && Str(NABYWCA)+DtoS(DATAS)
       DOKUM->( DBSeek( Str( nrp, 10 )))
@@ -9821,16 +9855,24 @@ Select(bb)
 
 function DzienVAT0()
 
-return !wysylka ;
-         .and.;
-             (( DtoS(DOKUM->DATAS)>='20110101' ;
-         .and. DtoS(DOKUM->DATAS)<='20110430' ;
-         .and. Day(DOKUM->DATAS)/2==Int(Day(DOKUM->DATAS)/2);
-         .and. (Left(DOKUM->TYP,1)=='F' .or. Left(DOKUM->TYP,2)=='RW');
-         .and. (Left(DOKUM->TYP,2)<>'FZ');
+return !wysylka;
+       .and. ((      DtoS(DOKUM->DATAS)>='20110101' ;
+               .and. DtoS(DOKUM->DATAS)<='20110430' ;
+               .and. Day(DOKUM->DATAS)/2==Int(Day(DOKUM->DATAS)/2);
+               .and. (Left(DOKUM->TYP,1)=='F' .or. Left(DOKUM->TYP,2)=='RW');
+               .and. (Left(DOKUM->TYP,2)<>'FZ');
               );
-         .or. ( DtoS(DOKUM->DATAS)<'20110101') ;
-         .or. (Year(DOKUM->DATAO)<2011 .and. right(DOKUM->TYP,1)=='K');
+              .or. (      (Year(DOKUM->DATAS)<2011));
+              .or. (      (Year(DOKUM->DATAO)<2011); 
+                    .and. (right(DOKUM->TYP,1)=='K');
+                   );
+              .or. (      DtoS(DOKUM->DATAO)>='20110101' ;
+                    .and. DtoS(DOKUM->DATAO)<='20110430' ;
+                    .and. Day(DOKUM->DATAO)/2==Int(Day(DOKUM->DATAO)/2);
+                    .and. (Left(DOKUM->TYP,1)=='F' .or. Left(DOKUM->TYP,2)=='RW');
+                    .and. (Left(DOKUM->TYP,2)<>'FZ');
+                    .and. (right(DOKUM->TYP,1)=='K');
+                   );
              )
 
 ******************************************************************************

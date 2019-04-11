@@ -18,6 +18,7 @@ if gorne_bloki
    endif
    if Type( bl2 ) = 'B'               && blok z metod† uzyskania napisu tytu’u
       gtyt := Eval( &bl2 )
+      gtyt := Konwert( gtyt, maz, lat, .t. )
       if Len( gtyt ) > 74
          @ rr[ 1 ] - 3 , 1 say ''
          ?? DwieLinie( gtyt, 74, 1 )
@@ -322,8 +323,8 @@ if Eof()                  && nie znaleziono
 
    go rek                    && powrot do pozycji przed szukaniem
 
-   odp := Alert( 'Nie znaleziono w cz‘žci poni§ej.;Wybierz spos¢b szukania w cz‘žci powy§ej:',;
-               { 'W g¢r‘ do szczytu', 'Od szczytu w d¢’' })
+   odp := Alert( Konwert('Nie znaleziono w cz‘žci poni§ej.;Wybierz spos¢b szukania w cz‘žci powy§ej:',maz,lat,.t.),;
+               { Konwert('W g¢r‘ do szczytu',maz,lat,.t.), Konwert('Od szczytu w d¢’',maz,lat,.t.) })
 
    do case
    case odp = NIL .or. odp = 0
@@ -808,7 +809,7 @@ mOpen( cat_wydr + wzor )
 ?? Naglowek_wydruku() + Linia_wydruku({ Time()})
 ?? Naglowek_wydruku() + Linia_wydruku({ Datee()})
 
-?  Eval( bl_naglowka )
+?  Konwert( Eval( bl_naglowka ),maz,lat,.t.)
 ?? Konwert( Naglowek_wydruku() + Linia_wydruku({ DBE_Tyt }))
 ?? Konwert( Naglowek_wydruku() + Linia_wydruku({''}))
 ?  Konwert( Naglowek_wydruku())
@@ -1146,6 +1147,7 @@ if ( plik := ReadWzor( wzor )) == ''
    plik := DefWzor( baza, wzor )
 endif
 
+//plik := Konwert( plik, maz, lat, .t.)
 if IsDigit( MemoLine( plik, dl_memo, 2,, .t. ))
 
    DBE_Tyt := AllTrim( MemoLine( plik, dl_memo, 1,, .t. ))
@@ -1163,7 +1165,7 @@ if IsDigit( MemoLine( plik, dl_memo, 2,, .t. ))
 				ss := SubStr( ss, 2 )
 				ss := RunCommand( ss )
 			endif
-         Aadd( naglowki, ss )
+         Aadd( naglowki, Konwert(ss,maz,lat,.t.) )
          Aadd( szablon , Odetnij( @line, '|' ))
          i ++
    enddo
@@ -1213,7 +1215,7 @@ endif
 else
 
    kolumny := LineTab( MemoLine( plik, dl_memo, 1,, .t. ))
-   naglowki := LineTab( MemoLine( plik, dl_memo, 2,, .t. ))
+   naglowki := LineTab( MemoLine( plik, dl_memo, 2,, .t. ),,,1)
    szablon := LineTab( MemoLine( plik, dl_memo, 3,, .t. ))
 
    wsp := LineTab( MemoLine( plik, dl_memo, 4,, .t. ))
@@ -1301,7 +1303,7 @@ if Len( wsp ) > 5
 				DBSeek( &seekkey + 'zzzzz', .t. )
 			endif
 			DBSkip( -1 )
-			globalbuf := RecNo()
+			globalbuf3 := RecNo()
 			DBGoTo( ps )
    	   Keyboard Replicate( Chr( K_RIGHT ), Val( wsp[ 5 ]) - 1 ) +;
                Chr( K_PGUP ) + Chr( K_CTRL_PGDN ) + '~' +;
@@ -1353,8 +1355,9 @@ return baza
 ***************************************************************************
 * Tworzenie tablicy string¢w z podanej linii
 * jepu = jeden pusty
+* musi konwertowaæ maz => lat
 
-function LineTab( line, liczby, jepu )
+function LineTab( line, liczby, jepu, musi )
 
 local k, tab, sep := '|', cz, plik, i
 
@@ -1372,6 +1375,10 @@ else
    	plik := ReadWzor( SubStr( line, 3 ))
 	   line := MemoLine( plik, dl_memo, Val( SubStr( line, 2, 1 )),, .t. )
 	endif
+endif
+
+if (musi<>NIL)
+   line := Konwert(line,maz,lat,.t.)
 endif
 
 i := 0
@@ -1419,6 +1426,7 @@ przerwa := Min( i, 5 )   && najwy§ej 5 spacji
 linia := ''
 AEval( lll , { |a| linia += a[ 3 ] + Space( przerwa ) } )
 
+linia := Konwert(linia,maz,lat,.t.)
 if ( rr[ 2 ] = 21 ) .and. ( Len( linia ) > mc )
 	dwie := .t.
 	@ r , 1 say ''
@@ -1883,7 +1891,8 @@ while !Eof()
       y := &( kolumny[ nr ] )
       if x = y
          jest := .t.
-         exit
+*         exit
+BDelete()
       endif
       x := y
       skip

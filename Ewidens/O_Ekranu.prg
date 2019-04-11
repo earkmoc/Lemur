@@ -57,7 +57,7 @@ Aeval( tab , { |a| Aadd( poz_menu , ' ' + a + ' ' ) } )
 Aeval( tab , { |a| Aadd( tabw , if( a = '-' , .f. , .t. ) ) ,;
                    Aadd( tabl , if( a = '-' , Replicate( 'Ä' , max_d + 2 ),;
                                 ' ' + PadR( a, max_d ) + ' ' ) ) } )
-max_d += 2
+max_d += 2                                  //Konwert(a,maz,lat,.t.) 
 
 private max_l , min_l
 min_l := if( haslo = NIL , 4 , 7 )       && mozliwe max rozmiary menu
@@ -351,7 +351,7 @@ FUNCTION Nazwa_M( m )
 
 private nm := {  'STYCZE¥', 'LUTY', 'MARZEC', 'KWIECIE¥',;
                  'MAJ', 'CZERWIEC', 'LIPIEC', 'SIERPIE¥',;
-                 'WRZESIE¥', 'PA DZIERNIK',;
+                 'WRZESIE¥', 'PA DZIERNIK',;
                  'LISTOPAD', 'GRUDZIE¥' }
 return nm[ m ]      
 
@@ -456,21 +456,21 @@ SetColor( STC )
 
 FUNCTION PgDn( b )
 
-Nap_haslo( 'Page Down' , ' - ca’kowita akceptacja' , 'R' + if( b = NIL, '', 'b' ))
+Nap_haslo( 'Page Down' , Konwert(' - ca’kowita akceptacja',maz,lat,.t.) , 'R' + if( b = NIL, '', 'b' ))
 
 ******************************************************************************
 
 FUNCTION Esc( b, s )
 
 b := 1
-Nap_haslo( 'ESC' , ' - WYJ˜CIE' , if( s = NIL, 'L', s ) + if( b = NIL, '', 'b' ))
+Nap_haslo( 'ESC' , Konwert(' - WYJ˜CIE',maz,lat,.t.) , if( s = NIL, 'L', s ) + if( b = NIL, '', 'b' ))
 
 ******************************************************************************
 
 FUNCTION Choice( b )
 
 b := 1
-Nap_haslo( 'ENTER' , ' - WYB£R' , 'R' + if( b = NIL, '', 'b' ) )
+Nap_haslo( 'ENTER' , Konwert(' - WYB£R',maz,lat,.t.) , 'R' + if( b = NIL, '', 'b' ) )
 
 ******************************************************************************
 
@@ -501,15 +501,18 @@ if h = NIL; return 0; endif
 if Empty( h ); return 0; endif
 if tab = NIL; tab := Ent; endif
 
+h := Konwert(h,maz,lat,.t.)
 if kwm # NIL; h := Konwert( h, win, maz, 1 ); endif
 
 private tb := {} , wy , len := 0
 
 if kwm # NIL; AEval( tab , { |a| len += Len( a ) , Aadd( tb , Konwert( a, win, maz, 1 ))})
-else; AEval( tab , { |a| len += Len( a ) , Aadd( tb , a )})
+else; AEval( tab , { |a| len += Len( a ) , Aadd( tb , Konwert(a,maz,lat,.t.) )})
 endif
 
-Tone( ton2 , 1 )
+if ton2<>0
+   Tone( ton2 , 1 )
+endif
 
 if Len( tb ) <= 4 .and. len < 50
    wy := Alert( h , tb )
@@ -558,7 +561,7 @@ oe := SetKey( K_ALT_INS,   { || FromClip()})
 
 private buf := n
 
-h := ' ' + h
+h := ' ' + Konwert(h,maz,lat,.t.)
 
 if wm # NIL
 	h := Konwert( h, win, maz )
@@ -689,6 +692,7 @@ if yy= NIL; yy:= y; endif
 if haslo = NIL; haslo := ''; endif
 if color # NIL; SetColor( color ); endif
 
+haslo := Konwert(haslo,maz,lat,.t.)
 if czy = NIL
    haslo := ' ' + SubStr( haslo, 1, yy - y - 2 ) + '  '
    y += ( yy - y - Len( haslo ) ) / 2
@@ -1326,7 +1330,7 @@ c := Val( SubStr( p, 5, 2 ))
 d := Val( SubStr( p, 7, 2 ))
 
 p := SubStr( p, 9 )
-
+p := Konwert(p,maz,lat,.t.)
 return RestScreen( a, b, c, d, p )
 
 ******************************************************************************
@@ -1360,9 +1364,10 @@ return Str( a, 2 ) + Str( a, 2 ) + Str( a, 2 ) + Str( a, 2 )
 * zy - z jakiego standardu (lat)
 * na - na jaki standard (maz)
 
-function Konwert( s, zy, na, musi )
+function Konwert( s, zy, na, musi, html )
 
 local i, n, z, s0
+local cpi10 := '12'
 
 if musi = NIL
 	if !konwertON .or. ( zy = NIL .and. szy = NIL .and. na = NIL .and. sna = NIL )
@@ -1392,6 +1397,27 @@ for i := 1 to Len( s )
     n := At( z, zy )               && czy jest z "lat"
     if n > 0                       && TAK
        z := SubStr( na, n, 1 )     && pobierz odpowiednik "z" z "maz"
+    else
+       if html # NIL
+          if z = ' '; z := '&nbsp;'; endif
+          if z = Chr(13); z := '<br>' + Chr(13); endif
+          if z = Chr(27)
+             i++
+             z := SubStr( s, i, 1 )         && znak z ci†gu
+             z2:= SubStr( s, i + 1, 1 )     && znak z ci†gu
+             if z + z2 = '@' + Chr(15); i++; z:=''; endif
+             if z = '@'; z := '<font style="font-size:' + cpi10 + '">'; endif
+             if z + z2 = 'W1'; i++; z := '<b><font style="font-size:20">'; endif
+             if z + z2 = 'W0'; i++; z := '</font></b>'; endif
+             if z = 'G'; z := '<b>'; endif
+             if z = 'H'; z := '</b>'; endif
+             if z = 'M'; z := ''; endif
+             if z = 'P'; z := ''; endif
+          endif
+          if z = Chr(18); z := '<font style="font-size:17">'; endif
+          if z = Chr(15); z := '<font style="font-size:' + cpi10 + '">'; endif
+          if z = Chr(12); z := '<div style="height:1px"></div><div style="page-break-after: always; height:1px"></div>'; endif
+       endif
     endif
     s0 += z                        && do’†cz do ci†gu wynikowego
 next

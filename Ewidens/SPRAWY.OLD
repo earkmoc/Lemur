@@ -7,6 +7,7 @@ procedure Zanki()
 
 public lat := '¤¨ãà—½¥†©ˆä¢˜«¾'
 public maz := '•œ¥£˜ ¡†‘’¤¢¦§'
+public inez:= '•œ¥£˜ ¡†‘’†¢¦§'
 public bezpl:='ACELNOSZZacelnoszz'
 public win := '¥ÆÊ£ÑÓŒ¯¹æê³ñóœŸ¿'
 public zus := '¡ÆÊ£ÑÓ¦¬¯¡ÆÊ£ÑÓ¦¬¯'

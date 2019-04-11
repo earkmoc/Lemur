@@ -7,6 +7,7 @@ procedure Zanki()
 
 public lat := '¤¨ãà—½¥†©ˆä¢˜«¾'
 public maz := '•œ¥£˜ ¡†‘’¤¢¦§'
+public inez:= '•œ¥£˜ ¡†‘’†¢¦§'
 public bezpl:='ACELNOSZZacelnoszz'
 public win := '¥ÆÊ£ÑÓŒ¯¹æê³ñóœŸ¿'
 public zus := '¡ÆÊ£ÑÓ¦¬¯¡ÆÊ£ÑÓ¦¬¯'
@@ -26,7 +27,7 @@ endif
 
 function Wypisz_sprawy( h )
 
-public runtimever := '2011.04.06'
+public runtimever := '2017.11.22'
 
 if !( h == 'wypisz'); return .f.; endif
 

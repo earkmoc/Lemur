@@ -9,8 +9,6 @@ function Druk( plik, m, x )
 
 local drukarka := File( drukarkaPA + 'drukarka.exe' )
 local plik_ini, tekst_ini
-local doIE:=.f.
-local doPDF:=.f.
 
 if !prn2file; return; endif
 
@@ -27,21 +25,10 @@ if x = NIL
    x := NIL          && nie przerobií, wiëc symulacja, ße nie miaí przerabiaç
 endif
 
-if File(StrTran(plik,'.wyd','.ht'))
-   doIE:=.t.
-   if File('\Arrakis\Wydruki\DrukPDF.bat') .and. File('\Arrakis\Wydruki\PDF.exe')
-      doPDF:=.t.
-      private opc := { 'Drukowaç' , 'Obejrzeç przed drukiem', 'Druk do PDF', 'Druk przez IE' }
-   else
-      private opc := { 'Drukowaç' , 'Obejrzeç przed drukowaniem', 'Druk przez IE' }
-   endif
+if File('\Arrakis\Wydruki\DrukPDF.bat') .and. File('\Arrakis\Wydruki\PDF.exe')
+   private opc := { 'Drukowaç' , 'Obejrzeç przed drukiem', 'Druk do PDF' }
 else
-   if File('\Arrakis\Wydruki\DrukPDF.bat') .and. File('\Arrakis\Wydruki\PDF.exe')
-      doPDF:=.t.
-      private opc := { 'Drukowaç' , 'Obejrzeç przed drukiem', 'Druk do PDF' }
-   else
-      private opc := { 'Drukowaç' , 'Obejrzeç przed drukowaniem' }
-   endif
+   private opc := { 'Drukowaç' , 'Obejrzeç przed drukowaniem' }
 endif
 
 private odp := 0 , has
@@ -63,22 +50,19 @@ if m # NIL
 *         else     ; has := 'Przygotuj drukarkë i wí¢ß odpowiedni papier !!!'
 *         endif
 
-         odp := Alarm( Konwert(has,maz,lat,.t.) , opc )
+         odp := Alarm( has , opc )
 
          do case
          case odp = 0; strony := Space( 80 ); return NIL
          case odp = 1; strony := Space( 80 ); exit
          case odp = 2; Opis( plik , 1 )
-         case odp = 3 .and. doPDF
+         case odp = 3
                m_plik := plik
                RunCommand( 'run copy ' + m_plik + ' \Arrakis\Wydruki\wydruk.txt >nul' )
                Przetworz( plik )
                RunCommand( 'run copy ' + m_plik + ' \Arrakis\Wydruki\wydruk.htm >nul' )
                RunCommand( 'run \Arrakis\Wydruki\DrukPDF.bat' )
                return NIL
-         case (odp = 3 .and. !doPDF) .or. odp=4
-               ExportIE(StrTran(plik,'.wyd','.ht'))
-               RunCommand('run iexplore.exe file:///C:/wydruk.htm')   //+StrTran(plik,'.wyd','.htm'))
          endcase
    enddo
 endif
@@ -622,7 +606,7 @@ local plikd:=plik+'.htm'
 
 if File( pliks )
    tekst := MemoRead( pliks )
-   tekst := StrTran(tekst,'name="MIASTO" value=""','name="MIASTO" value="ú¢d¶,"')
+   tekst := StrTran(tekst,'name="MIASTO" value=""','name="MIASTO" value="∂¢dä,"')
    tekst := StrTran(tekst,'name="DATA" value="2012-10-06"','name="DATA" value="'+DtoC(DATA)+'"')
    tekst := StrTran(tekst,'name="MARKA" value="SKODA"','name="MARKA" value="'+MARKA+'"')
    tekst := StrTran(tekst,'name="REJESTRAC" value="LWO 4935"','name="REJESTRAC" value="'+REJESTRAC+'"')
@@ -674,140 +658,6 @@ if File( pliks )
    tekst := StrTran(tekst,'name="UWAGI2" value="uwagi2"','name="UWAGI2" value="'+UWAGI2+'"')
    tekst := StrTran(tekst,'name="UWAGI3" value="uwagi3"','name="UWAGI3" value="'+UWAGI3+'"')
    MemoWrit( plikd, Konwert( tekst, maz, win ))
-endif
-
-**************************************************************************
-
-procedure ExportIE( plik )
-
-local pliks:=plik
-local plikh:=StrTran(plik,'.ht','.h')
-local plikd:='c:\wydruk.htm' //StrTran(plik,'.ht','.htm')
-local poleb:=''
-local polezl:=''
-local polegr:=''
-local poleul:=''
-local polelp:=0
-local poleRazemPrzych:=0
-local poleRazemRozch:=0
-local poleIleKP:=0
-local poleIleKW:=0
-local poleNRK:=''
-local poleRecNo:=RecNo()
-
-local seria:=(StrTran(plik,'REJ_','')<>plik) .and. File(plikh)
-local z:=maz
-local na:=win
-
-if File( pliks )
-
-   tekst := MemoRead( pliks )
-   tekst := StrTran(tekst,'name="OSOBA_UPR">','name="OSOBA_UPR" >'+Konwert(osoba_upr, z, na ))
-
-   if seria
-      inclu := MemoRead( plikh )
-      DBSetOrder(4)
-      DBSeek(DtoS(data1),.t.)
-      tekst := StrTran(tekst,'name="NRK">','name="NRK" >'+NRK)
-      tekst := StrTran(tekst,'name="NADZIEN">','name="NADZIEN" >'+DtoC(data2))
-      tekst := StrTran(tekst,'name="ODDNIA">','name="ODDNIA" >'+AllS(Day(data1)))
-      tekst := StrTran(tekst,'name="DODNIA">','name="DODNIA" >'+AllS(Day(data2)))
-      tekst := StrTran(tekst,'name="MIESIACA">','name="MIESIACA" >'+Konwert(Nazwa_M(Month(data2)), z, na ))
-      tekst := StrTran(tekst,'name="ROKU">','name="ROKU" >'+AllS(Year(data2)))
-   else
-      poleNRK:=NRK
-      DBSetOrder(4)
-      DBGoTop()
-      ok:=.t.
-      while ok .and. !Eof()
-         if (poleNRK=NRK)
-            polelp++
-         else
-            polelp:=0
-         endif
-         if (poleRecNo=RecNo())
-            ok:=.f.
-         else
-            DBSkip()
-         endif
-      enddo
-   endif
-
-   ok:=.t.
-   while ok
-
-      if seria
-         tekstBuf:=tekst
-         tekst := inclu
-         polelp++
-         poleRazemPrzych+=K10
-         poleRazemRozch+=K11
-         if K10>0
-            poleIleKP++
-         endif
-         if K11>0
-            poleIleKW++
-         endif
-      endif
-
-      tekst := StrTran(tekst,'name="POLELP">','name="POLELP" >'+AllS(polelp))
-
-      for i := 1 to FCount()
-          polezl:=''
-          polegr:=''
-          poleul:=''
-          if (ValType(FieldGet(i))=='C'); poleb := AllTrim(FieldGet(i)); endif
-          if (ValType(FieldGet(i))=='D'); poleb := DtoC(FieldGet(i)); endif
-          if (ValType(FieldGet(i))=='N') 
-            poleb := AllS(FieldGet(i))
-            if seria .and. poleb='0.00'
-               poleb='&nbsp;'
-            endif
-            polezl := Slownie(FieldGet(i),,1)
-            polegr := Slownie(FieldGet(i),,2)
-            poleul := AllS( 100 * ( FieldGet(i) - Int(FieldGet(i))), '99' ) + '/100'
-          endif
-          poleb:=Konwert( poleb, z, na )
-          polezl:=Konwert( polezl, z, na )
-          polegr:=Konwert( polegr, z, na )
-          tekst := StrTran(tekst,'name="'+FieldName(i)+'" value=""','name="'+FieldName(i)+'" value="'+poleb+'"')
-          tekst := StrTran(tekst,'name="'+FieldName(i)+'">','name="'+FieldName(i)+'" >'+poleb)
-          tekst := StrTran(tekst,'name="'+FieldName(i)+'" mode="SLOWNIEZL">','name="'+FieldName(i)+'" >'+polezl)
-          tekst := StrTran(tekst,'name="'+FieldName(i)+'" mode="SLOWNIEGR">','name="'+FieldName(i)+'" >'+polegr)
-          tekst := StrTran(tekst,'name="'+FieldName(i)+'" mode="SLOWNIEUL">','name="'+FieldName(i)+'" >'+poleul)
-      next                                                                
-   
-      if seria
-         if len(tekstBuf)+len(tekst)>65535
-            ok:=.f.
-            tekst := tekstBuf
-         else
-            tekst := StrTran(tekstBuf,'#include',tekst+'#include')
-         endif
-         DBSkip()
-         if (D3>data2) .or. Eof()
-            ok:=.f.
-         endif
-      else
-         ok:=.f.
-      endif
-
-   enddo
-
-   if seria
-      tekst := StrTran(tekst,'name="RAZEMPRZYCH">','name="RAZEMPRZYCH" >'+AllS(poleRazemPrzych))
-      tekst := StrTran(tekst,'name="RAZEMROZCH">','name="RAZEMROZCH" >'+AllS(poleRazemRozch))
-      tekst := StrTran(tekst,'name="STANPOPRZ">','name="STANPOPRZ" >'+AllS(bun1))
-      tekst := StrTran(tekst,'name="ILEKP">','name="ILEKP" >'+AllS(poleIleKP))
-      tekst := StrTran(tekst,'name="ILEKW">','name="ILEKW" >'+AllS(poleIleKW))
-      tekst := StrTran(tekst,'name="STANOBECNY">','name="STANOBECNY" >'+AllS(bun1+poleRazemPrzych-poleRazemRozch))
-      tekst := StrTran(tekst,'name="TOTALPRZYCH">','name="TOTALPRZYCH" >'+AllS(bun1+poleRazemPrzych))
-      tekst := StrTran(tekst,'name="TOTALROZCH">','name="TOTALROZCH" >'+AllS(poleRazemRozch+bun1+poleRazemPrzych-poleRazemRozch))
-      tekst := StrTran(tekst,'#include','')
-   endif
-   
-   MemoWrit( plikd, tekst)
-
 endif
 
 **************************************************************************

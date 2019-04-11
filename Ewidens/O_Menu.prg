@@ -251,8 +251,8 @@ if DBSeek( Str( menu, 2 ))
                 if audyt .and. menu = 0 .and. F_SYSTEMU = 2 .and. !full_dostep
                    exit
                 else
-                  if ramka; @ if( menu = 0, R_OPCJI, rm ), C_OPCJI prompt ' ' + PadR( N_OPCJI, md ) + ' '
-                  else;     @ if( menu = 0, R_OPCJI, rm ), C_OPCJI prompt ' ' + AllTrim( N_OPCJI ) + ' '
+                  if ramka; @ if( menu = 0, R_OPCJI, rm ), C_OPCJI prompt ' ' + PadR( Konwert(N_OPCJI, maz, lat, .t.), md ) + ' '
+                  else;     @ if( menu = 0, R_OPCJI, rm ), C_OPCJI prompt ' ' + AllTrim( Konwert(N_OPCJI, maz, lat, .t.) ) + ' '
                   endif
                 endif
                endif

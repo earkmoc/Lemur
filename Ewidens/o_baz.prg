@@ -304,7 +304,7 @@ private rela_partner, rerere
 
 if NoClose = NIL; NoClose := .f.; endif    && domyžlnie "zamykaj"
 
-private ll, lll, rr, cc, kolumny, naglowki, szablon, validy := {}
+private ll, lll, rr, cc, kolumny, naglowki, szablon, validy := {}, kolumny2 := {}
 private blok, bl_il_poz, bl_napis, bl_pozycja, zmiana := .f.
 
 parametry := if( '(baza)' $ parametry, StrTran( parametry, '(baza)', baza ), parametry )
@@ -381,7 +381,8 @@ if !Empty( rela_partner )
    set relation to &rela_partner into ( baza_partner )
 endif
 
-DbEdit( rr[1], cc[1], rr[2], cc[2], kolumny, 'Obsluga', szablon, naglowki, Chr( 196 ) + Chr( 194 ) + Chr( 196 ))
+AEval(kolumny, {|a| Aadd(kolumny2,'Konwert('+a+',maz,lat,.t.)')})
+DbEdit( rr[1], cc[1], rr[2], cc[2], kolumny2, 'Obsluga', szablon, naglowki, Chr( 196 ) + Chr( 194 ) + Chr( 196 ))
 
 if ( 'BUF' $ Upper( katalog ) .or. 'ROB' $ Upper( katalog )) .and.;
    !Empty( katalog ) .and. zmiana
@@ -1619,6 +1620,9 @@ while !Empty( a )            && pary wpis¢w : pole z "source" i numer GET'a
          i ++
          pole := RunCommand( pole )
          if pole # NIL
+            if ValType( pole ) == 'C'
+               pole := Konwert(pole,maz,lat,.t.)
+            endif
             vp[ nr ] := pole
          endif
       endif
@@ -2915,6 +2919,11 @@ else
 				RunCommand( a, s, bez, stri, par )
 		enddo
 		return .t.
+	endif
+
+	if Left( b, 1 ) == '='
+		b := SubStr( b, 2 )
+      bez:=1
 	endif
 
    if Upper( Left( b, 6 )) == 'DBEVAL'

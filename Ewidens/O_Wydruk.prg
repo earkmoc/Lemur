@@ -1254,39 +1254,56 @@ DBGo( rr )
 *******************************************************************************
 * czy strona naleßy do podanej listy stron
 
-function DrukStr( s, st )
+function DrukStr( s, strony )
 
 local wy, a, b, c
 
-st := AllTrim( st )
+st := AllTrim( strony )
 
 if Empty( st ); return .t.; endif
 
-wy := .f.
-while !Empty( c := Odetnij( @st ))
-      if '-' $ c
-         a := SubStr( c, 1, ( wy := At( '-', c )) - 1 )
-         b := SubStr( c, wy + 1 )
-         a := if( Empty( a ), 1, Val( a ))
-         b := if( Empty( b ), 9999999, Val( b ))
-         if a <= s .and. s <= b; wy := .t.; exit
-         else; wy := .f.
-         endif
-      else
-         if s = Val( c ); wy := .t.; exit; endif
-      endif
-enddo
+st := StrTran( st, 'n', '' )
+st := StrTran( st, 'p', '' )
+
+if Empty( st )
+	wy := .t.
+else
+	wy := .f.
+	while !Empty( c := Odetnij( @st ))
+		  if '-' $ c
+			 a := SubStr( c, 1, ( wy := At( '-', c )) - 1 )
+			 b := SubStr( c, wy + 1 )
+			 a := if( Empty( a ), 1, Val( a ))
+			 b := if( Empty( b ), 9999999, Val( b ))
+			 if a <= s .and. s <= b; wy := .t.; exit
+			 else; wy := .f.
+			 endif
+		  else
+			 if s = Val( c ); wy := .t.; exit; endif
+		  endif
+	enddo
+endif
+
+if wy .and. ('p' $ strony)		//tylko parzyste
+	wy := ((s/2)==Int( s/2 ))
+endif
+
+if wy .and. ('n' $ strony)		//tylko nieparzyste
+	wy := ((s/2)<>Int( s/2 ))
+endif
 
 return wy
 
 *******************************************************************************
 * Czy juß jest strona spoza zakresu drukowania i trzeba ko§czyç ???
 
-function KoniecStr( s, st )
+function KoniecStr( s, strony )
 
 local a, b, c, d
 
-st := AllTrim( st )
+st := AllTrim( strony )
+st := StrTran( st, 'n', '' )
+st := StrTran( st, 'p', '' )
 
 if Empty( st ); return .f.; endif
 

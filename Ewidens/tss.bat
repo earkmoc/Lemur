@@ -1,1 +1,1 @@
-c:\Arrakis\ts *.prg runcommand(
+c:\Arrakis\ts *.prg wysylka

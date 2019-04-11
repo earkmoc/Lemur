@@ -3628,9 +3628,10 @@ if !( ( lmie )->( DBSeek( Str( LPRAC->ID ) + Str( ii, x ))))
    ( lmie )->ID := i + 1
    ( lmie )->ID_LPRAC := LPRAC->ID
 	if ( lmie )->( FieldPos( 'MIESIAC' )) # 0
-if ii>12 .and. (Left(CurDir(),5)=='PLACE')
-	ii := Val(Right(AllS(ii),2))
-endif
+      if ii>12 .and. (Left(CurDir(),5)=='PLACE')
+*      if ii>12
+      	ii := Val(Right(AllS(ii),2))
+      endif
 	   ( lmie )->MIESIAC := ii
 	endif
 else

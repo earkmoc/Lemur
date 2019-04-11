@@ -1,6 +1,7 @@
 ******************************************************************************
 ********************      Procedury  F K    **********************************
 ******************************************************************************
+#include 'directry.ch'
 #include 'Inkey.ch'
 
 ******************************************************************************
@@ -645,7 +646,7 @@ function ZEST1_Tworz( a, b, c, e, f, g, bezb )
 
 local i, k, n, dt
 
-private ok_bo := "T", k_bil := "T", k_pozabil := "T"
+private ok_bo := "T", k_bil := "T", k_pozabil := "T", do_lp:=0
 
 g := if( g = NIL, .t., g )
 
@@ -783,7 +784,7 @@ ON( 'ZEST1',,,, .t. )
 **
 **   if Eof()
 **
-      ZOS( ok_bo, c, k_bil, k_pozabil )
+      ZOS( ok_bo, c, k_bil, k_pozabil, do_lp )
 **
 **   else
 **
@@ -851,7 +852,7 @@ return .t.
 
 ******************************************************************************
 
-procedure ZOS( ok_bo, c, kbila, kpoza )
+procedure ZOS( ok_bo, c, kbila, kpoza, do_lp )
 
 
 ON( 'KNORDPOL' )
@@ -860,7 +861,7 @@ ON( 'NORDPOL', 2 )
 if ok_bo
    Przerwa( LastRec())
       while !Eof()
-            if DATA <= data_do
+            if DATA <= data_do .and. iif(NORDPOL->DATA <> data_do .or. do_lp==0, .t., NORDPOL->LP <= do_lp)
                if KontoOK( WINIEN, c, kbila, kpoza )
                   if !( ZEST1->( DBSeek( Upper( NORDPOL->WINIEN ))))
                      AppendRecord( 'ZEST1', { NORDPOL->WINIEN, KNORDPOL->TRESC })
@@ -908,8 +909,8 @@ else                                             && bez BO
       Przerwa( LastRec())
 
       while DATA <= data_do .and. !Eof()
-
-            if KontoOK( WINIEN, c, kbila, kpoza )
+                                                 
+            if KontoOK( WINIEN, c, kbila, kpoza ) .and. iif(NORDPOL->DATA <> data_do .or. do_lp==0, .t., NORDPOL->LP <= do_lp)
                if !( ZEST1->( DBSeek( Upper( NORDPOL->WINIEN ))))
                   AppendRecord( 'ZEST1', { NORDPOL->WINIEN, KNORDPOL->TRESC })
 
@@ -929,7 +930,7 @@ else                                             && bez BO
                endif
             endif
 
-            if KontoOK( MA, c, kbila, kpoza )
+            if KontoOK( MA, c, kbila, kpoza ).and. iif(NORDPOL->DATA <> data_do .or. do_lp==0, .t., NORDPOL->LP <= do_lp)
                if !( ZEST1->( DBSeek( Upper( NORDPOL->MA ))))
                   AppendRecord( 'ZEST1', { NORDPOL->MA, KNORDPOL->TRESC })
                   ZEST1->TRESCG := KNORDPOL->TRESCG
@@ -4103,5 +4104,528 @@ while !Eof()
 	if ID=1341; BDelete(); endif
 	skip
 enddo
+
+*******************************************************************************
+* import z pliku "Faktury_2013_12_30listopad.xml" sekcji "faktury"...
+
+function ImportInes(d)
+
+local pp, p, i, x, mm := {}
+local p1, p2, p3, p4
+local bb := Alias(), ekran := SaveScreen()
+
+Repl_XML := 'Repl_XML.exe'
+if !File(Repl_XML)
+   Alarm( 'Brak programu ' + Repl_XML + ' !!!' )
+   OpuscSys(1)
+endif
+
+if d = NIL; d = ''; endif
+d := PadR( d, 100 )
+d := Get_U( 10, 10, 'Podaj katalog importowanych faktur:', '@S30', d )
+if d = NIL; return .f.; endif
+d := AllTrim( d )
+
+p := Directory( d + '\*.xml' )
+do case
+case Len( p ) = 0; Alarm( 'Brak plik¢w XML w podanym katalogu',, 1 ); return .f.
+case Len( p ) = 1
+	p := p[ 1, 1 ]
+case Len( p ) > 1
+	for i := 1 to Len( p )
+      a := p[ i ]
+		Aadd( mm, a[ F_NAME ] + ', data: ' + DtoC(a[ F_DATE ]) + ', rozmiar: ' + Transform(a[ F_SIZE ]/1024,'999,999,999,999 kB'))
+	next
+	i := Alarm( 'Wybierz plik z danymi do importu:', mm )
+	if i = 0; return .f.; endif
+	p := Left(mm[ i ], 12)
+endcase
+
+p := d + '\' + p
+
+Czek( 1 )
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run copy ' + p + ' Dane.xml'
+RunCommand( x, 1 )
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run ' + Repl_XML
+RunCommand( x, 1 )
+
+fullImport=.t.
+//if Alarm('Import pelny?', nt )=2
+//	fullImport=.t.
+//endif
+
+if fullImport
+	mm := {}
+	Aadd( mm, { 'TEKST', 'C', 500, 0 })
+	Dbcreate( 'LINIE.dbf', mm)
+endif
+
+	use LINIE new
+
+if fullImport
+	@ 0, 0 clear to 0, mc
+	@ 0, 0 say "append from ( '" + p + "' ) SDF"
+	append from ( 'Dane.txt' ) SDF
+endif
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run del Dane.xml'
+RunCommand( x, 1 )
+@ 0, 0 clear to 0, mc
+
+objekt := ''
+mm := {}
+i := 0
+go top
+while !Eof()
+
+   @ 0, 0 say AllS(RecNo()) + '/' + AllS(LastRec()) + '=' + AllS(100*RecNo()/LastRec(),'999%')
+
+   ss := AllTrim(TEKST)
+   ss := StrTran( ss, '&amp;', '&')
+
+   s := '<ZAPIS co="'
+   if (Left(ss, Len(s))==s)
+      s := '<ZAPIS co="faktury"'
+      if (Left(ss, Len(s))==s)
+         objekt := 'faktura'
+      else
+         if (objekt == 'faktura' )
+//             '/' + faktura_netto0 + ;
+//             '/' + faktura_przedplata + ;
+//             '/' + faktura_waluta + ;
+
+//             '/' + faktura_datas + ;
+//             '/' + faktura_sposob + ;
+//             '/' + faktura_dni + ;
+//             '/' + faktura_termin + ;
+//             '/' + faktura_netto23 + ;
+//             '/' + faktura_vat23 + ;
+//             '/' + faktura_brutto + ;
+//             '/' + faktura_wplacono + ;
+//             '/' + faktura_koszt + ;
+/*
+            Aadd( mm, faktura_nr + ' z ' + faktura_dataw +;
+             '/' + faktura_anulowana + ;
+             '/' + faktura_nab_nip + ;
+             '/' + faktura_nab_nazwa + ;
+             '/' + faktura_nab_kodp + ;
+             '/' + faktura_nab_miasto + ;
+             '/' + faktura_nab_ulica + ;
+             '';
+            )
+*/
+
+			i++
+            ( bb )->( DBAppend())
+            ( bb )->LP := 0
+            ( bb )->NUMER_FAK := faktura_nr
+            ( bb )->D1 := CtoD(SubStr(faktura_dw,7,2)+'.'+SubStr(faktura_dw,5,2)+'.'+SubStr(faktura_dw,1,4))
+            ( bb )->D2 := CtoD(SubStr(faktura_ds,7,2)+'.'+SubStr(faktura_ds,5,2)+'.'+SubStr(faktura_ds,1,4))
+//            ( bb )->D4 := CtoD(SubStr(faktura_te,7,2)+'.'+SubStr(faktura_te,5,2)+'.'+SubStr(faktura_te,1,4))
+            ( bb )->NIP := faktura_ni
+            ( bb )->NAZWA := Konwert( faktura_na, win, maz )
+            ( bb )->ADRES := Konwert( faktura_kp + ' ' + faktura_mi + ', ' + faktura_ul, win, maz ) 
+            ( bb )->K8  := val(faktura_n2)
+            ( bb )->K9  := val(faktura_v2)
+//            ( bb )->K23 := val(faktura_v2)
+            ( bb )->K7  := val(faktura_br)
+			if (faktura_sp='Przelew')
+				faktura_wp:='0'
+			endif
+            ( bb )->K16 := val(faktura_br)-val(faktura_wp)
+            
+         endif
+         objekt := 'inne'
+      endif
+   endif
+   
+   if (objekt == 'faktura')
+      s := '</NrR'; if (SubStr(ss, -Len(s))==s); faktura_nr := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</DWy'; if (SubStr(ss, -Len(s))==s); faktura_dw := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</DSp'; if (SubStr(ss, -Len(s))==s); faktura_ds := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Fp';  if (SubStr(ss, -Len(s))==s); faktura_sp := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Dni'; if (SubStr(ss, -Len(s))==s); faktura_dn := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Tpl'; if (SubStr(ss, -Len(s))==s); faktura_te := SubStr(ss, 0, Len(ss)-Len(s)); endif
+//    s := '</N0';  if (SubStr(ss, -Len(s))==s); faktura_n0 := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</N2';  if (SubStr(ss, -Len(s))==s); faktura_n2 := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</V2';  if (SubStr(ss, -Len(s))==s); faktura_v2 := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Wart';if (SubStr(ss, -Len(s))==s); faktura_br := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Zap'; if (SubStr(ss, -Len(s))==s); faktura_wp := SubStr(ss, 0, Len(ss)-Len(s)); endif
+//    s := '</Przedp';if (SubStr(ss,-Len(s))==s);faktura_pr := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Koszt';if (SubStr(ss, -Len(s))==s);faktura_ko := SubStr(ss, 0, Len(ss)-Len(s)); endif
+//    s := '</Wal'; if (SubStr(ss, -Len(s))==s); faktura_wa := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</NIP'; if (SubStr(ss, -Len(s))==s); faktura_ni := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Nazw';if (SubStr(ss, -Len(s))==s); faktura_na := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Kodp'; if (SubStr(ss, -Len(s))==s);faktura_kp := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Mias'; if (SubStr(ss, -Len(s))==s);faktura_mi := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Ulic'; if (SubStr(ss, -Len(s))==s);faktura_ul := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Anul'; if (SubStr(ss, -Len(s))==s);faktura_an := SubStr(ss, 0, Len(ss)-Len(s)); endif
+   endif
+
+	skip
+enddo
+use
+DBCommitAll()
+
+x := 'run del LINIE.DBF'
+RunCommand( x, 1 )
+
+x := 'run del Dane.txt'
+RunCommand( x, 1 )
+
+Czek( 0 )
+RestScreen(,,,, ekran )
+Select( bb )
+
+Alarm( 'Pozycji: '+ AllS( i ))
+//Alarm( 'Znalezione dokumenty : '+ AllS( Len( mm )), mm )
+ImportIneU()
+
+return .t.
+
+*******************************************************************************
+* import z pliku "Zakupy_01_12_2013-28_01_2014.xml" sekcji "zakupy", "spec", "klienci", "towary"
+
+function ImportInez(d)
+
+local pp, p, i, x, mm := {}
+local p1, p2, p3, p4
+local bb := Alias(), ekran := SaveScreen()
+
+Repl_XML := 'Repl_XML.exe'
+if !File(Repl_XML)
+   Alarm( 'Brak programu ' + Repl_XML + ' !!!' )
+   OpuscSys(1)
+endif
+
+if d = NIL; d = ''; endif
+d := PadR( d, 100 )
+d := Get_U( 10, 10, 'Podaj katalog importowanych zakup¢w:', '@S30', d )
+if d = NIL; return .f.; endif
+d := AllTrim( d )
+
+p := Directory( d + '\*.xml' )
+do case
+case Len( p ) = 0; Alarm( 'Brak plik¢w XML w podanym katalogu',, 1 ); return .f.
+case Len( p ) = 1
+	p := p[ 1, 1 ]
+case Len( p ) > 1
+	for i := 1 to Len( p )
+      a := p[ i ]
+		Aadd( mm, a[ F_NAME ] + ', data: ' + DtoC(a[ F_DATE ]) + ', rozmiar: ' + Transform(a[ F_SIZE ]/1024,'999,999,999,999 kB'))
+	next
+	i := Alarm( 'Wybierz plik z danymi do importu:', mm )
+	if i = 0; return .f.; endif
+	p := Left(mm[ i ], 12)
+endcase
+
+p := d + '\' + p
+
+Czek( 1 )
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run copy ' + p + ' Dane.xml'
+RunCommand( x, 1 )
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run ' + Repl_XML
+RunCommand( x, 1 )
+
+mm := {}
+Aadd( mm, { 'TEKST', 'C', 500, 0 })
+Dbcreate( 'LINIE.dbf', mm)
+use LINIE new
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say "append from ( '" + p + "' ) SDF"
+append from ( 'Dane.txt' ) SDF
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run del Dane.xml'
+RunCommand( x, 1 )
+@ 0, 0 clear to 0, mc
+
+objekt := ''
+mm := {}
+i := 0
+go top
+while !Eof()
+
+   @ 0, 0 say AllS(RecNo()) + '/' + AllS(LastRec()) + '=' + AllS(100*RecNo()/LastRec(),'999%')
+
+   ss := AllTrim(TEKST)
+   ss := StrTran( ss, '&amp;', '&')
+
+   s := '<ZAPIS co="'
+   if (Left(ss, Len(s))==s)
+      s := '<ZAPIS co="zakupy"'
+      if (Left(ss, Len(s))==s)
+         objekt := 'faktura'
+      else
+         if (objekt == 'faktura' )
+			i++
+            ( bb )->( DBAppend())
+            ( bb )->LP := 0
+            ( bb )->NUMER_FAK := faktura_nr
+            ( bb )->D1 := CtoD(SubStr(faktura_dw,7,2)+'.'+SubStr(faktura_dw,5,2)+'.'+SubStr(faktura_dw,1,4))
+//            ( bb )->D2 := CtoD(SubStr(faktura_ds,7,2)+'.'+SubStr(faktura_ds,5,2)+'.'+SubStr(faktura_ds,1,4))
+            ( bb )->D2 := CtoD(SubStr(faktura_dw,7,2)+'.'+SubStr(faktura_dw,5,2)+'.'+SubStr(faktura_dw,1,4))
+//            ( bb )->D4 := CtoD(SubStr(faktura_te,7,2)+'.'+SubStr(faktura_te,5,2)+'.'+SubStr(faktura_te,1,4))
+            ( bb )->NIP := faktura_ni
+            ( bb )->NAZWA := Konwert( faktura_na, win, maz )
+            ( bb )->ADRES := Konwert( faktura_kp + ' ' + faktura_mi + ', ' + faktura_ul, win, maz ) 
+            ( bb )->K8  := val(faktura_n2)
+            ( bb )->K11 := val(faktura_v2)
+            ( bb )->K22 := val(faktura_n0)
+            ( bb )->K24 := val(faktura_v2)
+            ( bb )->K7  := val(faktura_br)
+            ( bb )->K27 := val(faktura_wp)
+            ( bb )->K28 := ( bb )->K7-( bb )->K27
+            
+         endif
+         objekt := 'inne'
+      endif
+   endif
+   
+   if (objekt == 'faktura')
+      s := '</Fak'; if (SubStr(ss, -Len(s))==s); faktura_nr := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</DWy'; if (SubStr(ss, -Len(s))==s); faktura_dw := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Dfa'; if (SubStr(ss, -Len(s))==s); faktura_ds := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Fp';  if (SubStr(ss, -Len(s))==s); faktura_sp := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Dni'; if (SubStr(ss, -Len(s))==s); faktura_dn := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Tpl'; if (SubStr(ss, -Len(s))==s); faktura_te := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</N0';  if (SubStr(ss, -Len(s))==s); faktura_n0 := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</N2';  if (SubStr(ss, -Len(s))==s); faktura_n2 := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</V2';  if (SubStr(ss, -Len(s))==s); faktura_v2 := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Wart';if (SubStr(ss, -Len(s))==s); faktura_br := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Zap'; if (SubStr(ss, -Len(s))==s); faktura_wp := SubStr(ss, 0, Len(ss)-Len(s)); endif
+//    s := '</Przedp';if (SubStr(ss,-Len(s))==s);faktura_pr := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Koszt';if (SubStr(ss, -Len(s))==s);faktura_ko := SubStr(ss, 0, Len(ss)-Len(s)); endif
+//    s := '</Wal'; if (SubStr(ss, -Len(s))==s); faktura_wa := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</NIP'; if (SubStr(ss, -Len(s))==s); faktura_ni := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Nazw';if (SubStr(ss, -Len(s))==s); faktura_na := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Kodp'; if (SubStr(ss, -Len(s))==s);faktura_kp := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Mias'; if (SubStr(ss, -Len(s))==s);faktura_mi := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Ulic'; if (SubStr(ss, -Len(s))==s);faktura_ul := SubStr(ss, 0, Len(ss)-Len(s)); endif
+      s := '</Anul'; if (SubStr(ss, -Len(s))==s);faktura_an := SubStr(ss, 0, Len(ss)-Len(s)); endif
+   endif
+
+	skip
+enddo
+use
+DBCommitAll()
+
+x := 'run del LINIE.DBF'
+RunCommand( x, 1 )
+
+x := 'run del Dane.txt'
+RunCommand( x, 1 )
+
+Czek( 0 )
+RestScreen(,,,, ekran )
+Select( bb )
+
+Alarm( 'Pozycji: '+ AllS( i ))
+//Alarm( 'Znalezione dokumenty : '+ AllS( Len( mm )), mm )
+ImportIneU()
+
+return .t.
+
+*******************************************************************************
+* import z pliku "Klienci_2014_01_27.xml" sekcji "faktury"...
+
+function ImportIneK(d)
+
+local pp, p, i, x, mm := {}
+local p1, p2, p3, p4
+local bb := Alias(), ekran := SaveScreen()
+
+Repl_XML := 'Repl_XML.exe'
+if !File(Repl_XML)
+   Alarm( 'Brak programu ' + Repl_XML + ' !!!' )
+   OpuscSys(1)
+endif
+
+if d = NIL; d = ''; endif
+d := PadR( d, 100 )
+d := Get_U( 10, 10, 'Podaj katalog importowanych danych:', '@S30', d )
+if d = NIL; return .f.; endif
+d := AllTrim( d )
+
+p := Directory( d + '\*.xml' )
+do case
+case Len( p ) = 0; Alarm( 'Brak plik¢w XML w podanym katalogu',, 1 ); return .f.
+case Len( p ) = 1
+	p := p[ 1, 1 ]
+case Len( p ) > 1
+	for i := 1 to Len( p )
+      a := p[ i ]
+		Aadd( mm, a[ F_NAME ] + ', data: ' + DtoC(a[ F_DATE ]) + ', rozmiar: ' + Transform(a[ F_SIZE ]/1024,'999,999,999,999 kB'))
+	next
+	i := Alarm( 'Wybierz plik z danymi do importu:', mm )
+	if i = 0; return .f.; endif
+	p := Left(mm[ i ], 12)
+endcase
+
+p := d + '\' + p
+
+Czek( 1 )
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run copy ' + p + ' Dane.xml'
+RunCommand( x, 1 )
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run ' + Repl_XML
+RunCommand( x, 1 )
+
+mm := {}
+Aadd( mm, { 'TEKST', 'C', 500, 0 })
+Dbcreate( 'LINIE.dbf', mm)
+use LINIE new
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say "append from ( '" + p + "' ) SDF"
+append from ( 'Dane.txt' ) SDF
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say x := 'run del Dane.xml'
+RunCommand( x, 1 )
+@ 0, 0 clear to 0, mc
+
+objekt := ''
+mm := {}
+n := 0
+i := 0
+
+( bb )->(DBSetOrder(5))	//Str(NUMER)
+( bb )->(DBGoBottom())
+lastNr=( bb )->NUMER
+
+( bb )->(CreateIndex( 'PSEUDO+NIP+NAZWA' ))
+
+go top
+while !Eof()
+
+	@ 0, 0 say AllS(RecNo()) + '/' + AllS(LastRec()) + '=' + AllS(100*RecNo()/LastRec(),'999%')
+
+	ss := AllTrim(TEKST)
+	ss := StrTran( ss, '&amp;', '&')
+
+	s := '</Alias'; if (SubStr(ss, -Len(s))==s); klient_pse := SubStr(ss, 0, Len(ss)-Len(s)); endif
+	s := '</Nazw' ; if (SubStr(ss, -Len(s))==s); klient_naz := SubStr(ss, 0, Len(ss)-Len(s)); endif
+	s := '</Ulic' ; if (SubStr(ss, -Len(s))==s); klient_uli := SubStr(ss, 0, Len(ss)-Len(s)); endif
+	s := '</kodP';  if (SubStr(ss, -Len(s))==s); klient_kod := SubStr(ss, 0, Len(ss)-Len(s)); endif
+	s := '</Mias';  if (SubStr(ss, -Len(s))==s); klient_mia := SubStr(ss, 0, Len(ss)-Len(s)); endif
+	s := '</NIP';   if (SubStr(ss, -Len(s))==s); klient_NIP := SubStr(ss, 0, Len(ss)-Len(s)); endif
+
+	s := '</ZAPIS'
+	if (Left(ss, Len(s))==s)
+		i++
+		
+		ps := PadR(Konwert( klient_pse, win, maz ),10)
+		ni := PadR(Konwert( klient_nip, win, maz ),15)
+		na := PadR(Konwert( klient_naz, win, maz ),120)
+
+		if (!( bb )->(DBSeek( ps+ni+na )))
+			n++
+			lastNr++
+			
+			( bb )->( DBAppend())
+			( bb )->KONTO := '201-D12-' + AllS(lastNr)
+			( bb )->TRESC := na
+			( bb )->NAZWA := na
+			( bb )->ULICA := Konwert( klient_uli, win, maz )
+			( bb )->KOD_POCZT := klient_kod
+			( bb )->MIASTO := Konwert( klient_mia, win, maz )
+			( bb )->NIP := ni
+			( bb )->NUMER := lastNr
+			( bb )->PSEUDO := ps
+		else
+		endif
+		
+	endif
+
+	skip
+enddo
+use
+DBCommitAll()
+
+x := 'run del LINIE.DBF'
+RunCommand( x, 1 )
+
+x := 'run del Dane.txt'
+RunCommand( x, 1 )
+
+Czek( 0 )
+RestScreen(,,,, ekran )
+
+Alarm( 'Pozycji nowych/wszystkich: ' + AllS( n ) + "/" + AllS( i ))
+
+(bb)->(DBClearIndex())
+won:=.t.
+
+return .t.
+
+*******************************************************************************
+
+function ImportIneU()
+
+local bb := Alias()
+
+if (Alarm('Aktualizacja Numer i Pseudo kontrahent¢w wed’ug kartoteki kontrahent¢w?',nt)<>2)
+	return .f.
+endif
+
+Czek(1)
+
+kk:='KNORDPOL'
+ON(kk,3)	//NIP
+
+Select(bb)
+go top
+all:=0
+yok:=0
+nok:=0
+while !Eof()
+	if ((((bb)->NRKONT=0) .or. (Empty((bb)->PSKONT))) .and. (!Empty((bb)->NIP)))
+		all++
+		ok:=.f.
+		(kk)->(DBSeek((bb)->NIP))
+		while ((kk)->NIP=(bb)->NIP) .and. (kk)->(!Eof()) .and. !ok
+			ps:=(kk)->PSEUDO
+			nr:=(kk)->NUMER
+			na:=AllTrim((bb)->NAZWA)
+			if na=Left(AllTrim((kk)->NAZWA),Len(na))
+				ok:=.t.
+			endif
+*			(kk)->(DBSkip())
+*			if ((bb)->NIP==(kk)->NIP)
+*				nok++
+*				ok:=.f.
+*			endif
+			(kk)->(DBSkip())
+		enddo
+		if (ok)
+			yok++
+			(bb)->(Blokuj_R())
+			(bb)->PSKONT:=ps
+			(bb)->NRKONT:=nr
+			(bb)->(OdBlokuj_R())
+		endif
+	endif
+	skip
+enddo
+Czek(0)
+
+*Alarm('Na ' + AllS(all) + ' pozycji zmieniono ' + AllS(yok) + ', niezmieniono ' + AllS(nok) + ', pomini‘to ' + AllS(all-yok-nok))
+Alarm('Na ' + AllS(all) + ' pozycji zmieniono ' + AllS(yok) + ', pomini‘to ' + AllS(all-yok-nok))
+
+return .t.
 
 *******************************************************************************

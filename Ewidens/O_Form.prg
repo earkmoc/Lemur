@@ -163,9 +163,14 @@ return if( b = NIL, .t., b )
 
 procedure ValidWykonaj( a )
 
-private pole := Odetnij( @a ), wyrazenie := a, wynikvalid := .t.
+local pole
+private x := Odetnij( @a ), wyrazenie := a, wynikvalid := .t.
 
-&pole := RunCommand( wyrazenie )
+pole := RunCommand( wyrazenie )
+if ValType( pole ) == 'C'
+   pole := Konwert(pole,maz,lat,.t.)
+endif
+&x := pole
 
 return wynikvalid
 
@@ -325,7 +330,7 @@ else
    endif
 
 if Empty( tytul )
-   @ mr, 0 say "Esc-wyjžcie, Enter-wprowadzenie wartožci pola, PgDn-pole ni¦ej, PgUp-pole wy§ej"
+   @ mr, 0 say Konwert("Esc-wyjžcie, Enter-wprowadzenie wartožci pola",maz,lat,.t.) //, PgDn-pole ni§ej, PgUp-pole wy§ej
 else
    RRamka({ r1, r2 }, { c1, c2 })
    CSay( r1 - 1, c1, c2, tytul, jasny )
@@ -355,6 +360,9 @@ while AllTrim( FORM_NAME ) == AllTrim( nazwa ) .and. !Eof()
          endif
       endif
       ( bb )->( Aadd( vp, if( Empty( buf ), '', &buf )))
+      if ValType( vp[len(vp)] ) == 'C'
+         vp[len(vp)] := Konwert(vp[len(vp)],maz,lat,.t.)
+      endif
       if odp = 2
          ( SysForm)->( Blokuj_R())
          if i + r1 < r2
@@ -369,16 +377,16 @@ while AllTrim( FORM_NAME ) == AllTrim( nazwa ) .and. !Eof()
       endif
    if Empty( tytul )
       if Empty( buf )        && napisy
-         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say RTrim( POLE_NAME )
+         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say Konwert(RTrim( POLE_NAME ),maz,lat,.t.)
       elseif Left( POLE_VAR, 1 ) == '?'
       elseif Left( POLE_VAR, 1 ) == '@'
-         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say RTrim( POLE_NAME ) + ' ' + vp[ i ]
+         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say Konwert(RTrim( POLE_NAME ),maz,lat,.t.) + ' ' + vp[ i ]
       elseif Empty( POLE_PIC )
          ni ++
          nam := POLE_NAME
          nam := RTrim( nam )
          if ';' $ nam; nrpol := ni; nam := StrTran( nam, ';', ':' ); endif
-         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say nam;
+         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say Konwert(nam,maz,lat,.t.);
                                         get vp[ i ];
                                         valid FormValid( nazwa )
       else
@@ -386,20 +394,20 @@ while AllTrim( FORM_NAME ) == AllTrim( nazwa ) .and. !Eof()
          nam := POLE_NAME
          nam := RTrim( nam )
          if ';' $ nam; nrpol := ni; nam := StrTran( nam, ';', ':' ); endif
-         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say nam;
+         @ if( POLE_ROW < 0, r0, r1 + POLE_ROW ), c1 + POLE_COL say Konwert(nam,maz,lat,.t.);
                                         get vp[ i ];
                                         picture AllTrim( POLE_PIC );
                                         valid FormValid( nazwa )
       endif
    else
       if Empty( buf )
-         @ r1 + POLE_ROW, c1 + POLE_COL say RTrim( POLE_NAME )  && napisy
+         @ r1 + POLE_ROW, c1 + POLE_COL say Konwert(RTrim( POLE_NAME ),maz,lat,.t.)  && napisy
       elseif Left( POLE_VAR, 1 ) == '?'
       elseif Left( POLE_VAR, 1 ) == '@'
 			if ValType( vp[ i ]) == 'C'
-				@ r1 + POLE_ROW, c1 + POLE_COL say RTrim( POLE_NAME ) + ' ' + vp[ i ]
+				@ r1 + POLE_ROW, c1 + POLE_COL say Konwert(RTrim( POLE_NAME ),maz,lat,.t.) + ' ' + vp[ i ]
 			else
-				@ r1 + POLE_ROW, c1 + POLE_COL say RTrim( POLE_NAME ) + ' ' + Transform( vp[ i ], POLE_PIC )
+				@ r1 + POLE_ROW, c1 + POLE_COL say Konwert(RTrim( POLE_NAME ),maz,lat,.t.) + ' ' + Transform( vp[ i ], POLE_PIC )
 			endif
 		   if ( VALID_FUNC # 0 ) .and. !( Left( VALID_PARA, 2 ) == 'vp' )
 		      Eval( SysFunction[ VALID_FUNC ], VALID_PARA )
@@ -409,7 +417,7 @@ while AllTrim( FORM_NAME ) == AllTrim( nazwa ) .and. !Eof()
          nam := POLE_NAME
          nam := RTrim( nam )
          if ';' $ nam; nrpol := ni; nam := StrTran( nam, ';', ':' ); endif
-         @ r1 + POLE_ROW, c1 + POLE_COL say nam;
+         @ r1 + POLE_ROW, c1 + POLE_COL say Konwert(nam,maz,lat,.t.);
                                         get vp[ i ];
                                         valid FormValid( nazwa )
       else
@@ -418,12 +426,12 @@ while AllTrim( FORM_NAME ) == AllTrim( nazwa ) .and. !Eof()
          nam := RTrim( nam )
          if ';' $ nam; nrpol := ni; nam := StrTran( nam, ';', ':' ); endif
 			if '?' $ POLE_PIC
-   	      @ r1 + POLE_ROW, c1 + POLE_COL say nam;
+   	      @ r1 + POLE_ROW, c1 + POLE_COL say Konwert(nam,maz,lat,.t.);
                                         get vp[ i ];
                                         picture StrTran( AllTrim( POLE_PIC ), '?', '.' );
                                         valid FormValid( nazwa )
 				SetColor( 'W/B' )
-      	   @ r1 + POLE_ROW, c1 + POLE_COL + Len( nam ) + 1 say Tra( vp[ i ], AllTrim( POLE_PIC ))
+      	   @ r1 + POLE_ROW, c1 + POLE_COL + Len( nam ) + 1 say Konwert(Tra( vp[ i ], AllTrim( POLE_PIC )),maz,lat,.t.)
 				SetColor( STC )
 *				if runvalids;
 *					.or.;
@@ -438,7 +446,7 @@ while AllTrim( FORM_NAME ) == AllTrim( nazwa ) .and. !Eof()
 *				   endif
 *				endif
 			else
-   	      @ r1 + POLE_ROW, c1 + POLE_COL say nam;
+   	      @ r1 + POLE_ROW, c1 + POLE_COL say Konwert(nam,maz,lat,.t.);
                                         get vp[ i ];
                                         picture AllTrim( POLE_PIC );
                                         valid FormValid( nazwa )
@@ -519,6 +527,9 @@ else
                    buf := SubStr( pola[ i ], 2 )     &&  zmienne : "=zmienna"
                    &buf := vp[ i ]
                 elseif Left( pola[ i ], 1 ) # ':'
+                     if ValType( vp[i] ) == 'C'
+                        vp[i] := Konwert(vp[i],lat,maz,.t.)
+                     endif
                    &buf := vp[ i ]
                 endif
              endif
