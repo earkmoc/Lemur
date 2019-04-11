@@ -1,0 +1,12 @@
+ Aadd(pola,{'BASE','C',8,0})|
+ Aadd(pola,{'NAME','C',12,0})|
+ Aadd(pola,{'SIZE','N',10,0})|
+ Aadd(pola,{'DATE','D',8,0})|
+ Aadd(pola,{'TIME','C',8,0})|
+ Aadd(pola,{'OPIS','C',80,0})|
+ Aadd(indeksy,'wzoryhl1')|
+ Aadd(indeksy,'wzoryhl2')|
+ Aadd(indeksy,'wzoryhl3')|
+ Aadd(klucze,'NAME')|
+ Aadd(klucze,'BASE+NAME')|
+ Aadd(klucze,'PadR(Right(AllTrim(NAME),3),3)')|

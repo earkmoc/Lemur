@@ -1,0 +1,68 @@
+Bolewska:
+
+233 znaki = drukarka
+223 znaki = papier
+
+M       10 -> 12     84 znaki            g‘stož czcionki
+        10 -> 17    119 znak¢w
+M   10 -> 20    139-171 znak¢w A4, lub 272 znak¢w A3
+P     20 -> 10     70 znak¢w
+        17 -> 10
+P       12 -> 10
+        20 -> 12
+g          -> 15 cpi
+
+
+
+!128    underline                         rodzaj druku
+!64     italic
+!32     double-width
+!16     double-strike      sumy tworz† kombinacje rodzaj¢w
+!8      bold
+!4      condensed
+!2      proportional
+!1      12 cpi
+!0      10 cpi
+
+
+
+@       init
+        eject
+
+
+
+C nn    set page length in lines            strona papieru
+C0 nn   set page length in inches
+
+N n     set bottom margin in lines
+O       cancel top/bottom margin
+
+l n     set left margin in columns
+Q n     set right margin in columns
+
+
+
+
+W1      single -> double width              typ druku
+W0      double -> single width
+
+w1      single -> double hight
+w0      double -> single hight
+
+x1      ON  NLQ mode
+x0      OFF NLQ mode
+
+        double width for 1 line
+        cancel double width for 1 line
+
+E       ON  emphasised ( wyt’uszczone )
+F       OFF emphasised
+G       ON  enhanced ( double strike )
+H       OFF enhanced
+
+S0      superscript
+S1      subscript
+T       cancel j.w.
+
+-1      underline ON
+-0      underline OFF

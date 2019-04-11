@@ -1,0 +1,14 @@
+LPLAC->(GetPole(1,'ROB->ID_LPLAC','NUMER'))|LPLAC->(GetPole(1,'ROB->ID_LPLAC','DATA'))|if(LPLAC->ID_LPD=0,PadR('Lista os¢b',50),LPD->(GetPole(1,'LPLAC->ID_LPD','NAZWA')))|LPD->(GetPole(1,'LPLAC->ID_LPD2','NAZWA'))|Mark('LPLACZ',ID_LPLAC,'*')|
+     ;Numer|    ;Data|     ;Lista|Kom¢rka;organizacyjna|Z|
+@S8||@S25|@S21|X|
+11|1|22|78|3||||ON('LPLACZ',,,,.t.)|TabDefFill('tabela list','')|
+Listy na kt¢rych wyst†pi’ powy§szy pracownik
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|Z|Znak|Mark('LPLACZ',LPLAC->ID)|
+1|W|Wydruki|50||e|1|Wybierz wariant wydruku :|
+|P|Pozycje=Enter|SubBase('LPLACPP,lplacppp.txt,BUFOR,3,(baza)->(Str(ID_LPLAC)+Str(ID)),(baza)->(Str(ID_LPLAC)+Str(ID))==Str(ID_LPLAC)+Str(ID_LPLACP)',,,,6)|
+|Enter||SubBase('LPLACPP,lplacppp.txt,BUFOR,3,(baza)->(Str(ID_LPLAC)+Str(ID)),(baza)->(Str(ID_LPLAC)+Str(ID))==Str(ID_LPLAC)+Str(ID_LPLACP)',,,,6)|
+|Q||Kasuj()|
+|A||BDelete(),wy:=2,zmiana:=.t.|

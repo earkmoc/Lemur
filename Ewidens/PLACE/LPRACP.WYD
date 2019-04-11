@@ -1,0 +1,20 @@
+AllTrim(LPRAC->NAZWA)|CMonth(CtoD('01.'+Str(ROB->MIESIAC,2)+'.2001'))+' 2001 r.'|EOL+EOL+Firma()+EOL|
+AllTrim(ROB->LISTY)|0<>
+W1Pracownik:<@S50>, wynagrodzenie za miesi†c:<@S30>W0<@S200>
+
+Numery zsumowanych list:<@S100>M<>
+#globalbuf:=ROB->ID|TytWydruku(5,,"=",,.f.)|
+ON('LPRACPP',3)|LPRACPP->(DBSeek(Str(LPRAC->ID)+Str(ROB->ID)))|
+Ustaw('proc_2poziom','TytWydruku(-2,,,,.f.)')|
+Ustaw('baza_2poziom','ROB')|
+Ustaw('proc_3poziom','Inccctab(LPRACPP->ID,2,LPRACPP->WARTOSC)')|
+Ustaw('baza_3poziom','LPRACPP')|
+Ustaw('drukuj_3poziom','ROB->ID=globalbuf')|
+Ustaw('drukuj_for',"!(LPDPD->(GetPole(1,'LPRACPP->ID_LPDPD','DRUKOWAC'))=='N')")|
+Ustaw('drukuj_while','Str(LPRAC->ID)+Str(ROB->ID)==Str(ID_LPRAC)+Str(ID_LPRACP)')<>
+if(IsDigit(LPDPD->(GetPole(1,'LPRACPP->ID_LPDPD','MASKA'))),Left(WARTOSC,Len(AllTrim(LPDPD->MASKA))),Transform(WARTOSC,AllTrim(LPDPD->MASKA)))<>
+{@S50}
+#Jest_baza('ROB')|DBSetOrder(3)|DBSeek(Str(LPRAC->ID)+Str(globalbuf))|
+TytWydruku(0,3,'=','ä=',.f.)<>
+#Jest_baza('ROB')<>
+  0<>  P

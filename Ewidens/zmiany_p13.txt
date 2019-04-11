@@ -1,0 +1,14 @@
+magazyny:
+8489 10=ds+7
+wystawil='michal kolinski'
+8517 rem
+
+, bufr, bufi
+
+	bufr := DOKUM->(RecNo())
+	bufi := DOKUM->(IndexOrd())
+	DOKUM->(DBSetOrder(2))	//typ+Str(ID,10)
+	DOKUM->(DBSeek(globalbuf+'9999999999', .t.))
+	DOKUM->(DBSkip(-1))
+
+8630 //	   RunMenu( 66,,1 )      && wydruk orygina'u lub kopii

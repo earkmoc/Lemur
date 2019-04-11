@@ -1,0 +1,10 @@
+Wzory wydruk¢w i inne definicje
+5|22|1|78|1||||DBEFiltr('SIZE#0, ( istniej†ce )')|DBSetOrder(1)|DBGoTop()|
+NAME|Nazwa|
+BASE|Baza|
+OPIS|Opis|@S50|
+OPIS|Opis|
+SIZE| Bajt¢w|@Z|
+DATE|Data|
+TIME|Czas|
+OPIS|Opis|@S40|

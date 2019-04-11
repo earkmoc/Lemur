@@ -1,0 +1,22 @@
+2|47| |data|Month(DATA)|!ANULOWANO|Time()|Date()|0|firma|data1|data2|0<>
+LP|PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM|0<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+Czas :<@S8>                                                      Data :<@S8>  
+  <>  
+  
+         PODATKOWA KSIêGA PRZYCHOD£W I ROZCHOD£W za okres <@S8> r. - <@S8> r.M
++-----------+-------------+---------+-----------+-------------+-----------+------------------------------------------+-------+--------+
+≥           ≥    Sprzedaß ≥Pozostaíe≥   Razem   ≥Zakup towar¢w≥   Koszty  ≥      W Y D A T K I   ( K O S Z T Y )     ≥       ≥ Doch¢d ≥
+≥           ≥   towar¢w i ≥przychody≥  przych¢d ≥handlowych i ≥   uboczne ≥------------------------------------------≥       ≥   lub  ≥
+≥         LP≥    i usíug  ≥  ( 8 )  ≥ ( 7 + 8 ) ≥ materiaí¢w  ≥   zakupu  ≥ rekl.≥wynagrodz.≥ pozostaíe≥razem wydatki≥       ≥ Strata ≥
++-----------+-------------+---------+-----------+-------------+-----------+------------------------------------------+-------+--------+<>
+{99999999999|@Z 99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999|@Z 999,999.99| }
++-----------+-------------+---------+-----------+-------------+-----------+------------------------------------------+-------+--------+<>  
+Suma folio :<99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999|@Z 999,999.99| >  
+p. z folio :<99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999|@Z 999,999.99| >  
+     Razem :<99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999|@Z 999,999.99| >  
+  
+P<@S50>

@@ -1,0 +1,2 @@
+OKRES,Import dokument¢w z rejestru korekt zakup¢w,REJKZA,
+#importC1.txt

@@ -1,0 +1,22 @@
+2|47| |data|Month(DATA)|!ANULOWANO|Time()|Date()|0|firma|data1|data2|0<>
+MemVar->LP|SubStr(DtoC(DATA),4,5)|PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM-ZAKUP_TOW-KOSZTY_UB|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM-ZAKUP_TOW-KOSZTY_UB|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM-ZAKUP_TOW-KOSZTY_UB|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|PRZYCHOD3-RAZEM-ZAKUP_TOW-KOSZTY_UB|0<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+Czas :<@S8>                                                      Data :<@S8>  
+  <>  
+  
+         PODATKOWA KSIêGA PRZYCHOD£W I ROZCHOD£W za okres <@S8> r. - <@S8> r.M
++-------+-----+-------------+---------+-----------+-------------+-----------+------------------------------------------+-------+-------------+
+≥       ≥Mies.≥    Sprzedaß ≥Pozostaíe≥   Razem   ≥Zakup towar¢w≥   Koszty  ≥      W Y D A T K I   ( K O S Z T Y )     ≥       ≥    Doch¢d   ≥
+≥       ≥  i  ≥   towar¢w i ≥przychody≥  przych¢d ≥handlowych i ≥   uboczne ≥------------------------------------------≥       ≥     lub     ≥
+≥     LP≥ rok ≥    i usíug  ≥  ( 8 )  ≥ ( 7 + 8 ) ≥ materiaí¢w  ≥   zakupu  ≥reklama|wynagrodz.≥pozostaíe≥razem wydatki≥       ≥    Strata   ≥
++-------+-----+-------------+---------+-----------+-------------+-----------+------------------------------------------+-------+-------------+<>
+{9999999|XXXXX|@Z 99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 9999.99|@Z 999,999.99|@Z 999,999.99|@Z 9,999,999.99|@Z 9999.99|@Z 99,999,999.99| }
++-------+-----+-------------+---------+-----------+-------------+-----------+------------------------------------------+-------+-------------+<>  
+  Suma strony:<@Z 99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 9999.99|@Z 999,999.99|@Z 999,999.99|@Z 9,999,999.99|@Z 9999.99|@Z 99,999,999.99| >  
+Poprz. strona:<@Z 99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 9999.99|@Z 999,999.99|@Z 999,999.99|@Z 9,999,999.99|@Z 9999.99|@Z 99,999,999.99| >  
+       Razem :<@Z 99,999,999.99|@Z 99,999.99|@Z 9999,999.99|@Z 99,999,999.99|@Z 9999,999.99|@Z 9999.99|@Z 999,999.99|@Z 999,999.99|@Z 9,999,999.99|@Z 9999.99|@Z 99,999,999.99| >  
+  
+P<@S50>  

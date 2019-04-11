@@ -1,0 +1,171 @@
+
+procedure DokImport()
+
+local x, y, k := 'C:\MMAGAZYN.86'
+
+if Get_U( 10, 10, 'Podaj katalog importowanych danych:', '@KS30', PadR( k, 50 )) = NIL
+   return
+endif
+
+k := AllTrim( k ) + '\'
+
+ON( 'MAGAZYNY');zap
+ON( 'DOKUM' ) ; zap
+ON( 'SPEC' )  ; zap
+ON('TOWARY',2); zap
+
+ON( 'DOKTYPY')
+ON( 'FIRMY' )
+
+*use ( k + 'ew_pkt' ) new
+*while !Eof()
+*      FIRMY->( DBAppend())
+*      FIRMY->ID_F := NR_PKTU
+*      FIRMY->TYP := 'P'
+*      FIRMY->NAZWA1 := NZW_PUNKTU
+*      skip
+*      @ 0, 0 say recno()
+*enddo
+*@ 0, 0 say Space( 30 )
+*use
+
+while !Eof()
+      if FIRMY->ID_F > 99
+         BDelete()
+      else
+         FIRMY->TYP := 'P'
+      endif
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+ON( 'FIRMY' ) ; pack
+
+ON( 'FIRMY', 5 )
+
+y := 'FAKTZ00'
+use ( k + y ) new
+index on NR_FAKTURY to buf.ntx
+
+use ( k + 'ewz00' ) new
+while !Eof()
+      DokFirmy( DOST_NIP, ADRES, DOSTAWCA, 'D' )
+      DokDokum( "FZ", LTrim( NR_PZ ), DAT_OTRZ_F, WARTOSC_ZK, LTrim( NR_FAKTURY ))
+      DokTowar( y, EWZ00->NR_PZ, 1 )
+      DokClose()
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+use
+
+Zwolnij( y )
+
+ON( 'SPEC' )
+ON( 'DOKUM' )
+ON( 'FIRMY' )
+for x := 0 to 99
+    @ 0, 0 say x
+    FIRMY->( DBSeek( x ))
+    DokDokTow( k, 'pwh' + Right( '00' + AllS( x ), 2 ))
+    DokDokTow( k, 'rwh' + Right( '00' + AllS( x ), 2 ))
+    DokDokInw( k, 'magini' + Right( '00' + AllS( x ), 2 ), "IN" )
+next
+@ 0, 0 say Space( 30 )
+
+ON( 'FIRMY', 5 )
+
+y := 'FAKTS00'
+use ( k + y ) new
+index on NR_FAKTURY to buf.ntx
+
+use ( k + 'EWS00' ) new
+while !Eof()
+      DokFirmy( ODBIOR_NIP, ADRES, ODBIORCA, 'N' )
+      DokDokum( if( RODZ_DOK == "F", "FV", "RU" ), LTrim( NR_FAKTURY ), DATA_OB_PO, WARTOSC_SP,, WAR_SP_22, VAT_22, WAR_SP_7, VAT_7, WAR_SP_KRJ, SPRZED_ZW )
+      DokTowar( y, EWS00->NR_FAKTURY )
+      DokClose()
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+use
+
+Zwolnij( y )
+
+y := 'REKLH00'
+use ( k + y ) new
+index on NR_FAKTURY to buf.ntx
+
+ON( 'FIRMY', 5 )
+use ( k + 'ewsk00' ) new
+while !Eof()
+      DokFirmy( ODBIOR_NIP, ADRES, ODBIORCA, 'N' )
+      DokDokum( if( RODZ_DOK == "F", "FVK", "RUK" ), LTrim( NR_FAKTURY ), DATA_OB_PO, WARTOSC_SP,, WAR_SP_22, VAT_22, WAR_SP_7, VAT_7, WAR_SP_KRJ, SPRZED_ZW )
+      DokTowar( y, EWSK00->NR_FAKTURY,, 1 )
+      DokClose()
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+use
+
+Zwolnij( y )
+
+ON( 'FIRMY' )
+for x := 0 to 99
+    @ 0, 0 say x
+    FIRMY->( DBSeek( x ))
+    DokDokInwent( k, 'mag' + Right( '00' + AllS( x ), 2 ), "INW", x )
+next
+@ 0, 0 say Space( 30 )
+
+ON( 'FIRMY', 5 )
+use ( k + 'kodb' ) new
+while !Eof()
+      DokFirmy( NIP_PESEL, ADRES, ODBIORCA, 'N', TELEFON, NA_ODB )
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+use
+
+k := ( Alarm( 'Zako¤czy ustalanie danych adresowych?', nt ) = 2 )
+
+ON( 'FIRMY' )
+while !Eof()
+      if k
+         FIRMY->ADRES := FIRMY->NAZWA3
+         FIRMY->NAZWA3 := ""
+      endif
+      FIRMY->INDEKS := FIRMY->( GetSkrot( NAZWA1 ))
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+
+ON( 'FIRMY', 2 )
+x := 0
+k := INDEKS
+skip
+while !Eof()
+      if !( Upper( k ) == Upper( INDEKS ))
+         k := INDEKS
+         skip
+      else
+         skip
+         if Eof(); exit; endif
+         y := RecNo()
+         skip -1
+         x ++
+         FIRMY->INDEKS := Left( FIRMY->INDEKS, 7 ) + PadL( AllS( x ), 3 )
+         DBGoTo( y )
+      endif
+      @ 0, 0 say recno()
+enddo
+Zwolnij( 'FIRMY' )
+@ 0, 0 say Space( 30 )
+
+Alarm( 'Import zako¤czony.')
+
+******************************************************************************

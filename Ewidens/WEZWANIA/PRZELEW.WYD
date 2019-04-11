@@ -1,0 +1,41 @@
+PadR(AllTrim(NAZ21)+' '+NAZ22,100)|
+PadR(AllTrim(NAZ23)+' '+NAZ24,100)|
+Left(AllTrim(RACH21)+RACH22,8)|
+SubStr(AllTrim(RACH21)+RACH22,10)|
+'***'+StrTran(AllS(KWOTA),'.',',')+'***---------'|
+Space(4)+PadR(AllTrim(RACH11)+RACH12,100)|
+PadR(AllTrim(NAZ11)+' '+NAZ12,100)|
+PadR(AllTrim(NAZ13)+' '+NAZ14,100)|
+PadR(TYT11,100)|
+PadR(TYT22,100)|
+DtoC(DATA)|0<>
+0<>
+0<>
+0<>
+@P  <@S52>  
+  
+  
+<@S52>  
+  
+      <@S52>       <@S30>  
+  
+                               <@S22>  
+  
+  
+<@S52>  
+  
+  
+<@S52>  
+  
+  
+<@S52>  
+  
+  
+<@S52>  
+  
+  
+<@S52>  
+  
+  
+<@S52>  
+  

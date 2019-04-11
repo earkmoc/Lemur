@@ -1,0 +1,1 @@
+del c:\arrakis\retsat\magazyn*.*

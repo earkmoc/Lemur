@@ -1,0 +1,360 @@
+******************************************************************************
+****************************   ò R O D K I   T R W A ú E   *******************
+******************************************************************************
+* Init record "SR_TRAMO" while appending 
+
+procedure SrTrwAmoDop( a )   && 17
+
+replace KOD_WEW with SR_TRWAL->KOD_WEW,;
+        LP with PadL( Val( GetLast( 2, 1 )) + 1, Len( LP )),;
+        WARTOSC_P with SR_TRWAL->WARTOSC_P,;
+        DATA_P with SR_TRWAL->DATA_P,;
+        STAWKA with SR_TRWAL->STAWKA,;
+        DATA with Date()
+
+******************************************************************************
+* Init record "SR_TRWAL" while appending
+
+procedure SrTrwaleDop( a )   && 26
+
+replace KOD_WEW with PadL( Val( GetLast( 1, 2 )) + 1, Len( KOD_WEW )),;
+        LP with PadL( Val( GetLast( 2, 1 )) + 1, Len( LP )),;
+        DATA_P with Date(),;
+        DATA with Date()
+
+******************************************************************************
+
+procedure Amortyzuj( a )
+
+local maxLP, dataAMO, bb, rr, ii, pominiete, nrLP
+local s1, s2, s3, s4, s5
+
+Select( 'SR_TRWAL' )
+
+bb := Alias()
+rr := RecNo()
+ii := IndexOrd()
+
+private plik := 'Rap_amort.txt'
+private szablon_wzoru := NIL
+private bufor_wzoru := ReadWzor( plik )
+
+if Empty( bufor_wzoru ); return; endif
+
+if ( dataAMO := Get_U( 10, 10, 'Podaj datë amortyzacji :', Sz_X(8), Date())) = NIL
+   return
+endif
+
+ON( 'SR_TRAMO', 3 )
+if Empty( a ) .and. DBSeek( dataAMO )
+   if ( Alarm( 'Z podanÜ datÜ byía juß przeprowadzana amortyzacja !!!',;
+             { 'Wycofaç poprzedniÜ amortyzacjë', 'Wyjûç z procedury' })) = 1
+      Czek( 1 )
+      while dataAMO = DATA .and. !Eof(); BDelete(); skip; enddo
+      Czek( 0 )
+   else
+      Select( bb )
+      DBSetOrder( ii )
+      DBGoTo( rr )
+      return
+   endif
+endif
+
+Czek( 1 )
+
+ON( 'SR_TRAMO', 2 )
+maxLP := Replicate( '9', Len( LP ))
+
+mOpen( cat_wydr + plik )
+
+??  Naglowek_wydruku() + Linia_wydruku({ Time()})
+??  Naglowek_wydruku() + Linia_wydruku({ Date()})
+??  Naglowek_wydruku() + Linia_wydruku({ dataAMO })
+?? Naglowek_wydruku() + Linia_wydruku({''})
+?  ReadWzor( cat_main + '\' + 'max.txt', 11 )
+?  Naglowek_wydruku() + Linia_wydruku({''})
+
+Linia_wydruku({''})
+
+store 0 to pominiete, nrLP, s1, s2, s3, s4, s5
+
+ON( 'SR_TRWAL' )
+while !Eof()
+
+      if !Empty( a )       && amortyzacja pojedynczego towaru
+         DBGoTo( rr )
+      endif
+
+      if dataAMO >= DATA_P
+
+         Select( 'SR_TRAMO' )
+         DBSeek( SR_TRWAL->KOD_WEW + maxLP, .t. ); DBSkip( -1 )
+
+         if SR_TRWAL->KOD_WEW == SR_TRAMO->KOD_WEW      && jest poprzednik
+            DBCAppend({ || .t. })
+            SR_TRAMO->LP        := PadL( Val( LP ) + 1, Len( LP ))
+            SR_TRAMO->DATA      := dataAMO
+            SR_TRAMO->DATA_P    := SR_TRWAL->DATA_P
+            SR_TRAMO->STAWKA    := SR_TRWAL->STAWKA
+            SR_TRAMO->WARTOSC_M := 0.001 * (( 1000 * STAWKA * WARTOSC_P ) / 12 ) * 0.01
+            SR_TRAMO->WARTOSC_O := ( 13 - Month( dataAMO )) * WARTOSC_M
+            SR_TRAMO->WARTOSC_D := WARTOSC_Z
+            SR_TRAMO->WARTOSC_Z := WARTOSC_D - WARTOSC_M
+
+            SR_TRWAL->WARTOSC_A := WARTOSC_Z
+
+         else
+            DBAppend()
+            SR_TRAMO->KOD_WEW   := SR_TRWAL->KOD_WEW
+            SR_TRAMO->LP        := PadL( '1', Len( LP ))
+            SR_TRAMO->DATA      := dataAMO
+            SR_TRAMO->DATA_P    := SR_TRWAL->DATA_P
+            SR_TRAMO->WARTOSC_P := SR_TRWAL->WARTOSC_P
+            SR_TRAMO->STAWKA    := SR_TRWAL->STAWKA
+            SR_TRAMO->WARTOSC_M := 0.001 * (( 1000 * STAWKA * WARTOSC_P ) / 12 ) * 0.01
+            SR_TRAMO->WARTOSC_O := ( 13 - Month( dataAMO )) * WARTOSC_M
+            SR_TRAMO->WARTOSC_D := WARTOSC_P
+            SR_TRAMO->WARTOSC_Z := WARTOSC_P - WARTOSC_M
+
+            SR_TRWAL->WARTOSC_A := WARTOSC_Z
+
+         endif
+
+         if SR_TRAMO->WARTOSC_Z < 0
+            SR_TRAMO->WARTOSC_Z := 0
+            SR_TRAMO->WARTOSC_M := SR_TRAMO->WARTOSC_D
+            SR_TRWAL->WARTOSC_A := 0
+         endif
+
+         if SR_TRAMO->WARTOSC_Z < SR_TRAMO->WARTOSC_O
+            SR_TRAMO->WARTOSC_O := SR_TRAMO->WARTOSC_Z
+         endif
+
+         nrLP ++
+         ? Linia_wydruku({ nrLP, SR_TRWAL->NAZWA, SR_TRWAL->NUMER, WARTOSC_P, STAWKA, WARTOSC_M, WARTOSC_D, WARTOSC_Z, WARTOSC_O })
+         s1 += WARTOSC_P
+         s2 += WARTOSC_M
+         s3 += WARTOSC_D
+         s4 += WARTOSC_Z
+         s5 += WARTOSC_O
+
+         Select( 'SR_TRWAL' )
+
+      else
+         pominiete ++
+      endif
+
+      if !Empty( a )       && amortyzacja pojedynczego towaru
+         exit
+      endif
+
+      skip
+enddo
+
+?  Naglowek_wydruku() + Linia_wydruku({''})
+?  Naglowek_wydruku() + Linia_wydruku({ s1, s2, s3, s4, s5 })
+
+Ew_Print( pominiete # 0, Naglowek_wydruku() + Linia_wydruku({ pominiete }))
+?  Naglowek_wydruku() + Linia_wydruku({''})
+
+Select( bb )
+DBSetOrder( ii )
+DBGoTo( rr )
+
+mClose()
+Druk( cat_wydr + plik, 2 )    && druk natychmiastowy na perforowanym
+
+Czek( 0 )
+
+******************************************************************************
+
+procedure Wycof_AMO( a )
+
+local dataAMO, bb, rr, ii, i_dalej, nrLP, buf
+
+Select( 'SR_TRWAL' )
+
+bb := Alias()
+rr := RecNo()
+ii := IndexOrd()
+
+if ( dataAMO := Get_U( 10, 10, 'Podaj datë usuwanej amortyzacji :', Sz_X(8), Date())) = NIL
+   return
+endif
+
+i_dalej := ( Alarm( 'Czy usuwaç takße wszystkie p¢¶niejsze amortyzacje ?', tk ) = 1 )
+
+Czek( 1 )
+
+if Empty( a )       && amortyzacja wszystkich
+   ON( 'SR_TRAMO', 3 )
+   DBSeek( dataAMO, .t. )
+   while ( dataAMO = DATA .or. if( i_dalej, dataAMO < DATA, .f. )) .and. !Eof()
+         BDelete()
+         skip
+   enddo
+else
+   ON( 'SR_TRAMO', 4 )
+   DBSeek( SR_TRWAL->KOD_WEW + DtoS( dataAMO ), .t. )   && usuwamy jeden
+   while SR_TRWAL->KOD_WEW == SR_TRAMO->KOD_WEW .and.;
+         ( dataAMO = DATA .or. if( i_dalej, dataAMO < DATA, .f. )) .and. !Eof()
+         BDelete()
+         skip
+   enddo
+endif
+
+ON( 'SR_TRAMO', 2 )
+ON( 'SR_TRWAL' )
+while !Eof()
+      buf := 0
+      nrLP := 0
+
+      if !Empty( a )       && amortyzacja pojedynczego towaru
+         DBGoTo( rr )
+      endif
+
+      Select( 'SR_TRAMO' )
+      DBSeek( SR_TRWAL->KOD_WEW )
+      while SR_TRWAL->KOD_WEW == SR_TRAMO->KOD_WEW .and. !Eof()
+            nrLP ++
+            SR_TRAMO->LP := PadL( nrLP, Len( LP ))
+            if nrLP = 1
+               SR_TRAMO->DATA_P    := SR_TRWAL->DATA_P
+               SR_TRAMO->WARTOSC_P := SR_TRWAL->WARTOSC_P
+               SR_TRAMO->STAWKA    := SR_TRWAL->STAWKA
+               SR_TRAMO->WARTOSC_M := 0.001 * (( 1000 * STAWKA * WARTOSC_P ) / 12 ) * 0.01
+               SR_TRAMO->WARTOSC_O := ( 13 - Month( DATA )) * WARTOSC_M
+               SR_TRAMO->WARTOSC_D := WARTOSC_P
+               SR_TRAMO->WARTOSC_Z := WARTOSC_P - WARTOSC_M
+               buf := SR_TRAMO->WARTOSC_Z
+            else
+               SR_TRAMO->DATA_P    := SR_TRWAL->DATA_P
+               SR_TRAMO->WARTOSC_P := SR_TRWAL->WARTOSC_P
+               SR_TRAMO->WARTOSC_D := buf
+               SR_TRAMO->WARTOSC_Z := buf - WARTOSC_M
+               buf := SR_TRAMO->WARTOSC_Z
+            endif
+            skip
+      enddo
+      SR_TRWAL->WARTOSC_A := buf
+      Select( 'SR_TRWAL' )
+
+      if !Empty( a )       && amortyzacja pojedynczego towaru
+         exit
+      endif
+
+      skip
+enddo
+
+Select( bb )
+DBSetOrder( ii )
+DBGoTo( rr )
+
+Czek( 0 )
+
+******************************************************************************
+* Wydruk raportu z wskazanej amortyzacji
+
+procedure Wydruk_AMO()
+
+local maxLP, dataAMO, bb, rr, ii, pominiete, nrLP
+local s1, s2, s3, s4, s5
+
+Select( 'SR_TRWAL' )
+
+bb := Alias()
+rr := RecNo()
+ii := IndexOrd()
+
+private plik := 'Rap_amort.txt'
+private szablon_wzoru := NIL
+private bufor_wzoru := ReadWzor( plik )
+
+if Empty( bufor_wzoru ); return; endif
+
+if ( dataAMO := Get_U( 10, 10, 'Podaj datë amortyzacji :', Sz_X(8), Date())) = NIL
+   return
+endif
+
+Czek( 1 )
+
+ON( 'SR_TRAMO', 4 )
+maxLP := Replicate( '9', Len( LP ))
+
+mOpen( cat_wydr + plik )
+
+?? Naglowek_wydruku() + Linia_wydruku({ Time()})
+?? Naglowek_wydruku() + Linia_wydruku({ Date()})
+?? Naglowek_wydruku() + Linia_wydruku({ dataAMO })
+?? Naglowek_wydruku() + Linia_wydruku({''})
+?  ReadWzor( cat_main + '\' + 'max.txt', 11 )
+?  Naglowek_wydruku() + Linia_wydruku({''})
+
+Linia_wydruku({''})
+
+store 0 to pominiete, nrLP, s1, s2, s3, s4, s5
+
+ON( 'SR_TRWAL' )
+while !Eof()
+      if dataAMO >= DATA_P
+         Select( 'SR_TRAMO' )
+         DBSeek( SR_TRWAL->KOD_WEW + DtoS( dataAMO ))
+         nrLP ++
+         ? Linia_wydruku({ nrLP, SR_TRWAL->NAZWA, SR_TRWAL->NUMER, WARTOSC_P, STAWKA, WARTOSC_M, WARTOSC_D, WARTOSC_Z, WARTOSC_O })
+         s1 += WARTOSC_P
+         s2 += WARTOSC_M
+         s3 += WARTOSC_D
+         s4 += WARTOSC_Z
+         s5 += WARTOSC_O
+         Select( 'SR_TRWAL' )
+      else
+         pominiete ++
+      endif
+      skip
+enddo
+
+?  Naglowek_wydruku() + Linia_wydruku({''})
+?  Naglowek_wydruku() + Linia_wydruku({ s1, s2, s3, s4, s5 })
+Ew_Print( pominiete # 0, Naglowek_wydruku() + Linia_wydruku({ pominiete }))
+?  Naglowek_wydruku() + Linia_wydruku({''})
+
+Select( bb )
+DBSetOrder( ii )
+DBGoTo( rr )
+
+mClose()
+Druk( cat_wydr + plik, 2 )    && druk natychmiastowy na perforowanym
+
+Czek( 0 )
+
+******************************************************************************
+         SRODKITR->( Blokuj_R())
+         for i := 4 to 12; SRODKITR->( FieldPut( i, 0 )); next
+         for i :=14 to 25; SRODKITR->( FieldPut( i, 0 )); next
+         ( bh )->( DBGoTo( ph ))
+         while ( bh )->LPP = ( bb )->LP .and. ( bh )->( !Eof())
+               if ( Year(( bh )->DATA ) = rok - 1 ) .and.;
+                  ( Month(( bh )->DATA ) = 12 )
+*                 SRODKITR->WIBO := ( bh )->WIBZ    && ( WIBZ + WUBZ )
+                  SRODKITR->WIBO := ( bh )->( WIBZ + WUBZ )
+                  SRODKITR->UMBO := ( bh )->WUBZ
+               endif
+               if (( bh )->WAAM = 0.00 ) .and.;
+                  ( Year(( bh )->DATA ) = rok )
+                  if ( Day(( bh )->DATA ) = 1 ) .and.;
+                     ( Month(( bh )->DATA ) = 1 )
+*                     SRODKITR->WIBO += ( bh )->WIBZ   && ( WIBZ + WUBZ )
+                     SRODKITR->WIBO := ( bh )->WIBZ  && + ( bh )->WUBZ
+                     SRODKITR->UMBO += ( bh )->WUBZ
+                  else
+                     if ( bh )->WIBZ < 0.01
+                        SRODKITR->WIZM += -( bh )->WIBZ    && + ( bh )->WUBZ
+                        SRODKITR->UMZM += -( bh )->WUBZ
+                     else
+                        SRODKITR->WIZW += ( bh )->WIBZ    && - ( bh )->WUBZ
+                        SRODKITR->UMZW += ( bh )->WUBZ
+                     endif
+                  endif
+               endif
+               ( bh )->( DBSkip())
+         enddo

@@ -1,0 +1,218 @@
+
+PROCEDURE Kopie
+
+local op := 1
+
+private drive, baza := ''
+private cluster_floppy := 1024,;
+        cluster_hard := 4 * 1024
+
+@ 14,0 say ''
+?'²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²'
+?'²²                                                       ²²'
+?'²²              Wybierz kierunek kopiowania :            ²²'
+?'²²              -----------------------------            ²²'
+?'²² ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿              ÚÄÄÄÄÄÄÄÄÄÄÄ¿ ²²'
+?'²² ³                        ³  ÍÍÍÍÍÍÍÍÍ>  ³           ³ ²²'
+?'²² ³ KOMPUTER (dysk twardy) ³              ³ DYSKIETKA ³ ²²'
+?'²² ³                        ³  <ÍÍÍÍÍÍÍÍÍ  ³           ³ ²²'
+?'²² ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ              ÀÄÄÄÄÄÄÄÄÄÄÄÙ ²²'
+?'²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²²'
+
+@ 20,30 prompt ' ÍÍÍÍÍÍÍÍÍ'+CHR(16)+' '
+@ 22,30 prompt ' '+CHR(17)+'ÍÍÍÍÍÍÍÍÍ '
+menu to op
+
+if LastKey() = K_ESC ; return
+else ; @ 15 , 0 clear
+endif
+
+if ( drive := Alarm( 'Wybierz stacj‘ dyskietek' , { '  A  ' , '  B  ' } ) ) = 0 ; return ; endif
+Alarm( 'W’¢§ dyskietk‘ do wybranej stacji !!!' , Ent )
+Czek( 1 )
+      
+do case
+case op = 1 ; Kopiuj2fd()
+case op = 2 ; Kopiuj2hd()
+endcase
+
+Czek( 0 )
+
+******************************************************************************
+* kopiowanie z dysku na dyskietke
+
+procedure Kopiuj2fd
+
+private source, dest , dr := if( drive = 1 , 'a:' , 'b:' )
+private odp , wolne , i , j, kom := .f.
+
+if Len( dane_p := Directory( '*.db?' ) ) = 0
+   Alarm( 'Brak baz danych na dysku !!!' , Ent )
+   return
+endif
+
+wolne := DiskSpace( drive )
+if ( wolne = 65535 .or. wolne = 131070 ) .and. Len( Directory( dr + '*.*' ) ) = 0
+   Alarm( 'Brak dyskietki w stacji !!!' , Ent )
+   return
+endif
+
+if Len( dane_d := Directory( dr + '*.db?' ) ) # 0
+   for i := 1 to Len( dane_d )
+       if FScan( dane_p , dane_d[ i ] ) # 0
+          if Alarm( 'Na dyskietce s† ju§ podobne zbiory !!!' ,;
+                  { 'Wymaza je ...' , 'Zaniecha kopiowania' }) = 1
+             for j := 1 to Len( dane_d )
+                 dest := dane_d[ j , F_NAME ]
+                 delete file ( dr + dest )       && wymazywanie
+             next
+             exit
+          else ; return
+          endif
+       endif
+   next
+endif
+
+private rozmiar_p := 0
+wolne := DiskSpace( drive )
+for i := 1 to Len( dane_p )
+    rozmiar_p += dane_p[ i , F_SIZE ] + cluster_floppy
+next
+
+while rozmiar_p >= wolne
+    odp := Alarm( 'Za ma’o miejsca na dyskietce !!!',;
+                { 'Ponowna pr¢ba z inn† dyskietk†',;
+                  'Kompresja danych na t† dyskietk‘',;
+                  'Zaniechanie kopiowania' })
+    do case
+    case odp = 0 .or. odp = 3; return
+    case odp = 1; Alarm( 'W’¢§ inn† dyskietk‘ do stacji !' , Ent )
+    case odp = 2
+         if !( kom := Kompresja()); return; endif
+    endcase
+    wolne := DiskSpace( drive )
+enddo
+
+Czek( 1 )
+
+for i := 1 to Len( dane_p )
+    source := dane_p[ i , F_NAME ]
+    dest := dr + source
+    copy file ( source ) to ( dest )
+next
+
+if kom
+   delete file ( source )
+else
+   dane_d := Directory( dr + '*.db?' )   && zbiory skopiowane i inne
+
+   for i := 1 to Len( dane_p )        && ka¦dy zbior kopiowany musi si‘ znale¦
+       if FScan( dane_d , dane_p[ i ] ) = 0
+          Alarm( 'B’†d !!! Powt¢rz kopiowanie !!!', Ent )
+          exit
+       endif
+   next
+endif
+
+******************************************************************************
+
+function Kompresja
+
+local daneXXXX := 'dane' + Right( DtoS( Date()), 4 )
+
+private par := ' a ' + daneXXXX + ' *.db?'
+
+@ 3, 0 clear
+@ 4, 0 say PadC( 'Kompresja danych ...', mc )
+?
+run lharc &par
+
+if Len( dane_p := Directory( daneXXXX + '.lzh' )) = 0
+   Alarm( 'Kompresja NIEWYKONANA !!!', Ent )
+   return .f.
+endif
+
+rozmiar_p := dane_p[ 1 , F_SIZE ] + cluster_floppy
+
+return .t.
+
+******************************************************************************
+
+function Dekompresja( daneXXXX )
+
+private par := ' x ' + daneXXXX
+
+@ 3, 0 clear
+@ 4, 0 say PadC( 'Dekompresja danych ...', mc )
+?
+run lharc &par
+
+return .t.
+
+******************************************************************************
+* kopiowanie z dyskietki na twardy
+
+procedure Kopiuj2hd()
+
+private source, dest, lista := {}, kom := .f.
+private odp := 1 , dysk := if( drive = 1 , 'a:' , 'b:' ) , rozmiar_p := 0 , i
+
+dane_p := Directory( dysk + '*.lzh' )     && spakowane
+if Len( dane_p ) = 0
+   dane_p := Directory( dysk + '*.db?' )  && zwyk’e
+   if Len( dane_p ) = 0
+      Alarm( 'Brak baz danych na dyskietce !!!' , Ent )
+      return
+   endif
+elseif Len( dane_p ) > 1
+   AEval( dane_p, { |a| Aadd( lista, a[ F_NAME ])})
+   if ( i := Alarm( 'Wybierz odpowiedni zbi¢r archiwalny :' , lista )) = 0; return; endif
+   dest := lista[ i ]
+   kom := .t.
+else
+   dest := dane_p[ 1 , F_NAME ]
+   kom := .t.
+endif
+
+if kom
+   source := '*.db?'
+   run del &source > nul        && kasowanie aktualnych baz
+   source := dysk + dest
+   copy file ( source ) to ( dest )   && kopia kompresji
+   Dekompresja( dest )
+   delete file ( dest )       && kasowanie kompresji
+   dest := '*.NTX'
+   run del &dest > nul        && kasowanie indeks¢w
+   return
+endif
+
+for i := 1 to Len( dane_p )
+    rozmiar_p += dane_p[ i , F_SIZE ] + cluster_hard
+next
+
+private wolne := DiskSpace()
+if rozmiar_p >= wolne
+      odp := Alarm( 'Za ma’o miejsca na dysku !!!' , Ent )
+      return
+endif
+
+for i := 1 to Len( dane_p )
+    dest := dane_p[ i , F_NAME ]
+    source := dysk + dest
+    copy file ( source ) to ( dest )
+next
+
+dest := '*.NTX'
+run del &dest > nul
+
+private d_d := Directory( '*.db?' )
+
+for i := 1 to Len( dane_p )
+    if FScan( d_d , dane_p[ i ] ) = 0
+       Alarm( 'B’†d podczas kopiowania !!!' ,;
+            { 'Powt¢rz kopiowanie !!!' , Enter } )
+       exit
+    endif
+next
+
+******************************************************************************

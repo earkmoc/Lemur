@@ -1,0 +1,7 @@
+U§ytkownicy
+5|22|1|78|||||ON('STANOWIS')|
+PadC(AllTrim(NAZWA),24)|   Imi‘ i;   Nazwisko|
+DtoA(DATA_O)| Data ;wejžcia|
+CZAS_O| Czas ;wejžcia|
+STANOWIS->(GetPole(,"STAN_O","NAZWA"))|Stanowisko;pracy|@S15|
+DATA_P|  Data  ;operacyjna|

@@ -1,0 +1,2 @@
+OKRES,Import dokument¢w z rejestru zakup¢w žrodk¢w trwa’ych,REJ_ZS,
+#importC1.txt

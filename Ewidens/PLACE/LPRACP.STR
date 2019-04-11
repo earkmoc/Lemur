@@ -1,0 +1,13 @@
+ Aadd(pola,{'ID        ','N', 10,0})|
+ Aadd(pola,{'ID_LPRAC  ','N', 10,0})|
+ Aadd(pola,{'MIESIAC   ','N',  4,0})|
+ Aadd(pola,{'DATA_PO   ','D',  8,0})|
+ Aadd(pola,{'DATA_KO   ','D',  8,0})|
+ Aadd(pola,{'ILE_LIST  ','N',  3,0})|
+ Aadd(pola,{'LISTY     ','C', 50,0})|
+ Aadd(indeksy,'lpracp1')|
+ Aadd(indeksy,'lpracp2')|
+ Aadd(indeksy,'lpracp3')|
+ Aadd(klucze,'ID')|
+ Aadd(klucze,'Str(ID_LPRAC)+Str(MIESIAC)')|
+ Aadd(klucze,'Str(ID_LPRAC)+Str(ID)')|

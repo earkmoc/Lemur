@@ -1,0 +1,51 @@
+wersja = ewid
+opcje = /m/n/d$(wersja)
+p_o = c:\arek.m\firmy\objekty
+p_c = c:\arek.m\firmy\ewidens
+nazwa = c:\arrakis\r.exe
+
+.prg.obj:
+   clipper $< $(opcje) /o$@
+
+$(p_o)\ewid1.obj    : $(p_c)\main.prg
+$(p_o)\ewid2.obj    : $(p_c)\o_baz.prg
+$(p_o)\ewid3.obj    : $(p_c)\o_menu.prg
+$(p_o)\ewid4.obj    : $(p_c)\o_ekranu.prg
+$(p_o)\ewid5.obj    : $(p_c)\o_dbedit.prg
+$(p_o)\ewid6.obj    : $(p_c)\o_druku.prg
+$(p_o)\ewid7.obj    : $(p_c)\o_plikow.prg
+$(p_o)\ewid8.obj    : $(p_c)\o_wydruk.prg
+$(p_o)\ewid9.obj    : $(p_c)\o_form.prg
+
+$(p_o)\ewid10.obj    : $(p_c)\srodki_t.prg
+$(p_o)\ewid11.obj    : $(p_c)\sprawy.prg
+$(p_o)\ewid12.obj    : $(p_c)\przelewy.prg
+$(p_o)\ewid13.obj    : $(p_c)\dokument.prg
+$(p_o)\ewid14.obj    : $(p_c)\fk.prg
+$(p_o)\ewid15.obj    : $(p_c)\stemko.prg
+$(p_o)\ewid00.obj    : $(p_c)\total.prg
+$(p_o)\ewid16.obj    : $(p_c)\errorsy.prg
+$(p_o)\ewid17.obj    : $(p_c)\place.prg
+$(p_o)\ewid18.obj    : $(p_c)\magazyny.prg
+
+.obj.exe:
+ exospace @$(p_c)\sklad.rmk li oslib
+$(nazwa) : $(p_o)\ewid1.obj\
+           $(p_o)\ewid2.obj\
+           $(p_o)\ewid3.obj\
+           $(p_o)\ewid4.obj\
+           $(p_o)\ewid5.obj\
+           $(p_o)\ewid6.obj\
+           $(p_o)\ewid7.obj\
+           $(p_o)\ewid8.obj\
+           $(p_o)\ewid9.obj\
+           $(p_o)\ewid10.obj\
+           $(p_o)\ewid11.obj\
+           $(p_o)\ewid12.obj\
+           $(p_o)\ewid13.obj\
+           $(p_o)\ewid14.obj\
+           $(p_o)\ewid15.obj\
+           $(p_o)\ewid00.obj\
+           $(p_o)\ewid16.obj\
+           $(p_o)\ewid17.obj\
+           $(p_o)\ewid18.obj\

@@ -1,0 +1,3 @@
++2011.04.17, 18.10-18.25 zmiana menu wed³ug opisu
++2011.04.17, 18.25-18.30 testy i poprawki
++2011.04.17, 18.30-18.35 kopia z KM do P13: testy i w±tpliwo¶ci

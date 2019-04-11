@@ -1,0 +1,14 @@
+ID|NAZWA|TYP|WARTOSC|
+ID|Nazwa|T|Wartoûç|
+@S20|@S50|X|@S7|
+5|1|22|78|1|
+Parametry programu
+
+5|Esc|Esc - wyjûcie|
+15|D|Dopisz|PARAMS,Nowy parametr|
+6|U|Usu§|usuwasz tÜ pozycjë|
+23|C|Copy|PARAMS,Nowy parametr|
+|A|Aktualizacja|FillParams()|
+|W|Wydruk|Drukuj()|
+14|F|Formularz=ENTER|PARAMS,Dane parametru|
+14|ENTER||PARAMS,Dane parametru|

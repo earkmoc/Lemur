@@ -1,0 +1,22 @@
+1|45| |DATA|Month(DATA)|!ANULOWANO|Time()|Date()|0|firma|CMonth(DATA)+Str(Year(DATA))|0<>
+LP|DATA|NRDOW|FIRMA|ADRES|OPIS|PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|UWAGI_21|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|0<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|UWAGI_20|0<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+Czas :<@S8>                                                  Data :<@S10>  
+  <>  
+  
+         PODATKOWA KSIêGA PRZYCHOD£W I ROZCHOD£W za<@S20> r.M
++----+--------+--------------------+-------------------------------------------------------------+------------------------------+-------------+---------+------------+-------------+------------+----------------------------------------------+-------+--------+
+≥    ≥        ≥                    ≥                        Kontrahent                           ≥                              ≥    Sprzedaß ≥Pozostaíe≥    Razem   ≥Zakup towar¢w≥    Koszty  ≥          W Y D A T K I   ( K O S Z T Y )     ≥       ≥        ≥
+≥    ≥        ≥                    ≥-------------------------------------------------------------≥                              ≥   towar¢w i ≥przychody≥   przych¢d ≥handlowych i ≥    uboczne ≥----------------------------------------------≥       ≥        ≥
+≥  LP≥  Data  ≥Nr dowodu ksiëgowego≥  imië i nazwisko ( firma )   ≥    adres                     ≥ Opis zdarzenia gospodarczego ≥    i usíug  ≥  ( 8 )  ≥  ( 7 + 8 ) ≥ materiaí¢w  ≥    zakupu  ≥ reklama  ≥wynagrodz.≥ pozostaíe≥razem wydatki≥       ≥ Uwagi  ≥
++----+--------+--------------------+-------------------------------------------------------------+------------------------------+-------------+---------+------------+-------------+------------+----------------------------------------------+-------+--------+<>
+{9999|@S10|@S20|@S30|@S30|@S28|@Z 99,999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999.99|XXXXXXXX| }
++----+--------+--------------------+-------------------------------------------------------------+------------------------------+-------------+---------+------------+-------------+------------+----------------------------------------------+-------+--------+<>   
+                                                                                                                    Suma folio :<99,999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999.99| >  
+                                                                                                         Przeniesienie z folio :<99,999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999.99| >  
+                                                                                                                         Razem :<99,999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@Z 9999.99| >  
+  
+P<@S50>

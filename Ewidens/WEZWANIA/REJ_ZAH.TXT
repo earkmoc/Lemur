@@ -1,0 +1,15 @@
+Mark('REJ_ZAZ',RecNo(),'*')|LP|NUMER|K9|K26|K9-K26|D4|D4-Date()|K25|NRKONT|PSKONT|D1|D2|D3|NIP|K20|PRZEDMIOT|
+?| LP|Numer|Wartoûç|Wpíacono|Do zapíaty|Termin|Za dni|Uwagi|Numer|Pseudo|Data pod.|Data wyst.|Data otrz.|NIP|Podatek VAT|Przedmiot|
+X|9999|@S5|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@S10|@Z 99,999|||||||@S10|||
+4|1|22|78||1|||KopiaSerii('REJKZA,REJ_PZ,REJKZK','ROB',2,'vp[32]','vp[32]=NRKONT','K9#K26')|KopiaSerii('REJKSP,REJ_SP','ROB',2,'vp[32]','vp[32]=NRKONT','K11#K21','ROB->K9:=-K11,ROB->K26:=-K21,.f.',10)|DBGoTop()|ON('REJ_ZAZ',,,,.t.)|
+Nierozliczone dokumenty zakupu od wybranego kontrahenta
+
+|Esc|Escape |MakeZnaki('REJ_ZAZ','vp[27]',42,'vp[29]','vp[30]','AllTrim(NUMER)+"="+AllS(K9-K26,"999,999,999.99")+Chr(59)+" "','K9-K26'),won:=.t.|
+|Z|Znak |Mark('REJ_ZAZ',RecNo())|
+7|S|Szukaj |nr,1,1,14,2,15,3|
+8|I|Indeks |naturalna kolejnoûç,0|
+|X|X=Sortuj |CreateIndex(kolumny[nr])|
+|F|Formularz=ENTER |NewSysForm('REJ_ZA,Zamkniëta pozycja rejestru',.t.)|
+|ENTER||NewSysForm('REJ_ZA,Zamkniëta pozycja rejestru',.t.)|
+|I|Indeks|
+|TAB||Znacz('NUMER')|

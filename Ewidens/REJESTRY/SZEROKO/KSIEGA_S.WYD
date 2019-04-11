@@ -1,0 +1,48 @@
+Czas :<99.99.99>                                      Data :<99.99.99>
+  
+                      KSIêGA PRZYCHOD£W i ROZCHOD£W<>
+  
+   <XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
+   
+kolumna       KWOTA       Opis
+w ksiëdze    [ zí.]       kolumny
+-----------------------------------------------------------------------<>  
+   7.   <999,999,999.99>  Wartoûç sprzedanych towar¢w i usíug
+   8.   <999,999,999.99>  Pozostaíe przychody
+   9.   <999,999,999.99>  Razem przych¢d ( 7 + 8 )
+
+  10.   <999,999,999.99>  Zakup towar¢w handlowych
+  11.   <999,999,999.99>  Koszty uboczne zakupu
+
+  12.   <999,999,999.99>  Koszty reprezentacji i reklamy
+  13.   <999,999,999.99>  Wynagrodzenia w got¢wce
+  14.   <999,999,999.99>  Pozostaíe wydatki
+  15.   <999,999,999.99>  Razem wydatki ( koszty ) (12+13+14)
+
+  16.   <999,999,999.99>  Suma kolumny wolnej
+
+
+PIT-5 ( wybrane dane )
+=======================================================================
+(27)=<99,999,999.99> Przych¢d
+(28)=<99,999,999.99> Koszty uzyskania przychodu
+-----------------------------------------------------------------------
+(29)=<99,999,999.99> Doch¢d = Przychody-Zakupy-Koszty uboczne-Wydatki
+-----------------------------------------------------------------------
+(77)=<99,999,999.99> Odliczenia od dochodu
+(78)=<99,999,999.99> Podstawa obliczenia podatku dochodowego
+(79)=<99,999,999.99> Podatek obliczony w/g urzëdowej skali
+(85)=<99,999,999.99> Odliczenia od podatku
+(86)=<99,999,999.99> Naleßny podatek po odliczeniach
+(92)=<99,999,999.99> Zaliczki wpíacone dotÜd
+(93)=<99,999,999.99> Naleßna zaliczka miesiëczna
+
+Regon firmy : 470427651
+
+U.S. ú¢d¶-Polesie
+ul. 6-go Sierpnia 84/86
+90-646 ú¢d¶
+
+Nr rachunku : NBP O/O ú¢d¶, 47047-71-222-3
+
+  

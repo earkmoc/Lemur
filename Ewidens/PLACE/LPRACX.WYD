@@ -1,0 +1,35 @@
+#SumPolaSuba( 'PRZELEWY1','d','LPLACPP',4,'Str(62,10)','LPLACPP->ID_LPDPD=62',
+'!Empty(WARTOSC).and.
+(LPLACP->(GetPole(2,"LPLACPP->(Str(ID_LPLAC)+Str(ID_LPLACP))","ID_PRAC"))=LPRAC->ID).and.
+WOkresie(LPLAC->(GetPole(1,"LPLACPP->ID_LPLAC","DATA"))).and.LPLAC->ID_LPD=7','UT(WARTOSC)')|
+SumPolaSuba( 'PRZELEWY2','d','LPLACPP',4,'Str(62,10)','LPLACPP->ID_LPDPD=62',
+'!Empty(WARTOSC).and.
+(LPLACP->(GetPole(2,"LPLACPP->(Str(ID_LPLAC)+Str(ID_LPLACP))","ID_PRAC"))=LPRAC->ID).and.
+WOkresie(LPLAC->(GetPole(1,"LPLACPP->ID_LPLAC","DATA"))).and.LPLAC->ID_LPD=39','UT(WARTOSC)')|
+SumPolaSuba( 'PRZELEWY3','d','LPLACPP',4,'Str(62,10)','LPLACPP->ID_LPDPD=62',
+'!Empty(WARTOSC).and.
+(LPLACP->(GetPole(2,"LPLACPP->(Str(ID_LPLAC)+Str(ID_LPLACP))","ID_PRAC"))=LPRAC->ID).and.
+WOkresie(LPLAC->(GetPole(1,"LPLACPP->ID_LPLAC","DATA"))).and.LPLAC->ID_LPD=51','UT(WARTOSC)')|
+SumPolaSuba( 'PRZELEWY4','d','LPLACPP',4,'Str(62,10)','LPLACPP->ID_LPDPD=62',
+'!Empty(WARTOSC).and.
+(LPLACP->(GetPole(2,"LPLACPP->(Str(ID_LPLAC)+Str(ID_LPLACP))","ID_PRAC"))=LPRAC->ID).and.
+WOkresie(LPLAC->(GetPole(1,"LPLACPP->ID_LPLAC","DATA"))).and.LPLAC->ID_LPD=53','UT(WARTOSC)')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+Date()|Time()|EOL+EOL+Firma()+EOL|data1|data2|0<>
+Data i czas wydruku:<@S8>, <@S8>  <@S200>
+
+Lista pracownik¢w przelewami za okres: <@S10> -<@S10>  
+---------------------------------------------------------------------------------------------------------------------------
+  LP    ID Nazwisko i imi‘                                            umys’owi   autorskie  zlecenia  wdro§eni¢wka razem
+---------------------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|
+Ustaw('drukuj_while','!Eof()')|
+Ustaw('drukuj_for','(PRZELEWY1+PRZELEWY2+PRZELEWY3+PRZELEWY4)#0')<>
+lp|ID|PadR(NAZWA,100)|InccTab('tabs[1]',PRZELEWY1)|InccTab('tabs[2]',PRZELEWY2)|InccTab('tabs[3]',PRZELEWY3)|InccTab('tabs[4]',PRZELEWY4)|InccTab('tabs[5]',PRZELEWY1+PRZELEWY2+PRZELEWY3+PRZELEWY4)<>
+{999|99999|@S57|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]<>  
+---------------------------------------------------------------------------------------------------------------------------
+                                                                    <@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99>
+  0<>  
+koniec.

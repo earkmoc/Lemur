@@ -1,0 +1,11 @@
+MIESIAC|DATA_PO|DATA_KO|ILE_LIST|LISTY|
+M-c|Od dnia|Do dnia|ile|Numery list|
+@Z 9999|@S10|@S10|@Z 999|@S38|
+11|1|22|78|4|
+Karta wynagrodze¤ pracownika
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|W|Wydruk|Drukuj(if(Alarm('Wybierz wariant wydruku:',{'Pion (1 pracownik/strona)','Poziom'})=1,'lpracp2','lpracp'))|
+|P|Pozycje=Enter|SubBase('LPRACPP,,BUFOR,3,(baza)->(Str(ID_LPRAC)+Str(ID)),(baza)->(Str(ID_LPRAC)+Str(ID))==Str(ID_LPRAC)+Str(ID_LPRACP)',,,,6)|
+|Enter||SubBase('LPRACPP,,BUFOR,3,(baza)->(Str(ID_LPRAC)+Str(ID)),(baza)->(Str(ID_LPRAC)+Str(ID))==Str(ID_LPRAC)+Str(ID_LPRACP)',,,,6)|

@@ -1,0 +1,30 @@
+Firma()|0<>
+<@S500>  
+M
+  <>
+#Jest_baza('ROB')|DBGoTop()|Ustaw('min_szablon',.f.)<>
++PadR("Numer",13)|&ACadd( naglowki, tab, 6,,, 'PadC(NWord("x",1),8)' )<>
+<@S40>
++EOL+PadR("",17)|&ACadd( naglowki, tab, 6,,, 'PadC(NWord("x",2),8)' )<>
+<@S40>
++EOL+PadR("",17)|&ACadd( naglowki, tab, 6,,, 'PadC(NWord("x",3),8)' )<>
+<@S40>
++EOL+PadR("",17)|&ACadd( naglowki, tab, 6,,, 'PadC(NWord("x",4),8)' )<>
+<@S40>
++EOL+PadR('',17)|&ACadd( naglowki, tab, 6,,, 'PadC(NWord("x",5),8)' )<>
+<@S40>
++EOL+PadR("=",16,"=")|&ACadd( naglowki, tab, 6,,, 'PadC(NWord("x",6),8,"=")' )<>
+<@S40>
+#Jest_baza('ROB')|Ustaw('drukuj_while','.t.')|Ustaw('drukuj_for','Mark("LPLACZ",ROB->ID_LPLAC,"*")=="*"')<>
++RunCommand(kolumny[1])|&ACadd( kolumny, tab, 6,,, 'IncccTab(y,0,TU(Transform(x,"@Z 9,999.99")))' )<>
+{@S15|@S8}
++EOL+PadR("=",16,"=")|&ACadd( naglowki, tab, 6,,, 'PadC(NWord("x",6),8,"=")' )<>
+<@S40>
++tab[1]:=EOL+PadL("Razem:",16)|&ACadd( tabs, tab, 6,,, 'TU(Transform(x,"@Z 9,999.99"))', 1 )<>
+{@S30}
+#DBGoTop()|Ustaw('min_szablon',.t.)<>
+  0<>
+  
+  
+  
+Sporz†dzi’: ......................... Data: ...............  Zatwierdzi’: ........................P

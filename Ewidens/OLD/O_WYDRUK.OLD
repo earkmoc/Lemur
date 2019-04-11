@@ -1,0 +1,89 @@
+* form # NIL - wydruk rekordu danych w formie formularza
+
+procedure Wydruk( baza, subbaza, pole, wzor, ind, form )
+
+local dane_bazy := {}, dane_subbazy := {}, sumy := {}, dane_ko := {}, line, i
+
+private buf, lp, buff
+
+if wzor = NIL; wzor := baza + '.wyd'; endif
+
+Czek( 1 )
+
+private szablon_wzoru := NIL
+private bufor_wzoru := ReadWzor( wzor )
+
+if Empty( bufor_wzoru ); return; endif
+
+line := Naglowek_wydruku() + Linia_wydruku({''})      && baza
+while !Empty( line )
+      Aadd( dane_bazy, Odetnij( @line ))
+enddo
+
+line := Naglowek_wydruku() + Linia_wydruku({''})      && subbaza
+while !Empty( line )
+      Aadd( dane_subbazy, Odetnij( @line ))
+enddo
+
+line := Naglowek_wydruku() + Linia_wydruku({''})      && sumy
+while !Empty( line )
+      Aadd( sumy, Val( Odetnij( @line )))
+enddo
+
+line := Naglowek_wydruku() + Linia_wydruku({''})      && dane ko¤cz†ce
+while !Empty( line )
+      Aadd( dane_ko, Odetnij( @line ))
+enddo
+
+mOpen( cat_wydr + wzor )
+
+for i := 1 to Len( dane_bazy )
+    ?? Naglowek_wydruku() + Linia_wydruku({ &( dane_bazy[ i ])})  && druk bazy
+next
+
+private tab := AClone( dane_subbazy ), tab_sum := {}
+for i := 1 to Len( sumy ); Aadd( tab_sum, 0 ); next    && zerowanie sum
+
+do case
+   case form # NIL
+   case subbaza = NIL
+        Select( baza )
+        DBGoTop()
+otherwise
+   UruchomBaze( subbaza,, ind )
+   buf := pole
+   DBSeek(( baza )->( &buf ))
+endcase
+
+lp := 0
+Linia_wydruku({''})        && ze§ryj szablon ( na wszelki wypadek )
+while if( subbaza # NIL .and. form = NIL, ( baza )->( &buf ) = &buf, .t. );
+      .and. !Eof()
+      lp ++
+      for i := 1 to Len( tab )
+          buff := dane_subbazy[ i ]
+          buff := &buff
+          tab[ i ] := buff
+      next
+      if form = NIL
+         for i := 1 to Len( sumy ); tab_sum[ i ] += tab[ sumy[ i ]]; next
+      endif
+      ? Linia_wydruku( tab, '³' )
+      if form # NIL; exit; endif
+      DBSkip()
+enddo
+
+if Len( sumy ) > 0; ? Naglowek_wydruku() + Linia_wydruku( tab_sum ); endif
+
+Select( baza )
+for i := 1 to Len( dane_ko )
+    buff := dane_ko[ i ]
+    buff := &buff
+    ?? Naglowek_wydruku() + Linia_wydruku({ buff })      && druk ko¤ca
+next
+
+mClose()
+Druk( cat_wydr + wzor, 1 )    && druk natychmiastowy
+Czek( 0 )
+
+*******************************************************************************

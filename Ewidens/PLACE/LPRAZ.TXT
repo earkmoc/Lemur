@@ -1,0 +1,19 @@
+Mark('LPRACZ',ID,'*')|ID|NAZWA|LISTYP|PRZELEWY1|PRZELEWY2|PRZELEWY3|PRZELEWY4|
+Z|ID|Nazwisko i imi‘|Listy p’ac|Przelewy umys’owych|Przelewy od praw autorskich|Przelewy um¢w zlece¤|Przelewy funduszu wdro§eniowego|
+X|99999|@S50|@Z 9999999999|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|
+5|1|22|78|3||||ON('LPRACZ',,,,.t.)|ON('LPRACP')|ON('LPRACPP')|ON('LPRAZP')|ON('LPRAZPP')|
+Pracownicy - karty sk’adek ZUS
+
+5|Esc|Escape|
+|D|Dopisz|NewSysDopisz('LPRAC,Nowa pozycja',1,,'(baza)->ID:=GetLast(1,1)+1')|
+|U|Usu¤|Kasuj('usuwasz t† pozycj‘')|
+|S|Szukaj|SysMySeek('2,1,3,2',nr)|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|Z|Znak|Mark('LPRACZ',ID)|
+1|W|Wydruki|51||e|1|Wybierz wariant:|
+|A|Aktual|LPRACAktualizacja('LPRACZ','karta zus', 'LPRAZP', 'LPRAZPP')|
+|K|Karta|SubBase('LPRAZP,,ROBOCZY,2,Str((baza)->ID),(baza)->ID==ID_LPRAC')|
+|F|Form|NewSysForm('LPRAC,Dane pozycji')|
+|L|Listy=Enter|SubBase('LPLACP,lplacp2.txt,ROBOCZY,3,Str((baza)->ID),(baza)->ID==ID_PRAC')|
+|Enter||SubBase('LPLACP,lplacp2.txt,ROBOCZY,3,Str((baza)->ID),(baza)->ID==ID_PRAC')|
+|~||SumPolaSuba( 'LISTYP', 'ile', 'LPLACP', 3, 'Str(LPRAC->ID)','LPRAC->ID=LPLACP->ID_PRAC','LPLAC->(GetPole(1,"LPLACP->ID_LPLAC","ID_LPD")) # 0' )|

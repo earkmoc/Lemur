@@ -1,0 +1,13 @@
+plik:='wydruk.txt'
+erase ( plik )
+set printer to ( plik )
+set device to printer
+set printer on
+set console off
+
+set printer to
+set device to screen
+set printer off
+set console on
+
+Opis(plik)

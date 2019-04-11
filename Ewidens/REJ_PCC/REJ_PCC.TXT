@@ -1,0 +1,18 @@
+LP|NUMER|NAZWA|KWOTA|D1|D2|NRKONT|PSKONT|STAWKA|
+LP|Nr dokumentu|Nazwa kontrahenta|Podatek|Data w.|Data d.|Numer k.|Pseudo|Stawka|
+99999|@S18|@S21|@Z 9999,999.99|@S10|@S10||||
+5|1|22|78|1|1|
+Rejestr podatku od czynnožci cywilnoprawnych
+
+5|Esc|Escape|
+15|D|Dopisz|REJ_PCC,Nowa pozycja,,,,,,,2|(baza)->D1:=Date(),(baza)->LP:=GetLast(1,1)+1,(baza)->UWAGI:="Art.2 punkt 4"|
+|U|Usu¤|UsunDz('usuwasz t† pozycj‘',D1)|
+7|S|Szukaj|nr,1,1,7,2,8,3|
+|I|Import|RunMenu(43,,'e',,'Wybierz wariant importu :',1)|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Wydruk()|
+|R|Renum|Renum('D1','LP','Data wpisu')|
+|F|Formularz=Enter|FormDz('REJ_PCC,Pozycja rejestru',D1)|
+|Enter||FormDz('REJ_PCC,Pozycja rejestru',D1)|
+|.~||BDelete(),wy:=2|
+|TAB||Znacz('NUMER')|

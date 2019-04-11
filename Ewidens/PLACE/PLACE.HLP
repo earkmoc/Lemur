@@ -1,0 +1,44 @@
+LPRAC.str:
+ Aadd(pola,{'PROCENT2'  ,'N',  3,0})|
+ Aadd(pola,{'OD_DNIA2'  ,'D',  8,0})|
+ Aadd(pola,{'PROCENT3'  ,'N',  3,0})|
+ Aadd(pola,{'OD_DNIA3'  ,'D',  8,0})|
+definicje list i pozycji:
+procpodat=CheckPodatek()
+pozanapodo=Zaokr(PodatekDochodowy(ponapodoch),2)
+
+Definicje pozycji:
+
+      Kod: dzie
+    Nazwa: Dzie¤ wyp’aty (dzie¤ miesi†ca)
+Definicja: ==StrTran(DtoC(LPRACP->DATA_KO),'.','-')
+    Maska: @S10
+
+       Kod: mies
+     Nazwa: M-c
+ Definicja: ==LPRACP->MIESIAC
+     Maska: 9999
+
+LPRACP.txt:
+
+MIESIAC|DATA_PO|DATA_KO|ILE_LIST|LISTY|
+M-c|Od dnia|Do dnia|ile|Numery list|
+@Z 9999|@S10|@S10|@Z 999|@S38|
+11|1|22|78|4|
+Karta wynagrodze¤ pracownika
+
+LPRACP.str:
+
+ Aadd(pola,{'ID        ','N', 10,0})|
+ Aadd(pola,{'ID_LPRAC  ','N', 10,0})|
+ Aadd(pola,{'MIESIAC   ','N',  4,0})|
+ Aadd(pola,{'DATA_PO   ','D',  8,0})|
+ Aadd(pola,{'DATA_KO   ','D',  8,0})|
+ Aadd(pola,{'ILE_LIST  ','N',  3,0})|
+ Aadd(pola,{'LISTY     ','C', 50,0})|
+ Aadd(indeksy,'lpracp1')|
+ Aadd(indeksy,'lpracp2')|
+ Aadd(indeksy,'lpracp3')|
+ Aadd(klucze,'ID')|
+ Aadd(klucze,'Str(ID_LPRAC)+Str(MIESIAC)')|
+ Aadd(klucze,'Str(ID_LPRAC)+Str(ID)')|

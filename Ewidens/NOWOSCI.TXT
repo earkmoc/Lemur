@@ -1,0 +1,1015 @@
+17.03.2004
+	Poprawka dodawania pozycji do menu. Poprzednio pojawia≥ siÍ b≥πd "Width error" i by≥o LP=99.
+26.02.2004
+	Poprawa úrodkÛw trwa≥ych w wariancie "Umorzenie natychmiastowe"
+	Ctrl+Ins i Alt+Ins dzia≥a przy szybkim i powolnym szukaniu.
+22.02.2004
+	Zabezpieczenie w Analizie 5 przed usuniÍciem ca≥ej analityki ("MAGAZYNY.DBF").
+03.12.2003
+	DOKUM_14.NTX jest od teraz = DtoS(DATAS) dla Analizy5 (procedura DokAnaz()).
+29.11.2003
+	Opracowanie skrÛtu dzia≥ania GetPole, øeby nie nastÍpowa≥o spowolnienie, gdy jest ich duøo.
+27.11.2003 (P13)
+	Test wartoúci brutto dokumentÛw i jednego dokumentu: DokumTestuj(), DokumTest().
+20.11.2003 (p13)
+	IO pokazuje iloúci z ostatniego FV dla RW i z FJ dla RWJ.
+	Syntetycznie stan podmagazynu pokazuje waøone ceny zakupu i poprawne iloúci.
+05.11.2003
+	Import dekretÛw z jednej wybranej listy p≥ac lub ze wszystkich.
+04.11.2003
+	Tabelki uøywajπ pojedynczych kresek semigrafiki, a nie pokieranego "D".
+28.10.2003 (Sz)
+	Skasowanie ciπg≥ego bloku moøe przenosiÊ do DK1 lub DK2 i tam moøna renumerowaÊ i inne takie.
+24.09.2003 (Parrot)
+	"WolneKonto" zamiast "PopKonto" do szukania pierwszego wolnego konta rozliczeniowego.
+02.07.2003 (P13)
+	Poprawki wydruku linii podsumy (za d≥uga kreska oddzielajπca).
+	Dodanie podsum na koÒcu wydruku po linii "Razem" (linie "w tym").
+27.06.2003 (P13)
+	Procedura "PodSuma" sumuje podane wartoúci i przy zmianie klucza drukuje je.
+	Analiza rachunkÛw autorÛw i umÛw zleceÒ z podanego okresu z podsumami i razem.
+18.06.2003 (Parrot)
+	Poprawki w analityce obrotÛw konta. Jak brak obrotÛw w miesiπcu to klient jest bo ma BO.
+	Jak BO takie samo Wn i Ma, czyli Wynik=0, to pozycja jest kasowana w ramach "Kondensacji".
+04.06.2003
+	F7 na kolumnie dat podaje drugπ datÍ "do=Datee()" jeúli parametr "Ana_Daty_B=.t.".
+07.05.2003
+	Nowy parametr "OddajMoc" (domyúlnie=.f.) dla funkcji OL_AutoYield( OddajMoc ).
+28.03.2003
+	Nowa funcja: OL_AutoYield(.t.) zwraca moc do procesora. Moøe wydruki bÍdπ sz≥y bez przystankÛw.
+27.03.2003
+	+poprawienie definicji importu dekretÛw z kasy: D, KP, PrzychÛd
+	+usuwanie kont "201-1-" nieaktywnych: brak BO Wn i Ma wed≥ug maski "UsunKonta()".
+	+import kont rozliczeniowych powtarza NIP jak g≥upie
+24.03.2003
+	Nowy wydruk z analityki: podsumy kont przeciwstawnych: "zest2k.wyd".
+23.03.2003
+	Poprawienie generowania przelewÛw z list p≥ac. Teraz konto pracownika trafia do dwÛch pÛl
+	przelewu jeúli przekracza d≥ugoúÊ jednego.
+04.03.2003 (Mykogen)
+	Poprawienie ustawiania kryterium na daty (F7).
+03.03.2003 (P13)
+	Funkcja "SetNaleznosci()" nanosi dane rozliczeniowe firmy na nowo badajπc wszystkie jej dokumenty.
+21.02.2003 (Izofol)
+	Wyjúcie po wybraniu towaru lub kontrahenta (57) gasi ewentualny filtr.
+29.01.2003
+	Szukanie po wielu polach w DG przy pomocy SysMySeek('1,1,2,3',nr,'1,2').
+22.01.2003
+	Jak baza ma 35 bajtÛw to sio.
+	Poprawienie b≥Ídu zamykania dokumentu WZH generowanego po FVH u SÛjty.
+12.12.2002
+	Funkcja 41 nie reaguje gdy dotyczy "Dziwna data"
+	UsuniÍty b≥πd przy usuwaniu ciπg≥ego bloku danych z DG, ktÛry sia≥ na LPT.
+05.12.2002
+	Jeúli numer pola startowego formularza jest liczbπ ujemnπ, to skacze
+	do tego pola przez wielokrotne K_DOWN i dodaje zwÛd prawo+lewo, øeby
+	nie kasowa≥o zawartoúci pola liczbowego (numer tygodnia: 46.02)
+12.11.2002 (CLCH)
+	Poprawki w p≥acach (zestawienie dla pracownika miesiπcami).
+11.11.2002 (Mykogen)
+	Modyfikacje zamÛwieÒ.
+23.10.2002
+	Funkcja "ShowMasy()" w parze z funkcjπ "DokumZLicz()".
+	Pokazywanie masy towaru na dokumencie podczas wystawiania i przeglπdania.
+16.10.2002
+	Nowy wydruk ANALIZSS.WYD dla analizy5.
+11.10.2002
+	Druk serii dokumentÛw bez pytaÒ (DOKUMDrukM()) automatycznie wy≥πcza tymczasowo
+	pytanie o drukowane strony.
+	Funkcja tabeli o nazwie "pozycja" (pierwsza wartoúÊ z lewej) jest wykonywana po
+	przejúciu do pozycji tabeli. Teraz jest wykorzystywana do pokazania pozycji:
+	pozycja|||CSay(mr-1,1,mc,AllS(RecNo()),jasny)
+10.10.2002 (Parrot)
+	Po≥πczenia miÍdzy dekretami i dziennikiem g≥Ûwnym.
+09.10.2002 (P13)
+	UkoÒczenie dokumentÛw KOR.
+07.10.2002 (Literatura)
+	Zmiana kolejnoúci pÛl w FIRMY.DBF, bo zaliczki wpada≥y w TERMIN.
+04.10.2002 (Literatura)
+	Cena i rabat zapamiÍtane przy dokumencie w polach TOWCENNIK (N,1)
+	i TOWRABAT (N,6,2).
+	Domyúlny cennik i rabat zapamiÍtane przy kontrahencie w polach
+	CENNIK (N,1) i RABAT (N,6,2).
+	Zmiana formularza dokumentu øeby úciπga≥ pola domyúlne z
+	kontrahenta na formularz dokumentu.
+	Zmiana definicji wydruku PW, øeby w zaleønoúci od zapamiÍtanej
+	wartoúci w polu TOWCENNIK drukowa≥ w nag≥Ûwku "hurtowa", "zbytu".
+	Wy≥πczenie pytania o drukowane strony, bo przy wydruku serii
+	dokumentÛw siÍ zatrzymywa≥ i pyta≥, zamiast drukowaÊ wszystko.
+	Zmiana procedury AktCZ, øeby nie bada≥ cen FV, a tylko PW i INW.
+02.10.2002 (Mistral)
+	Przebudowa wskazanej bazy danych ("Przebudowa()").
+26.09.2002 (P13)
+	Obliczenia minimalnej iloúci korekt wed≥ug stanu po korektach.
+	Wskazanie faktur do korekty.
+	"Rabaty / Zmiana iloúci na przeciwnπ" nie pytajπ o "Rabat:".
+24.09.2002 (Literatura)
+	Wykluczenie z Analiz dokumentÛw otwartych.
+23.09.2002 (STEMKO)
+	Rozdzielenie plikÛw "WYB_RANE" na poszczegÛlnych uøytkownikÛw.
+18.09.2002 (SÛjta)
+	PR( s, literka ) = Po( s, literka ), tyle øe liczone po Su i Po.
+14.09.2002 (Literatura)
+	Wyszukiwanie minimalnej iloúci korekt do faktur.
+13.09.2002 (Literatura)
+	Lawinowe poprawianie stanÛw u wszystkich dla podmagazynu = -1
+12.09.2002 (Literatura)
+	Poprawki analizy "Stan firmy na dzieÒ" dla podmagazynu = 0
+	(wiÍcej parametrÛw sterujπcych przebiegiem procedury).
+05.09.2002 (ZIARKO)
+	Wymuszenie zamykania okresÛw sprawozdawczych.
+04.09.2002
+	Poprawki analizy "Stan firmy na dzieÒ" dla podmagazynu = NRMG
+	(inteligentna eliminacja stanÛw ujemnych).
+03.09.2002
+	Poprawki analizy "Stan firmy na dzieÒ".
+	Dokumenty otwarte nie wchodzπ do analizy.
+	Zamiana cen w analityce wed≥ug ostatnich dokumentÛw "FV,PW,INW".
+27.08.2002
+	Funkcja "DokumRabaty()" wype≥nia tylko rekordy gdzie ILOSC >=0.
+	Generowanie RWC i PWC pyta czy pytaÊ o rabaty przy kaødym PWC.
+	Nie sprawdza, czy jest analiza2.ntx tylko robi w ciemno "AnalizÍ
+	sprzedaøy przez kontrahentÛw (miesiπcami)".
+	Na totalu i wydruku stanu podmagazynu witaÊ masÍ towaru i iloúci
+	paczek i pe≥nych paczek.
+	Drukowanie zaznaczonych dokumentÛw.
+25.06.2002
+	Wype≥nianie pola "INNE" adresem przy dodawaniu BO w analityce.
+22.06.2002
+	Analityka wedlug adresow (pole "INNE" w analityce)
+15.05.2002
+	Nowy parametr programu: edytor, Edytor uøywany do przeglπdania plikÛw powyøej
+    65000 B, np.: Editpad.exe
+11.04.2002
+   Generowanie dokumentu PZ do korekty powoduje, ße numer PZ jest dopisywany
+
+   do listy dokument¢w FVK w polu "Do dokumentu" jako kolejny powiÜzany.
+04.04.2002
+   Opracowanie sumowania przelew¢w r¢ßnych rodzaj¢w list do tabeli pracownik¢w
+   Potrzebna jest zmiana struktury bazy danych pracownik¢w o pola:
+   PRZELEWY1, PRZELEWY2, PRZELEWY3, PRZELEWY4, zmiana definicji tabeli, zmiana
+   definicji menu drukowania danych pracownik¢w (Nr 51) o opcje:
+
+Nazwa opcji : Lista pracownik¢w przelewami
+   Parametr : if(Get_Okres()#NIL,LPRAC->(Drukuj('lpracx')),)
+
+Nazwa opcji : Lista j.w. - szybka powt¢rka
+   Parametr : LPRAC->(Drukuj('lpracxx'))
+
+13.03.2002
+   Data operacji gosporadczej w dekretach, dzienniku, itp.
+03.03.2002
+   Parowanie uwzgl'dnia fakt, ße mogÜ byç r¢ßne konta g'¢wne w analityce.
+26.02.2002 (P13)
+   AnalizaS moße uwzgl'dniaç dokumenty z okresu i rozr¢ßniaç ceny lub nie.
+25.02.2002 (P13)
+   Nowa funkcja ONP do pakowania i zapowania baz znak¢w tabel, ale bez za-
+   bierania baz na wy'Ücznoûç. Jak si' nie uda zapowaç bazy znak¢w to dalej.
+   Jeûli jest "iexe" i klucz indeksowy ma "->" to nie stosuje "i.exe".
+   Nowa funkcja DrukujA do alfabetycznego drukowania specyfikacji dokument¢w.
+14.02.2002
+   Kosmetyka przy imporcie danych (pozycja linii "Powsta'o pozycji ..."
+   Format daty domyûlnie = 'dd.mm.yy'
+   KonwertON i drukarkaON domyûlnie = .f.
+   Brak limitu okresu na renumeracj' w KPR.
+   Moßna umieûciç wyßej 'max.txt' (w ARRAKIS) i wszystkie 2001, 2002 go widzÜ.
+23.01.2002 (Mykogen)
+   Archiwizacja i inne operacje poprzedzane komunikatem "Polecenie DOS",
+   kt¢ry pozwala si'gnÜç do poprzednich zapis¢w tej operacji klawiszem F1.
+22.01.2002 (Ziarko)
+   Data operacyjna niezaleßna dla kaßdego ußytkownika.
+   Zmiana daty operacyjnej przy logowaniu.
+   Prezentacja czasu i dat na ekranie.
+   Dodanie masek pseudo, NIPu i nazwy w formularzu analityki dla kont rozl.
+19.01.2002 (Arrakis)
+   Opracowanie wydruku z KPR z dochodem narastajÜco i ûrednio w skali roku.
+10.01.2002 (Mistral)
+   Zmiana struktury przelew¢w i opracowanie wydruku przelewu podatku dla US.
+28.12.2001 (Mistral)
+   Procedura "Wydruk()" (przelew) reaguje prawid'owo na zmiennÜ "konwertON"
+   uniezaleßnionÜ niniejszym od "zy_maz.txt" i "na_lat.txt".
+20.12.2001 (P13)
+   Opracowanie opcji automatycznego generowania PWC, RWC z zaznaczonych
+   pozycji analizy Nr 9.
+13.12.2001
+   "MySeek(nr, ..." zamienia najpierw "(nr", na prawdziwy numer kolumny.
+06.12.2001
+   "CatSwich(,,1)" nie zamyka baz danych.
+04.12.2001 (CLCH)
+
+   Opracowanie funkcji zliczajÜcej warunkowo elementy podbazy:
+   SumPolaSuba( pw, ps, sub, i, s, k, w ), np.:
+   SumPolaSuba( 'LISTYP', 'ile', 'LPLACP', 3, 'Str(LPRAC->ID)',;
+                'LPRAC->ID=LPLACP->ID_PRAC',;
+                'LPLAC->(GetPole(1,"LPLACP->ID_LPLAC","ID_LPD")) # 0' )
+   Ußycie tych funkcji do detekcji aktywnych pracownik¢w w p'acach i aktywnych
+   towar¢w w magazynach: funkcje "~" do aktualizacji pola "LISTYP" i "ILE",
+   oraz "A" (Aktywne) do odfiltrowania pozycji aktywnych.
+
+03.12.2001 (P13)
+
+  Zmiany estetyki ekranu podczas automatycznej zmiany struktury bazy danych.
+  Zmiana definicji dokumentu "FH" na taki, kt¢ry nie ma wp'ywu na magazyny.
+  Zmiana struktury bazy danych "DOKTYPY" i formularza tabeli "Typy dokument¢w"
+  w zwiÜzku z dodaniem p¢l "Warunki do generowania". Zapisanie w definicji
+  typu "RW" wartoûci w polach:
+  "Warunki przed generowaniem": SaRabatyZero()
+  "Dokument"                  : FH
+  "Warunki do generowania"    : RabatZero()
+  Powoduje to, ße podczas zamykania "RW" jest sprawdzana specyfikacja "RW" i
+  jeûli sÜ tam towary z domyûlnym upustem = 0%, to do tego "RW" jest generowany
+  dokument "FH", ale tylko z tymi pozycjami specyfikacji "RW", kt¢re spe'niajÜ
+  warunek "RabatZero()", czyli majÜ domyûlny rabat = 0%. Jeûli generowanie
+  dojdzie do skutku, to pojawia si' menu pozwalajÜce wydrukowaç "FH".
+
+02.12.2001 (P13)
+
+   Zmiany w procedurach indeksowania baz danych i sortowania tabeli po
+   wybranej kolumnie klawiszem "X" (X=Sortuj). Do indeksowania trudnych
+   przypadk¢w (bardzo duße iloûci rekord¢w, np. baza "SPEC") jest automatycznie
+   wybierany zewn'trzny program indeksujÜcy "i.exe". Naleßy go zainstalowaç
+   razem z tÜ wersjÜ programu przez przekopiowanie go do katalogu "ARRAKIS"
+   i w'Üczenie jego dzia'ania w programie wed'ug ponißszego opisu.
+
+   Nowy parametr "jestiexe" okreûlajÜcy czy program ma stosowaç zewn'trzny
+   program "i.exe" do indeksowania baz danych. Parametr naleßy wprowadziç do
+   tabeli "Parametry programu". W polu "ID" wpisaç "jestiexe", w polu "Typ"
+   wpisaç "L" (L=Logic), a w polu "Wartoûç" wpisaç: TAK
+   Potem nacisnÜç klawisz "A" (Aktualizacja).
+
+   Program odpowiednio reaguje przy sortowaniu danych w tabelach baz, kt¢re
+   osiÜgn''y limit liczby otwartych indeks¢w. DotÜd pojawia' si' komunikat
+   "Limit exceeded ..." i nast'powa'o wyjûcie z programu. Obecnie pojawia
+   si' komunikat:
+               OsiÜni'ta zosta'a maksymalna moßliwa iloûç
+                plik¢w indeksowych do jednej bazy danych.
+           Dane b'dÜ teraz posortowane, ale nie zmieniaj ich !!!
+           Dopisywanie, poprawianie i usuwanie sÜ zabronione !!!
+
+   Oznacza to, ße moßna przeglÜdaç dane wed'ug nowego uporzÜdkowania, drukowaç,
+   sortowaç, ALE pozosta'e operacje (zmiany danych) muszÜ byç wykonywane PO
+   wyjûciu z tabeli i powt¢rnym wejûciu. Wtedy b'dÜ otwarte wszystkie indeksy
+   niezb'dne do zachowania integralnoûci bazy danych.
+
+26.11.2001 (P13)
+
+   Zmiana struktury bazy "DOKTYPY" o seri' p¢l "GENERUJ..." dotyczÜcych 
+   generowania faktur z dokument¢w "RW" i "PW" z p'ytami CD i kasetami.
+   Trzeba ustawiç (F10) TEST_STR:=.t., wejûç do tabeli typ¢w dokument¢w
+   i zgodziç si' na restrukturyzacj'.
+
+   Wprowadzenie nowych typ¢w dokument¢w: RWC, PWC. Typy te naleßy okreûliç w
+   tabeli "Typy dokument¢w", najlepiej przez skopiowanie ("C"=Copy) typ¢w
+   podobnych, czyli "RW", "PW", ale w polu "Typ" wpisaç w'aûciwÜ nazw' typu,
+   czyli odpowiednio "RWC", "PWC", w polu "Nast'pny numer" wpisaç 1, a w polu
+   "Maska" dopisaç liter' "C" (najpierw w'Ücz Insert), np.:  ..."/C/2001".
+
+   Opracowanie analizy "9. Kontrahenci dawno bez dokumentu RWC, PWC".
+
+   Nowy parametr "TypyKonSpc" okreûlajÜcy limit iloûci dni od ostatniego
+   dokumentu typu "RWC", lub "PWC". Parametr naleßy wprowadziç do tabeli
+   "Parametry programu" najlepiej przez skopiowanie ("C"=Copy) parametru
+   "TypyKonSpi", ale w polu "ID" wpisaç "TypyKonSpc", w polu "Typ" wpisaç
+   "P" (P=public), a w polu "Wartoûç" wpisaç np.: 120, ale jeûli analiza
+   ma spe'niç rol' otrzegawczÜ, to wartoûç ta powinna byç nißsza, np.: 100.
+   Potem nacisnÜç klawisz "A" (Aktualizacja).
+
+   Nowy parametr "TypyKonStc" okreûlajÜcy czy nowa analiza ma byç wykonywana
+   przy starcie programu. Parametr naleßy wprowadziç do tabeli "Parametry
+   programu" najlepiej przez skopiowanie ("C"=Copy) parametru "TypyKonSta",
+   ale w polu "ID" wpisaç "TypyKonStc", a w polu "Wartoûç" wpisaç TAK lub NIE.
+   Potem nacisnÜç klawisz "A" (Aktualizacja).
+
+24.11.2001 (P13)
+
+   Modyfikacja definicji wydruku "dokum.wyd", z kt¢rej korzystajÜ dokumenty
+   m.in. "RW" i "PW". Data przesuni'ta do pierwszej linii danych sprzedawcy.
+   Zamiast p¢l "Do zap'aty", "Wp'acono", "Pozostaje do zap'aty" sÜ pola
+   "úÜczna masa (b. opakowa§)", "Iloûç paczek", "Iloûç pe'nych paczek".
+   Jeûli jest drukowany dokument "RW", to dodatkowo jest dopisywana zawartoûç
+   pliku "WZORY\opis_rw.txt":
+
+P'yty CD i kasety sÜ fakturowane w momencie wydania towaru. W przypadku
+nieotrzymania przez 7 dni faktury prosimy o kontakt.
+Na p'yty CD i kasety nie obowiÜzujÜ ceny hurtowe.
+
+23.11.2001 (P13)
+
+   Nowy parametr PRI (Printer Init) = "@" do stosowania w parametrach jako
+   wartoûç parametru "WydInit". Jego ußycie ma zapobiedz zjawisku rozpoczynania
+   wydruku drukarki do ûrodka linii. °eby wprowadziç takÜ wartoûç, naleßy
+   wejûç do tabeli "Parametry programu", odnale¶ç parametr o kodzie (ID)
+   "WydInit", nacisnÜç klawisz "F" (Formularz) i w polu "Wartoûç" wpisaç PRI
+   zamiast wyst'pujÜcej tam dotychczasowej wartoûci, np.: Space(0). Potem
+   nacisnÜç klawisz "A" (Aktualizacja).
+
+   Nowa niewidoczna opcja "TAB" w tabeli "Tytu'y - syntetyka". Wciûni'cie
+   klawisza "TAB" pokazuje u g¢ry ekranu nazw' towaru. Ma to pom¢c w orientacji
+   w tabeli nawet gdy nie jest widoczna kolumna "Nazwa".
+
+   Nowa niewidoczna opcja "TAB" w tabeli "Kontrahenci". Wciûni'cie klawisza
+   "TAB" pokazuje u g¢ry ekranu indeks kontrahenta. Ma to pom¢c w orientacji
+   w tabeli nawet gdy nie jest widoczna kolumna "Indeks".
+
+   Zmiana struktury baz "TOWARY", "TOWARYBU", "TOWARYUB" o "W_PACZCE", N, 6.
+   Trzeba ustawiç (F10) TEST_STR:=.t., wejûç do syntetyki towar¢w, do towar¢w
+   nieußywanych, wystawiç FV, RW i wsz'dzie zgadzaç si' na restrukturyzacj'.
+
+   Iloûç w paczce na towarach (syntetyka). Jeûli okienko formularza jest puste,
+   to iloûç paczek wynosi 0. Jeûli paczka jest niepe'na, to jednak jest liczona
+   jako pe'na paczka, dlatego gdy w paczce jest 10 egz., to 10 egz. = 1 paczka,
+   a 11 egz. = 2 paczki.
+
+
+   Zmodyfikowanie definicji tabel przeglÜdania specyfikacji dokument¢w, ßeby
+   w skrajnych prawych kolumnach widaç by'o mas' poszczeg¢lnych pozycji i ich
+   licznoûç w paczkach.
+
+   Zmodyfikowanie wydruk¢w dokument¢w zliczajÜcych masy towaru, aby pokazywa'y
+   teß sumy iloûci paczek po znaku "/":   100 egz.   =>   100/10.
+
+17.11.2001 - 19.11.2001 (P13)
+
+   Zmiana struktury baz "TOWARY", "TOWARYBU", "TOWARYUB" o "RABAT", C, 6.
+   Trzeba ustawiç (F10) TEST_STR:=.t., wejûç do syntetyki towar¢w, do towar¢w
+   nieußywanych, wystawiç FV, RW i wsz'dzie zgadzaç si' na restrukturyzacj'.
+
+
+   Domyûlny rabat na towarach (syntetyka). Jeûli okienko formularza jest puste,
+   to nie rusza upustu okreûlonego na dokumencie, inne wartoûci przykrywajÜ go.
+
+   ZastÜpienie dokument¢w "RU" i "RUK" dokumentami "FH" i "FHK".
+   Zmiana kluczy indeksowych "dokum_10.ntx", "dokum_11.ntx" (trzeba je usunÜç).
+
+   Moßliwoûç otwarcia i zamkni'cia dokument¢w z pewnego okresu wybranego
+   kontrahenta przez ußycie funkcji F10 w tabeli "Dokumenty wszystkie" i
+   wpisanie "p13o()", ßeby je otworzyç lub "p13z()", ßeby je zamknÜç.
+
+   Moßliwoûç usuni'cia analityki stan¢w wybranego kontrahenta. Trzeba si' na
+   nim ustawiç w tabeli "Tytu'y - analityka" i wcisnÜç klawisz "C" (Czyûç).
+
+   Dzi'ki powyßszym moßna otworzyç dokumenty kontrahenta (p13o()), usunÜç
+   analityk' stan¢w kontrahenta (Czyûç) i ponownie jÜ odbudowaç (p13z()).
+
+   Moßna takße 'atwiej stosujÜc w tabeli "Dokumenty wszystkie" F10 i p13(),
+   wtedy program ustala zakres dat i kontrahenta, otwiera dokumenty, czyûci
+   ca'Ü analityk' (od poczÜtku ûwiata) i zamyka dokumenty (z podanego okresu).
+
+   Moßliwoûç wydruku cennika na wybrane tytu'y w tabeli "Tytu'y - syntetyka".
+   Naleßy zaznaczyç tytu'y klawiszem "M" (Mark=znak) i wydrukowaç klawiszem
+   "W" (Wydruk) w wariancie "Cennik". Pojawi si' pytanie o wysokoûç rabatu 
+   procentowego. Przy zaznaczaniu w skrajnej prawej kolumnie pojawia si' znak
+   "*" i nie znika po wyjûciu z tabeli. Dopiero ponowne zaznaczenie tej pozycji
+   powoduje znikni'cie zaznaczenia.
+
+   Zamienione sÜ miejscami menu Kartoteki i Rozliczenia.
+
+08.11.2001 (S¢jta)
+   Poprawka ßeby si' nie upomina' o baz' "ZWIAZKI".
+24.05.2001 (CLCH)
+   òrodki trwa'e: zmiana wartoûci inwentarzowej (modernizacja) w trakcie roku.
+23.10.2001 (Oltina)
+   Dodanie "TAB" do obs'ugi PressKey().
+   Generowanie zwiÜzk¢w przy imporcie dokument¢w do dokumentu rozliczeniowego.
+22.10.2001 (CLCH)
+   Wplecenie "procpodat := CheckPodatek()" w procedur' "PodatekDochodowy",
+   pod warunkiem wywo'ania "PodatekDochodowy( x,,,,, 1 )".
+20.09.2001 (Oltina)
+   Brak danych o bazie danych (import danych) nie powoduje wyjûcia z programu.
+   CSay zwraca has'o, kt¢re w'aûnie wyûwieli'o (TAB pokazuje dane osoby).
+   Domyûlny katalog importu przy natrafieniu na "...", to "C:\".
+   W Environment formularza opcji menu, moßna umieûciç "T_OSOBY->MOZECOSTAM".
+18.09.2001 (S¢jta)
+   Poprawka exportu dla Excela (zamiast SWW by'o JM).
+17.09.2001 (Parrot)
+   Raport dopasowania z zamkni'cia przelew¢w.
+12.09.2001 (P13)
+   Poprawki ko'o miejsca "dokladnie".
+10.09.2001 (Parrot)
+   Pytanie o dat' przy blokowaniu przelew¢w.
+06.09.2001 (P13)
+   Poprawki w miejscu "dokladnie": SPEC->( DBGo( rLSTowar ) i Blokuj_R())
+28.08.2001 (Parrot)
+Poprawki w blokowaniu przelew¢w.
+Zmiana dzia'ania funkcji Odsetek() tak, aby moßna jej by'o ußywaç jako 
+niezaleßnego kalkulatora odsetek.
+
+24.08.2001 (Parrot)
+Opracowanie funkcji liczenia odsetek ustawowych:
+   Odsetek( kw, te, do )            - wariant prosty
+   Odsety( kw, wp, te, do, bw, po ) - wariant z wp'atami cz'ûciowymi
+
+23.08.2001 (P13)
+Poprawki zdejmowania towaru z podmagazyn¢w po wskazanej cenie.
+
+21.08.2001 (CLCH)
+Zmiana sposobu wpisywania danych do cel¢w RP6 na 3 kwoty (formularz LPRACZ,
+funkcja GenLPRP67(), pliki lpracrp.txt i lpracz_.str).
+
+15.08.2001 (Alufinish)
+Poprawienie przeliczania tytu'u dla "Zestawienia przychod¢w i rozchod¢w".
+Poprawienie b''du definicji formularza rejestru bankowego.
+Poprawienie definicji funkcji tabeli w wariancie z filtrem.
+Dodatkowy komunikat, gdy program juß raz jest uruchomiony w tle.
+
+23.07.2001 (Stemko)
+Opracowanie usuwania ze specyfikacji p'ac pozycji bez listy ("PlaceCzysc()").
+
+20.07.2001 (Parrot)
+Opracowanie zamykania przelew¢w z automatycznym uzupe'nianiem wp'aty w
+odpowiednim rejestrze.
+
+
+
+16.07.2001 (Alufinish)
+Zmiany dla zestawienia przychod¢w i koszt¢w czerpiÜcego dane z rejest¢w.
+
+10.07.2001 (Ziarko)
+Opracowanie prawid'owej reakcji na brak bazy danych w funkcji AutoDekret().
+Opracowanie prezentacji kwoty brutto importowanych do BABA danych.
+Poprawka raportu r¢ßnic struktur baz danych.
+Opracowanie wydruku parametr¢w programu.
+
+09.07.2001 (CLCH)
+Opracowanie wydruku listy list pracownika.
+
+05.07.2001 (CLCH)
+Opracowanie kart wynagrodze§ latami lub miesiÜcami w zaleßnoûci od okresu.
+
+25.06.2001 (El-Instal)
+Opracowanie reakcji na przekroczenie progu podatkowego w p'acach.
+Opracowanie reakcji na brak wyzerowania kwoty wolnej po przekroczeniu 1.
+
+23.06.2001 (Parrot)
+Opracowanie funkcji "Minus" do wpisywania formularzy pozycji odejmujÜcych
+wartoûci od innych pozycji ( wariant "w tym" ).
+
+19.06.2001
+Poprawienie rozpoznawania ko§ca linii pliku "txt" nawet jeûli brak "|".
+
+18.06.2001
+Jeûli pole formularza zaczyna si' od znaku "?", to jest niewidzialne.
+Stosuje si' to w przelewach, gdzie F1 wype'nia to pole ("NUMER1"), ale
+nie udost'pnia na ekranie dla ußytkownika (Parrot).
+
+15.06.2001
+Poprawka aktualizacj o zerowanie "Bajt¢w" i gaszenie filtra ("SIZE # 0").
+
+12.06.2001
+Opracowanie tabeli wzor¢w wydruk¢w i definicji z opisami i aktualizacjÜ.
+
+11.06.2001
+Poprawki liczenia dokument¢w ze specyfikacji od cen netto ("OblFKRS()").
+W'Ücza "ne.com" przy edycji definicji tabel, definicji wydruk¢w itp.
+Opracowanie rejestru podatku od czynnoûci cywilnoprawnych (tabela, helpy).
+
+UsunDz(1, 2, 3, B, C) dosta' dodatkowe parametry dla Kasuj( a, B, C )
+
+26.05.2001
+Zmiana funkcji renumeracji tak, aby przenumerowaniu ulega'y takße zapisy
+przypi'te do LP, jak Zap'aty lub Specyfikacje faktur (Renum(...,5,6)).
+
+23.05.2001
+Poprawka "Kryteria dla komputera". Jeûli w polu kryterium by'y znaki ", to
+pojawia' si' "Syntex error: &".
+Jak sÜ dwie zmienne ûrodowiskowe "ARRAKIS" i "HANDEL", to dla FK pierwsza.
+
+19.05.2001
+F9 pokazuje teß godzin' i dat' na ekranie.
+Poprawki licznia korekt sprzedaßy od brutto + wydruk dla Mykogenu.
+Zastosowanie "TAB", "~" i "FormDz()" w systemie Mykogenu.
+Zamkni'cie okresu zamyka takße wszystkie wczeûniejsze przed modyfikacjÜ.
+
+18.05.2001
+TAB s'ußy do zaznaczania pozycji w rejestrach (odhaczanie) (funkcja Znacz).
+
+17.05.2001
+Poprawki estetyki ekranu przy obs'udze menu, tabel, wydruk¢w itd.
+Wygaszanie funkcji pod tabelÜ przed menu wariant¢w wydruku (RunMenu(...6)).
+Prezentacja edytowanego pliku w tytule ramki.
+Opracowanie wydruku z KPR w wariancie: wÜsko w 2 liniach.
+
+12.05.2001
+4 ußytkownik¢w domyûlnie: ußytkownik, kontrola, autor, administrator.
+
+05.05.2001
+Osobne has'o autora z uprawnieniami do fukcji z kropkÜ.
+Zmiana funkcji "FormDz" i "UsunDz", ßeby uwraßliwiç je na dowolnÜ dat',
+dzi'ki temu moßna je stosowaç takße w innych miejscach niß DG, np.: w RS.
+Poprawka w amortyzacji ûrodk¢w trwa'ych: w pewnych warunkach by' wykazywa-
+ny bilans otwarcia roku na wartoûci inwentarzowej mimo, ße ûrodek trwa'y
+by' zakupiony w trakcie roku i BO powinno mieç wartoûç = 0.
+
+04.05.2001
+F9 w bazie danych pokazuje w ramce info jej nazw'. Ma to u'atwiç spe'nienie
+wymog¢w ustawy o rachunkowoûci, gdzie trzeba podaç ûcießk' do zbior¢w
+stanowiÜcych ksi'gi rachunkowe. Wystarczy teraz wejûç do tej ksi'gi i F9.
+Poprawienie funkcji "logout" - teraz nie pojawia si' (w pewnych sytuacjach,
+np.: przy zmianie ußytkownika) komunikat o braku struktury bazy "STANOWIS".
+Poprawienie reindeksacji z pakowaniem, ßeby nie kasowa'a "*.DBF" w ROBOCZY,
+bo w instalacjach sieciowych jest tam osobisty BILANS i inne waßne pliki.
+Wykluczanie kont z maski, np.: 2*,-20-1 => wszystkie dw¢jki opr¢cz "20-1",
+zar¢wno przy przetwarzaniu analityki, jak i w formu'ach bilansu.
+
+27.04.2001
+Nowa funkcja do liczenia PIT-4: SumaPrac(...) b'dÜca rozszerzeniem funkcji
+SumaPozP(...) o przebieganie po wszystkich pracownikach z kartoteki, a jeûli
+element sumowany ko§czy si' na ",", to nast'puje zliczenie pracownik¢w,
+u kt¢rych wskazany element jest niezerowy.
+Opracowanie nadruku na nowych formularzach CIT-0.
+Opracowanie nadruku na nowych formularzach PIT-4.
+Opracowanie funkcji TSG( x, s ) 'ÜczÜcej w sobie zalety funkcji Gwiazdki(...)
+i Transform(...). Zastosowanie tej funkcji w liûcie zaznaczonych list.
+
+24.04.2001  (BZWI = bilans zamkni'cia wartoûci inwentarzowej)
+Zmiana liczenia amortyzacji. Teraz jest liczona wed'ug BZWI poprzedniego
+miesiÜca z datÜ pierwszego dnia bießÜcego miesiÜca, a potem dopiero idÜ
+zmiany w trakcie miesiÜca, kt¢re rzutujÜ na BZWI bießÜcego miesiÜca, a zatem
+amortyzacj' przysz'ego miesiÜca. W zwiÜzku z tym, ße amortyzacja z pierwszego
+dnia miesiÜca musi widnieç wczeûniej niß zmiany z datÜ pierwszego dnia miesiÜca
+musia' si' zmieniç indeks bazy "SRODKIHI.DBF" w pliku "srodkihi.str":
+By'o: Aadd(klucze,'Str(LPP)+DtoS(DATA)')|
+Jest: Aadd(klucze,'Str(LPP)+DtoS(DATA)+if(WAAM=0,"B","A")')|
+
+23.04.2001
+Opracowanie Importu/Exportu PIT¢w (funkcja PITImpExp()).
+Opracowanie funkcji "ostatnia data podanego m-ca i roku" (ODPMR( m, r, rrrrmm))
+Opracowanie funkcji "pierwsza data podanego m-ca i roku" (PDPMR( m, r, rrrrmm))
+Opracowanie nadruku na nowych formularzach CIT-2.
+
+19.04.2001
+Opracowanie nadruku na nowych formularzach PIT-5.
+
+17.04.2001
+Opracowanie wydruku specyfikacji zaznaczonych dokument¢w syntetyzowanych w
+kilku stopniach: bez,wsjo=ceny+rabaty,ceny,tylkonazwy (DokumDrukM(...))(P13).
+Opracowanie wydruku zestawienia um¢w zlece§ i rachunk¢w za dowolny rok (P13).
+Stornowanie wartoûci w listach p'ac (LPLACStorno()).
+
+10.04 2001
+Usuni'cie b''du przy imporcie danych ("<"), kt¢ry powsta' w wersji 08.04.2001.
+Poprawienie procedury automatycznie dodajÜcej "9" do masek wydruku p¢l, ßeby
+doda'a g¢ra 10 x "9" i, jak nie daje to rezultat¢w, to daç spok¢j.
+Przesuni'cie definicji wydruk¢w na koniec menu F12.
+
+08.04.2001
+Udoskonalenie procedur zwiÜzanych z zamykaniem pozycji rejestr¢w do rozlicze§.
+Nowa zmienna "min_szablon := .t." obcinajÜca wydruk do d'ugoûci tablicy masek.
+
+Wydruk listy list powinien ustawiç jÜ na ".f.", a na ko§cu zn¢w na ".t.".
+
+07.04.2001
+Cofni'cie sztucznego wyd'ußania tabeli masek gdy tabela wartoûci jest d'ußsza.
+Niestety zmienia to spos¢b drukowania listy list p'ac.
+Gaszenie filtra przed szukaniem po indeksie
+wyeliminowa'o koniecznoûç dwukrotnego wciskania F1.
+Poprawka formularza pozycji rejestru bankowego przepisuje dane kontrahenta,
+gdy zmieni si' konto i jest to dw¢jka. Inne konta nic nie przepisujÜ.
+Renumeracja moße przesuwaç "Nr" dokumentu, a nie tylko "LP".
+
+04.04.2001
+
+Drobne poprawki w Analizach STEMKO.
+Rozszerzenie rabatu w funkcji DokumRabaty() do formatu RABAT,N,6,2.
+
+31.03.2001
+
+Pokazanie w prawym g¢rnym rogu ekranu zalogowanej osoby.
+
+30.03.2001
+Opracowanie 'amania linii nazwy towaru na spacji i uzupe'nianie drugiej
+
+kropkami do ko§ca: DwieLinie( s, l, d, k ).
+
+23.03.2001
+Opracowanie elastycznych kryteri¢w uwzgl'dniania danych na wydrukach (F7).
+
+12.03.2001
+Poprawki uruchamiania archiwizacji.
+Poprawki wydruku listy list przy wykryciu gwiazdek (funkcja TU, parametr 6 ).
+
+06.03.2001
+Automatyczne powi'kszanie szablonu dla liczby przy wykryciu gwiazdek.
+
+05.03.2001
+Generowanie dokument¢w z zam¢wie§ dla SIEï-BUDu.
+
+04.03.2001
+Wydruki pod dokumentacj' technicznÜ FK.
+
+02.03.2001
+Wydruk listy list dla CLCH.
+
+28.02.2001
+Poprawki: PgDn w formularzu dokumentu gdy indeks kontrahenta jest "INCYDENT".
+Rejestr kasowy i przelewy dla "SIEï-BUD".
+
+27.02.2001
+Poprawienie fiskalizowania dokument¢w w SIEï-BUDZIE.
+Specjalne pole w "TOWARY" na nazw' fiskalnÜ "NAZWA_FIS" (C,28).
+
+25.02.2001
+Poprawienie generowania list dla RP6, RP7.
+Poprawienie fiskalizowania dokument¢w w SIEï-BUDZIE.
+Opracowanie "f.exe" dla ELZABu.
+
+23.02.2001
+Opracowanie tabeli "lpracrp.txt" do nanoszenia kwot a'propos RP6, RP7.
+Opracowanie alarmu o minusach przy dopisywaniu list p'ac ("LPAlarmMin").
+
+22.02.2001
+Zaszycie daty kompilacji "Runtime ver" w pliku 'sprawy.prg' czyli w 'r.exe'.
+
+21.02.2001
+Import modu'u moße importowaç menu po numerze: podaje si' numery po przecinkach
+zamiast nazw z menu.
+
+20.02.2001
+Uruchomienie programu "Drukarka" jest z pe'nÜ ûcießkÜ dost'pu.
+
+15.02.2001
+Tabela list zawiera p'ynnie okreûlane kolumny wed'ug definicji listy "tabela
+list". Blokowanie list oblicza wartoûci poszczeg¢lnych kolumn. Odblokowanie
+wymaga has'a. Blokowana lista jest utrwalona, nie da si' zmieniç, ani usunÜç.
+
+
+14.02.2001
+Drukowanie karty wynagrodze§ w wariancie 1 mies / 2 linie.
+
+09.02.2001
+Funkcja "SumaPozP" ma dwa nowe parametry:
+   SumaPozPP( x, d1, d2, nr1, nr2, kode, ware )
+   * kode - kod elementu, np.: 'p_podst'
+   * ware - warunek dla elementu, np.: '>100'
+
+08.02.2001
+Aktualizacja kartoteki kontrahent¢w (MAG) po dopisaniu do drugiej
+kartoteki (FK) bieße ULICA lub ADRES, czyli po prostu pole FieldGet( 9 ).
+
+26.01.2001
+Sumowanie z sub do bazy tylko jeûli sumsub # 0 (parametr Nr 4: "zeranie").
+
+25.01.2001
+Parametr TestDaty z wariantami 0, 1, 2 testu dat.
+Usuni'cie problemu z blokowaniem dokumentu przez 2 osoby w sieci.
+Renumeracja w rejestrze bankowym.
+F1 w polu treûç na razie nie kieruje do rozlicze§ tylko do opis¢w dekret¢w.
+
+23.01.2001
+òrodki trwa'e liczÜ histori' tak, ße pierwsza zmiana wchodzi z datÜ faktycznÜ
+a nast'pne z datami pierwszego dnia nast'pnego miesiÜca.
+Generowanie dokumentu do "WZ" nie zeruje "Wp'acono" i nie zmienia dat.
+Dokumenty u S¢jty sÜ ustawiane wed'ug indeksu 9, WZ obok FV:
+DtoS(DATAS)+INDEKS+Str(NABYWCA)+TYP
+
+22.01.2001
+Zabezpieczenie antyszostakowe=DBCommit() po kaßdym formularzu.
+
+21.01.2001
+Szereg zmian dla P13 wed'ug kartki (RW,PW,FV,IO,FIFO).
+
+20.01.2001
+KontrUzup( x, a1, a2, a3 ) - pozwala sterowaç czy majÜ byç aro (rozliczenia),
+ara (rachunki), umz (umowy/zlecenia) na uzupe'nianiu danych.
+Uzupe'nienie danych o wszystkie sk'adniki (procenty i kwoty do obliczenia
+podatku dochodowego i kwoty do wyp'aty)
+Params ma parametry samodeklarujÜce "P" (public) i obliczajÜce si' "=".
+
+15.01.2001
+Rozwini'cie zaznaczania w tabeli wprowadzania dekret¢w ksi'gowych o drukowanie
+i usuwanie zaznaczonych pozycji.
+
+
+14.01.2001
+
+Dokumenty modu'u magazynowego prawid'owo przyjmujÜ dane kontrahent¢w, mimo ße
+majÜ oni ten sam indeks (np.: "Sklep Sportowy", "Sklep Sportowy", "Sklep ... ")
+
+Zmiana procedury reindeksacji i pakowania "Odswiez". Moßna wymieniç bazy danych
+do tej operacji i pakowaç bez czasoch'onnego indeksowania.
+
+Poprawienie kosmetyki ekranu przy reindeksacji, pakowaniu i przechodzeniu menu.
+
+12.01.2001
+
+Opracowanie zaznaczania w dekretach ksi'gowych ("Z"="*").
+Wydruk zaznaczonych pozycji. "Czyûç" lub "Wpisz" czyûci takße "BABA_Z".
+"SumaPozP" ma 'ogprzychod,-kuzprzych' i konkretny rodzaj listy lub kom¢rki.
+"ToExcel" exportuje dokument jak w Handlu u S¢jty.
+
+30.12.2000
+
+Procedura badania chronologicznoûci numeracji w tabelach (klawisz "*").
+
+Renumeracja w PIT'ach:
+   wiersze i kolumny pozycji:
+      cyfry 4, 8, 6, 2 (jedna pozycja),
+      cyfry 7, 9, 3, 1 (wszystkie ponißsze),
+   wartoûç LP pozycji:
+
+      K, I (jedna pozycja),
+      O, L (wszystkie ponißsze)
+
+Zmodyfikowanie funkcji "RunCommand":
+RunCommand( 'run c:\OKI.bat', 1 ) - wykonanie BATCH'a z savescreen'em
+
+Wprowadzenie zmiennych:
+drukarkaON - w'Üczenie korzystania z programu "Drukarka.exe"
+konwertON - w'Üczenie konwersji MAZ -> LAT
+
+5 XI 1998r.
+
+1. Opracowanie obs'ugi osobnych katalog¢w z zestawieniami dla poszczeg¢lnych
+   ußytkownik¢w programu w przypadku instalacji sieciowej programu.
+2. Pliki inicjujÜce zestawie§ sÜ zapisywane w tym samym katalogu gdzie
+   zestawienia, a nie w katalogu wzor¢w wydruk¢w (jak do tej pory).
+
+-------------------------------------------------------------------------------
+
+4 IX 1998 r.
+
+1. W kalkulatorze wyraße§ arytmetycznych moßna stosowaç zar¢wno "." jak "," do
+   oddzielania cz'ûci dziesi'tnej liczby.
+2. Opracowanie tabeli "Zamiennik¢w kont" i stosowanie jej w tabeli
+   "Zestawienie obrot¢w i sald" w funkcjach "D" (dopisz zamiennik konta do
+   bießÜcej pozycji) i "A" (agreguj pozycje z zastosowaniem zamiennik¢w).
+
+-------------------------------------------------------------------------------
+
+18 VIII 1998 r.
+
+1. Wprowadzenie totalizera w tabelach zestawie§ (funkcja "Total"), kt¢ry
+   pozwala w kaßdej chwili zobaczyç sumy liczbowych kolumn tabeli z ostatnio
+   wykonanego przetwarzania. Zapami'tywany jest teß tytu' tabeli, kt¢ry
+   jednoznacznie okreûla oglÜdane dane (zakres dat, maska kont, itp.).
+
+-------------------------------------------------------------------------------
+
+21 VII 1998 r.
+
+1. Udoskonalenie operacji "Przetw¢rz" w tabeli "Zestawienie obrot¢w i sald".
+   Obecnie operacja ta wykorzystuje dane zgromadzone przy zamykaniu okres¢w
+   sprawozdawczych, co pozwala bardzo skr¢ciç czas przetwarzania.
+
+-------------------------------------------------------------------------------
+
+8 VII 1998 r.
+
+1. Opracowanie zamykania okres¢w sprawozdawczych (tabela "Zamkni'te okresy").
+2. Gromadzenie zestawie§ obrot¢w i sald (tabela "Zamkni'te zestawienia").
+3. PodglÜd danych o wybranym koncie z zamkni'tych okres¢w zestawie§ obrot¢w i
+   sald (funkcja "Z" w tabeli zestawie§ obrot¢w i sald).
+4. Na'oßenie restrykcji na ußywanie funkcji "Kasuj" i "Usu§" w Dzienniku, kt¢re
+   teraz nie mogÜ dzia'aç na danych z okres¢w zamkni'tych.
+5. Funkcja "Formularz=ENTER" w Dzienniku nie pozwala na zmiany danych z okres¢w
+   zamkni'tych.
+
+-------------------------------------------------------------------------------
+
+11 III 1998 r.
+
+1. Opracowanie wykonywania serii automatycznych import¢w danych.
+
+-------------------------------------------------------------------------------
+
+21 I 1998 r.
+
+1. Opracowanie parowania pozycji w analityce obrot¢w konta (opcja Kondensacja).
+2. Dodatnie do formularzy parametr¢w operacji Przetwarzania w zestawieniach
+   pytania: "czy obliczaç B.O. i obroty narastajÜco ?". Odpowied¶ "T" (TAK)
+   powoduje wykonanie procedury w dotychczasowy spos¢b, doûç powolny przy dußej
+   iloûci danych. Odpowied¶ "N" (nie) powoduje "p¢jûcie na skr¢ty", dzi'ki temu
+   procedura trwa znacznie kr¢cej (przebiega dane tylko z podanego zakresu dat)
+   ale brak wtedy informacji o B.O. i obrotach narastajÜco.
+
+-------------------------------------------------------------------------------
+
+4 X 1997 r.
+
+1. Zmiana formy komunikatu "Przetwarzanie danych w toku" z pulsujÜcej ramki
+   na ûrodku ekranu (zas'aniajÜcej widok na dane) na wiersz na dole ekranu,
+   kt¢ry zas'ania funkcje w tym czasie i tak nieaktywne.
+2. Poprawa procedury szukania danych w kolumnach nieindeksowanych. Obecnie jest
+   wykonywany tylko jeden przebieg zamiast dotychczasowych dw¢ch.
+
+-------------------------------------------------------------------------------
+
+21 IX 1997 r.
+
+1. Opracowanie drukowania wybranych stron w/g opisu w polu "strony".
+   Moßna okreûliç konkretne strony lub zakresy stron, np.: ße b'dÜ wydrukowane
+   4 przedzia'y stron:
+   1) strony z zakresu od 1 do 3,
+   2) strona 7,
+   3) strony z zakresu od 11 do 19
+   4) strony z zakresu od 25 w g¢r'
+
+   zapis powyßszego okreûlenia wyglÜda nast'pujÜco:
+
+   strony : -3,7,11-19,25-
+
+   Zapis "-3" oznacza, ße nie zosta'a podana wartoûc dolna zakresu pierwszego
+   przedzia'u i wtedy przyjmowana jest wartoûç dolna zakresu = 1, a g¢rna = 3.
+   Zapis "7" oznacza, ße wartoûç dolna zakresu = wartoûç g¢rna zakresu = 7.
+   Zapis "11-19" oznacza, ße wartoûç dolna zakresu = 11, a wartoûç g¢rna = 19.
+   Zapis "25-" oznacza, ße wartoûç dolna zakresu = 25, a wartoûç g¢rna jest
+   nieokreûlona i wtedy jest przyjmowana jakaû dußa liczba zast'pujÜca plus
+   niesko§czonoûç, tutaj r¢wna 9999999 stron.
+
+-------------------------------------------------------------------------------
+
+20 IX 1997 r.
+
+1. Opracowanie szybkiego importu dekret¢w z rejestr¢w sprzedaßy i zakup¢w.
+2. Modyfikacja menu importu: po wykonaniu operacji importu menu nie znika,
+   dzi'ki czemu moßna natychmiast wykonaç nast'pny import, np. opcja nißej.
+3. Opracowanie tabeli "Typowych dekret¢w ksi'gowych" i ich importu.
+
+-------------------------------------------------------------------------------
+
+18 IX 1997 r.
+
+1. Opracowanie szybkiego usuwania grup pozycji w zestawieniu dekret¢w.
+   Naleßy zaznaczyç gwiazdkami (litera "Z") pozycje do usuni'cia, ustawiç
+   podûwietlenie na pierwszej pozycji do usuni'cia i wcisnÜç klawisz litery
+   "K" (kasuj), wtedy zostanÜ usuni'te pozycje od bießÜcej w d¢' tak d'ugo
+
+   dop¢ki b'dÜ zaznaczone. Kaßda nieciÜg'oûç w zaznaczeniu przerywa usuwanie.
+
+-------------------------------------------------------------------------------
+
+13 VIII 1997 r.
+
+1. Opracowanie nowych rejestr¢w wraz z definicjami wydruk¢w i importu danych:
+   - zakup¢w koszt¢w
+   - zakup¢w z ZPCH (Zak'ady Pracy Chronionej)
+   - korekt zakup¢w koszt¢w
+   - korekt zakup¢w z ZPCH (Zak'ady Pracy Chronionej)
+2. Z'amanie wszystkich wydruk¢w na szeroki papier we wszystkich rejestrach.
+3. Odûwießenie danych w ramce startowej programu (wersja, telefony).
+4. Poszerzenie miejsca na pokazanie iloûci wolnej przestrzeni dysku twardego.
+5. Przegrupowanie prze'adowanych menu.
+
+-------------------------------------------------------------------------------
+
+29 V 1997 r.
+
+1. Opracowanie importu dekret¢w z kasy dla dokument¢w bankowych (stemko).
+2. Opracowanie definiowanych sprawozda§ ( Bilans, Raport p'ynnoûci, Rach. Wyn.)
+3. Opracowanie funkcji zbierajÜcych dane do w.w. sprawozda§:
+   - Ma('<maski kont oddzielone przecinkami>'), np. Ma('20*,10*,13*')
+   - Wn('<maski kont oddzielone przecinkami>'), np. Wn('20*,10*,13*')
+   - Su('<maski dla pola LP w sprawozdaniu>') , np. Su('1*,2*')
+
+
+-------------------------------------------------------------------------------
+
+6 IV 1997 r.
+
+1. Opracowanie wydruku "Zestawienia obrot¢w i sald" w wariancie "dzielony na
+   strony z podsumowaniami" oraz pozbycie si' kresek na ko§cu niepodkreûlonych
+   linii wydruku.
+2. Kaßdy wydruk moßna przerwaç klawiszem Esc.
+
+-------------------------------------------------------------------------------
+
+22 III 1997 r.
+
+1. Opcja renumeracji "LP" w/g "Daty otrzymania" we wszystkich rejestrach.
+2. Zastosowanie narz'dzi opracowanych 19 III we wszystkich miejscach w FK.
+3. Zmiany w menu "ZarzÜdzanie danymi", m.in. dodanie opcji testu archiw¢w.
+4. Liberalizacja sprawdzania daty. Sprawdzenie daty nast'puje dopiero wtedy,
+   gdy zostanie ona zmieniona przez ußytkownika. Jeûli nie jest to data z
+   miesiÜca operacyjnego, to pojawia si' komunikat "Dziwna data ... sprawd¶".
+   Ma to znaczenie w momencie gdy przeglÜdamy pozycje dawno juß zatwierdzone.
+   Do tej pory w tym momencie pojawia' si' komunikat. Obecnie tylko w przypadku
+   zmiany daty b'dzie moßliwoûç pojawienia si' tego komunikatu. Zbyt cz'ste
+   komunikaty uniewraßliwiajÜ ußytkownika. Rzadkie, ale s'uszne komunikaty b'dÜ
+   znaczenie lepiej spe'nia'y swojÜ rol'.
+
+-------------------------------------------------------------------------------
+
+19 III 1997 r.
+
+1. Zmiana interpretacji "zamiennika ûcießek". Podaje si' w nim jakie s'owa
+   (ußyte w definicjach) zast'powaç innymi (ûcießkami dost'pu), np.:
+
+   handel, G:\STEM97.03,
+   sieradz, G:\SIERADZ\SIER97.02,
+   bhandel, G:\ARRAKIS,
+   bsieradz, G:\SIERADZ\SIER97.03,
+
+   Kaßde s'owo musi byç zako§czone przecinkiem.
+   Nie jest rozr¢ßniana wielkoûç liter.
+   Spacje i EOL sÜ pomijane.
+
+2. Po imporcie danych podûwietlenie jest na ostatniej pozycji.
+3. Kasowanie pozycji w trybie sieciowym nie powoduje b''du "Lock required".
+4. Korzystanie z klauzuli "#nazwa_pliku" pozwala odwo'ywaç si' w jednej
+   definicji importu danych do innej. Dzi'ki temu moßna zmieniaç tylko bazowÜ
+   definicj' importu danych a zmiana b'dzie automatycznie dotyczy'a wszystkich
+   definicji z niej korzystajÜcych. Klauzul' "#..." umieszcza si' po nag'¢wku
+   definicji w miejscu gdzie powinno si' znale¶ç cia'o definicji.
+5. Opcja "Posortuj" lub "X=Sortuj" prawid'owo dzia'a na zdalnych bazach danych
+   gdy jako parametr poda si' ûcießk' dost'pu. Dzia'a "zamiennik ûcießek".
+
+-------------------------------------------------------------------------------
+
+4 III 1997 r.
+
+1. We wszystkich rejestrach jest wykonywany skok na koniec tabeli danych.
+2. W tabeli "Zestawienia kont wynikowych" moßna wybraç dodatkowe warianty.
+3. Zosta'a opracowana opcja "Pomocy w kolejnoûci czynnoûci" (stemko).
+4. Wprowadzona zosta'a kontrola wprowadzanych dat. Jeûli data jest spoza bießÜ-
+   cego miesiÜca ( roku ) to pojawia si' komunikat z proûbÜ o sprawdzenie daty.
+
+-------------------------------------------------------------------------------
+
+3 III 1997 r.
+
+1. Wadliwy indeks bazy danych ( rozmiar <= 1024 B ) jest usuwany i odtwarzany.
+2. Z "zamiennika ûcießek" sÜ usuwane zb'dne spacje i EOL (stemko).
+3. Renumeracja "LP" nie psuje innych indeks¢w.
+
+-------------------------------------------------------------------------------
+
+14 II 1997 r.
+
+1. Przed komunikatem o iloûci powsta'ych pozycji jest czyszczone miejsce.
+2. Jest zwi'kszona dok'adnoûç pokazywania w lewym g¢rnym rogu ekranu wyniku
+   sumowania klawiszem "+" ( szary ) do dw¢ch znak¢w po przecinku.
+3. Zerowanie w.w. wyniku teraz opr¢cz klawisza "*", takße klawiszem "/".
+4. Po ußyciu kalkulatora wyraße§ arytmetycznych ( F10 ) ostatni wynik jest
+   wyûwietlany w lewym g¢rnym rogu ekranu.
+5. Opracowanie opcji "zamiennika ûcießek". Moßna hurtem okreûliç innÜ ûcießk'
+   dost'pu do danych pobieranych przy importach niß wymieniona w definicji.
+   Jeûli w definicjach jest okreûlona ûcießka do danych np.:
+   G:\ARRAKIS..., a zosta' zamkni'ty miesiÜc i dane chcemy braç z np.:
+   G:\STEM97.02, to zamiast zmieniaç ûcießk' w kaßdej definicji importu danych
+   wystarczy okreûliç zamiennik "G:\STEM97.02". Jeûli wyczyûcimy zamiennik, tj.
+   b'dzie on pusty, to b'dzie brana oryginalnie podana w definicjach ûcießka.
+6. "Zamiennik ûcießek" dzia'a nie tylko przy imporcie danych, ale takße na
+   tabelach przeglÜdania danych, tj. jak mamy wpisany "zamiennik", to widzimy
+   w tabelach zdalnego podglÜdu danych to samo co importujemy, czyli dane ze
+   ûcießki zamiennika. Nie podlegajÜ zamianie tylko te ûcießki, kt¢re sÜ pisa-
+   ne z ma'ej litery : "g:\ARRAKIS" ( niezb'dne przy podglÜdzie MEGAKO.dbf ).
+
+7. Opracowanie mutacji definicji importu o prostszej formie zapisu,
+
+   zamiast niewygodnej formy :
+
+Upper(Left(K25;1))=='K'.and.K9#0.and.D3>=data_od.and.D3<=data_do,KWOTA:=K9,...
+
+   mamy nieco skr¢conÜ form' z najwaßniejszymi elementami na poczÜtku linii:
+
+K, K9, WINIEN:='31-4', MA:='21-2-x', OPIS:=PRZEDMIOT, NAZ1:=NUMER,NAZ2:=NAZWA,LP:=BABA->LP+1,PZ:=1,,
+
+
+-------------------------------------------------------------------------------
+
+11 II 1996 r.
+
+1. Opracowanie "Rejestru zakup¢w pozosta'ych" wraz z "Rejestrem korekt zakup¢w
+   pozosta'ych".
+
+-------------------------------------------------------------------------------
+
+9 II 1996 r.
+
+1. Opracowanie renumeracji numer¢w ( NR ) dokument¢w ( np. PK ) w bazie g'¢wnej
+   dekret¢w, na zasadzie tworzenia lub niwelowania luk w numeracji.
+
+-------------------------------------------------------------------------------
+
+4 II 1996 r.
+
+1. Zabezpieczenie przed ußyciem formularza w pustej bazie danych. W takim przy-
+   padku jest automatycznie dopisywany rekord bazy danych i w ten spos¢b dane
+   nie sÜ tracone.
+2. Zabezpieczenie przed ußyciem przeglÜdania specyfikacji dokumentu w pustej
+   bazie danych dokument¢w. W takim przypadku na ekranie pojawia si' komunikat,
+   ße baza danych jest pusta. Innymi s'owy nie moßna obejrzeç specyfikacji nie-
+   istniejÜcego dokumentu.
+3. Umieszczenie w rejestrach stawki 12% i 17% ( zar¢wno netto jak i VAT ).
+4. Zmiana wyglÜdu formularzy rejestr¢w, ßeby zwi'kszyç czytelnoûç.
+5. Plan kont w zaleßnoûci od wariantu ( synt., anal., ca'y ) ma odpowiedni
+   tytu' tabeli i tytu' wydruku jej zawartoûci.
+6. Klawisz ENTER w Planie kont wywo'uje formularz przeglÜdania danych konta, a
+   nie jak dotÜd "Wyb¢r", kt¢ry ma sens tylko przy korzystaniu z planu kont
+   podczas dekretacji w tabeli wprowadzania dekret¢w ksi'gowych.
+7. Opracowanie rejestru podatku akcyzowego.
+
+===============================================================================
+
+mgr inß. Arkadiusz Moch                                  "Finanse i Ksi'gowoûç"
+
+Modu'y w/g stanu w dniu 3 II 1997 r.
+
+1. Standard ( dekretowanie, zestawienia, kartoteki )
+2. Rejestr sprzedaßy i rejestr korekt sprzedaßy.
+3. Rejestr zakup¢w i rejestr korekt zakup¢w.
+4. Rejestr zakup¢w ûrodk¢w trwa'ych i rejestr korekt zakup¢w ûrodk¢w trwa'ych.
+5. Ksi'ga Przychod¢w i Rozchod¢w.
+6. Przelewy.
+7. Importy danych z zewn'trznych baz danych.
+8. Automatyczne dekretacje na podstawie w'asnych i zewn'trznych baz danych.

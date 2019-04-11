@@ -1,0 +1,900 @@
+* Nr 72 - "katalog,ODBIORCY,KNORDPOL,200/F/1"
+
+procedure FrykasImport( a )
+
+Czek( 1 )
+
+private cc := Odetnij( @a )      && katalog bazy odbiorc¢w
+private bb := Odetnij( @a )      && baza odbiorc¢w ( source )
+private dd := Odetnij( @a )      && baza kont      ( dest )
+private ss := Odetnij( @a )      && precz’on konta
+private il := Val( Odetnij( @a ))&& ile cyfr NIP'u
+private al := Odetnij( @a )      && AllTrim() ?
+
+ON( dd )
+ON( bb,, cc )
+while !Eof()
+      buf_sys := AllTrim( KOD )
+      if Empty( al )
+         buf_sys := Right( '000' + buf_sys, 3 )
+      endif
+      buf_sys := ss + buf_sys
+      if !( dd )->( DBSeek( buf_sys ))
+          ( dd )->( DBAppend())
+      endif
+      ( dd )->KONTO := buf_sys                            && numer konta
+      ( dd )->TRESC := AllTrim( MemoLine( DANE,, 1 ))
+      ( dd )->ADRES := AllTrim( MemoLine( DANE,, 2 ))
+      ( dd )->NIP := AllTrim( Right( StrTran( AllTrim( MemoLine( DANE,, 4 )), '.', '' ), il ))
+      if !IsDigit(( dd )->NIP ); ( dd )->NIP := ''; endif
+      DBSkip()
+enddo
+
+Czek( 0 )
+Syrena( 1 )
+
+******************************************************************************
+* Sprawdzanie konta z tablic† szablon¢w
+* m - konto do sprawdzenia
+* ko - tablica szablon¢w kont
+
+function Sprawdz_ko( m, ko )
+
+for i := 1 to Len( ko )
+    if Szablon( m, ko[ i ]); return .t.; endif    && konto zgodne z szablonem
+next
+
+return .f.      && konto niezgodne z §adnym szablonem
+
+******************************************************************************
+* Wype’nianie tablicy seri† kont
+
+procedure Laduj_ko( a, tab )
+
+local bu := 'a'
+
+tab := {}
+while !Empty( bu )
+      bu := Odetnij( @a )
+      if !Empty( bu ); Aadd( tab, bu ); endif
+enddo
+
+******************************************************************************
+* Nr 76. Rejestr sprzeda§y/zakup¢w
+
+procedure Rejestr( a )
+
+local zakup, baza, ko, ne22, ne7, ne0, nezw, va22, va7, wn, wp, wo, wk
+local i, k, ii, nrd, dt, nr, ni, naz, adr, n22, n7, n0, nzw, v22, v7, n, b
+
+if Get_Okres( @data_od, @data_do ) = NIL; return; endif
+
+zakup := ( Odetnij( @a ) == 'zakup' )   && czy zakup ?
+
+baza := if( zakup, 'REJ_ZA', 'REJ_SP' )
+
+Laduj_ko( @a, @ko )   && konta brane
+
+Laduj_ko( @a, @ne22 ) && netto22
+Laduj_ko( @a, @ne7 )  && netto7
+Laduj_ko( @a, @ne0 )  && netto0
+Laduj_ko( @a, @nezw)  && nettozw
+
+Laduj_ko( @a, @va22 ) && vat22
+Laduj_ko( @a, @va7 )  && vat7
+
+Czek( 1 )
+
+ON( baza )
+ON( baza,,,, .t. )
+ON( 'KNORDPOL' )
+ON( 'NORDPOL', 2 )
+
+*i := 0
+ii := 0
+*k := LastRec()
+wp := '' && konto poprzedniego przebiegu p‘tli
+while !Eof()
+
+*   i ++
+*   @ 0, 0 say Transform( i/k * 100, '999 %' )
+
+   if DATA <= data_do .and. DATA >= data_od
+
+      wo := if( zakup, MA, WINIEN )        && konto g’¢wne oryginalne
+      wk := if( zakup, WINIEN, MA )        && konto przeciwstawne
+
+      if !Sprawdz_ko( wo, ko )
+
+         wp := ''        && pozycje rozdzielone to jak pierwszy raz
+
+      else
+
+         if !( wp == wo )
+            store 0 to n22, n7, n0, nzw, v22, v7, n, b  && pierwszy raz zeruj
+         endif
+
+         ok := .f.
+         do case
+         case Sprawdz_ko( wk, ne22 ); n22 += KWOTA; ok := .t.
+         case Sprawdz_ko( wk, ne7 ) ; n7  += KWOTA; ok := .t.
+         case Sprawdz_ko( wk, ne0 ) ; n0  += KWOTA; ok := .t.
+         case Sprawdz_ko( wk, nezw) ; nzw += KWOTA; ok := .t.
+         case Sprawdz_ko( wk, va22) ; v22 += KWOTA; ok := .t.
+         case Sprawdz_ko( wk, va7 ) ; v7  += KWOTA; ok := .t.
+         endcase
+
+      if ok
+
+         wn := AllTrim( wo )
+
+         if !( wp == wo )     && pierwszy raz poszukaj kontrahenta
+
+            if !( KNORDPOL->( DBSeek( wn )))               && nie ma go
+               AppendRecord( 'KNORDPOL', { wn, 'j.w.' })   && to go dopisz
+            endif
+               
+            while !( KNORDPOL->( Bof()))           && poszukaj rekordu
+                  if !Empty( KNORDPOL->ADRES )     && o niepustym adresie
+                     ni := KNORDPOL->NIP
+                     naz:= KNORDPOL->TRESC
+                     adr:= KNORDPOL->ADRES
+                     exit
+                  endif
+                  KNORDPOL->( DBSkip( -1 ))        && id†c w g¢r‘
+            enddo
+
+            wn := SubStr( wn, 6 )                  && wytnij z konta
+            nr := Left( wn, At( '/', wn ) - 1 )    && numer kontrahenta
+            nrd:= SubStr( wn, Len( nr ) + 2 )      && numer dokumentu
+            dt := DATA
+
+         endif
+
+         n := n22 + n7 + n0 + nzw
+         b := n + v22 + v7
+
+         if !( wp == wo )     && pierwszy raz
+*            ii ++
+            wp := wo
+            AppendRecord( baza, { ii, nrd, dt, nr, ni, naz, adr, n22, n7, n0, nzw, v22, v7, n, b })
+         else
+            AppendRecord( baza, { ,,,,,,, n22, n7, n0, nzw, v22, v7, n, b }, 1 )
+         endif
+
+      endif   && ok ...
+      endif  && Sprawdz_ko ...
+   endif    && Data ...
+
+   DBSkip()
+
+enddo
+
+ON( baza )
+wy := 2
+
+******************************************************************************
+* Nr 95 - import danych z systemu "HANDEL"
+
+procedure ImportHandel( a )
+
+local rr, aa, bb, cc, dd, ee, ff, gg, fo, ha, ka, tt, n1, n2, impre
+
+ee := Odetnij( @a )    && baza odbiorcow
+dd := Odetnij( @a )    && baza dokumentow
+if ee == 'DOSTAWCY'
+   wn1 := Odetnij( @a )   && VAT # 0
+   ma1 := Odetnij( @a )
+   wn2 := Odetnij( @a )
+   ma2 := Odetnij( @a )
+   wn3 := Odetnij( @a )
+   ma3 := Odetnij( @a )
+   wn4 := Odetnij( @a )
+   ma4 := Odetnij( @a )
+   wn5 := Odetnij( @a )   && VAT = 0
+   ma5 := Odetnij( @a )
+   wn6 := Odetnij( @a )
+   ma6 := Odetnij( @a )
+   fo := Odetnij( @a )    && nazwa formularza
+   ha := Odetnij( @a )    && has’o dla formularza
+else
+   aa := Odetnij( @a )    && WN brutto
+   bb := Odetnij( @a )    && MA netto
+   cc := Odetnij( @a )    && MA VAT
+   ff := Odetnij( @a )    && WN Raport kasowy
+   gg := Odetnij( @a )    && MA ----- " -----
+   fo := Odetnij( @a )    && nazwa formularza
+   ha := Odetnij( @a )    && has’o dla formularza
+endif
+
+impre := 0
+private nn := 1        && numer pocz†tkowy raportu kasowego
+
+Select( 'BABA' )
+
+if !NewSysDopisz( fo + ',' + ha ); return; endif
+
+rr := BABA->( RecNo())
+
+Czek( 1 )
+ON( ee,, a )
+ON( dd,, a )
+DBSeek( DtoS( data_od ), .t. )
+*tt := DATA
+while DATASP <= data_do .and. !Eof()
+
+      ( ee )->( DBSeek(( dd )->PLATNIK ))
+
+*      if DATA # tt   && zmiana daty
+*         tt := DATA
+*         nn ++       && inkrement numeru raportu kasowego
+*      endif
+
+      n2 := if( Empty( NUMER2 ), NUMER, NUMER2 )   && ostatni numer
+      if n1 = NIL; n1 := n2; endif                 && pierwszy numer
+
+if ee == 'DOSTAWCY'
+
+   if PODATEK # 0
+
+do case
+
+   case VAT_22 # 0
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_22 + VAT_22, "300-03", "201-01",;
+      if( Upper( VATOWSKA ) == ' ', 'FV', 'RU' ) + ' ' + AllTrim( n2 ),;
+      ( ee )->SKROT }, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_22 + VAT_22, "", "300-03" }, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, VAT_22, "220-05", ""}, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_22, "330-03", "" }, 1 )
+
+   case VAT_7 # 0
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_7 + VAT_7, "300-01", "201-01",;
+      if( Upper( VATOWSKA ) == ' ', 'FV', 'RU' ) + ' ' + AllTrim( n2 ),;
+      ( ee )->SKROT }, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_7 + VAT_7, "", "300-01" }, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, VAT_7, "220-05", ""}, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_7, "330-01", "" }, 1 )
+
+if NETTO_ZW # 0
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_ZW, wn5, ma5,;
+      if( Upper( VATOWSKA ) == ' ', 'FV', 'RU' ) + ' ' + AllTrim( n2 ),;
+      ( ee )->SKROT }, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, NETTO_ZW, wn6, ma6 }, 1 )
+endif
+
+endcase
+
+   else
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, WARTOSC, wn5, ma5,;
+      if( Upper( VATOWSKA ) == ' ', 'FV', 'RU' ) + ' ' + AllTrim( n2 ),;
+      ( ee )->SKROT }, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, WARTOSC, wn6, ma6 }, 1 )
+
+   endif
+else
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, WARTOSC, aa, '',;
+      if( Upper( VATOWSKA ) == 'T', 'FV', 'RU' ) + ' ' +;
+      AllTrim( n2 ),;
+      ( ee )->SKROT }, 1 )
+
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      AppendRecord( 'BABA', { ,,,,, WARTOSC - PODATEK, '', bb }, 1 )
+
+      if PODATEK # 0
+      impre ++
+         KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+         AppendRecord( 'BABA', { ,,,,, PODATEK, '', cc }, 1 )
+      endif
+endif
+      DBSkip()
+enddo
+
+if ee # 'DOSTAWCY' .and. dd == 'FAKTURY'
+
+ON( ee,, a )          && odbiorcy
+ON( dd, 2, a )        && faktury
+
+n2 := nn
+nn := a + '\wplatym.ntx'
+if File( nn )
+   run del &nn
+endif
+nn := n2 - 1
+tt := data_od
+
+Czek( 0 )
+ON( 'WPLATYF', 2, a )   && wp’aty w/g daty
+Czek( 1 )
+while !Eof()
+
+      if DATA >= data_od .and.;
+         DATA <= data_do              && .and.;
+                                      &&       ( NUMER < n1 .or. NUMER > n2 )
+         if DATA # tt   && zmiana daty
+            tt := DATA
+            nn ++       && inkrement numeru raportu kasowego
+         endif
+
+         ( dd )->( DBSeek( WPLATYF->NUMER ))
+         ( ee )->( DBSeek(( dd )->PLATNIK ))
+
+         Select( dd )
+         n2 := if( Empty( NUMER2 ), NUMER, NUMER2 )
+
+   if WPLATYF->KWOTA # 0
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      if WPLATYF->KWOTA > 0
+         AppendRecord( 'BABA', { ,,,,, WPLATYF->KWOTA, ff, gg, 'RK ' +;
+                        AllTrim( Str( nn )),;
+                        AllTrim(( ee )->SKROT ) + ' ' +;
+                        if( Upper( VATOWSKA ) == 'T', 'FV', 'RU' ) + ' ' +;
+                        AllTrim( n2 )}, 1 )
+      else
+         AppendRecord( 'BABA', { ,,,,, -WPLATYF->KWOTA, gg, ff, 'RK ' +;
+                        AllTrim( Str( nn )),;
+                        AllTrim(( ee )->SKROT ) + ' ' +;
+                        if( Upper( VATOWSKA ) == 'T', 'FV', 'RU' ) + ' ' +;
+                        AllTrim( n2  )}, 1 )
+      endif
+   endif
+
+         Select( 'WPLATYF' )
+
+      endif
+      skip
+enddo
+endif
+
+if ee # 'DOSTAWCY' .and. dd == 'FKOREKTY'
+
+ON( ee,, a )          && odbiorcy
+ON( dd, 2, a )        && faktury
+
+n2 := nn
+nn := a + '\wplatykm.ntx'
+if File( nn )
+   run del &nn
+endif
+nn := n2 - 1
+tt := data_od
+
+Czek( 0 )
+ON( 'WPLATYKF', 2, a )   && wp’aty w/g daty
+Czek( 1 )
+while !Eof()
+
+      if DATA >= data_od .and.;
+         DATA <= data_do              && .and.;
+                                      &&       ( NUMER < n1 .or. NUMER > n2 )
+         if DATA # tt   && zmiana daty
+            tt := DATA
+            nn ++       && inkrement numeru raportu kasowego
+         endif
+
+         ( dd )->( DBSeek( WPLATYKF->NUMER ))
+         ( ee )->( DBSeek(( dd )->PLATNIK ))
+
+         Select( dd )
+         n2 := if( Empty( NUMER2 ), NUMER, NUMER2 )
+
+   if WPLATYKF->KWOTA # 0
+      impre ++
+      KopiujRec( 'BABA', 'BABA' ); BABA->PZ ++
+      if WPLATYKF->KWOTA > 0
+         AppendRecord( 'BABA', { ,,,,, WPLATYKF->KWOTA, ff, gg, 'RK ' +;
+                        AllTrim( Str( nn )),;
+                        AllTrim(( ee )->SKROT ) + ' ' +;
+                        if( Upper( VATOWSKA ) == 'T', 'FV', 'RU' ) + ' ' +;
+                        AllTrim( n2 )}, 1 )
+      else
+         AppendRecord( 'BABA', { ,,,,, -WPLATYKF->KWOTA, gg, ff, 'RK ' +;
+                        AllTrim( Str( nn )),;
+                        AllTrim(( ee )->SKROT ) + ' ' +;
+                        if( Upper( VATOWSKA ) == 'T', 'FV', 'RU' ) + ' ' +;
+                        AllTrim( n2  )}, 1 )
+      endif
+   endif
+
+         Select( 'WPLATYKF' )
+
+      endif
+      skip
+enddo
+endif
+
+Select( 'BABA' )
+DBGoTo( rr )
+BDelete()
+go top
+Tone( ton2, 1 )
+wy := 2
+
+Czek( 0 )
+
+@ 0, 0 clear to 0, mc
+@ 0, 0 say PadR( AllS( impre ) + ' powsta’ych pozycji', mc )
+
+******************************************************************************
+
+procedure DokImport()
+
+local x, y, z, k := 'C:\piatek13'
+
+if Get_U( 10, 10, 'Podaj katalog importowanych danych:', '@KS30', PadR( k, 50 )) = NIL
+   return
+endif
+
+k := AllTrim( k ) + '\'
+
+ON( 'DOKTYPY')
+
+if Alarm( 'Kontrahenci?', tk ) = 1
+
+ON( 'FIRMY' ); DBZap('')
+
+y := 'stat2'
+use ( k + y ) new
+        FIRMY->( DBAppend())
+        FIRMY->ID_F:=0
+        FIRMY->TYP := 'P'
+        FIRMY->INDEKS:='PITEK 13'
+        FIRMY->NAZWA1:=L1_NAGL
+        FIRMY->NAZWA2:=L2_NAGL
+        FIRMY->NAZWA3:=L3_NAGL
+        FIRMY->KOD:=KOD_P
+        FIRMY->MIASTO:=MIASTO
+        FIRMY->ADRES:=ADRES
+*        FIRMY->TELEFON:=TELEFON+if(!Empty(FAX),' fax:'+FAX,'')
+        FIRMY->OSOBA:=OSOBA_WYST
+        FIRMY->NIP:=NIP
+        FIRMY->REGON:=REGON+if(!Empty(PESEL),', PESEL:'+PESEL,'')
+        FIRMY->BANK:=AllTrim(BANK)+' '+AllTrim(BANK_CD)
+        FIRMY->RACH:=AllTrim(NR_RACH)+AllTrim(NR_RACH_CD)
+*        FIRMY->NUMER:=0
+*        FIRMY->KONTO:=''
+        FIRMY->UWAGI1:=TEKST1
+        FIRMY->UWAGI2:=TEKST2
+        FIRMY->UWAGI3:=TEKST3
+Zwolnij( y )
+
+y := 'bankadr'
+use ( k + y ) new
+while !Eof()
+        FIRMY->( DBAppend())
+        FIRMY->ID_F:=ID
+        FIRMY->TYP := 'N'
+        FIRMY->INDEKS:=SYMBOL
+        FIRMY->NAZWA1:=NAZWA
+        FIRMY->NAZWA2:=NAZWA_CD
+*        FIRMY->NAZWA3:=''
+        FIRMY->KOD:=KOD_P
+        FIRMY->MIASTO:=MIASTO
+        FIRMY->ADRES:=ADRES
+        FIRMY->TELEFON:=TELEFON+if(!Empty(FAX),' fax:'+FAX,'')
+        FIRMY->OSOBA:=PODP_ODB
+        FIRMY->NIP:=NIP
+        FIRMY->REGON:=REGON+if(!Empty(PESEL),', PESEL:'+PESEL,'')
+        FIRMY->BANK:=AllTrim(BANK)+' '+AllTrim(BANK_CD)
+        FIRMY->RACH:=AllTrim(NR_RACH)+AllTrim(NR_RACH_CD)
+*        FIRMY->NUMER:=0
+*        FIRMY->KONTO:=''
+        FIRMY->UWAGI1:=UWAGI
+        FIRMY->UWAGI2:=UWAGI_CD
+        FIRMY->UWAGI3:=UWAGI_CD2
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+Zwolnij( y )
+
+endif
+
+if Alarm( 'Towary?', tk ) = 1
+
+ON( 'TOWARY', 2); DBZap('')
+y := 'mag'
+use ( k + y ) new
+while !Eof()
+   TOWARY->( DBAppend())
+   TOWARY->ID:=IND
+   TOWARY->INDEKS:=SYMBOL
+   TOWARY->NAZWA:=NAZWA
+   TOWARY->CENA_Z:=0
+   TOWARY->CENA_S:=CENA1
+   TOWARY->CENA_S2:=CENA2
+   TOWARY->CENA_S3:=CENA3
+   TOWARY->JM:=JM
+   TOWARY->SWW:=SWW
+   TOWARY->VAT:=if(IsDigit(AllTrim(PV)),Val(PV),-1)
+   TOWARY->STAN_MIN:=ZAPAS_MIN
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+Zwolnij( y )
+
+y := 'usl'
+use ( k + y ) new
+while !Eof()
+   TOWARY->( DBAppend())
+   TOWARY->ID:= TOWARY->( GetLast( 1, 1 ) + 1 )
+   TOWARY->INDEKS:=SYMBOL
+   TOWARY->NAZWA:=NAZWA
+   TOWARY->CENA_Z:=0
+   TOWARY->CENA_S:=CENA1
+   TOWARY->CENA_S2:=CENA2
+   TOWARY->CENA_S3:=CENA3
+   TOWARY->JM:=JM
+   TOWARY->SWW:=SWW
+   TOWARY->VAT:=if(IsDigit(AllTrim(PV)),Val(PV),-1)
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+Zwolnij( y )
+
+endif
+
+if Alarm( 'Dokumenty?', tk ) = 1
+
+ON( 'TOWARY' )
+ON( 'FIRMY' )
+ON( 'SPEC' ); DBZap('')
+ON( 'DOKUM' ); DBZap('')
+for i := 96 to 99
+x := 'faktv'+AllS(i)
+y := 'find_v'+AllS(i)
+if File( k + y + '.dbf') .and.;
+   File( k + x + '.dbf')
+use ( k + x ) new
+index on NR_FAKT to buf.ntx
+use ( k + y ) new
+while !Eof()
+      DOKUM->( DBAppend())
+      DOKUM->ID := DOKUM->( GetLast( 1, 1 ) + 1 )
+      DOKUM->BLOKADA := "O"
+      DOKUM->TYP := if( SYM = 90, 'FVK', if( SYM = 10, 'FV', 'RU' ))
+      DOKUM->INDEKS := NR_FAKT
+*if NRMG # 0; DOKUM->MAGAZYN := NRMG; endif
+if DOKTYPY->( DBSeek( DOKUM->TYP )); DOKTYPY->NUMER := Val( DOKUM->INDEKS ) + 1; endif
+      DOKUM->NABYWCA := ID
+
+if !FIRMY->( DBSeek( DOKUM->NABYWCA ))
+   FIRMY->( DBAppend())
+   FIRMY->ID_F := DOKUM->NABYWCA
+   FIRMY->TYP := 'N'
+   FIRMY->NIP := NIP
+   FIRMY->NAZWA1 := NAZWA
+   FIRMY->INDEKS := NAZWA
+   DokADRES( ADRES )
+endif
+
+      DOKUM->INDEKS_F := FIRMY->INDEKS
+      DOKUM->TYP_F    := FIRMY->TYP
+      DOKUM->NAZWA1   := FIRMY->NAZWA1
+      DOKUM->NAZWA2   := FIRMY->NAZWA2
+      DOKUM->NAZWA3   := FIRMY->NAZWA3
+
+      DOKUM->KOD   := FIRMY->KOD
+      DOKUM->MIASTO:= FIRMY->MIASTO
+      DOKUM->ADRES := FIRMY->ADRES
+      DOKUM->NIP   := FIRMY->NIP
+
+      DOKUM->DATAW := DATA_W
+      DOKUM->DATAS := DATA_S
+      DOKUM->DATAO := DATA_FV
+      DOKUM->DATAT := TERM_PL
+      DOKUM->SPOSOB := FORMA_PL
+      DOKUM->NUMERFD := NR_FAKTV
+      DOKUM->UWAGI := AllTrim(UWAGI1)+' '+AllTrim(UWAGI2)
+
+      DOKUM->WARTOSC := WART_Z_VAT
+      DOKUM->WPLACONO:= ZAPLACONO
+      DOKUM->NETTO22 := WARTOSC_1
+      DOKUM->NETTO7  := WARTOSC_2
+      DOKUM->NETTO0  := WARTOSC_0+WARTOSC_K
+      DOKUM->NETTOZW := WARTOSC_ZW
+      DOKUM->VAT22   := VAT_1
+      DOKUM->VAT7    := VAT_2
+
+( x )->( DBSeek(( y )->NR_FAKT ))
+while ( x )->NR_FAKT == ( y )->NR_FAKT .and. ( x )->( !Eof())
+      SPEC->( DBAppend())
+      SPEC->ID_D := DOKUM->ID
+      SPEC->ID_T := ( x )->IND
+      SPEC->CENA := ( x )->CENA
+      SPEC->ILOSC := ( x )->ILOSC
+      SPEC->RABAT := Val(( x )->UPUST )
+      SPEC->CENABEZR := ( x )->CENA
+      if TOWARY->( !DBSeek(( x )->IND ))
+         TOWARY->( DBAppend())
+         TOWARY->ID := ( x )->IND
+         TOWARY->INDEKS := ( x )->SYMBOL
+         TOWARY->NAZWA := ( x )->NAZWA
+         TOWARY->CENA_S := ( x )->CENA
+         TOWARY->JM := ( x )->JM
+         TOWARY->VAT := Val(( x )->PV )
+         TOWARY->SWW := ( x )->SWW
+      endif
+      ( x )->( DBSkip())
+enddo
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+Zwolnij( x )
+Zwolnij( y )
+endif
+next
+
+for i := 96 to 99
+x := 'wz'+AllS(i)
+y := 'wzin'+AllS(i)
+if File( k + y + '.dbf') .and.;
+   File( k + x + '.dbf')
+use ( k + x ) new
+index on NR_DOK to buf.ntx
+use ( k + y ) new
+while !Eof()
+      DOKUM->( DBAppend())
+      DOKUM->ID := DOKUM->( GetLast( 1, 1 ) + 1 )
+      DOKUM->BLOKADA := "O"
+      DOKUM->TYP := "WZ"
+      DOKUM->INDEKS := NR_DOK
+*if NRMG # 0; DOKUM->MAGAZYN := NRMG; endif
+if DOKTYPY->( DBSeek( DOKUM->TYP )); DOKTYPY->NUMER := Val( DOKUM->INDEKS ) + 1; endif
+      DOKUM->NABYWCA := ID
+
+if !FIRMY->( DBSeek( DOKUM->NABYWCA ))
+   FIRMY->( DBAppend())
+   FIRMY->ID_F := DOKUM->NABYWCA
+   FIRMY->TYP := 'N'
+   FIRMY->NAZWA1 := NAZWA
+   FIRMY->INDEKS := NAZWA
+   DokADRES( ADRES )
+endif
+
+      DOKUM->INDEKS_F := FIRMY->INDEKS
+      DOKUM->TYP_F    := FIRMY->TYP
+      DOKUM->NAZWA1   := FIRMY->NAZWA1
+      DOKUM->NAZWA2   := FIRMY->NAZWA2
+      DOKUM->NAZWA3   := FIRMY->NAZWA3
+
+      DOKUM->KOD   := FIRMY->KOD
+      DOKUM->MIASTO:= FIRMY->MIASTO
+      DOKUM->ADRES := FIRMY->ADRES
+      DOKUM->NIP   := FIRMY->NIP
+
+      DOKUM->DATAW := DATA_W
+      DOKUM->DATAS := DATA_W
+      DOKUM->UWAGI := UWAGI
+
+      DOKUM->WARTOSC := WARTOSC
+
+( x )->( DBSeek(( y )->NR_DOK ))
+while ( x )->NR_DOK == ( y )->NR_DOK .and. ( x )->( !Eof())
+      SPEC->( DBAppend())
+      SPEC->ID_D := DOKUM->ID
+      SPEC->ID_T := ( x )->IND
+      SPEC->CENA := ( x )->CENA
+      SPEC->ILOSC := ( x )->ILOSC
+      SPEC->RABAT := Val(( x )->UPUST )
+      SPEC->CENABEZR := ( x )->CENA
+      if TOWARY->( !DBSeek(( x )->IND ))
+         TOWARY->( DBAppend())
+         TOWARY->ID := ( x )->IND
+         TOWARY->INDEKS := ( x )->SYMBOL
+         TOWARY->NAZWA := ( x )->NAZWA
+         TOWARY->CENA_S := ( x )->CENA
+         TOWARY->JM := ( x )->JM
+         TOWARY->VAT := Val(( x )->PV )
+      endif
+      ( x )->( DBSkip())
+enddo
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+Zwolnij( x )
+Zwolnij( y )
+endif
+next
+
+for i := 96 to 99
+x := 'zak'+AllS(i)
+y := 'zakin'+AllS(i)
+if File( k + y + '.dbf') .and.;
+   File( k + x + '.dbf')
+use ( k + x ) new
+index on NR_DOK to buf.ntx
+use ( k + y ) new
+while !Eof()
+      DOKUM->( DBAppend())
+      DOKUM->ID := DOKUM->( GetLast( 1, 1 ) + 1 )
+      DOKUM->BLOKADA := "O"
+      DOKUM->TYP := "PZ"
+      DOKUM->INDEKS := NR_DOK
+*if NRMG # 0; DOKUM->MAGAZYN := NRMG; endif
+if DOKTYPY->( DBSeek( DOKUM->TYP )); DOKTYPY->NUMER := Val( DOKUM->INDEKS ) + 1; endif
+      DOKUM->NABYWCA := ID
+
+if !FIRMY->( DBSeek( DOKUM->NABYWCA ))
+   FIRMY->( DBAppend())
+   FIRMY->ID_F := DOKUM->NABYWCA
+   FIRMY->TYP := 'N'
+   FIRMY->NIP := NIP
+   FIRMY->NAZWA1 := NAZWA
+   FIRMY->INDEKS := NAZWA
+   DokADRES( ADRES )
+endif
+
+      DOKUM->INDEKS_F := FIRMY->INDEKS
+      DOKUM->TYP_F    := FIRMY->TYP
+      DOKUM->NAZWA1   := FIRMY->NAZWA1
+      DOKUM->NAZWA2   := FIRMY->NAZWA2
+      DOKUM->NAZWA3   := FIRMY->NAZWA3
+
+      DOKUM->KOD   := FIRMY->KOD
+      DOKUM->MIASTO:= FIRMY->MIASTO
+      DOKUM->ADRES := FIRMY->ADRES
+      DOKUM->NIP   := FIRMY->NIP
+
+      DOKUM->DATAW := DATA_W
+      DOKUM->DATAS := DATA_W
+      DOKUM->DATAO := DATA_O
+      DOKUM->UWAGI := UWAGI
+
+      DOKUM->WARTOSC := WARTOSC
+      DOKUM->WPLACONO:= ZAPLACONO
+
+( x )->( DBSeek(( y )->NR_DOK ))
+while ( x )->NR_DOK == ( y )->NR_DOK .and. ( x )->( !Eof())
+      SPEC->( DBAppend())
+      SPEC->ID_D := DOKUM->ID
+      SPEC->ID_T := ( x )->IND
+      SPEC->CENA := ( x )->CENA
+      SPEC->ILOSC := ( x )->ILOSC
+*      SPEC->RABAT := Val(( x )->UPUST )
+      SPEC->CENABEZR := ( x )->CENA
+      if TOWARY->( !DBSeek(( x )->IND ))
+         TOWARY->( DBAppend())
+         TOWARY->ID := ( x )->IND
+         TOWARY->INDEKS := ( x )->SYMBOL
+         TOWARY->NAZWA := ( x )->NAZWA
+         TOWARY->CENA_S := ( x )->CENA
+         TOWARY->SWW := ( x )->SWW
+         TOWARY->JM := ( x )->JM
+         TOWARY->VAT := Val(( x )->PV )
+      endif
+      ( x )->( DBSkip())
+enddo
+      skip
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+Zwolnij( x )
+Zwolnij( y )
+endif
+next
+
+if Alarm( 'Dokumenty: IP, IR ?', tk ) = 1
+
+ON( 'DOKUM', 5 )     && INDEKS
+y := 'obroty'
+if File( k + y + '.dbf')
+use ( k + y ) new
+index on NR_DOK to buf.ntx
+while !Eof()
+
+      if DOKUM->( DBSeek( AllTrim(( y )->NR_DOK ))); skip ; loop; endif
+
+z := if( ILOSC < 0, "IR ", "IP " )
+
+      DOKUM->( DBAppend())
+      DOKUM->ID := DOKUM->( GetLast( 1, 1 ) + 1 )
+      DOKUM->BLOKADA := "O"
+      DOKUM->TYP := z
+      DOKUM->INDEKS := NR_DOK
+*if NRMG # 0; DOKUM->MAGAZYN := NRMG; endif
+if DOKTYPY->( DBSeek( DOKUM->TYP )); DOKTYPY->NUMER := Val( DOKUM->INDEKS ) + 1; endif
+      DOKUM->TYP_F := "P"
+      DOKUM->DATAW := DATA
+      DOKUM->DATAS := DATA
+
+x := ( y )->NR_DOK
+while x == ( y )->NR_DOK .and.;
+      z == if( ILOSC < 0, "IR ", "IP " ) .and.;
+      ( y )->( !Eof())
+
+      SPEC->( DBAppend())
+      SPEC->ID_D := DOKUM->ID
+      SPEC->ID_T := ( y )->IND
+      SPEC->ILOSC := if( DOKUM->TYP == "IP ", ( y )->ILOSC, -( y )->ILOSC )
+      if TOWARY->( !DBSeek(( y )->IND ))
+         TOWARY->( DBAppend())
+         TOWARY->ID := ( y )->IND
+         TOWARY->INDEKS := ( y )->SYMBOL
+         TOWARY->NAZWA := ( y )->NAZWA
+         TOWARY->JM := ( y )->JM
+      endif
+      ( y )->( DBSkip())
+enddo
+
+      @ 0, 0 say recno()
+enddo
+@ 0, 0 say Space( 30 )
+Zwolnij( y )
+endif
+endif
+
+y := 'mag'
+if File( k + y + '.dbf')
+   use ( k + y ) new
+      DOKUM->( DBAppend())
+      DOKUM->ID := DOKUM->( GetLast( 1, 1 ) + 1 )
+      DOKUM->BLOKADA := "O"
+      DOKUM->TYP := "INW"
+      DOKUM->INDEKS := "1/99"
+*if NRMG # 0; DOKUM->MAGAZYN := NRMG; endif
+if DOKTYPY->( DBSeek( DOKUM->TYP )); DOKTYPY->NUMER := Val( DOKUM->INDEKS ) + 1; endif
+      DOKUM->TYP_F := "P"
+      DOKUM->DATAW := Date()
+      DOKUM->DATAS := Date()
+   while ( y )->( !Eof())
+      SPEC->( DBAppend())
+      SPEC->ID_D := DOKUM->ID
+      SPEC->ID_T := ( y )->IND
+      SPEC->ILOSC := ZAPAS
+      ( y )->( DBSkip())
+   enddo
+   @ 0, 0 say Space( 30 )
+   Zwolnij( y )
+endif
+
+endif
+
+Alarm( 'Import zako¤czony.')
+
+DokCloseAll()
+
+******************************************************************************

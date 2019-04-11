@@ -1,0 +1,12 @@
+ Aadd(pola,{'LP','N',5,0})|
+ Aadd(pola,{'NAZWA','C',50,0})|
+ Aadd(pola,{'KAT_WZOROW','C',50,0})|
+ Aadd(pola,{'HASLO','C',50,0})|
+ Aadd(pola,{'P1','C',50,0})|
+ Aadd(pola,{'P2','C',50,0})|
+ Aadd(pola,{'DATA_O','D',8,0})|
+ Aadd(pola,{'CZAS_O','C',8,0})|
+ Aadd(pola,{'STAN_O','C',2,0})|
+ Aadd(pola,{'DATA_P','D',8,0})|
+ Aadd(indeksy,'t_osoby')|
+ Aadd(klucze,'LP')|

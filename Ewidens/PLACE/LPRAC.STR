@@ -1,0 +1,37 @@
+ Aadd(pola,{'ID        ','N', 10,0})|
+ Aadd(pola,{'NAZWA     ','C', 50,0})|
+ Aadd(pola,{'DRUGIEIMIE','C', 20,0})|
+ Aadd(pola,{'OJCAIMIE'  ,'C', 20,0})|
+ Aadd(pola,{'MATKIIMIE' ,'C', 20,0})|
+ Aadd(pola,{'DATAURODZ' ,'D',  8,0})|
+ Aadd(pola,{'MIEJSCEUR' ,'C', 20,0})|
+ Aadd(pola,{'PESEL'     ,'C', 11,0})|
+ Aadd(pola,{'NIP'       ,'C', 13,0})|
+ Aadd(pola,{'MIEJSCEZAM','C', 20,0})|
+ Aadd(pola,{'ULICA'     ,'C', 20,0})|
+ Aadd(pola,{'ULICANR'   ,'C',  5,0})|
+ Aadd(pola,{'ULICAM'    ,'C',  5,0})|
+ Aadd(pola,{'KODPOCZT'  ,'C',  6,0})|
+ Aadd(pola,{'MIASTO'    ,'C', 20,0})|
+ Aadd(pola,{'ZATRUD_OD' ,'D',  8,0})|
+ Aadd(pola,{'ZATRUD_DO' ,'D',  8,0})|
+ Aadd(pola,{'ODKOUZPRZY','N', 10,2})|
+ Aadd(pola,{'ODKWWOODPO','N', 10,2})|
+ Aadd(pola,{'DOROOBPODO','C',  1,0})|
+ Aadd(pola,{'US_NAZWA'  ,'C', 20,0})|
+ Aadd(pola,{'US_ULICA'  ,'C', 20,0})|
+ Aadd(pola,{'US_ULICANR','C',  5,0})|
+ Aadd(pola,{'US_KODPOCZ','C',  6,0})|
+ Aadd(pola,{'US_MIASTO' ,'C', 20,0})|
+ Aadd(pola,{'US_BANK'   ,'C', 50,0})|
+ Aadd(pola,{'US_KONTO'  ,'C', 50,0})|
+ Aadd(pola,{'TYP'       ,'N', 10,0})|
+ Aadd(pola,{'LISTYP'    ,'N', 10,0})|
+ Aadd(pola,{'PRZELEWY1' ,'N', 15,2})|
+ Aadd(pola,{'PRZELEWY2' ,'N', 15,2})|
+ Aadd(pola,{'PRZELEWY3' ,'N', 15,2})|
+ Aadd(pola,{'PRZELEWY4' ,'N', 15,2})|
+ Aadd(indeksy,'lprac1')|
+ Aadd(indeksy,'lprac2')|
+ Aadd(klucze,'ID')|
+ Aadd(klucze,'Upper(Left(NAZWA,30))')|

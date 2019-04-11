@@ -1,0 +1,1 @@
+c:\arrakis\dbu.exe c:\arrakis\retsat\spec.dbf

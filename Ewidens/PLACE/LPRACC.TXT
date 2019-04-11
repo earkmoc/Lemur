@@ -1,0 +1,19 @@
+Mark('LPRACZ',ID,'*')|ID|NAZWA|Max(PROCENT2,PROCENT3)|Max(OD_DNIA2,OD_DNIA3)|PROCENT2|OD_DNIA2|PROCENT3|OD_DNIA3|
+Z|ID|Nazwisko i imi‘|P.d.|Od dnia|P.d. 1|Od dnia 1|P.d. 2|Od dnia 2|
+X|999|@S46|@Z 999%||@Z 999%||@Z 999%||
+5|1|22|78|3||||ON('LPRACZ',,,,.t.)|ON('LPRACP')|ON('LPRACPP')|ON('LPRAZP')|ON('LPRAZPP')|
+Pracownicy - karty wynagrodze¤
+
+5|Esc|Escape|
+|D|Dopisz|NewSysDopisz('LPRAC,Nowa pozycja',1,,'(baza)->ID:=GetLast(1,1)+1')|
+|U|Usu¤|Kasuj('usuwasz t† pozycj‘')|
+|S|Szukaj|SysMySeek('2,1,3,2',nr)|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|Z|Znak|Mark('LPRACZ',ID)|
+1|W|Wydruki|51||e|1|Wybierz wariant:|
+|A|Aktual|LPRACAktualizacja('LPRACZ','karta')|
+|K|Karta|SubBase('LPRACP,,ROBOCZY,2,Str((baza)->ID),(baza)->ID==ID_LPRAC')|
+|F|Form|NewSysForm('LPRAC,Dane pozycji')|
+|L|Listy=Enter|SubBase('LPLACP,lplacp2.txt,ROBOCZY,3,Str((baza)->ID),(baza)->ID==ID_PRAC')|
+|Enter||SubBase('LPLACP,lplacp2.txt,ROBOCZY,3,Str((baza)->ID),(baza)->ID==ID_PRAC')|
+|Q||PracOdtworz()|

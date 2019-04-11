@@ -1,0 +1,2882 @@
+******************************************************************************
+*****************             HANDEL     ver 5.5            ******************
+******************************************************************************
+#include 'box.ch'
+#include 'inkey.ch'
+#include 'directry.ch'
+ 
+* Arkadiusz Moch 
+* ver 1.0 ( 17 VII 1992 r. )
+* ver 2.0 (  1 IX  1992 r. )    - gruntowna przebudowa systemu i struktur baz
+* ver 3.0 ( 26 XI  1992 r. )    - zmiana koncepcji wymuszona ßyciem :
+*                                 przebudowa, zmiana struktur, uelastycznienie,
+*                                 nowe pomysíy, korekcja " bíëd¢w znoûnych "
+* ver 4.0 ( 17  V  1993 r. )    - numery faktur jako znaki i historie wpíat 
+*         ( 28  V  1993 r. )    - doíoßenie nowego magazynu ( export )
+*         ( 29  V  1993 r. )    - nowa technika programowania i nowe ceny
+*         ( 21 VI  1993 r. )    - nowy spos¢b tworzenia wydruk¢w z wzorc¢w
+*         ( 23 VI  1993 r. )    - wersja Handlu dla Video "MIRADU"
+* ver 5.0 ( 3 VIII 1993 r. )    - wersja Handlu dla Hurtowni "R¢wna"
+*         ( 31 XII 1993 r. )    - wersja dla "ANEXIM'u"
+*         (  2 I   1994 r. )    - nowa wersja dla "MERX'a"
+* ver 5.5 ( 10 VII 1994 r. )    - przejûcie na programowanie zewnëtrzne
+
+procedure main
+
+parameters h, catw, cats, hLanguage, hPolski, hGerman
+
+public data_sys          && data systemowa w momencie wejûcia do FK
+data_sys := Datee()      && data systemowa w momencie wejûcia do FK
+
+private rozlacz := .f.
+
+*public wysylka := (right(CurDir(),1)=='2' .or. right(CurDir(),1)=='3')
+public wysylka := .t.
+public oknaleznos := .t.
+public SysFunction := {}, cat_oryg := '\' + CurDir()
+
+Aadd( SysFunction, {|a,b,c,d,e| RunMenu( a,, c, d, e )})
+Aadd( SysFunction, { |a| ViewDBF( a )})        && 2
+Aadd( SysFunction, { |a| SysBaz_P( a )})
+Aadd( SysFunction, { |a| ValidWykonaj( a )})   && 4
+Aadd( SysFunction, { ||  won := .t. })
+Aadd( SysFunction, { |a,b| Kasuj( a, b )})     && 6
+Aadd( SysFunction, { |a| SysMySeek( a )})
+Aadd( SysFunction, { |a| SysIndeks( a )})      && 8
+Aadd( SysFunction, { |a| SysForm( a )})
+Aadd( SysFunction, { |a| SysDopisz( a )})      && 10
+Aadd( SysFunction, { |a| UsunForm( a )})
+Aadd( SysFunction, { |a| SubBase( a )})        && 12
+Aadd( SysFunction, { |a| AutoBazFill( a )})
+Aadd( SysFunction, { |a, b| NewSysForm( a,,, b )}) && 14
+Aadd( SysFunction, { |a, b| NewSysDopisz( a,,, b )})
+Aadd( SysFunction, { |a| Init_LPiDATA( a )})   && 16
+Aadd( SysFunction, { |a| .t. })
+Aadd( SysFunction, { |a| SysWydruk( a )})      && 18
+Aadd( SysFunction, { |a| DBZap( a )})
+Aadd( SysFunction, { |a| SysReadWzor( a )})    && 20
+Aadd( SysFunction, { ||  RenForm()})
+Aadd( SysFunction, { |a| KopiaForm( a )})      && 22
+Aadd( SysFunction, { |a, b| NewSysDopisz( a, '',, b )})      && z kopiÜ
+Aadd( SysFunction, { |a| SysMenuFillForm( a )})&& 24
+Aadd( SysFunction, { |a| SysMenuHelpNazwa( a )})
+Aadd( SysFunction, { |a| .t. })                && 26
+Aadd( SysFunction, { |a| .t. })
+Aadd( SysFunction, { |a| .t. })                && 28
+Aadd( SysFunction, { |a| .t. })
+Aadd( SysFunction, { |a| SprawyDopisz( a )})   && 30
+Aadd( SysFunction, { |a,b| Popraw( a, b )})
+Aadd( SysFunction, { |a,b,c| .t. })            && 32
+Aadd( SysFunction, { |a| SysMenuZmiana( a )})
+Aadd( SysFunction, { |a| Init_DBF_Main( a )})  && 34
+Aadd( SysFunction, { |a| Show_Nazwa( a )})
+Aadd( SysFunction, { |a| Odswiez( a )})        && 36
+Aadd( SysFunction, { |a| GetPut( a, 'LP' )})
+Aadd( SysFunction, { |a| Show_Dzien( a )})     && 38
+Aadd( SysFunction, { |a| GetPut( a, 'SYMBOL' )})
+Aadd( SysFunction, { |a| Init_Dokument( a )})  && 40
+Aadd( SysFunction, { |a| ValidSprawdz( a )})
+Aadd( SysFunction, { |a,b| Dodaj_towar( a, b )})    && 42
+Aadd( SysFunction, { |a| Done_Dokument( a )})
+Aadd( SysFunction, { |a| RunProgram( a )})     && 44
+Aadd( SysFunction, { |a| Param_Sys()})
+Aadd( SysFunction, { |a,b| WybierzTowary( a, b )})  && 46
+Aadd( SysFunction, { |a| Znakuj( a )})
+Aadd( SysFunction, { |a| ReadKontrakt( a )})   && 48
+Aadd( SysFunction, { |a| ReadObroty( a )})
+Aadd( SysFunction, { |a| UsunDokument( a )})   && 50
+Aadd( SysFunction, { |a| ObliczStan( a )})
+Aadd( SysFunction, { |a| RozlMagazyn( a )})    && 52
+Aadd( SysFunction, { |a| InitDekret( a )})
+Aadd( SysFunction, { |a| DoneDopisz( a )})     && 54
+Aadd( SysFunction, { |a| WpiszDekrety( a )})
+Aadd( SysFunction, { |a| Set_GET( a )})        && 56
+Aadd( SysFunction, { |a| Set_GETY( a )})
+Aadd( SysFunction, { |a| Init_DBF_Sub( a )})   && 58
+Aadd( SysFunction, { |a| ON( a )})
+Aadd( SysFunction, { |a| OFF( a )})            && 60
+Aadd( SysFunction, { |a| CzyJest( a )})
+Aadd( SysFunction, { |a| ZEST1_Tworz( a )})    && 62
+Aadd( SysFunction, { |a| DBEFiltr( a )})
+Aadd( SysFunction, { |a| SysMenuDopisz( a )})  && 64
+Aadd( SysFunction, { |a| SysMenuUsun( a )})
+Aadd( SysFunction, { |a| Opis( a )})           && 66
+Aadd( SysFunction, { |a| ZEST1W_Tworz( a )})
+Aadd( SysFunction, { |a| Druk( a, 1 )})        && 68
+Aadd( SysFunction, { |a| SprawdzKonta( a )})
+Aadd( SysFunction, { |a| SaldoKonta( a )})     && 70
+Aadd( SysFunction, { |a| KontoDopisz( a )})
+Aadd( SysFunction, { |a| NIL })                && FrykasImport( a )})   && 72
+Aadd( SysFunction, { |a| RunCommand( a )})
+Aadd( SysFunction, { |a| Zaznacz( a )})        && 74
+Aadd( SysFunction, { |a| OperujZnaki( a )})
+Aadd( SysFunction, { |a| NIL })                && Rejestr( a )})        && 76
+Aadd( SysFunction, { |a| ZmianaZnakow( a )})
+Aadd( SysFunction, { |a| ZEST1S_Tworz( a )})   && 78
+Aadd( SysFunction, { |a| ZEST1WB_Tworz( a )})
+Aadd( SysFunction, { |a,b,c| ZEST2_Tworz( a, b, c )})&& 80
+Aadd( SysFunction, { |a,b| ZEST3_Tworz( a, b )})
+Aadd( SysFunction, { |a| Zaznacz_ASO( a )})    && Nr 82
+Aadd( SysFunction, { |a| Zaznacz_ODB( a )})
+Aadd( SysFunction, { |a| Zaznacz_DOS( a )})    && 84
+Aadd( SysFunction, { |a| F1_ODB_WYB( a )})
+Aadd( SysFunction, { |a| Roz_Odb( a )})        && 86
+Aadd( SysFunction, { |a| Pokaz_Logic( a )})
+Aadd( SysFunction, { |a| PopKontrakt( a )})    && 88
+Aadd( SysFunction, { |a| CreateIndex( a )})
+Aadd( SysFunction, { |a| Zaznacz_MAG( a )})    && 90
+Aadd( SysFunction, { |a| ObliczRKM( a )})
+Aadd( SysFunction, { |a,b| SeriaZnakow( a, b )})&& 92
+Aadd( SysFunction, { |a| ChangeHaslo( a )})
+Aadd( SysFunction, { |a| Import( a )})         && 94
+Aadd( SysFunction, { |a| NIL })                    && ImportHandel( a )})
+Aadd( SysFunction, { |a| Opis_Rekordu( a )})   && 96
+Aadd( SysFunction, { |a,b| Wydruk( b, a,,,, 1 )})
+Aadd( SysFunction, { |a| ZmianaDaty( a )})     && 98
+Aadd( SysFunction, { |a| GetValue( a )})
+
+if File( 'init.bat' )
+   run init.bat
+endif
+
+Wypisz_sprawy( h )
+
+Init_System( h )
+Init_SysBazy()
+Init_SysMenu()
+Init_SysForm()
+Switch_INVERS( '' )
+
+@ 0, 0 clear
+CSay( 1, 0, mc, tyt_sys, invers )
+PlikToEkran( 'tytul.txt' )
+Import_Mod( '' )
+Test_Num( '' )
+if !File( cat_wzorow + 'bezramki.txt' ); Test_Mem(); endif
+PlikToEkran( 'tytul.txt' )
+CSay( mr, 0, mc, 'Wciûnij klawisz ENTER ...', jasny )
+Inkey( 0 )
+@ 2, 0 clear
+
+public serio := .t., pirat := .f.
+if !File( cat_wzorow + 'licencja.txt' )
+   if Date() > CtoD( ReadWzor( 'ddl.txt', 7 ))
+      full_dostep := cat_main + '\' + 'max.txt'
+      run del &full_dostep
+      Demo_end( '' )
+   endif
+endif
+
+public audyt := .f.
+LUpDate()         && zeby zlinkowal funkcje
+
+if !FFile( cat_wzorow + 't_osoby.str' )
+   full_dostep := Haslo()
+else
+   full_dostep := .f.
+   ON( 'STANOWIS' )
+   if DBSeek( nr_stacji )
+      Blokuj_R()
+      STANOWIS->DATA_O := Date()
+      STANOWIS->CZAS_O := Time()
+      na_Naglo += ' ( ' + AllTrim( NAZWA ) + ' )'
+      na_na := na_Naglo
+   endif
+   Zwolnij( 'STANOWIS' )
+   Login()
+endif
+
+GoANALIZAK()
+
+while .t.
+      if full_dostep # NIL
+         RunMenu( 0 )
+      endif
+      if FFile( cat_wzorow + 't_osoby.str' )
+         Koniec()
+      else
+         OpuscSys( 2 )
+      endif
+enddo
+
+******************************************************************************
+******************************************************************************
+***************************  SYSTEM  *****************************************
+******************************************************************************
+ 
+
+
+
+******************************************************************************
+
+procedure Init_System( h )
+
+set wrap on                 && zawijanie w menu
+set deleted on              && nie widzimy skasowanych
+set cursor off              && nie widac kursora
+set confirm on              && trzeba potwierdziç wszystko Enter'em
+set epoch to 1930           && wyznaczenie epoki
+set date format to 'dd.mm.yy'
+
+public importIDLP := NIL	 && identyfikator jednej importowanej listy p≥ac
+public ok_dod_bo := .f., ok_kon := .f.   && przetwarzanie analityki
+public buf_kodpas := ''
+public jestiexe  := .t.     && jest i.exe do indeksowania
+
+public procpodat := 0.000   && procent podatku dochodowego w píacach
+public ponapodosu:= 0.00    && suma SumaPoz( 'ponapodoch' )
+public data_listy:= CtoD('')&& domyûlna data listy píac
+
+public MaskaDelta := NIL    && jak Oltina ("192/00472"), to # NIL i np. = 5
+public doknazal := ''       && dokumenty na pole "Zaliczki"
+public doknanal := ''       && dokumenty na pole "Naleßnoûci"
+public NRZLEC := ''	&& przed niebytem
+
+public drukarkaPA := 'C:\ARRAKIS\WYDRUKI\'    && ûcießka do "drukarka.exe"
+public drukarkaST := 'C:\WINDOWS\COMMAND\'    && ûcießka do "start.exe"
+public drukarkaWY := 'C:\ARRAKIS\WYDRUKI\'    && ûcießka do "wydruk.txt"
+
+public haker := .f.         && haker ma wiëcej opcji
+public min_szablon := .t.   && druk tylko do díugoûci tabeli masek
+public Kryteria  := ''
+public KryteriaS := 0
+public SUPERSAVE := .f.
+public SUPERSAVE := .f.
+public LastZnak := ''
+public strony := Space( 80 )
+public stronaABC := 0       && kt¢ra strona listy píac: A, B, C ...
+public polski_druk := .t.
+public prn2file    := .t.
+
+public sieciowo    := .f.     && otwieraç bazy danych w osobnych ROBOCZY?
+public nr_stacji
+
+nr_stacji := GetEnv( 'ARRAKIS' )
+if Empty( nr_stacji )
+   nr_stacji := GetEnv( 'HANDEL' )
+else
+   sieciowo := .t.
+endif
+
+public siec        := !Empty( nr_stacji )
+public serwer      := .f.
+public cat_BAT     := ''
+public cat_main    := '\' + CurDir()
+public dr_main := ''
+
+if !Empty( h )
+   if ':' $ h
+      dr_main := Left( h, 2 )
+      RunCommand( 'run ' + dr_main )
+      h := SubStr( h, 3 )
+   endif
+   RunCommand( 'run cd ' + h )
+endif
+
+public ton2 := 100
+if catw # NIL .and. Right( catw, 1 ) == '?' .and.;
+   cats # NIL .and. Right( cats, 1 ) == '?'
+   hLanguage := if( hLanguage = NIL, 'Jëzyk / language ?', StrTran( hLanguage, '_', ' ' ))
+   hPolski   := if( hPolski   = NIL, 'Polski',             StrTran( hPolski,   '_', ' ' ))
+   hGerman   := if( hGerman   = NIL, 'Deutch',             StrTran( hGerman,   '_', ' ' ))
+   if Alarm( hLanguage, { hPolski, hGerman }) = 1
+      catw := StrTran( catw, '?', '' )
+      cats := StrTran( cats, '?', '' )
+   else
+      catw := StrTran( catw, '?', 'N' )
+      cats := StrTran( cats, '?', 'N' )
+   endif
+endif
+
+public cat_wzorow  := if( catw = NIL .or. Empty( catw ), cat_main + '\WZORY',  catw ) + '\'
+public cat_system  := if( cats = NIL .or. Empty( cats ), cat_main + '\SYSTEM', cats ) + '\'
+public cat_ekranow := cat_wzorow
+public cat_baza    := Left( cat_wzorow, At( 'WZORY', Upper( cat_wzorow )) - 1 )
+public cat_wydr    := cat_baza + 'WYDRUKI'
+
+if siec .and. sieciowo
+   cat_wydr    += nr_stacji
+endif
+
+CatMake( cat_wydr )
+
+cat_wydr += '\'
+cat_main := '\' + CurDir()
+
+public SUPERSAVE := File( cat_wzorow + 'supersav.txt' )
+public rocznik     := SubStr( DtoS( Date()), 3, 2 )
+public prafix      := '/' + rocznik
+public STC, jasny, miga, podkresl, invers
+public n22, n7, n0, nzw, v22, v7, sum_il, sum_ne, sum_va, sum_br, v_systemu := ''
+public data_od, data_do, typ_sys := Space( 8 )
+public konto_sys := PadR( '2*', 18 ), konto_prz := PadR( '*', 18 )
+public konto_pse := Space( 10 ), konto_nip := Space( 13 ), konto_naz := Space( 120 )
+public data1, data2, data3, data4
+
+store Date() to data1, data2, data3, data4, data_od, data_do
+
+public mr := MaxRow() , mc := MaxCol()        && ekran
+public Enter := 'Wciûnij klawisz Enter ...'   && hasla pomocnicze
+public il_poz := 'Pozycji : '
+public tk := { '  TAK  ' , '  NIE  ' }
+public nt := { '  NIE  ' , '  TAK  ' }
+public wy := 'Wyjûcie ...'
+public Ent := { Enter }
+public zl := 'zí'
+public PRI := "@"
+public EOL := Chr( 13 ) + Chr( 10 )
+public EJE := Chr( 12 )
+public ESC := Chr( 27 )
+
+public OpcLastName := ''        && nazwa ostatnio ußytej opcji
+public DBE_Sumy := {}           && tablica sum kolumn
+*public DBE_kolumny := {}       && tablica numer¢w wypeànianych sumami kolumn
+public bl_s_il_poz := { || AllTrim( Str( LastRec() ) ) }    && blok standard
+
+Zanki()
+
+public szy := MemoRead( cat_wzorow + 'szy.txt' )
+public sna := MemoRead( cat_wzorow + 'sna.txt' )
+
+if szy = NIL .or. Empty( szy ); szy := NIL; endif
+if sna = NIL .or. Empty( sna ); sna := NIL; endif
+
+public ton1 := 10         && piski przy Alert'ach i Menu
+public ton2 := Val( MemoRead( cat_wzorow + 'pisk.txt' ))
+public has := ''          && inicjacja dla bezpiecze§stwa hasía dla dubli
+public Memo_col := 71     && iloûç kolumn w polu Memo odbiorc¢w
+public dl_memo := 254     && díugoûç linii pobierana z wzor¢w wydruk¢w
+public DBE_Filtr := '', filtr := ''
+public na_Naglo := Deszyfr( '<<<222ZsÄvw~222<<<222àwÑ2G@B' , 18 )
+
+public wop   := 70          && width of page for 10 CPI
+public wop10 := 70          && width of page for 10 CPI
+public wop12 := 84          && width of page for 12 CPI
+public wop17 := 119         && width of page for 17 CPI
+
+public full_dostep := NIL
+public OddajMoc := .t.
+public seeka := .f.
+public seeka_delay := 20000
+public cena_systemu := ReadWzor( 'cena_sys.txt' )
+
+public TAK_WPLATA, TAK_KPR, TAK_KASA, TAK_KPR1, TAK_KPR2, fast_druk, korekta_netto, ziarko
+public PZ_l1, PZ_l2, WZ_l1, WZ_l2, LO_l1, LO_l2, FA_l1, FA_l2, MM_l1, MM_l2, DW_l1, DW_l2
+public MAG_UWAGA, OPIS_FAK, OPIS_ZAK, OPIS_KASA, PROP_DUBEL, PROP_KOPIA, CZY_KPR_OK
+public WgCenNetto, PODZIAL_OPAKOWAN, kod_opakowan, ne_com, NEW_SYMBOL, TAK_INVERS, edytor, ne_edit := 'N'
+public GUpust := 0, globalbuf, globalbuf1, globalbuf2, globalbuf3, globalbuf4, globalbuf5
+public global_buf3, global_buf4
+public global_tab, global_ta1, global_ta2, global_ta3
+
+Param_Sys()
+
+
+if !FFile( cat_main + '\' + 'max.txt' )
+   Alarm( 'Wprowad¶ dane swojej firmy',;
+        { 'Po zako§czeniu wprowadzania wciûnij Ctrl+W' })
+   SysReadWzor( cat_main + '\' + 'max.txt', 11 )
+endif
+
+public osobne := cat_wzorow + 'osobne.' + nr_stacji
+
+if siec .and. sieciowo
+   osobne := 'ROBOCZY' + nr_stacji
+elseif File( osobne )
+   osobne := MemoRead( osobne )
+   if Empty( osobne )
+      osobne := NIL
+   endif
+else
+   osobne := NIL
+endif
+
+CatMake( 'ROBOCZY' )
+CatMake( 'BUFOR' )
+CatMake( osobne )
+
+#IFDEF DEMO
+   public na_Firma := Deszyfr( 'hvÉÑ{r1uv~ÄÑÖÉrtä{r' , 17 )
+#ELSE
+   if !FFile( cat_main + '\' + 'max2.txt' ) .or.;
+      !FFile( cat_wzorow + 'ddl.txt' )
+      OpuscSys()
+   endif
+   public na_Firma := ReadWzor( cat_main + '\' + 'max.txt', 11 )
+#ENDIF
+
+if Empty( na_Firma ); OpuscSys(); endif
+
+public tyt_sys := ReadWzor( cat_main + '\' + 'max2.txt', 11 )
+
+public TypyKonMAG := "P"    && typy kontrahent¢w traktowanych jak magazyny
+public TypyKonCZ  := "D,M"  && typy kontrahent¢w operujÜcych cenami zakupu
+public TypyKonZmi := .f.    && typy kontrahent¢w zmienne, zaleßne od pola "typ"
+public TypyKonSpr := ""     && typy kontrahent¢w sprawdzanych na Jest(dokument)
+public TypyKonSpi := 0      && iloûç dni od ostatniego dokumentu
+public TypyKonSta := .f.    && sprawdzanie na starcie programu ANALIZAK
+public TypyKonStc := .f.    && sprawdzanie na starcie programu ANALIZAC
+public MZzalezny := .f.     && MZ zaleßny od ustawie§ dla MG
+public NRMG := 0            && Numer magazynu gí¢wnego w kartotece kontrahent¢w
+public NRMP := 0            && Numer magazynu produkcja dla RW
+public DataRW_0 := NIL      && data do ktorej RW => ILOSC = 0
+public ObAuDoWCZ := .f.   && obliczac automatycznie dokument w cenach n. zakupu
+public RozneCenyZ:= .f.     && MZ zaleßny od ustawie§ dla MG
+public MagStanWar:= 1       && 1 - FIFO, 2 - LIFO
+public MagStanMin:= 2       && 1 - First, 2 - Last, 3 - tani, 4 - drogi
+public TowStatusU:= ''      && '' - towar, 'U' - usíuga
+public TowOstMini:= .f.     && ostrzeßenie przed zejûciem ponißej stanu minimum
+public TowOstMinu:= .f.     && ostrzeßenie przed zejûciem ponißej stanu magazyn
+public TowZmiCenW:= .f.     && zmiana cen waßonych
+public TowOstWU  := 100     && ostrzeßenie przed wygaûniëciem umowy z autorem
+public PROP_KOPIA := .f.    && proponowaç kopië wydruku
+public Druk_Nr := 0         && numer wydruku (0=oryginaí, kopia 1, 2, 3, ... )
+public BazyNieZam := ''     && bazy nie zamykane bez przerwy
+public BazyZapDys := .t.    && bazy zapisywaç fizycznie na dysku
+public WydLamany  := .f.    && íamanie wydruk¢w zgodnie z kodami [n]
+public WydDlugosc := 65     && iloûç linii na stronie
+public WydInit    := ''     && co przed pierwszÜ stronÜ
+public WydPost    := ''     && co po kaßdej stronie
+public WydDone    := ''     && co po ostatniej stronie
+public AutoImpNot := .f.    && notowaç wyniki autoimportu
+public TowUstawOU := .f.    && ustawiaç na ostatnio ußywanym
+public TowUstawRE := 1      && rekord towaru ostatnio ußywanego
+public TowUstawCE := 1      && numer cennika
+public TowUstawRA := 0.00   && domyûlny rabat
+public formatdaty := 'dd.mm.yy' && format daty
+public Ana_Daty_B := .f.    && Analizy: daty bießÜce
+public TowPodmag  := .f.    && towary podmagazynu przy wystawianiu dokumentu
+public DokPodmag  := ""     && dokumenty wystawiane ze stanu podmagazynu
+public DokSyaleCZ := ""     && dokumenty wystawiane syntetycznie, ale rozliczane analitycznie w c.z.
+public DokNorOst  := ""     && dokumenty wystawiane normalnie, ale z kol. IO
+public DokTypWyb  := .f.    && wyb¢r typu dokumentu przy wystawianiu (UGBT)
+public DokGeneruj := .f.    && generowanie dokumentu przy zamykaniu
+public Akt_po_dop := .f.    && aktualizacja kontrahent¢w po dopisaniu
+public Akt_po_for := .f.    && aktualizacja kontrahent¢w po formularzu
+public VAT_0_kraj := .t.    && jak VAT=0% to kraj
+public drukarkaON := .f.    && wíÜczone korzystanie z programu "Drukarka.exe"
+public konwertON  := .f.    && wíÜczone konwertowanie znak¢w MAZ -> LAT
+public produkcja  := .f.    && niby Mistral, ale brak konkretnego MG
+public stronyON   := .t.    && wíÜczone pytanie o strony przy wydruku íamanym
+public uprawnienia:= ''
+public uprawn_dzia:= ''
+public numer_o    := 0
+public osoba_upr  := ''
+public poz_dostepu:=-1
+public TestDaty   := 1
+public LPAlarmMin := .t.
+public DokBruNet  := .f.
+
+FillParams()
+
+******************************************************************************
+
+procedure FillParams()
+
+local bb := Alias(), jest, rr, x, ok
+
+if !File( 'PARAMS.DBF' ); return; endif
+
+private buf, buff
+
+jest := Jest_baza( 'PARAMS' )
+
+if jest
+   if Alarm( 'Aktualizowaç paramety programu;wedíug tabeli parametr¢w?', tk ) # 1; return; endif
+   rr := RecNo()
+   go top
+else
+   while .t.
+         use PARAMS new shared
+         if !NetErr(); exit; endif
+         if Alarm( 'Ktoû blokuje parametry systemu !',;
+                 { 'Ponowna pr¢ba', 'Wyjûcie z systemu' }) = 2
+            cls
+            quit
+         endif
+   enddo
+endif
+
+while !Eof()
+      buf := AllTrim( ID )
+      buff := AllTrim( WARTOSC )
+      do case
+         case TYP == 'F'  && nie rusza
+         case TYP == '='; &buf := &buff
+         case TYP == 'D'; &buf := CtoD( buff )
+         case TYP == 'N'; &buf := Val( buff )
+         case TYP == 'L'; &buf := Upper( Left( buff, 1 )) == "T"
+         case TYP == 'P'
+                   if IsDigit( buff ) .or. ( Left( buff, 1 ) == '-' )
+                      public &buf := Val( buff )
+                   else
+                      public &buf := buff
+                   endif
+         otherwise;       &buf := buff
+      endcase
+      skip
+enddo
+
+set date format to formatdaty
+
+OL_AutoYield( OddajMoc )			&& zwraca moc do procesora
+
+if drukarkaON .and. File( 'params.ntx' )  && drukarka wíÜczona i indeksowane
+   Zwolnij( 'PARAMS')
+   while .t.
+         use PARAMS new shared index params.ntx
+         if !NetErr(); exit; endif
+         if Alarm( 'Ktoû blokuje parametry systemu !',;
+                 { 'Ponowna pr¢ba', 'Wyjûcie z systemu' }) = 2
+            cls
+            quit
+         endif
+   enddo
+   if ( ok := !DBSeek( Upper( 'drukarkaPA' )))     && brak parametru ûcießki
+      while .t.
+            x := drukarkaPA; if File( x + 'drukarka.exe' ); ok := .t.; exit; endif
+            x := drukarkaWY; if File( x + 'drukarka.exe' ); ok := .t.; exit; endif
+            x := '\ARRAKIS\WYDRUKI\'; if File( x + 'drukarka.exe' ); ok := .t.; exit; endif
+            x := 'C:\WINDOWS\'; if File( x + 'drukarka.exe' ); ok := .t.; exit; endif
+            x := '\WINDOWS\'; if File( x + 'drukarka.exe' ); ok := .t.; exit; endif
+            exit
+      enddo
+      if ok
+         DBAppend()
+         PARAMS->ID := 'drukarkaPA'
+         PARAMS->NAZWA := 'òcießka dostëpu do programu "Drukarka.exe" drukujÜcego przez Windows'
+         PARAMS->TYP := ''
+         PARAMS->WARTOSC := x
+         Alarm( 'Parametrowi "drukarkaPA" przypisano wartoûç;"' + x + '";' + AllTrim( PARAMS->NAZWA ))
+      endif
+   endif
+   if ( ok := !DBSeek( Upper( 'drukarkaST' )))     && brak parametru ûcießki
+      while .t.
+            x := drukarkaST; if File( x + 'start.exe' ); ok := .t.; exit; endif
+            x := 'C:\WINDOWS\COMMAND\'; if File( x + 'start.exe' ); ok := .t.; exit; endif
+            x := '\WINDOWS\COMMAND\'; if File( x + 'start.exe' ); ok := .t.; exit; endif
+            exit
+      enddo
+      if ok
+         DBAppend()
+         PARAMS->ID := 'drukarkaST'
+         PARAMS->NAZWA := 'òcießka dostëpu do programu "Start.exe" pomocniczego przy druku przez Windows'
+         PARAMS->TYP := ''
+         PARAMS->WARTOSC := x
+         Alarm( 'Parametrowi "drukarkaST" przypisano wartoûç;"' + x + '";' + AllTrim( PARAMS->NAZWA ))
+      endif
+   endif
+   if ( ok := !DBSeek( Upper( 'drukarkaWY' )))     && brak parametru ûcießki
+      x := drukarkaWY
+      ok := .t.
+      if ok
+         DBAppend()
+         PARAMS->ID := 'drukarkaWY'
+         PARAMS->NAZWA := 'òcießka dostëpu do pliku "wydruk.txt" drukowanego przez Windows'
+         PARAMS->TYP := ''
+         PARAMS->WARTOSC := x
+         Alarm( 'Parametrowi "drukarkaWY" przypisano wartoûç;"' + x + '";' + AllTrim( PARAMS->NAZWA ))
+      endif
+   endif
+endif
+
+if jest
+   DBGo( rr )
+   Alarm( 'Aktualizacja zako§czona' )
+else
+   Zwolnij( 'PARAMS')
+endif
+
+Jest_baza( bb )
+
+******************************************************************************
+
+function J_M( nr, all )
+
+local dl := 5  && díugoûç symbolu jednostki miary
+local wy, maxl
+
+if all = NIL; all := .f.; endif
+
+if all
+   maxl := 0
+   AEval( tab_jm, { |a| maxl := Max( Len( a ), maxl )})
+   wy := if( nr >= 1 .and. nr <= Len( tab_jm ),;
+             tab_jm[ nr ], 'nieokreûlone' )
+   wy := PadR( wy, maxl )
+else
+   wy := if( nr >= 1 .and. nr <= Len( tab_jm ),;
+             Left( tab_jm[ nr ], dl ), Replicate( '?', dl ))
+endif
+
+return wy
+
+******************************************************************************
+
+function Rodzaj( nr )
+
+return PadR( if( nr > 0 .and. nr <= Len( tab_rodz ), tab_rodz[ nr ], 'Inne ...' ), 20 )
+
+******************************************************************************
+
+procedure Fill_tab( tab, plik )
+
+local dane, i
+
+tab := {}
+if File( cat_wzorow + plik )
+   dane := MemoRead( cat_wzorow + plik )
+   for i := 1 to MLCount( dane )
+       Aadd( tab, RTrim( MemoLine( dane,, i )))
+   next
+endif
+
+******************************************************************************
+* Standard Transform Cena
+
+function StdTC( c )
+return Transform( c , StdSC )
+
+******************************************************************************
+
+procedure Wzory
+
+local wz, kl1, kl2, wzor, pliki, full, k, mm, haslo
+
+SetColor( 'w/n,n/n,n/n,n/n,n/n' )
+if ( haslo := Get_U( 14, 20, 'Podaj hasío dostëpu :',;
+                     'XXXXXXXXXXXXXXXXXXXXXXX',;
+                     '                       ' )) # NIL
+      haslo := AllTrim( haslo )
+else; haslo := ' '
+endif
+SetColor( STC )
+
+mm := {}
+pliki := Directory( cat_wzorow + '*.*' )
+AEval( pliki, { |a| Aadd( mm, a[ F_NAME ] )})
+mm := ASort( mm )
+
+full := ( haslo == Deszyfr( '=>7?:77<7@=~s>@8?9;=', 7 ))
+
+while .t.
+
+   if ( k := Alarm( 'Wybierz odpowiedni wz¢r :', mm )) = 0
+      exit
+   endif
+   wz := mm[ k ]
+   kl1 := 0
+   kl2 := 0
+
+   if full
+      kl1 := Get_U( 14, 20, 'Podaj klucz wzoru przed :', '999', 0 )
+      kl2 := Get_U( 14, 20, 'Podaj klucz wzoru po :', '999', 0 )
+   endif
+
+   wzor := ReadWzor( wz, kl1 )
+   set cursor on
+   wzor := MemoEdit( wzor,1,0,mr,mc,.t.,,200 )
+   set cursor off
+   MemoWrit( cat_wzorow + wz, Deszyfr( wzor, kl2 ))
+
+enddo
+
+******************************************************************************
+
+function ReadWzor( nazwa, klucz, binarnie )
+
+local plik := AllTrim( if( '\' $ nazwa, nazwa, cat_wzorow + nazwa ))
+
+if binarnie = NIL; binarnie := .f.; endif
+
+if !FFile( @plik )
+   Alarm( 'Brak wzoru "' + plik + '" !!!', Ent )
+   return ''
+else
+   if binarnie; return MemoRead( plik ); endif
+   return Deszyfr( MemoRead( plik ), klucz )
+endif
+
+******************************************************************************
+******************************************************************************
+* a = NIL - test hasía
+* a # NIL - zmiana hasía
+
+function Haslo( a )
+
+local h, ho
+
+if File( '\STEMKO\STEMKO.BAT' ); return .f.; endif
+
+if a # NIL .and. !serio
+   NoChange()
+   return .f.
+endif
+
+if File( cat_main + '\wrf.txt' )
+   ho := ReadWzor( cat_main + '\wrf.txt', 7 )
+endif
+
+if a = NIL .and. !Empty( GetEnv( 'AREK' )); haker := .t.; return .t.
+else
+   if ho # NIL .and. Empty( ho )
+      h := ho
+   else
+      SetColor( 'w/n,n/n' )
+      if ( h := Get_U( 14, 20, 'Podaj hasío dostëpu :', Sz_X( 23 ), Space( 23 ))) # NIL
+           h := AllTrim( h )
+      else;h := ' '
+      endif
+      SetColor( STC )
+   endif
+endif
+
+do case
+case ( h == '111' ); h := .f.; serio := .f.
+case ( h == Deszyfr( 'IJILLE', 19 )); h := .t.; pirat := .t.
+case ( h == Deszyfr( '=>7?:77<7@=~s>@8?9;=', 7 )); h := .t.; pirat := .t.
+case ho # NIL .and. h == ho + '1998'; h := .f.; pirat := .t.
+case ho # NIL .and. h == ho + 'haker'; h := .f.; pirat := .t.; haker := .t.
+case (h == '456'); h := .f.
+case ho # NIL .and. h == ho; h := .f.
+case ( h == Deszyfr( 'tÇ', 19 )); h := .f.
+otherwise; h := NIL
+endcase
+
+if a # NIL .and. h # NIL
+   SetColor( 'w/n,n/n' )
+   if ( h := Get_U( 14, 20, 'Podaj nowe hasío dostëpu :', Sz_X( 23 ), Space( 23 ))) # NIL
+        h := AllTrim( h )
+   else;h := ' '
+   endif
+   SetColor( STC )
+   ho := h
+   SetColor( 'w/n,n/n' )
+   if ( h := Get_U( 14, 20, 'Powt¢rz nowe hasío dostëpu :', Sz_X( 23 ), Space( 23 ))) # NIL
+        h := AllTrim( h )
+   else;h := ' '
+   endif
+   SetColor( STC )
+
+   if ho # h
+      Alarm( ' le powt¢rzone hasío !!! Zmiana przerwana.' )
+   else
+      MemoWrit( cat_main + '\wrf.txt', Deszyfr( h, -7 ))
+      Alarm( 'Hasío zmienione.' )
+   endif
+endif
+
+return h
+
+******************************************************************************
+
+procedure Text_Log( i, zmienna )
+
+if ile >= i
+   zmienna := Upper( Left( MemoLine( dane,, i ), 3 )) == 'TAK'
+endif
+
+******************************************************************************
+
+procedure Text_Num( i, zmienna )
+
+if ile >= i
+   zmienna := Val( Left( MemoLine( dane,, i ), 10 ))
+endif
+
+******************************************************************************
+
+procedure Text_Sub( i, zmienna )
+
+local line
+
+if ile >= i
+   line := MemoLine( dane,, i )
+   zmienna := Left( line, At( '|', line ) - 1 )
+endif
+
+******************************************************************************
+
+procedure RunProgram( a )
+
+local b1, b2, r1, r2, plik, pliki, wnetrze, od
+
+private program, parametr, parametr2, ekran, buf, wnetrza
+
+program := Odetnij( @a )
+parametr:= Odetnij( @a )      && zawiera %1
+buf     := Odetnij( @a )
+parametr2:=Odetnij( @a )      && zawiera formuíë do obliczenia %2
+
+if buf == 'STAN 0'
+   b1 := 'T_OSOBY'; if Jest_baza( b1 ); r1 := RecNo(); endif
+   b2 := 'STANOWIS'; if Jest_baza( b2 ); r2 := RecNo(); endif
+   Pozamykaj( 1 )  && wszystko
+endif
+
+if ( '.bat' $ program ) .and. !( '\' $ program )
+   if File( '\ARRAKIS\' + program )
+      program := '\ARRAKIS\' + program          && ûcießka plik¢w BAT
+      if Empty( parametr2 ) .and. File( 'params.dbf' )
+         use PARAMS new
+         while !Eof()
+               if ID = 'arch_dane'
+                  parametr2 := ID
+                  exit
+               endif
+               skip
+         enddo
+         Zwolnij( 'PARAMS' )
+         if Empty( parametr )
+            parametr := 'c:'
+         endif
+      endif
+   endif
+endif
+
+ekran := SaveScreen()
+@ 3, 0 say ''
+if Empty( parametr2 )
+   RunCommand( 'run ' + program + ' ' + parametr )
+else
+   wnetrza := {}
+   plik := program
+   if '\' $ program      && "\ARRAKIS\archiwuj.bat"
+      plik := SubStr( plik, RAt( '\', plik ) + 1 )
+   endif
+   plik := Left( plik, 1 )
+   plik := Left( plik + Left( parametr, 1 ) + AllTrim( parametr2 ), 8 )
+   pliki := Directory( plik + '.*' )
+
+   if File( plik + '.txt' )
+      wnetrze := MemoRead( plik + '.txt' )
+      wnetrze := PadR( wnetrze, 120 )
+   else
+      wnetrze := program + ' ' + parametr + ' ' + &parametr2
+      wnetrze := PadR( wnetrze, 120 )
+      Aadd( wnetrza, wnetrze )
+      MemoWrit( plik + '.txt' , wnetrze )   && wnëtrze bießÜce
+      MemoWrit( plik + '.1'   , wnetrze )   && wnëtrze archiwalne
+   endif
+
+   AEval( pliki, { |a| if( Right( AllTrim( a[ F_NAME ]), 4 ) == '.TXT',, Aadd( wnetrza, MemoRead( a[ F_NAME ])))})
+
+   od := SetKey( K_F1, { || HelpWnetrz()})
+
+   F1( 1, 'C' )
+
+   if NIL # ( wnetrze := Get_U( 21, 1, 'Polecenie DOS' +;
+      if( Len( pliki ) > 2, ' (' + AllS( Len( pliki ) - 1 ) + ')', '' ) + ' :', '@S57', wnetrze ))
+
+      SetKey( K_F1, od )
+
+      MemoWrit( plik + '.txt' , wnetrze )   && wnëtrze bießÜce
+
+      jest := .f.
+      for i := 1 to Len( wnetrza )
+          if wnetrza[ i ] == wnetrze
+             jest := .t.
+
+             exit
+          endif
+      next
+
+      if !jest                && takiego jeszcze nie ma
+         for i := 1 to 9
+             if !File( plik + '.' + AllS( i ))
+                exit
+             endif
+         next
+      endif
+
+      MemoWrit( plik + '.' + AllS( i ), wnetrze )   && wnëtrze archiwalne
+
+      if Alarm( 'RozpoczÜç operacjë ?', tk ) = 1
+         RunCommand( 'run ' + wnetrze )
+      endif
+
+   endif
+
+   SetKey( K_F1, od )
+
+endif
+run cd &cat_main
+RestScreen( ,,,, ekran )
+set cursor off
+set cursor on
+set cursor off
+
+if buf == 'STAN 0'
+   b1 := 'T_OSOBY'; if r1 # NIL; ON( b1 ); DBGoTo( r1 ); endif
+   b2 := 'STANOWIS'; if r2 # NIL; ON( b2 ); DBGoTo( r2 ); endif
+endif
+
+if buf == 'RESTART'
+   Alarm( 'Wymagane jest ponowne uruchomienie systemu.' )
+   OpuscSys( 1 )
+endif
+
+******************************************************************************
+
+procedure HelpWnetrz()
+
+local i
+
+if Len( wnetrza ) = 0
+   Alarm( 'Brak poprzednich wersji zapisu tej operacji' )
+else
+   i := Alarm( 'Wybierz z poprzednich zapis¢w tej operacji:', wnetrza )
+   if i = 0; return; endif
+   buf := wnetrza[ i ]
+endif
+
+******************************************************************************
+
+function SysReadWzor( a, kk )
+
+local k1 := 0, k2 := 0, plik, ekran
+
+if '&' == Left( a, 1 )
+   a := SubStr( a, 2 )
+   a := &a
+else
+   a := if( '\' $ a, a, cat_wzorow + a )
+endif
+
+if kk # NIL
+   k1 := kk
+   k2 :=-kk
+   if !File( a )
+      plik := ReadWzor( 'ceny_de.txt' )
+      MemoWrit( a, plik )
+   endif
+else
+   if !full_dostep; return ; endif
+   if Get_Okres( @k1, @k2, 'Podaj szyfr wejûciowy i wyjûciowy :' ) = NIL; return; endif
+endif
+
+plik := ReadWzor( a, k1 )
+
+if ne_com
+   private name := a
+   MemoWrit( name, plik )
+   RunCommand( 'run ' + edytor + ' ' + name )
+   plik := ReadWzor( a )
+   plik := Deszyfr( plik, k2 )
+   MemoWrit( name, plik )
+else
+   ekran := SaveScreen()
+   set cursor on
+   @ 3 , 0 to mr - 3 , mc
+   CSay( 3, 0, mc, a, jasny )
+   Nap_haslo( 'Esc lub Ctrl-W' , ' - wyjûcie' , 'L' )
+   Nap_haslo( 'Strzaíki, PgUp, PgDn' , ' - ruchy' , 'R' )
+   plik := MemoEdit( plik, 4, 1, 20, 78, .t., '' , 200, 0, 0, 0, 0, 0 )
+   plik := Deszyfr( plik, k2 )
+   MemoWrit( a, plik )
+   set cursor off
+   RestScreen( ,,,, ekran )
+endif
+
+******************************************************************************
+
+procedure OpuscSys( a )
+
+DatyCzas()
+
+if a # NIL .and. a = 2
+      if Alarm( 'Zako§czyç pracë w systemie ?' , tk ) = 1
+         Czek( 1 )
+         close databases
+         Czek( 0 )
+      else
+         return
+      endif
+endif
+
+*if data_sys # Datee()   && powr¢t do daty systemowej
+*   ZmianaDaty( , data_sys )
+*endif
+
+if File( 'done.bat' )
+   run done.bat
+else
+   run cd &cat_oryg
+   cls
+   ? 'Praca w systemie zako§czona.'
+   ?
+endif
+
+quit
+
+******************************************************************************
+
+procedure Syrena( a )
+
+if a # NIL
+   Tone( 900, 3 )
+else
+   Tone( 900, 3 )
+   Tone( 500, 3 )
+   Tone( 900, 3 )
+endif
+
+******************************************************************************
+* Nr 74. Stawia wybrane znaki w wybranym polu wybranej bazy danych
+
+procedure Zaznacz( a )
+
+local baza, znak, potem
+
+private pole
+
+baza := Odetnij( @a )
+pole := Odetnij( @a )
+znak := Odetnij( @a )
+potem:= Odetnij( @a )   && dla Keyboard
+
+( baza )->( Blokuj_R())
+( baza )->&pole := if(( baza )->&pole == ' ', znak, ' ' )
+( baza )->( OdBlokuj_R())
+
+Keyboard Chr( Val( potem ))
+
+******************************************************************************
+* Nr 75. Wykonuje wybranÜ operacjë na wybranych pozycjach wybranej bazy danych
+* a = "baza,pole,znak,operacja,haslo"
+* b = NIL => go top .and. all records
+* b # NIL => while ( baza )->&pole == znak
+* c - func pre
+* d - func post
+* e = NIL => Przerwa(,1)
+* e # NIL => Przerwa(,)
+
+procedure OperujZnaki( a, b, c, d, e )
+
+local bb, baza, znak, rr, haslo, i, k, ek, dg := .f., wdg, bdg
+
+if !serio; NoChange(); return .f.; endif
+e := if( e = NIL, 1, NIL ) 
+
+private pole, operacja
+
+bb := Alias()
+rr := RecNo()
+baza := Odetnij( @a )
+pole := Odetnij( @a )
+
+znak := Odetnij( @a )
+operacja := Odetnij( @a )
+haslo := AllTrim( Odetnij( @a ))
+
+if bb == 'NORDPOL'
+	haslo := ''
+	wdg := Alarm( 'CiÜgíy blok zaznaczonych pozycji:',;
+						{ 'Skasowaç', 'Przenieûç do DK1', 'Przenieûç do DK2' })
+	if wdg = 0; return; endif
+	if wdg > 1
+		dg := .t.
+		bdg := if( wdg = 2, 'BABA', 'BABA2' )
+		ON( bdg )
+		if !Eof()
+			if Alarm( 'Baza ' + if( wdg = 2, 'DK1', 'DK2' ) + ' nie jest pusta !',;
+						{ 'OK', 'Przerwij' }) # 1
+				Select( bb )
+				return
+			endif
+		endif
+		Select( bb )
+	endif
+endif
+
+if Empty( haslo ) .or. Alarm( haslo, nt ) = 2
+
+   ek := SaveScreen()
+
+*   Czek( 1 )
+
+   Select( baza )
+   Przerwa( LastRec())
+
+   RunCommand( c )
+
+if b = NIL
+
+   go top
+   while !Eof()
+         if ( baza )->( RunCommand( pole )) == znak
+            ( baza )->( Blokuj_R())
+            a := RunCommand( operacja )
+         endif
+         if Przerwa(,e); exit; endif
+         skip
+   enddo
+
+else
+
+   while ( baza )->( RunCommand( pole )) == znak .and. !Eof()
+			if dg
+				KopiujRec( bb, bdg )
+			endif
+         ( baza )->( Blokuj_R())
+         a := RunCommand( operacja )
+         if Przerwa(,e); exit; endif
+         skip
+   enddo
+
+endif
+
+   RunCommand( d )
+
+   Przerwa(0)
+   Select( bb )
+   DBGo( rr )
+   DBSkip( 0 )
+   wy := 2
+
+*   Czek( 0 )
+   RestScreen( ,,,, ek )
+
+endif
+
+******************************************************************************
+
+procedure FillBufSys()
+
+buf_sys := global_buf3
+
+******************************************************************************
+
+procedure Test_Num( mode )
+
+set key K_F10 to
+
+if !Empty( mode )
+
+private GetList := {}
+private n, x := Space( 250 )
+private d := '@S40'
+private t := '999,999,999.9999'
+private e := SaveScreen( 22, 0, 24, mc )
+
+@ 22, 0 clear to 24, mc
+@ 23, 60 say ' = '
+
+while .t.
+      if ( x := Get_U( 23, 2, 'Wyraßenie :', d, x )) = NIL; exit
+      else
+         begin sequence
+               if !Empty( x )
+                  x := StrTran( x, ',', '.' )
+                  global_buf3 := x
+                  n := RunCommand( x )
+		  if ValType( n ) == 'N'
+	                  @ 23, 63 say n picture t
+		  else
+        	          @ 23, 63 say n
+		  endif
+               endif
+         recover
+               if Alarm( 'Bíëdnie okreûlone wyraßenie !!!',;
+                       { 'Poprawienie wyraßenia' , 'Wyjûcie' }) # 1
+                  exit
+               endif
+         end
+      endif
+enddo
+
+RestScreen( 22, 0, 24, mc, e )
+
+@ 0, 0 clear to 0, mc
+
+
+
+if n # NIL
+   @ 0, 0 say Transform( n, t )
+endif
+
+endif
+
+set key K_F10 to Test_Num()
+
+******************************************************************************
+
+procedure Test_Mem( mode )
+
+local bb := Alias(), x, dol_ekranu
+
+set key K_F9 to
+@ mr - 6, 20, mr - 2, 58 box B_SINGLE + ' '
+if Empty( bb )
+   *CSay( mr - 5, 0, mc, Transform( DiskSpace()*0.001, '999,999,999' ) + ' kB wolne na dysku' )
+   CSay( mr - 5, 0, mc, '\' + CurDir() + ' = bießÜcy katalog' )
+   CSay( mr - 4, 0, mc, 'Runtime version: ' + runtimever )
+   CSay( mr - 3, 0, mc, AllS( Memory( 0 ), '999,999,999' )+ ' kB pamiëci TOTAL' )
+else
+   x := SaveScreen( 0, 0, 0, 0 )
+   if IsDigit( Left( x, 1 ))
+      @ 0, 0 say Space( mc + 1 )
+      RestScreen( mr - 6, 23, mr - 1, 55, dol_ekranu )
+      dol_ekranu := NIL
+   else
+      dol_ekranu := SaveScreen( mr - 6, 23, mr - 1, 55 )
+      DatyCzas()
+   endif
+   *CSay( mr - 5, 0, mc, Transform( DiskSpace()*0.001, '999,999,999' ) + ' kB wolne na dysku' )
+   CSay( mr - 5, 0, mc, '\' + CurDir() + ' = bießÜcy katalog' )
+   CSay( mr - 4, 0, mc, bb + '.DBF = bießÜca baza danych' )
+   CSay( mr - 3, 0, mc, 'Runtime version: ' + runtimever )
+endif
+set key K_F9 to Test_Mem()
+
+******************************************************************************
+
+procedure Import_Mod( mode )
+
+if !Empty( mode )
+   SysImport()
+endif
+
+******************************************************************************
+* Ubruttowienie
+
+function Brutto( wn, po )
+return Grosz( wn * ( 100 + if( po < 0, 0, po )) * 0.01 )
+
+******************************************************************************
+* Unettowienie
+
+function Netto( wb, po )
+return Grosz( wb / (( 100 + if( po < 0, 0, po )) * 0.01 ))
+
+******************************************************************************
+* VAT
+
+function VAT( wn, po )
+return Grosz( wn * if( po < 0, 0, po ) * 0.01 )
+
+******************************************************************************
+* Wynik dziwnego efektu dla : 12.5 * 2.53 =  31.625 -> 31.62, a nie 31.63
+*                  : 50 * 2.45 = 122.5 * 7% = 8.575 ->  8.57, a nie  8.58
+
+function Grosz( x )
+return Round( x, 2 )
+
+******************************************************************************
+
+function Between( w, a, b )
+
+return a <= w .and. w <= b
+
+******************************************************************************
+
+function Inn( a, s, alltr )
+
+if .f. .and. alltr # NIL
+	a := AllTrim( a )
+	s := AllTrim( s )
+endif
+
+return ( ',' + a + ',' ) $ ( ',' + s + ',' )
+
+******************************************************************************
+* nawet niepeína paczka jako peína:  1=1, ale 1.0001=2
+
+function Paczka( x, y )
+
+local mi := ( x < 0 )
+
+if mi
+   x := -x
+endif
+
+if y = NIL
+   x := Round( x, 4 )       && zejûcie do racjonalnego poziomu
+   x += 0.4999              && podniesienie poprzeczki
+else
+   x := Round( x, y )       && zejûcie do racjonalnego poziomu
+   y := Round( 1/10^y, y )  && poprzeczka
+   x += 0.5 - y             && podniesienie poprzeczki
+endif
+
+if mi
+   x := -x
+endif
+
+return Round( x, 0 )    && obciëcie
+
+******************************************************************************
+* Ile to paczek ?
+* i = iloûç
+* w = w paczce
+* y = dokíadnoûç inna niß 4 dla "Paczka( x, y )"
+* p # NIL => chodzi tylko o peíne paczki
+
+function Paczki( i, w, y, p )
+
+if w = 0; return 0; endif
+if p # NIL; return Int( i / w ); endif
+return Paczka( i / w, y )
+
+******************************************************************************
+* odcina zera na koÒcu liczby po znaku '?': 123?200 -> 123.2
+
+function Tra( s, t )
+
+local d
+
+t := StrTran( t, '?', '.' )
+s := Transform( s, t )
+d := Len( s )
+while Right( s, 1 ) == '0'
+	s := SubStr( s, 1, Len( s ) - 1 )
+enddo
+if Right( s, 1 ) == '.'; s := SubStr( s, 1, Len( s ) - 1 ); endif
+
+return PadR( s, d )
+
+******************************************************************************
+
+function AllS( s, t )
+
+if t = NIL; return AllTrim( Str( s ))
+else
+	if '?' $ t
+		s := LTrim( Tra( s, t ))
+	else
+		s := AllTrim( Transform( s, t ))
+	endif
+	return s
+endif
+
+******************************************************************************
+
+procedure Switch_INVERS( mode )
+
+set key K_F11 to
+if !Empty( mode )
+   TAK_INVERS := !TAK_INVERS
+   @ 0, 0 say 'Invers ' + if( TAK_INVERS, 'jest', 'brak' )
+endif
+set key K_F11 to Switch_INVERS()
+
+******************************************************************************
+* zmiana parametr¢w systemu
+
+procedure Param_Sys( czytac )
+
+polski_druk := .t.
+STC   := ReadWzor( 'normal.col' )
+jasny := ReadWzor( 'jasny.col' )
+miga  := ReadWzor( 'miga.col' )
+invers:= ReadWzor( 'invers.col' )
+podkresl := ReadWzor( 'podkresl.col' )
+ne_com := File( cat_wzorow + 'tak_ne.txt' )
+edytor := 'ne.com'
+TAK_INVERS := File( cat_wzorow + 'tak_inv.txt' )
+public OD_NETTO := File( cat_wzorow + 'od_netto.txt' )
+public TEST_STR := .f.		&& File( cat_wzorow + 'test_str.txt' )
+public TEST_MUS := File( cat_wzorow + 'test_mus.txt' )
+fast_druk := !File( cat_wzorow + 'prn2file.txt' )
+ziarko := File( cat_wzorow + 'ziarko.txt' )
+if File( cat_wzorow + 'bez_siec.txt' ); siec := .f.; endif
+
+******************************************************************************
+* a - hasío zmiany daty
+
+function ZmianaDaty( a, dt )
+
+local s0, s1, s2, s3
+
+if dt = NIL; dt := Get_U( 10, 26, a, '99999999', Datee()); endif
+if dt = NIL; return .f.; endif
+if dt = Datee(); return .f.; endif
+
+data_sys := dt
+
+*if Empty( s0 := ReadWzor( 'data.txt' ))
+*   s0 := '-'
+*   s1 := 5
+*   s2 := 7
+*   s3 := 3
+*else
+*   s1 := Val( Odetnij( @s0 ))
+*   s2 := Val( Odetnij( @s0 ))
+*   s3 := Val( Odetnij( @s0 ))
+*   s0 := Odetnij( @s0 )
+*endif
+*
+*RunProgram( 'date,'+ SubStr( DtoS( dt ), s1, 2 ) + s0 +;
+*                     SubStr( DtoS( dt ), s2, 2 ) + s0 +;
+*                     SubStr( DtoS( dt ), s3, 2 ))
+
+return .t.
+
+******************************************************************************
+* Date to string full: 19990228 -> 28.02.1999
+
+function DtoSF( d )
+d := DtoS( d )
+return SubStr( d, 7, 2 ) + '.' + SubStr( d, 5, 2 ) + '.' + SubStr( d, 1, 4 )
+
+******************************************************************************
+* Ostatnia Data Poprzedniego Miesi•ca
+
+function ODPM( dt, delta )
+
+local r, m, s
+
+if dt = NIL; dt := Datee(); delta := 0; endif
+if delta = NIL; delta := -1; endif
+
+s := DtoS( dt )
+r := SubStr( s, 3, 2 ) + '.'
+m := SubStr( s, 5, 2 ) + '.'
+
+return CtoD( '01.' + m + r ) + delta
+
+******************************************************************************
+* Pierwsza Data Nastëpnego MiesiÜca
+
+function PDNM( dt )
+
+local r, m, s
+
+s := DtoS( dt )
+r := Val( Left( s, 4 ))
+m := Val( SubStr( s, 5, 2 )) + 1
+if m = 13
+   m := 1
+   r ++
+endif
+
+m := Right( '0' + AllS( m ), 2 )
+r := AllS( r )
+
+return CtoD( '01.' + m + '.' + r )
+
+******************************************************************************
+* Ostatnia Data podanego m-ca i roku
+
+function ODPMR( m, r, rrrrmm )
+
+if rrrrmm # NIL
+   r := Int( rrrrmm )
+   m := Round( 100 * ( rrrrmm - Int( rrrrmm )), 0 )
+endif
+
+if m < 12
+   m ++
+else
+   m := 1
+   r ++
+endif
+
+r := AllS( r )
+m := Right( '0' + AllS( m ), 2 ) + '.'
+
+return CtoD( '01.' + m + r ) - 1
+
+******************************************************************************
+* Pierwsza data podanego m-ca i roku
+
+function PDPMR( m, r, rrrrmm )
+
+if rrrrmm # NIL
+   r := Int( rrrrmm )
+   m := Round( 100 * ( rrrrmm - Int( rrrrmm )), 0 )
+endif
+
+r := AllS( r )
+m := Right( '0' + AllS( m ), 2 ) + '.'
+
+return CtoD( '01.' + m + r )
+
+******************************************************************************
+
+function IleMcy( d1, d2 )
+
+local wy := 1, i, m
+
+if d1 = NIL; return 1; endif
+if d2 = NIL; return 1; endif
+if d2 < d1 ; return 1; endif
+
+m := Month( d1 )
+for i = d1 to d2
+    i ++
+    if m # Month( i )
+       wy ++
+       m := Month( i )
+    endif
+next
+
+return wy
+
+******************************************************************************
+
+function WOkresie( d, d1, d2 )
+
+if d1 = NIL; d1 := data1; endif
+if d2 = NIL; d2 := data2; endif
+
+return d1 <= d .and. d <= d2
+
+******************************************************************************
+
+procedure SysImport()
+
+static ca
+local cat, catt, na, naa, bb := Alias(), ml
+
+if ca = NIL; ca := 'C:\ARRAKIS\NEW'; endif
+ca := PadR( ca, 50 )
+if ( NIL = ( ca := Get_U( 18, 10, 'Podaj katalog importowanego moduíu:', '@S30', ca ))); return; endif
+ca := AllTrim( ca )
+
+cat := AllTrim( ca ) + '\SYSTEM\'
+
+if Alarm( 'Bazy danych?', tk ) = 1
+
+   naa := MemoRead( ca + '\import.cfg' )
+
+while .t.
+
+   na := Odetnij( @naa )
+   while IsDigit( na )
+         na := Odetnij( @naa )
+         if Empty( na ); exit; endif
+   enddo
+
+   na := PadR( na, 10 )
+
+
+   if ( NIL = ( na := Get_U( 10, 10, 'Podaj nazwë importowanego moduíu:', '@S10', na ))); return; endif
+
+   SysBaz_UB()
+   DBGoTop()
+   while !Eof()
+         if Upper( DBF_NAME ) == Upper( Left( na, 8 ))
+            BDelete()
+         endif
+         skip
+   enddo
+   catt := cat + 'sys_baz.dbf'
+   Append from ( catt ) for Upper( DBF_NAME ) == Upper( Left( na, 8 ))
+
+   if Empty( naa ); exit; endif
+
+enddo
+
+endif
+
+
+
+if Alarm( 'Menu?', tk ) = 1
+
+   naa := MemoRead( ca + '\import.cfg' )
+
+while .t.
+
+   na := Odetnij( @naa )
+   while !IsDigit( na )
+         na := Odetnij( @naa )
+         if Empty( na ); exit; endif
+   enddo
+
+   na := PadR( na, 10 )
+
+   if IsDigit( na )
+
+      if ( NIL = ( na := Get_U( 10, 10, 'Podaj numer importowanego menu:', '@S10', na ))); return; endif
+
+      if !Empty( na )
+
+         ml := Val( na )
+
+         ON( SysMenu )
+         while !Eof()
+               if KOD_MENU = ml
+                  BDelete()
+               endif
+               skip
+         enddo
+
+         catt := cat + 'sys_menu.dbf'
+         Append from ( catt ) for KOD_MENU = ml
+
+      endif
+
+   else
+
+      if ( NIL = ( na := Get_U( 10, 10, 'Podaj nazwë importowanego moduíu:', '@S10', na ))); return; endif
+
+      if IsDigit( na )
+         naa := na
+      else
+         ON( SysMenu )
+         ml := Upper( AllTrim( na ))
+         catt := cat + 'sys_menu.dbf'
+         if !Empty( ml )
+            Append from ( catt ) for ml $ Upper( P_SYSTEMU )
+         endif
+      endif
+
+   endif
+
+   if Empty( naa ); exit; endif
+
+enddo
+
+endif
+
+if Alarm( 'Formularze?', tk ) = 1
+
+   naa := MemoRead( ca + '\import.cfg' )
+
+while .t.
+
+   na := Odetnij( @naa )
+   while IsDigit( na )
+         na := Odetnij( @naa )
+         if Empty( na ); exit; endif
+   enddo
+
+   na := PadR( na, 10 )
+
+   if ( NIL = ( na := Get_U( 10, 10, 'Podaj nazwë importowanego moduíu:', '@S10', na ))); return; endif
+
+   ml := Len( AllTrim( na ))
+
+   ON( SysForm )
+   while !Eof()
+         if Upper( Left( FORM_NAME, ml )) == Upper( Left( na, ml ))
+            BDelete()
+         endif
+         skip
+   enddo
+   catt := cat + 'sys_form.dbf'
+   Append from ( catt ) for Upper( Left( FORM_NAME, ml )) == Upper( Left( na, ml ))
+
+   if Empty( naa ); exit; endif
+
+enddo
+
+endif
+
+if Alarm( 'Wzory podobne?', tk ) = 1
+   RunCommand( 'run copy ' + ca + '\WZORY\' + AllTrim( Left( na, 8 )) + '*.* ' + Left( cat_wzorow, Len( cat_wzorow ) - 1 ))
+endif
+
+if Alarm( 'Wzory wszystkie?', tk ) = 1
+   RunCommand( 'copy ' + ca + '\WZORY\*.* ' + Left( cat_wzorow, Len( cat_wzorow ) - 1 ))
+endif
+
+Select( bb )
+
+******************************************************************************
+
+procedure MagNapraw()
+
+local id, idd, sy, ce, ma, i, i1, i2, r1, r2
+
+if Alarm( 'Przesuwaç obroty na zdublowanych towarach?', nt ) # 2; return; endif
+
+i := ''
+id := ''
+sy := ''
+ce := 0
+ma := ''
+
+DBSetOrder( 3 ); DBGoTop()     && Upper(SYMBOL)+MAG+Str(CENA_Z)
+while !Eof()
+
+      if sy == SYMBOL;    && stoimy na drugim podobnym
+        .and.;
+         ma == MAG;
+        .and.;
+         ce = CENA_Z
+
+      if ( 1 = Alarm( 'Zmiana "' + AllTrim( sy ) + '"/' + AllTrim( ma ) + '/' + AllS( ce ) + ' z LP=' + AllTrim( LP ) + ' na ' + AllTrim( i ), tk ))
+
+         idd := KOD_WEW
+         r2 := RecNo()
+         i2 := ILOSC
+         DBGoTo( r1 )
+         Blokuj_R()
+         replace ILOSC with i1 + i2
+
+         ON( 'KONTRAKT', 2 )
+         while DBSeek( idd )
+               KONTRAKT->( Blokuj_R())
+               KONTRAKT->KOD_TOWARU := id
+         enddo
+
+         Select( 'MAGAZYNY' )
+         DBGoTo( r2 )
+         BDelete()
+
+         DBGoTo( r1 )
+
+      else
+         if Alarm( 'Zako§czyç naprawë ?', nt ) = 2
+            exit
+         endif
+      endif
+
+      endif
+
+      id := KOD_WEW
+      sy := SYMBOL
+      ma := MAG
+      ce := CENA_Z
+      i  := LP
+      i1 := ILOSC
+      r1 := RecNo()
+
+      skip
+
+enddo
+
+wy := 2
+
+******************************************************************************
+* a = NIL - test hasía
+* a # NIL - zmiana hasía
+
+function Hasloo( a )
+
+local h, i, ho, hh
+
+baza := 'T_OSOBY'
+osoba_upr := T_OSOBY->( if(IsDigit(NAZWA),FIRMY->(GetPole(1,'Val(NAZWA)','NAZWA1')),NAZWA))
+osoba_upr := AllTrim( osoba_upr )
+
+if poz_dostepu # 0 .or. a = NIL
+   SetColor( 'w/n,n/n' )
+   if a # NIL
+      hh := 'Podaj dotychczasowe hasío dostëpu :'
+   else
+      hh := 'Podaj hasío dostëpu :'
+   endif
+   if ( h := Get_U( 14, 15, hh, Sz_X( 23 ), Space( 23 ))) # NIL
+         h := AllTrim( h )
+   else; h := ' '
+   endif
+   SetColor( STC )
+endif
+
+i := Deszyfr( AllTrim( T_OSOBY->HASLO ), 19 )
+
+if ( poz_dostepu = 0 ) .or.;                     && autor systemu kolejny raz
+   ( GetEnv( 'MONITOR' ) == 'HIGH' ) .or.;       && komputer autora
+   (( Left( h, Len( h ) - 4 ) == i ) .and. ( Right( h, 4 ) == '2361' ))&& autor
+
+   osoba_upr := '(' + osoba_upr + ')'
+   poz_dostepu := 0
+   full_dostep := .t.
+   haker := .t.
+
+else
+   if h == i
+      poz_dostepu := 1
+      serio := !( osoba_upr == 'Kontrola' )
+      if osoba_upr == 'Administrator systemu'; full_dostep := .t.; endif
+      haker := .f.
+   elseif (( Left( h, Len( h ) - 5 ) == i ) .and. ( Right( h, 5 ) == 'haker' ))
+      poz_dostepu := 1
+      serio := !( osoba_upr == 'Kontrola' )
+      if osoba_upr == 'Administrator systemu'; full_dostep := .t.; endif
+      haker := .t.
+   else
+      if poz_dostepu # 0
+         Alarm( ' le podane hasío !!!' )
+         Zsyp( 5, 1, mr - 3, mc - 1 )
+         OpuscSys()
+         return
+      endif
+   endif
+endif
+
+if a = NIL .or. poz_dostepu < 0
+   if ':' $ na_Firma
+      na_Firma := Left( na_Firma, At( ':', na_Firma ) - 1 )
+   endif
+   na_Firma += ': ' + osoba_upr
+else
+   while .t.
+      SetColor( 'w/n,n/n' )
+      if ( h := Get_U( 14, 15, 'Podaj nowe hasío dostëpu :', Sz_X( 23 ), Space( 23 ))) # NIL
+           h := AllTrim( h )
+      else;h := ' '
+      endif
+      SetColor( STC )
+      if full_dostep .or. Len( h ) >= 3; exit
+      else; Alarm( 'Hasío za kr¢tkie !!!' )
+      endif
+   enddo
+
+   ho := h
+
+   while .t.
+      SetColor( 'w/n,n/n' )
+      if ( h := Get_U( 14, 15, 'Powt¢rz nowe hasío dostëpu :', Sz_X( 23 ), Space( 23 ))) # NIL
+           h := AllTrim( h )
+      else;h := ' '
+      endif
+      SetColor( STC )
+      if full_dostep .or. Len( h ) >= 3; exit
+      else; Alarm( 'Hasío za kr¢tkie !!!' )
+      endif
+   enddo
+
+   if !( ho == h )
+      Alarm( ' le powt¢rzone hasío !!! Zmiana przerwana.' )
+   else
+      T_OSOBY->( Blokuj_R())
+      T_OSOBY->HASLO := Deszyfr( h, -19 )
+      T_OSOBY->( OdBlokuj_R())
+      Alarm( 'Hasío zmienione ...' )
+   endif
+endif
+
+******************************************************************************
+
+procedure Loginn( mode, zasoby )
+
+local s := SaveScreen(), r
+r := Login( mode, zasoby )
+RestScreen(,,,,s )
+return r
+
+******************************************************************************
+* mode = NIL -> normal          login
+* mode = 0   -> normal logout
+* mode = 1   -> normal logout i login
+
+procedure Login( mode, zasoby )
+
+local h, hh, x
+
+Pozamykaj( 1 )
+CatSwich()
+
+ON('T_OSOBY')
+
+if mode # NIL
+   cat_wzorow := cat_oryg + '\WZORY\'
+   if !File( cat_wzorow + 't_osoby.str' )
+      cat_wzorow := Left( cat_oryg, RAt( '\', cat_oryg ) - 1 ) + '\WZORY\'
+   endif
+   if DBSeek( numer_o )                        && logout
+      T_OSOBY->( Blokuj_R())
+      T_OSOBY->DATA_O := CtoD( '  .  .  ' )
+      T_OSOBY->CZAS_O := ''
+      T_OSOBY->STAN_O := ''
+      T_OSOBY->( OdBlokuj_R())
+   endif
+   go top
+endif
+
+if mode = NIL .or. mode = 1
+
+   if Eof()
+      h := cat_main + '\WZORY'
+      hh := Get_U( 18, 10, 'Podaj ûcießkë do katalogu wzor¢w:', '@KS30', PadR( h, 50 ))
+      if ( hh # NIL ) .and. !Empty( hh ); h := AllTrim( hh ); endif
+      AppendRecord( 'T_OSOBY', {  1, 'Ußytkownik', h, 'DEF', 'ksiëg' })
+      AppendRecord( 'T_OSOBY', { 97, 'Kontrola', h, 'DEF', 'ksiëg' })
+      AppendRecord( 'T_OSOBY', { 98, 'Arkadiusz Moch', h + '\ADMIN', 'IJILLE', 'admin,ksiëg' })
+      AppendRecord( 'T_OSOBY', { 99, 'Administrator systemu', h + '\ADMIN', Deszyfr( 'admin', -19 ), 'admin' })
+      go top
+   endif
+
+   @ 3, 0 clear
+   ViewDBF('T_OSOBY',,,,,'rerere:=RecNo()',.t.)   && noRestScreen
+
+   if poz_dostepu # 0 .and. zasoby # NIL
+      if !( zasoby $ T_OSOBY->P1 )
+         Alarm( 'Wybrana osoba nie ma dostatecznych uprawnie§.' )
+         Zwolnij( 'T_OSOBY' )
+         return .f.
+      endif
+   endif
+
+   Hasloo()
+   tyt_sys := ReadWzor( cat_main + '\' + 'max2.txt', 11 )
+   x := RAT( 'ver', tyt_sys )
+   x := if( x = 0, 30, x + 10 )
+
+   h := Left( tyt_sys, x )
+   h := AllTrim( h )
+   h := PadR( h, x )
+
+   hh:= Right( tyt_sys, mc - x - 2 )
+   hh:= AllTrim( hh ) + ': ' + osoba_upr
+   hh:= PadL( hh, mc - x - 2 )
+
+   tyt_sys := h + hh
+   CSay( 1, 0, mc, tyt_sys, invers )
+
+if !Empty( T_OSOBY->KAT_WZOROW )
+   cat_wzorow := AllTrim( T_OSOBY->KAT_WZOROW ) + '\'
+endif
+   uprawnienia := AllTrim( T_OSOBY->P1 )
+   uprawn_dzia := AllTrim( T_OSOBY->P2 )
+   numer_o := T_OSOBY->LP
+   T_OSOBY->( Blokuj_R())
+   T_OSOBY->DATA_O := Date()
+   T_OSOBY->CZAS_O := Time()
+   T_OSOBY->STAN_O := nr_stacji
+   GetDataSys()
+   T_OSOBY->( OdBlokuj_R())
+   DatyCzas()
+   @ 3, 0 clear
+
+else
+
+   ON( 'STANOWIS' )
+   if DBSeek( nr_stacji )
+      Blokuj_R()
+      STANOWIS->DATA_O := CtoD( '  .  .  ' )
+      STANOWIS->CZAS_O := ''
+   endif
+   Zwolnij( 'STANOWIS' )
+
+   OpuscSys()
+
+endif
+
+Zwolnij( 'STANOWIS' )
+Zwolnij( 'T_OSOBY' )
+
+return .t.
+
+******************************************************************************
+* mode = NIL -> trzy wyjcia
+* mode # NIL -> dwa wyjûcia
+
+procedure Koniec( mode )
+
+local od := 'Zako§czyç pracë w systemie ?'
+
+if mode # NIL; od := Alarm( od, tk )
+else; od := Alarm( od, { ' TAK ', ' NIE ', 'Zmiana ußytkownika' })
+endif
+
+DatyCzas()
+
+do case
+   case od = NIL .or. od = 0 .or. od = 2
+   case od = 1; Login( 0 )
+   case od = 3; Login( 1 )
+endcase
+
+DatyCzas()
+
+******************************************************************************
+* plik, czasem przez zmiennÜ
+
+function FFile( plik )
+
+local i
+
+if '\' $ plik
+
+if !File( plik )
+   i := Rat( '\', plik )
+   i := SubStr( plik, i + 1 )
+   plik := Przytnij( i )
+   if !File( plik )
+      return .f.
+   endif
+endif
+
+else
+
+
+if !File( cat_wzorow + plik )
+   plik := Przytnij( plik )
+
+   if !File( plik )
+      return .f.
+   endif
+else
+   plik := cat_wzorow + plik
+endif
+
+
+endif
+
+return .t.
+
+******************************************************************************
+
+function Przytnij( nazwa )
+
+local plik
+
+   plik := SubStr( cat_wzorow, 1, Len( cat_wzorow ) - 1 )
+   plik := Left( cat_wzorow, RAt( '\', plik ))
+
+return plik := plik + nazwa
+
+******************************************************************************
+
+procedure Posun( r, c, x )
+
+local q, w, e, s       && algorytm badania sÜsiednich do "W" p¢l w/g schematu
+
+r := mr - r
+
+w := Left( Savescreen( r, c, r, c ), 1 )     &&         Q W E
+
+if Empty( w ); return .f.; endif             &&         A S D
+
+s := Left( Savescreen( r + 1, c, r + 1, c ), 1 )
+if Empty( s )
+   @ r, c say ' '
+   @ r + 1, c say w
+   return .t.
+elseif w == '.' .and. s == 'o'   && kropka + 'o'       = anihilacja
+   @ r    , c     say   ' '
+   @ r + 1, c - 2 say '     '
+   return .t.
+elseif w == '.' .and. s # '.'    && kropka + niekropka = eksplozja
+
+if r - 5 >x; @ r - 5, c - 9 say 'o  o   o oo   o  o'; endif
+if r - 4 >x; @ r - 4, c - 7 say   'o o   oo  o  o'; endif
+if r - 3 >x; @ r - 3, c - 4 say      'o   o   o'; endif
+if r - 2 >x; @ r - 2, c - 2 say        'o o o'; endif
+if r - 1 >x; @ r - 1, c - 1 say         'ooo'; endif
+if r - 0 >x; @ r    , c     say          'o'; endif
+if r + 1 >x; @ r + 1, c     say          'o'; endif
+
+   return .t.
+endif
+
+if c > 0
+   q := Left( Savescreen( r, c - 1, r, c - 1 ), 1 )
+   if Empty( q )
+      a := Left( Savescreen( r + 1, c - 1, r + 1, c - 1 ), 1 )
+      if Empty( a )
+         @ r, c say ' '
+         @ r, c - 1 say w
+         return .t.
+      endif
+   endif
+endif
+
+if c < mc
+   e := Left( Savescreen( r, c + 1, r, c + 1 ), 1 )
+   if Empty( e )
+      d := Left( Savescreen( r + 1, c + 1, r + 1, c + 1 ), 1 )
+      if Empty( d )
+         @ r, c say ' '
+         @ r, c + 1 say w
+         c ++              && ßeby nie pchaí przez caíy ekran do prawej
+         return .t.
+      endif
+   endif
+endif
+
+return .f.
+
+******************************************************************************
+*   Zsyp( 6, 2, mr - 2, mc - 1 )
+
+procedure Zsyp( x, y, xx, yy )
+
+local i, r, c, k := 0
+local n := 2 * ( xx - x )
+
+while Inkey() = 0
+
+for i := 1 to n
+    k := 0
+    for r := mr - xx to mr - x
+        for c := y to yy
+            if Posun( r, @c, x )  && "c" moße sië zmieniç
+               k ++
+            endif
+            if Inkey() # 0; return; endif
+        next
+    next
+    if k = 0; exit; endif
+next
+
+*i := Time()
+*r := Val( Right( i, 2 ))      && 60
+*r := r / 60                   && liczba rzeczywista z przedziaíu 0->1
+*r := r * ( xx - x - 6 )       && uíamek przedziaíu x->xx
+*r := x + r + 3                && wsp¢írzëdna
+
+r := x + 2                     && wsp¢írzëdna
+
+i := Time()
+c := Val( Right( i, 2 ))
+c := c * c * c
+c := c % ( yy - y - 8 )       && uíamek przedziaíu x->xx
+c := y + c + 4                && wsp¢írzëdna
+
+@ r-2, c say '  .  '
+@ r-1, c say ' ... '
+@ r  , c say '.BUM.'
+@ r+1, c say ' ... '
+@ r+2, c say '  .  '
+
+enddo
+
+******************************************************************************
+* kw - kwota naleßnoûci
+* te - termin
+* do - do daty (moße do dziû?)
+
+function Odsetek( kw, te, do, h )
+
+static dt, st, stt
+local wy := 0, i, k, n, dd, e
+
+if do = NIL; do := Datee(); endif
+if te = NIL; te := Datee(); endif
+
+if dt = NIL
+   dt := {}
+   st := {}
+   stt := {}
+   Aadd( dt, CtoD( '15.08.1992' )); Aadd( st, 60 * 0.01 / 365 ); Aadd( stt, '60%' )
+   Aadd( dt, CtoD( '01.05.1993' )); Aadd( st, 54 * 0.01 / 365 ); Aadd( stt, '54%' )
+   Aadd( dt, CtoD( '15.12.1995' )); Aadd( st, 46 * 0.01 / 365 ); Aadd( stt, '46%' )
+   Aadd( dt, CtoD( '01.01.1997' )); Aadd( st, 35 * 0.01 / 365 ); Aadd( stt, '35%' )
+   Aadd( dt, CtoD( '15.04.1998' )); Aadd( st, 33 * 0.01 / 365 ); Aadd( stt, '33%' )
+   Aadd( dt, CtoD( '01.02.1999' )); Aadd( st, 24 * 0.01 / 365 ); Aadd( stt, '24%' )
+   Aadd( dt, CtoD( '15.05.1999' )); Aadd( st, 21 * 0.01 / 365 ); Aadd( stt, '21%' )
+   Aadd( dt, CtoD( '01.11.2000' )); Aadd( st, 30 * 0.01 / 365 ); Aadd( stt, '30%' )
+   Aadd( dt, CtoD( '15.12.2001' )); Aadd( st, 20 * 0.01 / 365 ); Aadd( stt, '20%' )
+   Aadd( dt, CtoD( '25.07.2002' )); Aadd( st, 16 * 0.01 / 365 ); Aadd( stt, '16%' )
+   Aadd( dt, CtoD( '01.02.2003' )); Aadd( st, 13 * 0.01 / 365 ); Aadd( stt, '13%' )
+   Aadd( dt, CtoD( '25.09.2003' )); Aadd( st, 12.25 * 0.01 / 365 ); Aadd( stt, '12,25%' )
+   Aadd( dt, CtoD( '10.01.2005' )); Aadd( st, 13.50 * 0.01 / 365 ); Aadd( stt, '13,5%' )
+   Aadd( dt, CtoD( '15.10.2005' )); Aadd( st, 11.50 * 0.01 / 365 ); Aadd( stt, '11,5%' )
+endif
+	e := SaveScreen()
+	@ 3, 0 say 'Od dnia     stopa'
+	? Space( 30 )
+	for i := 1 to Len( dt )
+		? PadR( DtoC( dt[ i ]) + ' = ' + stt[ i ], 30 )
+	next
+	? Space( 30 )
+
+if kw = NIL       && o wszystko po kolei pyta
+   kw := Get_U( mr-2, 30, 'Podaj kwotë naleßnoûci:', '999,999,999,999.99', 0 )
+	if kw = NIL
+		if e # NIL; RestScreen( ,,,, e ); endif
+		return 0
+	endif
+   te := Get_U( mr-2, 30, 'Podaj termin píatnoûci:', '@S10', te )
+	if te = NIL
+		if e # NIL; RestScreen( ,,,, e ); endif
+		return 0
+	endif
+   do := Get_U( mr-2, 30, 'Podaj datë bießÜcÜ:', '@S10', do )
+	if do = NIL
+		if e # NIL; RestScreen( ,,,, e ); endif
+		return 0
+	endif
+   h := 'Odsetki od kwoty ' + AllS( kw, '999,999,999,999.99' ) + ' zí za okres ' + DtoC( te ) + '-' + DtoC( do ) + ' wynoszÜ '
+elseif h # NIL
+   h := 'Odsetki od kwoty ' + AllS( kw, '999,999,999,999.99' ) + ' zí za okres ' + DtoC( te ) + '-' + DtoC( do ) + ' wynoszÜ '
+endif
+
+if do <= te
+	if e # NIL; RestScreen( ,,,, e ); endif
+	return 0
+endif     && naleßnoûç w terminie
+if kw <= 0.00
+	if e # NIL; RestScreen( ,,,, e ); endif
+	return 0
+endif   && brak naleßnoûci
+
+dd := te
+k := Len( dt )
+while .t.
+      if te >= dt[ k ]; exit; endif
+      if --k = 1; exit; endif
+enddo
+for i := k to Len( dt )
+    if i < Len( dt )         && dla wczeûniejszych
+       dd := dt[ i + 1 ] - 1 && nastëpna data zmiany stopy
+    else
+       dd := do              && dla ostatniej stopy dziaíanie do dziû
+    endif
+    dd := Min( dd, do )      && koniec dziaíania danej stopy
+    n := dd - te             && iloûç dni wedíug danej stopy
+    if n < 0; n := 0; endif
+    te := Max( te, dd )      && nowy termin
+    wy += st[ i ] * n * kw   && kwota odsetek
+    if te >= do; exit; endif
+next
+
+if h # NIL
+   Alarm( h + AllS( wy, '999,999,999,999.99' ))
+endif
+
+if e # NIL
+	RestScreen( ,,,, e )
+endif
+
+return wy
+
+******************************************************************************
+* kw - kwota naleßnoûci
+* te - termin
+* do - do daty (moße do dziû?)
+* bw - baza danych z wpíatami czëûciowymi
+* po - pole íÜczÜce bazë wpíat z bazÜ dokument¢w
+* wp - dotychczasowa kwota wpíat ußywana gdy brak podwieszonej listy wpíat
+
+function Odsety( kw, wp, te, do, bw, po )
+
+local wy := 0, bb := Alias(), dd
+private buf
+
+if kw = NIL; kw := K11; endif
+if wp = NIL; wp := K21; endif
+if kw <= 0.00; return 0; endif   && brak naleßnoûci
+if te = NIL; te := D4; endif
+if do = NIL; do := Datee(); endif
+if do <= te; return 0; endif     && naleßnoûç w terminie
+
+if bw = NIL; bw := 'SPLATY'; endif
+if po = NIL; po := 'LP'; endif
+
+buf := ( bb )->( &po )
+ON( bw )
+if DBSeek( buf )
+   while ( bb )->( &po ) == buf .and. !Eof()
+         dd := Min( do, ( bw )->DATA )
+         wy += Odsetek( kw, te, dd )
+         kw -= ( bw )->KWOTA
+         te := Max( te, dd )
+         skip
+   enddo
+   wy += Odsetek( kw, te, do )
+else
+   wy += Odsetek( kw - wp, te, do )
+endif
+Select( bb )
+
+return wy
+
+******************************************************************************
+* Rejestracja / modyfikacja zwiÜzku dokument¢w
+
+procedure Zwiazek( d1, t1, d2, t2, wa, ro )
+
+local bb := Alias()
+
+ON( 'ZWIAZKI' )
+if ro = NIL; ro := Alias(); endif
+if ( ro )->( BrakZwiazku( d1, d2 ))
+   ( ro )->( AppendRecord(, { d1, d2 }))
+endif
+( ro )->( Blokuj_R())
+( ro )->TYP_D1 := t1
+( ro )->TYP_D2 := t2
+( ro )->KWOTA := wa
+( ro )->( OdBlokuj_R())
+
+Select( bb )
+
+******************************************************************************
+
+function BrakZwiazku( d1, d2 )
+
+DBSetOrder( 1 )
+if !DBSeek( Str( d1 ) + Str( d2 ))
+   DBSetOrder( 2 )
+   if !DBSeek( Str( d2 ) + Str( d1 ))
+      return .t.
+   endif
+endif
+
+return .f.
+
+******************************************************************************
+
+function ZwiazanyZ( t )
+
+local bb := Alias(), wy := .f., d1 := DOKUM->ID
+
+t := PadR( t, 3 )          && "WZ"  ->  "WZ "
+
+ON( 'ZWIAZKI' )
+DBSetOrder( 1 )
+DBSeek( Str( d1 ))
+while ID_D1 = d1 .and. !Eof()
+      if TYP_D2 == t
+         wy := .t.
+         exit
+      endif
+      skip
+enddo
+
+if !wy
+   DBSetOrder( 2 )
+   DBSeek( Str( d1 ))
+   while ID_D2 = d1 .and. !Eof()
+         if TYP_D1 == t
+            wy := .t.
+            exit
+         endif
+         skip
+   enddo
+endif
+
+Select( bb )
+
+return wy
+
+******************************************************************************
+
+
+
+
+* Pokazuje numer miesiÜca w skali 123456789ABC
+* nr - numer 1 = Kalisz, 2 = Oltina
+
+function Mies( nr )
+
+local bb := Alias(), w, m, r
+
+if Jest_baza( 'DOKUM' ) .and. !Empty( DOKUM->DATAW )
+   r := Year( DOKUM->DATAW )
+   m := Month( DOKUM->DATAW )
+else
+   r := Year( Datee())
+   m := Month( Datee())
+endif
+
+if m < 10
+   w := Str( m, 1 )
+else
+   w := Chr( m + 65 - 10 )
+endif
+
+Select( bb )
+
+return Right( AllS( r ), 1 ) + w + Str( nr, 1 ) + '/'
+
+******************************************************************************
+* Upust
+
+function Upust( wn, po )
+return Grosz( wn * ( 100 - po ) * 0.01 )
+
+******************************************************************************
+
+function Datee()
+
+if data_sys = NIL .or. Empty( data_sys )
+   data_sys := Date()
+endif
+
+return data_sys
+
+******************************************************************************
+
+function Data()
+return Datee()
+
+******************************************************************************
+
+procedure DatyCzas()
+
+@ 0, 0 say "Czas: " + Time() + '            Data operacyjna: ' + DtoC( Datee()) + '          Data: ' + DtoC( Date())
+
+******************************************************************************
+* mode = NIL => tylko gdy pusta
+* mode # NIL => zawsze ( np.: wywoíanie funkcjÜ "zmiana Daty operacyjnej" )
+
+procedure GetDataSys( mode )
+
+if T_OSOBY->( FieldPos( 'DATA_P' )) # 0
+   data_sys := T_OSOBY->DATA_P
+   if mode # NIL
+      data_sys := Get_U( 15, 20, 'Podaj datë operacyjnÜ:', '@S10', data_sys )
+      if data_sys = NIL; data_sys := CtoD( '' ); endif
+      if mode # NIL; T_OSOBY->( Blokuj_R()); endif
+      T_OSOBY->DATA_P := data_sys
+      if mode # NIL; T_OSOBY->( OdBlokuj_R()); endif
+   endif
+   store ODPM()  to data1, data3, data_od
+   store Datee() to data2, data4, data_do
+   rocznik := SubStr( DtoS( Datee()), 3, 2 )
+endif
+
+******************************************************************************
+* K|Kod paskowy |NadajKodPas(INDEKS,ASORTYM->KODPAS)|
+
+* 0||GetKodPas()|
+
+procedure GetKodPas( x )
+
+local ii, rr, bb := Alias(), brak := .t.
+
+
+private GetList := {}
+
+if LastKey() # 13
+   Keyboard Chr( LastKey())
+endif
+
+
+if x = NIL; x := ''; endif
+x := PadR( x, 13 )
+if ( x := Get_U( 10, 10, 'Kod paskowy :', '@KS13', x )) = NIL; return; endif
+
+ii := TOWARY->( IndexOrd())
+TOWARY->( DBSetOrder( 4 ))
+if TOWARY->( DBSeek( x ))
+   rr := TOWARY->( RecNo())
+   if bb == 'TOWARY'
+      buf_kodpas := ''
+      rn := TOWARY->( RecNo())
+*      Zaznacz_ASO( INDEKS, CENA_Z )
+      brak := .f.
+   else
+      brak := .f.
+      ROB->( DBAppend())
+      ROB->ID_D  := DOKUM->ID
+      ROB->ID_T  := TOWARY->ID
+      ROB->RABAT := TowUstawRA
+      ROB->ILOSC := 1
+      ROB->CENABEZR := GetCS( bb )
+      ROB->CENA := Upust( ROB->CENABEZR, ROB->RABAT )
+      LastZero( K_CTRL_PGDN )
+      zmiana := .t.
+   endif
+endif
+
+if brak
+   @ 2, 0 say 'Brak towaru o kodzie paskowym ' + x
+   buf_kodpas := AllTrim( x )
+   okrest := .f.           && nie znikaj powyßszego napisu
+endif
+
+TOWARY->( DBSetOrder( ii ))
+
+******************************************************************************
+
+procedure NadajKodPas( sy, x )
+
+local ii, rr
+
+private GetList := {}
+
+if x # NIL
+   x := PadR( x, 13 )
+   if ( x := Get_U( 10, 10, 'Kod paskowy :', '@KS13', x )) = NIL; return; endif
+   buf_kodpas := x
+endif
+
+if !Empty( buf_kodpas ) .or. x # NIL
+   if Alarm( 'Nadaç temu towarowi kod paskowy "' + buf_kodpas + '" ?', tk ) = 1
+      ii := TOWARY->( IndexOrd())
+      rr := TOWARY->( RecNo())
+      TOWARY->( DBSetOrder( 2 )); TOWARY->( DBSeek( sy ))
+      while TOWARY->(( INDEKS == sy ) .and. !Eof())
+            TOWARY->( Blokuj_R())
+            TOWARY->KODPAS := buf_kodpas
+            TOWARY->( OdBlokuj_R())
+            TOWARY->( DBSkip())
+      enddo
+      TOWARY->( DBSetOrder( ii )); TOWARY->( DBGoTo( rr ))
+   endif
+   buf_kodpas := ''
+   @ 2, 0 say Space( mc )
+endif
+
+******************************************************************************
+* Nr 66
+* p = plik
+* mode = .t.    => zapisz modyfikacje pliku
+* x = 0         => nic
+* x = NIL lub 1 => edycja pliku
+* x = 2         => drukowanie pliku
+
+FUNCTION OPIS( p , mode, tyt, x )
+
+private ekran := SaveScreen()
+private nazpli, plik
+
+if p = NIL
+   nazpli := 'opis.txt'
+else
+   if '&' == Left( p, 1 )
+      nazpli := SubStr( p, 2 )
+      nazpli := &nazpli
+   else
+      nazpli := p
+   endif
+endif
+
+if '*' $ nazpli
+   if Len( plik := Directory( nazpli )) = 0
+      nazpli := StrTran( nazpli, '*', '' )
+      nazpli := StrTran( nazpli, cat_wzorow, '' )
+      nazpli := Get_U( 10, 10, 'Podaj nazwë pliku :', '@KS30', PadR( nazpli, 50 ))
+      if nazpli = NIL; return .f.; endif
+   else
+      nazpli := {}
+      AEval( plik, { |a| Aadd( nazpli, a[ 1 ])})
+      nazpli := ASort( nazpli )
+      plik := Alarm( 'Wybierz odpowiedni plik :', nazpli )
+      if plik # 0
+         nazpli := nazpli[ plik ]
+      else
+         nazpli := StrTran( nazpli[ 1 ], '*', '' )
+         nazpli := Get_U( 10, 10, 'Podaj nazwë pliku :', '@KS30', PadR( nazpli, 50 ))
+         if nazpli = NIL; return .f.; endif
+      endif
+   endif
+   if !( '\' $ nazpli )
+      nazpli := cat_wzorow + nazpli
+   endif
+else
+   FFile( @nazpli )
+endif
+
+@ 3, 0 clear
+
+mode := .t.
+set cursor on
+
+do case
+case x = NIL .or. x = 1
+        if ne_com
+				if File( drukarkaST + 'start.exe' ) .and. ( edytor # 'ne.com' )
+				   RunCommand( 'run ' + drukarkaST + 'start.exe /w ' + edytor + ' ' + nazpli )
+				else
+					RunCommand( 'run ' + edytor + ' ' + nazpli )
+				endif
+        else
+			plik := MemoRead( nazpli )
+			if Len( plik ) > 65000
+				plik := ''
+				if File( drukarkaST + 'start.exe' ) .and. ( edytor # 'ne.com' )
+				   RunCommand( 'run ' + drukarkaST + 'start.exe /w ' + edytor + ' ' + nazpli )
+				else
+					RunCommand( 'run ' + edytor + ' ' + nazpli )
+				endif
+			else
+				if Edit( @plik, if( tyt = NIL, nazpli, tyt )) .and. mode
+					plik := StrTran( plik, Chr( 141 ) + Chr( 10 ), '' )
+					MemoWrit( nazpli, plik )
+				endif
+			endif
+		endif
+case x = 0 ; return
+case x = 2 ; Druk( nazpli )
+endcase
+
+RestScreen( ,,,, ekran )
+set cursor off
+
+******************************************************************************
+
+function Edit( buf, tyt, sav, x, y, xx, yy, z_esc )
+
+x := if( x = NIL, 4, x )
+y := if( y = NIL, 1, y )
+xx:= if( xx= NIL,mr-3, xx)
+yy:= if( yy= NIL,mc-1, yy)
+
+if sav # NIL; sav := SaveScreen(); endif
+
+@ x - 1, 0 clear
+@ x - 1, 0 to xx + 1, yy + 1
+
+Nap_haslo( 'Esc lub Ctrl-W' , ' - wyjûcie' , 'L' )
+Nap_haslo( 'Strzaíki, PgUp, PgDn' , ' - ruchy' , 'R' )
+if tyt # NIL; CSay( x - 1, 0, mc, ' ' + AllTrim( tyt ) + ' ', jasny ); endif
+SetCursor( 1 )
+
+private textbuf := buf, textwon := .f., textzapisz := .f.
+private textr, textc, textrr, textcc, textzmiana := .f.
+store 0 to textr, textc, textrr, textcc
+LastZero()
+LastZero()
+if z_esc # NIL; Keyboard Chr( 27 ); endif
+while !textwon
+		textbuf := MemoEdit( textbuf, x, y, xx, yy, .t., 'MemoSerwis', 500, 3, textr, textc, textrr, textcc )
+enddo
+
+if textzapisz
+	buf := textbuf
+endif
+
+if sav # NIL
+   RestScreen(,,,, sav )
+   SetCursor( 0 )
+	textzapisz := buf		&& gdy jest 3-ci parametr, to zwracaj tekst, a nie logic "czy ok ?"
+endif
+
+
+return textzapisz
+
+******************************************************************************
+
+function MemoSerwis( nMode, r, c )
+
+static tekst := '', r1, c1, r2, c2, h1, h2, a1, a2, trwa := .f.
+local a, h
+
+if trwa .and. nMode # 0; return 0; endif
+
+textr := r
+textc := c
+textrr := Row() - 4
+textcc := Col() - 1
+
+a := LastKey()
+
+if a = 0 .or.;
+	a = K_LEFT .or.;
+	a = K_RIGHT .or.;
+	a = K_UP .or.;
+	a = K_DOWN .or.;
+	a = K_PGUP .or.;
+	a = K_PGDN .or.;
+	a = K_HOME .or.;
+	a = K_END .or.;
+	a = K_ESC .or.;
+	a = K_ENTER .or.;
+	a = K_CTRL_Z .or.;
+	a = K_CTRL_W .or.;
+	a = K_CTRL_LEFT .or.;
+	a = K_CTRL_RIGHT .or.;
+	a = K_CTRL_UP .or.;
+	a = K_CTRL_DOWN .or.;
+	a = K_CTRL_PGUP .or.;
+	a = K_CTRL_PGDN .or.;
+	a = K_CTRL_HOME .or.;
+	a = K_CTRL_END
+else
+	textzmiana := .t.
+	@ 3, 0 say '+'
+endif
+
+do case
+case a == K_ESC .and. !textzmiana
+	textwon := .t.
+case a == K_ESC .and. textzmiana
+	a := Alarm( 'ZapisaÊ zmiany ?', tk, 1 )
+	do case
+	case a = 1
+		textwon := .t.
+		textzapisz := .t.
+		return K_CTRL_W
+	case a = 2
+		textwon := .t.
+		textzapisz := .f.
+		return K_ESC
+	endcase
+	return K_LEFT
+case trwa .or. a == K_CTRL_Z
+	if !trwa
+		trwa := .t.
+		Keyboard Chr( K_CTRL_W )
+		return K_CTRL_W
+	endif
+	trwa := .f.
+	if r1 = NIL
+		text := MemoLine( textbuf, 254, r ) + '<eol>' + AllTrim( MemoLine( textbuf, 254, r + 1 ))
+		text := SubStr( text, c + 1 )
+		r1 := r
+		c1 := c
+		h1 := 'Start (' + AllS( r1 ) + '/' + AllS( c1 + 1 ) + ') {'
+		a1 := Len( h1 )
+		h1 := h1 + PadR( text, 40 )
+		r2 := NIL
+		c2 := NIL
+		h2 := ''
+		a2 := 0
+	elseif r2 = NIL
+		text := MemoLine( textbuf, 254, r )
+		text := SubStr( text, 1, c )
+		text := Space( mc ) + AllTrim( MemoLine( textbuf, 254, r - 1 )) + '<eol>' + text
+		r2 := r
+		c2 := c
+		h2 := '} Stop (' + AllS( r2 ) + '/' + AllS( c2 + 1 ) + ')'
+		a2 := Len( h2 )
+		h2 := text + h2
+	else
+		r1 := NIL
+		c1 := NIL
+		h1 := ''
+		a1 := 0
+		r2 := NIL
+		c2 := NIL
+		h2 := ''
+		a2 := 0
+	endif
+case a == K_CTRL_W
+	textzapisz := .t.
+	textwon := .t.
+endcase
+
+set cursor off
+
+if r1 # NIL .or. r2 # NIL
+	h := PadR( h1, 38 ) + '[...]' + Right( h2, 37 )
+	@ 2, 0 say h
+	SetColor( jasny )
+	h := Left( h1, a1 )
+	@ 2, 0 say h
+	h := Right( h2, a2 )
+	@ 2, mc - Len( h ) + 1 say h
+	h := '[...]'
+	@ 2, 38 say h
+else
+	SetColor( jasny )
+endif
+
+if r1 = NIL .and. r2 = NIL
+	@ 2, 0 say Space( mc + 1 )
+endif
+
+@ mr - 1, 30 say ' Wiersz: ' + AllS( textr )     + Space( 3 )
+@ mr - 0, 30 say 'Kolumna: ' + AllS( textc + 1 ) + Space( 3 )
+
+SetColor( STC )
+set cursor on
+
+return 0
+
+******************************************************************************
+* Funkcja wspÛ≥pracuje z "Generowanie"
+* Jest stosowana w "Warunkach do generowania" z plusem ("+WieleKorekt")
+* Korzysta z "global_tab" (identyfikatory dokumentÛw do korekty)
+
+function Receptury( krok )
+
+local idd, bb := Alias(), ii := IndexOrd(), rr := RecNo(), klucz, i, r
+
+do case
+case krok = 1			&& ustawienie siÍ na dokumencie do korekty
+case krok = 2			&& okreúlenie specyfikacji do korekty
+
+	idd := DOKUM->ID
+
+	DOKUM->( Blokuj_R())
+	DOKUM->NABYWCA := NRMP
+	DOKUM->( OdBlokuj_R())
+
+	ON( 'TOWARYR' )
+
+	SPEC->( DBSeek( do ))
+	while ( SPEC->ID_D = do ) .and. SPEC->( !Eof())
+			KopiujRec( 'SPEC', 'ROB' )
+			ROB->ID_D := DOKUM->ID
+			if TOWARYR->( DBSeek( SPEC->ID_T ))						&& towar ma recepturÍ
+				ROB->ID_T := TOWARYR->ID_S								&& ten z orygina≥u zmienia siÍ na pierwszy z receptury
+				ROB->ILOSC := TOWARYR->ILOSC * SPEC->ILOSC * 0.01000000		&&  procenty
+				TOWARYR->( DBSkip())
+				while ( TOWARYR->ID_T = SPEC->ID_T ) .and. TOWARYR->( !Eof())	&& reszta kopiowana z receptury
+						KopiujRec( 'SPEC', 'ROB' )
+						ROB->ID_D := DOKUM->ID
+						ROB->ID_T := TOWARYR->ID_S
+						ROB->ILOSC := TOWARYR->ILOSC * SPEC->ILOSC * 0.01000000		&&  procenty
+						TOWARYR->( DBSkip())
+				enddo
+			endif
+			SPEC->( DBSkip())
+	enddo
+
+	if Jest_baza( bb )
+		DBSetOrder( ii )
+		DBGoTo( rr )
+	endif
+
+case krok = 3			&& okreúlenie wyjúcia
+
+		return .f.
+
+case krok = 4			&& drukowaÊ ?
+
+		idd := DOKUM->NETTOCZ
+		rr := DOKUM->( RecNo())
+
+		if DOKUM->( DBSeek( st ))		&& st = stara faktura
+			DOKUM->( Blokuj_R())
+			DOKUM->NETTOCZ := idd		&& NETTOCZ wed≥ug RW z FIFO
+			DOKUM->( OdBlokuj_R())
+		endif
+
+		DOKUM->( DBGoTo( rr ))
+
+		ObAuDoWCZ := .f.				&& nie zamazuj dorobku, niech na FV zostanie NETTOCZ w postaci utrwalonej z RW
+
+		return .f.
+
+endcase
+
+return .t.
+
+******************************************************************************
+* Funkcja wspÛ≥pracuje z "Generowanie"
+* Jest stosowana w "Warunkach do generowania" z plusem ("+WieleKorekt")
+* Korzysta z "global_tab" (identyfikatory dokumentÛw do korekty)
+
+function ZProdukcji( krok )
+
+local idd, bb := Alias(), ii := IndexOrd(), rr := RecNo(), klucz, i, r
+
+do case
+case krok = 1			&& ustawienie siÍ na dokumencie do korekty
+case krok = 2			&& okreúlenie specyfikacji do korekty
+
+	DOKUM->( Blokuj_R())
+	DOKUM->NABYWCA := NRMP
+	DOKUM->( OdBlokuj_R())
+
+	SPEC->( DBSeek( do ))
+	while ( SPEC->ID_D = do ) .and. SPEC->( !Eof())
+			KopiujRec( 'SPEC', 'ROB' )
+			ROB->ID_D := DOKUM->ID
+			SPEC->( DBSkip())
+	enddo
+
+	if Jest_baza( bb )
+		DBSetOrder( ii )
+		DBGoTo( rr )
+	endif
+
+case krok = 3			&& okreúlenie wyjúcia
+
+		return .f.
+
+case krok = 4			&& drukowaÊ ?
+
+		rr := DOKUM->( RecNo())
+
+		if DOKUM->( DBSeek( st ))		&& st = stara faktura
+			DOKUM->( Blokuj_R())
+			idd := DOKUM->NETTOCZ		&& NETTOCZ wed≥ug FV po RW z FIFO
+			DOKUM->( OdBlokuj_R())
+		endif
+
+		DOKUM->( DBGoTo( rr ))
+		DOKUM->( Blokuj_R())
+		DOKUM->NETTOCZ := idd		&& NETTOCZ na PW wed≥ug FV i RW z FIFO
+		DOKUM->( OdBlokuj_R())
+
+		ObAuDoWCZ := .f.				&& nie zamazuj dorobku, niech na FV zostanie NETTOCZ w postaci utrwalonej z RW
+
+		return .f.
+
+endcase
+
+return .t.
+
+******************************************************************************

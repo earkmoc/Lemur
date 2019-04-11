@@ -1,0 +1,19 @@
+#Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+Date()|Time()|EOL+EOL+Firma()+EOL|data1|data2|0<>
+Data i czas wydruku:<@S8>, <@S8>  <@S200>
+
+Lista pracownik¢w przelewami za okres: <@S10> -<@S10>  
+---------------------------------------------------------------------------------------------------------------------------
+  LP    ID Nazwisko i imi‘                                            umys’owi   autorskie  zlecenia  wdro§eni¢wka razem
+---------------------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|
+Ustaw('drukuj_while','!Eof()')|
+Ustaw('drukuj_for','(PRZELEWY1+PRZELEWY2+PRZELEWY3+PRZELEWY4)#0')<>
+lp|ID|PadR(NAZWA,100)|InccTab('tabs[1]',PRZELEWY1)|InccTab('tabs[2]',PRZELEWY2)|InccTab('tabs[3]',PRZELEWY3)|InccTab('tabs[4]',PRZELEWY4)|InccTab('tabs[5]',PRZELEWY1+PRZELEWY2+PRZELEWY3+PRZELEWY4)<>
+{999|99999|@S57|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]<>  
+---------------------------------------------------------------------------------------------------------------------------
+                                                                    <@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99>
+  0<>  
+koniec.

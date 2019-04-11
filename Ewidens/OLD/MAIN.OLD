@@ -1,0 +1,67 @@
+
+procedure DoKlaw()
+
+local znak := LastKey()
+
+if (( IsBit( KBDStat(), 1 ) .or. IsBit( KBDStat(), 2 )) .and. !IsBit( KBDStat(), 7 )) .or.;
+ ( !( IsBit( KBDStat(), 1 ) .or. IsBit( KBDStat(), 2 )) .and.  IsBit( KBDStat(), 7 ))
+
+do case
+case znak == K_ALT_A; Keyboard ''
+case znak == K_ALT_C; Keyboard '•'
+case znak == K_ALT_E; Keyboard ''
+case znak == K_ALT_L; Keyboard 'œ'
+case znak == K_ALT_N; Keyboard '¥'
+case znak == K_ALT_O; Keyboard '£'
+case znak == K_ALT_S; Keyboard '˜'
+case znak == K_ALT_Z; Keyboard '¡'
+case znak == K_ALT_X; Keyboard ' '
+endcase
+
+else
+
+do case
+case znak == K_ALT_A; Keyboard '†'
+case znak == K_ALT_C; Keyboard ''
+case znak == K_ALT_E; Keyboard '‘'
+case znak == K_ALT_L; Keyboard '’'
+case znak == K_ALT_N; Keyboard '¤'
+case znak == K_ALT_O; Keyboard '¢'
+case znak == K_ALT_S; Keyboard 'ž'
+case znak == K_ALT_Z; Keyboard '§'
+case znak == K_ALT_X; Keyboard '¦'
+endcase
+
+endif
+
+******************************************************************************
+
+procedure Pol_Klaw()
+
+SetCancel( .f. )
+
+set key K_ALT_A to DoKlaw()
+set key K_ALT_C to DoKlaw()
+set key K_ALT_E to DoKlaw()
+set key K_ALT_L to DoKlaw()
+set key K_ALT_N to DoKlaw()
+set key K_ALT_O to DoKlaw()
+set key K_ALT_S to DoKlaw()
+set key K_ALT_Z to DoKlaw()
+set key K_ALT_X to DoKlaw()
+
+******************************************************************************
+* Wynik dziwnego efektu dla : 12.5 * 2.53 =  31.625 -> 31.62, a nie 31.63
+*                  : 50 * 2.45 = 122.5 * 7% = 8.575 ->  8.57, a nie  8.58
+
+function Grosz( x )
+
+x := 10 * x
+x := Str( x )
+x := Val( x )
+x := 0.1 * x
+x := Round( x, 2 )   && unormalnienie liczby
+
+return x
+
+******************************************************************************
