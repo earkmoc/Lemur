@@ -2,6 +2,9 @@
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
+mysqli_query($link, "ALTER TABLE `dokumentm` ADD INDEX `INDEKS` (`INDEKS`)");
+mysqli_query($link, "ALTER TABLE `towary` ADD UNIQUE KEY `INDEKS` (`INDEKS`)");
+
 // ----------------------------------------------
 // Parametry widoku
 
