@@ -1,0 +1,189 @@
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 300;
+    src: local("Open Sans Light"), local("OpenSans-Light"), url("http://fonts.gstatic.com/s/opensans/v10/DXI1ORHCpsQm3Vp6mXoaTRa1RVmPjeKy21_GQJaLlJI.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    src: local("Open Sans"), local("OpenSans"), url("http://fonts.gstatic.com/s/opensans/v10/u-WUoqrET9fUeobQW7jkRT8E0i7KZn-EPnyo3HZu7kw.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 600;
+    src: local("Open Sans Semibold"), local("OpenSans-Semibold"), url("http://fonts.gstatic.com/s/opensans/v10/MTP_ySUJH_bn48VBG8sNSha1RVmPjeKy21_GQJaLlJI.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 700;
+    src: local("Open Sans Bold"), local("OpenSans-Bold"), url("http://fonts.gstatic.com/s/opensans/v10/k3k702ZOKiLJc3WVjuplzBa1RVmPjeKy21_GQJaLlJI.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 800;
+    src: local("Open Sans Extrabold"), local("OpenSans-Extrabold"), url("http://fonts.gstatic.com/s/opensans/v10/EInbV5DfGHOiMmvb1Xr-hha1RVmPjeKy21_GQJaLlJI.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 300;
+    src: local("Open Sans Light Italic"), local("OpenSansLight-Italic"), url("http://fonts.gstatic.com/s/opensans/v10/PRmiXeptR36kaC0GEAetxrsuoFAk0leveMLeqYtnfAY.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 400;
+    src: local("Open Sans Italic"), local("OpenSans-Italic"), url("http://fonts.gstatic.com/s/opensans/v10/xjAJXh38I15wypJXxuGMBtIh4imgI8P11RFo6YPCPC0.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 600;
+    src: local("Open Sans Semibold Italic"), local("OpenSans-SemiboldItalic"), url("http://fonts.gstatic.com/s/opensans/v10/PRmiXeptR36kaC0GEAetxmWeb5PoA5ztb49yLyUzH1A.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 700;
+    src: local("Open Sans Bold Italic"), local("OpenSans-BoldItalic"), url("http://fonts.gstatic.com/s/opensans/v10/PRmiXeptR36kaC0GEAetxoUt79146ZFaIJxILcpzmhI.woff") format("woff");
+}
+@font-face {
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 800;
+    src: local("Open Sans Extrabold Italic"), local("OpenSans-ExtraboldItalic"), url("http://fonts.gstatic.com/s/opensans/v10/PRmiXeptR36kaC0GEAetxqQf9gnzM91ovO3JZgha9gY.woff") format("woff");
+}
+
+body {
+    font-family: "Open Sans",sans-serif;
+    font-size: 13px;
+    text-shadow: -1px 1px 0 #fff;
+}
+
+hr {
+    margin: 0;
+}
+
+.breadcrumb {
+    margin-bottom: 0px;
+}
+
+.page-header {
+    margin: 0;
+}
+
+.row {
+    margin: 0px;
+    padding: 0px;
+}
+
+.col-md-12 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.col-md-3 {
+    margin: 0px;
+    padding: 0px;
+}
+
+.bs-sidebar {
+   margin: 0px;
+   padding: 0px;
+}
+
+ul.nav.bs-sidenav {
+   margin: 10px 0 10px 0;
+   padding: 5px;
+}
+
+.bs-sidebar .nav > li > a {
+   margin: 0px;
+   padding: 5px;
+}
+
+.bs-docs-container {
+   margin: 0px;
+   padding: 0px;
+}
+
+.bs-docs-section {
+   border:dashed 1px lightgray;
+   margin: 15px 0px 5px 0px;
+   padding: 7px 0px 7px 0px;
+}
+
+.bs-docs-section + .bs-docs-section {
+   margin: 15px 0px 5px 0px;
+   padding: 7px 0px 7px 0px;
+}
+
+h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
+  padding: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-style: normal;
+  font-weight: bold;
+}
+
+h2, .h2 {
+  margin-left: 10px;
+  font-size: 20px;
+}
+
+h3, .h3, h4, .h4 {
+  font-size: 14px;
+}
+
+.panel {
+    margin: 2px;
+}
+
+input[type="text"] {
+  font-style: normal;
+  font-size: 12px;
+    margin: 2px;
+}
+
+.input-group-addon {
+  font-style: italic;
+  font-size: 13px;
+  margin: 2px;
+}
+
+.wybrany {
+    display: none;
+    white-space:nowrap;
+    background-color:lightgreen;
+    font-weight:bold;
+    font-size:12px;
+    margin-left:20px;
+}
+
+.wybranymenu {
+    color: #3776C4;
+    white-space:nowrap;
+    font-weight:bold;
+    font-size:12px;
+    margin-left:20px;
+}
+
+.wynikowy, .wynikowymenu, .wynikowytytul {
+    color: #3776C4;
+    font-style: italic;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.wynikowymenu {
+    font-size: 14px;
+}
+
+.wynikowytytul {
+    font-size: 23px;
+}
