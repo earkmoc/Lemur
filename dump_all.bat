@@ -1,4 +1,6 @@
 call dump.bat Lemur2
+call dump.bat KsiezyMlyn
+call dump.bat Filutek
 call dump.bat Inez2016a
 call dump.bat Inez2016DOS
 call dump.bat MAKLER_162

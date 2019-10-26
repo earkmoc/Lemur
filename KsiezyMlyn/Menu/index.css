@@ -1,0 +1,47 @@
+.panel {
+	margin-bottom: 2px;
+	background-color: black;
+}
+.container {
+    width: 300px;
+}
+.row {
+   margin-top: 3px;
+}
+.nag {
+   text-align: right; 
+   height: 34px;
+   padding: 6px 0px;
+   line-height: 1.42857;
+}
+
+.table-bordered {
+	border: 3px double white;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+	padding: 3px;
+	border: 0px;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th {
+	font-size: 20px;
+	border: 3px double white;
+}
+
+tr {
+	background-color: black;
+}
+
+a {
+	color: lightgray;
+	padding: 3px;
+}
+
+input {
+	padding: 3px;
+}
+
+.bs-sidebar.affix, .bs-sidebar.affix-bottom {
+	width: 215px;
+}
