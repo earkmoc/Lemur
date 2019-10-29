@@ -121,12 +121,18 @@ function Color()
 
 function ColorNagOff() 
 {
-	$("th").css('background','#EFEFDF');
+	$("th").css('background','black');
+	$("th .th-inner").css('background','');
+	$("th .th-inner").css('color','');
+	$("th .th-inner").css('fontWeight','');
 }
 
 function ColorNagOn() 
 {
-	$("th[data-field="+(col-1)+"]").css('background','#FF6600');
+	$("th[data-field="+(col-1)+"]").css('background','gray');
+	$("th[data-field="+(col-1)+"] .th-inner").css('background','gray');
+	$("th[data-field="+(col-1)+"] .th-inner").css('color','white');
+	$("th[data-field="+(col-1)+"] .th-inner").css('fontWeight','bold');
 }
 
 function ColorRowOff()
@@ -136,7 +142,7 @@ function ColorRowOff()
 
 function ColorRowOn()
 {
-	$("tr[data-index="+(row-1)+"]").css('background','#FFCC66');
+	$("tr[data-index="+(row-1)+"]").css('background','gray');
 }
 
 function Page(delta) 
