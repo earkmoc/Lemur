@@ -149,9 +149,11 @@ function ShowField($field,$row,$dane,$szerokoscPola,$link)
 
 function ShowLabel($field,$row,$dane,$szerokoscOpisu,$right)
 {
-	if	( ($row==0)
+	if (( ($row==0)
 		||($field['gridrow']==$row)
 		)
+	   &&($field['gridLabel']*1>0)
+	   )
 	{
 		echo "\n".'		<div class="col-md-'
 			.((($szerokoscOpisu*1)>0)?$szerokoscOpisu:($field['gridLabel']*1>0?$field['gridLabel']:($field['grid']*1>0?$field['grid']:$szerokoscOpisu)))
