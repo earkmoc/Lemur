@@ -108,7 +108,7 @@ $_SESSION["{$baza}Menu"]='';
 <tr><td style="border-bottom: 1px solid white"><a id="2k" href="">k) Osoby uprawnione</td></tr>
 <tr><td><a id="2l" href="">l) Typy dokumentów</td></tr>
 <tr><td><a id="2m" href="../Parametry">m) Parametry programu</td></tr>
-<tr><td><a id="2n" href="">n) ¦rodki transportu</td></tr>
+<tr><td><a id="2n" href="../SrodkiTransportu">n) ¦rodki transportu</td></tr>
 </table>
 </div>
                  </div>
