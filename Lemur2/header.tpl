@@ -32,7 +32,6 @@
 <style>
 	body {background-color: #049;}
 	.fixed-table-container thead {border: 3px double #ddd;}
-	.fixed-table-container thead {border: 3px double #ddd;}
 	.fixed-table-container tbody td .th-inner, .fixed-table-container thead th .th-inner {text-align: center; white-space: normal;}
 	.bootstrap-table .table > thead > tr > th {vertical-align: middle;}
 	.bootstrap-table .table:not(.table-condensed) > tbody > tr > td.hiddenColumn {margin: 0px !important; padding: 0px !important; width: 0px !important; visibility:hidden !important; font-size: 0px;}
