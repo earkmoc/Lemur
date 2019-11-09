@@ -6,14 +6,14 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 // Parametry widoku
 
 $title='¦rodki transportu';
-$tabela='srotran';
-$widok=$tabela;
+$widok='srotran';
+$tabela=$widok;
 $mandatory='';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 
 //----------------------------------------------
 
-$params="idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
+$params="firma=$firma&idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
 $esc="saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/$baza/Menu/&$params'+GetID()+'";
 $formularz="../Formularz/?$params'+GetID()+'";
 

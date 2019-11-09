@@ -1,5 +1,7 @@
 <?php
 
+$tabelaNazwa=(@$firma?"{$firma}_{$tabela}":$tabela);
+
 if	( ($tabela<>'osoby')
 	&&($widok<>'osoby')
 	&&(!@$_SESSION['osoba_id'])
@@ -28,6 +30,7 @@ while($r=mysqli_fetch_row($w)) {
 	$struktura=explode(';',$struktura);
 	$struktura=$struktura[0];
 	$struktura=str_replace('TYPE=MyISAM','ENGINE=MyISAM  DEFAULT CHARSET=latin1',$struktura);
+	$struktura=str_replace($tabela,$tabelaNazwa,$struktura);
 
 	$i=0;
 	foreach($wiersze as $wiersz) {
@@ -60,7 +63,7 @@ while($r=mysqli_fetch_row($w)) {
 		      {
 		         $pole=$kolumny[0];
 		      } else {
-		         $pole="$tabela.".$kolumny[0];
+		         $pole="$tabelaNazwa.".$kolumny[0];
 		      }
 			  $pole=str_replace('osoba_id',$ido,$pole);
 			  $poleNum=str_replace(array('format(',',2)'),array('',''),$pole);
@@ -94,6 +97,7 @@ while($r=mysqli_fetch_row($w)) {
 }
 
 $from=str_replace('osoba_id',$ido,$from);
+$from=str_replace($tabela,$tabelaNazwa,$from);
 
 //jeśli w where jest coś w stylu "where ID=[0]", to wytnij wszystko po "where" i polegaj na "mandatory"
 if (strpos(trim($from),']')!==false)
@@ -104,25 +108,25 @@ if (strpos(trim($from),']')!==false)
 require_once("saveMenuPosition.php");
 
 //utworzenie pustej tabeli gdy jej nie ma
-if (mysqli_num_rows(mysqli_query($link, "
-	show tables like '$tabela'
+if (mysqli_num_rows(mysqli_query($link, $q="
+	show tables like '$tabelaNazwa'
 "))==0)
 {
 	mysqli_query($link, $struktura);
 	if (mysqli_error($link)) {
-		die(mysqli_error($link).'<br>tabela='.$tabela.'<br>widok='.$widok.'<br>struktura='.$struktura);
+		die(mysqli_error($link)."<br>tabela=$tabelaNazwa<br>widok=$widok<br>struktura=$struktura");
 	}
 }
 
 if(in_array($tabela,array('menu','schematy','schematys','rejestry','dnordpol','slownik')))
 {
 	if( mysqli_fetch_row(mysqli_query($link,"
-			select count(*) from $tabela
+			select count(*) from $tabelaNazwa
 		"))[0]==0
 	  )
 	{
 		mysqli_query($link,"
-			insert into $tabela select * from Lemur.$tabela
+			insert into $tabelaNazwa select * from Lemur.$tabela
 		");
 	}
 }
@@ -130,12 +134,12 @@ if(in_array($tabela,array('menu','schematy','schematys','rejestry','dnordpol','s
 if($tabela=='knordpol')
 {
 	if( mysqli_fetch_row(mysqli_query($link,"
-			select count(*) from $tabela
+			select count(*) from $tabelaNazwa
 		"))[0]==0
 	  )
 	{
 		mysqli_query($link,"
-			insert into $tabela select * from Lemur.$tabela where NAZWA=''
+			insert into $tabelaNazwa select * from Lemur.$tabela where NAZWA=''
 		");
 	}
 }

@@ -102,9 +102,9 @@ $_SESSION["{$baza}Menu"]='';
 <tr><td style="border-bottom: 1px solid white"><a id="2i" href="">i) Tytu³y nieu¿ywane</td></tr>
 <tr><td><a id="2j" href="">j) Sposoby zap³at</td></tr>
 <tr><td style="border-bottom: 1px solid white"><a id="2k" href="">k) Osoby uprawnione</td></tr>
-<tr><td><a id="2l" href="../TypyDokumentow">l) Typy dokumentów</td></tr>
-<tr><td><a id="2m" href="../Parametry">m) Parametry programu</td></tr>
-<tr><td><a id="2n" href="../SrodkiTransportu">n) ¦rodki transportu</td></tr>
+<tr><td><a id="2l" href="../TypyDokumentow/?firma=<?php echo $firma;?>">l) Typy dokumentów</td></tr>
+<tr><td><a id="2m" href="../Parametry/?firma=<?php echo $firma;?>">m) Parametry programu</td></tr>
+<tr><td><a id="2n" href="../SrodkiTransportu/?firma=<?php echo $firma;?>">n) ¦rodki transportu</td></tr>
 </table>
 </div>
                  </div>
