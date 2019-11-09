@@ -1,5 +1,5 @@
 <?php
-
+die('copyOfLemur');
 //require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/copyOfLemur.php");
 
 $timestampLemur=mysqli_fetch_row(mysqli_query($link,"select CZAS from Lemur2.klienci where PSKONT='Lemur'"))[0];

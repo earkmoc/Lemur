@@ -1,3 +1,3 @@
 <?php
 
-header("location:Logowanie/Formularz");
+header("location:../Lemur2/Klienci");

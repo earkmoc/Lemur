@@ -1,35 +1,49 @@
 <?php
 @session_start();
+$ido=@$_SESSION['osoba_id'];
 
 date_default_timezone_set('Europe/Warsaw');
 
+$dev=true;
 $host='localhost';
-$user='root';
-$pass='krasnal';
-$pass='223';
-$ido=@$_SESSION['osoba_id'];
+if($dev)
+{
+	$user='root';
+	$pass='223';
+	$baza='Lemur2';
+}
+else
+{
+	$user='amoch67_amoch67';
+	$pass='JxV]oApeK+t@';
+	$baza='amoch67_wp';
+}
 
-//if (!$linkLemur = mysqli_connect($host, $user, $pass, 'Lemur2')) {
-if (!$linkLemur = mysqli_connect('p:'.$host, $user, $pass, 'Lemur2')) {
+if(!$linkLemur = mysqli_connect('p:'.$host, $user, $pass, $baza))
+{
     echo "Error: Unable to connect to MySQL." . PHP_EOL;
     echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
     echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
     exit;
 }
 
-$bazaLinku=explode('/',$_SERVER['REQUEST_URI'])[1];
-@$baza=($innaBaza?$innaBaza:$bazaLinku);
-if (!@$link = mysqli_connect('p:'.$host, $user, $pass, $baza)) {
+//$bazaLinku=explode('/',$_SERVER['REQUEST_URI'])[1];
+@$baza=($innaBaza?$innaBaza:$baza);
+if(!@$link = mysqli_connect('p:'.$host, $user, $pass, $baza))
+{
 	$link=mysql_connect($host,$user,$pass);
-	if (!$link){
+	if(!$link)
+	{
 			echo 'Problem z po³±czeniem z MYSQL';
 			exit;
 	}
-	if (!mysql_select_db($baza)) {
+	if(!mysql_select_db($baza))
+	{
 		mysql_query("
 			create database $baza
 		");
-		if (!$link = mysqli_connect($host, $user, $pass, $baza)) {
+		if(!$link = mysqli_connect($host, $user, $pass, $baza))
+		{
 			echo "Error: Unable to connect to MySQL." . PHP_EOL;
 			echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
 			echo "Debugging error: " . mysqli_connect_error() . PHP_EOL;
@@ -60,7 +74,7 @@ if (!@$link = mysqli_connect('p:'.$host, $user, $pass, $baza)) {
 	}
 }
 
-@$baza=$bazaLinku;
+//@$baza=$bazaLinku;
 
 //mysqli_query($link,$q="SET GLOBAL query_cache_type = 'ON'"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 //mysqli_query($link,$q="SET GLOBAL query_cache_type=1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
