@@ -79,6 +79,7 @@
 		$row=(!@$row||1*$row<1?1:$row);
 		$col=(!@$col||1*$col<1?1:$col);
 
+		echo "var firma='$firma';\n";
 		echo "var tabela='$tabela';\n";
 		echo "var widok='$widok';\n";
 		echo "var str=$str;\n";
@@ -156,6 +157,7 @@ echo '</thead>';
         ].join('');
     }
 	function ParametryRefresh(params) {
+		params['firma']=firma;
 		params['tabela']=tabela;
 		params['widok']=widok;
 		params['mandatory']=mandatory;

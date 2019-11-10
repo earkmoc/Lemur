@@ -1,11 +1,15 @@
 <?php
 
+$firma=$_GET['firma'];
+
 $drugiRaz=true;
 require("setup.php");
+$tabelaNazwa=strtolower((@$firma&&!stripos($tabela,'_')?"{$firma}_{$tabela}":$tabela));
 
 $set='';
 $where='';
-foreach($_POST as $klucz => $wartosc) {
+foreach($_POST as $klucz => $wartosc)
+{
    $wartosc=AddSlashes($wartosc);
    //echo "$klucz => $wartosc <br>";
    //$wartosc=iconv ( 'utf-8', 'iso-8859-2', $wartosc);
@@ -18,7 +22,9 @@ foreach($_POST as $klucz => $wartosc) {
 			||(strpos($klucz,'.')>0)
 			) {
 		//ignoruj
-	} else {
+	} 
+	else 
+	{
 		$ignoruj=false;
 		$numeryczne=false;
 		foreach($fields as $field)
@@ -37,24 +43,27 @@ foreach($_POST as $klucz => $wartosc) {
 				}
 			}
 		}
-		if  (!$ignoruj)
+		if(!$ignoruj)
 		{
-			if ($wartosc) 
+			if($wartosc) 
 			{
 				$wartosc=str_replace("'",'`',$wartosc);
 				if($numeryczne)
 				{
 					$wartosc=str_replace(',','.',"'$wartosc'");
-				} else
+				}
+				else
 				{
 					$wartosc="'$wartosc'";
 				}
-			} else
+			}
+			else
 			{
 				if($numeryczne)
 				{
 					$wartosc='0';
-				} else 
+				}
+				else 
 				{
 					$wartosc="''";
 				}
@@ -66,22 +75,29 @@ foreach($_POST as $klucz => $wartosc) {
 
 $where=" where ID=$id";
 
-if ($id==0) {
-   $q=("insert into $tabela $set");
-} elseif ($_GET[usun]) {
-   $q=("delete from $tabela $where limit 1");
-} else {
-   $q=("update $tabela $set $where limit 1");
+if($id==0)
+{
+   $q=("insert into $tabelaNazwa $set");
+}
+elseif($_GET[usun])
+{
+   $q=("delete from $tabelaNazwa $where limit 1");
+}
+else
+{
+   $q=("update $tabelaNazwa $set $where limit 1");
 }
 
 //die($q);
 mysqli_query($link, $q);
-if (mysqli_error($link)) {
+if(mysqli_error($link))
+{
 	die(mysqli_error($link).'<br>'.$q);
-} else
+}
+else
 {
 	if(!$noHeader)
 	{
-		header('Location:../Tabela');
+		header("Location:../Tabela/?firma=$firma");
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-$tabelaNazwa=(@$firma?"{$firma}_{$tabela}":$tabela);
+$tabelaNazwa=strtolower((@$firma&&!stripos($tabela,'_')?"{$firma}_{$tabela}":$tabela));
 
 if	( ($tabela<>'osoby')
 	&&($widok<>'osoby')
@@ -21,8 +21,8 @@ $w=mysqli_query($linkLemur, "
 ");
 
 $from='';
-while($r=mysqli_fetch_row($w)) {
-
+while($r=mysqli_fetch_row($w))
+{
 	$idTabeli=$r[0];
 	$wiersze=explode("\n",stripSlashes($r[1]));
 
@@ -97,7 +97,7 @@ while($r=mysqli_fetch_row($w)) {
 }
 
 $from=str_replace('osoba_id',$ido,$from);
-$from=str_replace($tabela,$tabelaNazwa,$from);
+$from=str_replace('from '.$tabela,'from '.$tabelaNazwa,$from);
 
 //jeśli w where jest coś w stylu "where ID=[0]", to wytnij wszystko po "where" i polegaj na "mandatory"
 if (strpos(trim($from),']')!==false)

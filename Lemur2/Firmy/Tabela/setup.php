@@ -46,7 +46,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 $params="idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
 
 $buttons=array();
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur2/Moduly');
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'/Lemur2/Logowanie/Tabela/logout.php');
 $buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=wej¶cie','akcja'=>"saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/Lemur2/Menu/?firma='+GetCol(2)+'&$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltF','nazwa'=>'Formularz','akcja'=>"../Formularz/?$params'+GetID()+'");
 $buttons[]=array('klawisz'=>'AltD','nazwa'=>'Dopisz','akcja'=>"../Formularz/?{$params}0'+'");

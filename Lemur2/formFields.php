@@ -18,10 +18,12 @@ $w=mysqli_query($linkLemur, $q="
 	 limit 1
 ");
 $i=0;
-while($r=mysqli_fetch_row($w)) {
+while($r=mysqli_fetch_row($w))
+{
 	$idTabeli=$r[0];
 	$wiersze=explode("\n",stripSlashes($r[1]));
-	foreach($wiersze as $wiersz) {
+	foreach($wiersze as $wiersz)
+	{
 		if 	( ($i++==0)
 			||(substr($wiersz,0,1)=="(")
 			||(substr($wiersz,0,3)=="if(")
@@ -81,6 +83,5 @@ while($r=mysqli_fetch_row($w)) {
 			,'checkbox'=>$checkbox
 			,'valid'=>$valid
 		);
-		//}
 	}
 }
