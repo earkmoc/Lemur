@@ -1,7 +1,9 @@
 <?php
 
+$firma=$_GET['firma'];
 require('setup.php');
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveTablePosition.php");
+$tabelaNazwa=strtolower((@$firma&&!stripos($tabela,'_')?"{$firma}_{$tabela}":$tabela));
 
 $idTabeles=($idTabeles?$idTabeles:0);
 
@@ -133,7 +135,7 @@ if($addWithAnd||$addWithOr)
 
 if($sortuj!='')
 {
-	$sortuj=($sortuj=='0'?'':$sortuj.",$tabela.ID");
+	$sortuj=($sortuj=='0'?'':$sortuj.",$tabelaNazwa.ID");
 	mysqli_query($link,$q="
 		update tabeles
 		   set WARUNKI=if('$warunek'<>'','$warunek',WARUNKI)
@@ -152,4 +154,4 @@ if($sortuj!='')
 if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 //die($q);
 //die(nl2br(print_r($fields,true)));
-header('location:.');
+header("location:./?firma=$firma");

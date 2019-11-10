@@ -20,6 +20,11 @@ li > span {
 	font-size:16px;
 }
 
+.modal-content {
+	border: 1px solid white;
+    background-color: black;
+}
+
 div.modal-body {
 	padding-bottom:0;
 }
