@@ -37,10 +37,13 @@
 						<li><b>WALC</b> poka¿e dane o warto¶ciach <b>WALC</b>, a tak¿e <b>WALC</b>ZAK, KO<b>WALC</b>ZYK, GROM-<b>WALC</b>, itp.
 						<li><b>15</b> poka¿e dane o warto¶ciach <b>15</b>, a tak¿e <b>15</b>97, 9<b>15</b>7, 97<b>15</b> itp.
 						<hr>
-						Na pocz±tku pola "Szukaj" mo¿na stosowaæ znaki <span>= < > *</span> lub dalej dwuznak <span>::</span> (dwa dwukropki), np.:
+						Na pocz±tku pola "Szukaj" mo¿na stosowaæ znaki <span>= < > * & | !</span> lub dalej dwuznak <span>::</span> (dwa dwukropki), np.:
 						<li><span>=</span><b>15</b> oznacza dane o warto¶ciach <span>równych</span> <b>15</b>
 						<li><span><=</span><b>15</b> oznacza dane o warto¶ciach <span>mniejszych lub równych</span> <b>15</b>
 						<li><span>*</span><b>15</b> oznacza dane o warto¶ciach <span>koñcz±cych siê</span> cyframi <b>15</b> (znak <span>*</span> zastêpuje dowolny ci±g znaków)
+						<li><span>&</span><b>kolejny warunek</b> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "i" (and)
+						<li><span>|</span><b>kolejny warunek</b> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "lub" (or)
+						<li><span>!</span><b>kolejny warunek</b> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "nie" (not)
 						<li><b>10</b><span>::</span><b>15</b> oznacza dane o warto¶ciach <span>z zakresu</span>: od <b>10</b> (w³±cznie) do <b>15</b> (w³±cznie)
 						<hr>
 						Na koñcu pola "Szukaj" mo¿na stosowaæ znak <span>*</span>, np.:
