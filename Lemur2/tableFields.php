@@ -30,7 +30,7 @@ while($r=mysqli_fetch_row($w))
 	$struktura=explode(';',$struktura);
 	$struktura=$struktura[0];
 	$struktura=str_replace('TYPE=MyISAM','ENGINE=MyISAM  DEFAULT CHARSET=latin1',$struktura);
-	$struktura=str_replace($tabela,$tabelaNazwa,$struktura);
+	$struktura=str_replace("CREATE TABLE $tabela","CREATE TABLE $tabelaNazwa",$struktura);
 
 	$i=0;
 	foreach($wiersze as $wiersz) {
@@ -112,10 +112,7 @@ if (mysqli_num_rows(mysqli_query($link, $q="
 	show tables like '$tabelaNazwa'
 "))==0)
 {
-	mysqli_query($link, $struktura);
-	if (mysqli_error($link)) {
-		die(mysqli_error($link)."<br>tabela=$tabelaNazwa<br>widok=$widok<br>struktura=$struktura");
-	}
+	mysqli_query($link, $struktura); if (mysqli_error($link)) {die(mysqli_error($link)."<br>tabela=$tabelaNazwa<br>widok=$widok<br>struktura=$struktura");}
 }
 
 if(in_array($tabela,array('menu','schematy','schematys','rejestry','dnordpol','slownik')))

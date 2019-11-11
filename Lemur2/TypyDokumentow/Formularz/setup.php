@@ -17,8 +17,8 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/formFields.php");
 //----------------------------------------------
 
 $buttons=array();
-$buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?tabela=$tabela&id=$id");
-$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Tabela");
+$buttons[]=array('klawisz'=>'_Enter','nazwa'=>'Enter=Zapisz','akcja'=>"save.php?firma=$firma&tabela=$tabela&id=$id");
+$buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"../Tabela/?firma=$firma");
 
 //----------------------------------------------
 
@@ -29,10 +29,11 @@ if ($id==0)
 }
 else
 {
+	$tabelaNazwa=strtolower((@$firma&&!stripos($tabela,'_')?"{$firma}_{$tabela}":$tabela));
 	$dane=mysqli_fetch_array(mysqli_query($link, "
 	select *
-	  from $tabela
-	 where ID=abs($id)
+	  from $tabelaNazwa
+	 where $tabelaNazwa.ID=abs($id)
 	"));
 	foreach($dane as $k => $v)
 	{

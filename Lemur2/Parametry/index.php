@@ -1,3 +1,3 @@
 <?php
 
-header("location:Tabela");
+header("location:Tabela/?firma={$_GET['firma']}");

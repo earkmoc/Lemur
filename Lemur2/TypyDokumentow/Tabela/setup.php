@@ -6,15 +6,15 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 // Parametry widoku
 
 $title='Typy dokumentów';
-$tabela='doktypy';
-$widok=$tabela;
+$widok='doktypy';
+$tabela=$widok;
 $mandatory='';
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/tableFields.php");
 
 //----------------------------------------------
 
-$params="idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
-$esc="saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/$baza/Menu/&$params'+GetID()+'";
+$params="firma=$firma&idTabeli=$idTabeli&row='+row+'&col='+col+'&str='+str+'&id=";
+$esc="saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/$baza/Menu/?$params'+GetID()+'";
 $formularz="../Formularz/?$params'+GetID()+'";
 
 $buttons=array();
