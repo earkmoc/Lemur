@@ -1,0 +1,6 @@
+ 0<>TYTUL;EAN;ILOSC;RABAT;CENA;WARTOSC;WARTOSC_BRUTTO_CALA<>
+#ON('SPEC')|DBSetOrder(1)|DBSeek(DOKUM->ID)|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|
+Ustaw('drukuj_for','ILOSC>0')<>
+Konwert(AllTrim(GetPoleS(1,'SPEC->ID_T','NAZWA','TOWARY')),maz,win,.t.)+CHR(59)+TOWARY->ISBN+CHR(59)+AllS(ILOSC)+CHR(59)+AllS(RABAT)+CHR(59)+AllS(CENA)+CHR(59)+AllS(Grosz(ILOSC*CENA))+CHR(59)+AllS(DOKUM->WARTOSC)<>
+{@S999}

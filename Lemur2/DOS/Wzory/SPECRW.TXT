@@ -1,0 +1,16 @@
+TOWARY->(GetPole(1,'ID_T','NAZWA'))|CENABEZR|RABAT|CENA|ILOSC|Grosz(CENA*ILOSC)|
+     ;Nazwa|Cena bez; rabatu|R%|Cena z;rabatem|     ;Ilož|       ;Wartož|
+@S41|@Z 9999.99|@Z 99|@Z 9999.99|@Z 999999|@Z 999,999.99|
+12|1|22|78|1||||LastZero(if(Eof(),68,))|TowUstawCe:=DOKUM->TOWCENNIK|TowUstawRa:=DOKUM->TOWRABAT|TowUstawRE:=0|rr[2]:=rr[2]-1|DokumZLicz(" 841";"ShowMasy()")|
+Pozycje powy§szego dokumentu
+
+|Esc|Esc - wyjžcie|Zwolnij('TOWARYBU'),Jest_baza('ROB'),DokumLicz('ROB->ID_T','VAT')|
+6|U|Usu¤|usuwasz t† pozycj‘|
+|I|Import|DokumImport()|
+|R|Rabaty|DokumRabat(" 842")|
+|C|Ceny|DokumCeny(" 842")|
+|S|Szukaj|SysMySeek('',nr)|
+14|F|Formularz|SPEC3,,,,73,DokumZLicz(" 842";"ShowMasy()"),,,3|
+15|D|Dopisz=ENTER|SPEC3,,,,73,DokumZLicz(" 842"; "ShowMasy()"),,,2,|ROB->ID_D:=DOKUM->ID,ROB->ID_T:=-1,ROB->RABAT:=TowUstawRA|
+15|ENTER||SPEC3,,,,73,DokumZLicz(" 842"; "ShowMasy()"),,,2,|ROB->ID_D:=DOKUM->ID,ROB->ID_T:=-1,ROB->RABAT:=TowUstawRA|
+pozycja|||CSay(mr-1,1,mc,AllS(RecNo()) + '. ' + TOWARY->(GetPole(1,'ID_T','NAZWA')),jasny)|

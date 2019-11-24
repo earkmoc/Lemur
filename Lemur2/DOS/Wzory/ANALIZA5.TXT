@@ -1,0 +1,13 @@
+DOKUM->(GetPole(4,'Str(ID_F)','INDEKS_F'))|DOKUM->(GetPole(4,'Str(ID_F)','NAZWA1'))|DOKUM->(GetPole(4,'Str(ID_F)','MIASTO'))|NETTO|WARTOSC|WARTOSC-NETTO|
+Indeks|Nazwa|Miasto|Netto|Brutto|VAT|
+@S10|@S35|@S10|@Z 999,999,999.99|@Z 999,999,999.99|@Z 999,999,999.99|
+5|1|22|78|1||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|Jest_baza('ANALIZA5')|CreateIndex(kolumny[1])|DBGoTop()|
+Sprzedaß kontrahent¢w: miasto, indeks, wartoûç
+
+5|Esc|Esc - wyjûcie|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|T|Total|ShowDBES()|
+|W|Wydruk|Drukuj()|
+|A|Aktualizacja=ENTER|Zwolnij(baza),ON(baza),DokAna5('ANALIZA5,Podaj parametry procedury,,,,,,,2','FV,RU,FVK,RUK','Wartoûç sprzedaßy kontrahent¢w'),Jest_baza('ANALIZA5'),CreateIndex(kolumny[1]),DBGoTop()|
+|ENTER||Zwolnij(baza),ON(baza),DokAna5('ANALIZA5,Podaj parametry procedury,,,,,,,2','FV,RU,FVK,RUK','Wartoûç sprzedaßy kontrahent¢w'),Jest_baza('ANALIZA5'),CreateIndex(kolumny[1]),DBGoTop()|

@@ -1,0 +1,3 @@
+Aadd(pola,{'NAZWA','C',20,0})|
+Aadd(indeksy,'srotran')|
+Aadd(klucze,'Upper(NAZWA)')|

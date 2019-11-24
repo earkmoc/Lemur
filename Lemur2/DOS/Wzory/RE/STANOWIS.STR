@@ -1,0 +1,6 @@
+ Aadd(pola,{'LP','C',2,0})|
+ Aadd(pola,{'NAZWA','C',50,0})|
+ Aadd(pola,{'DATA_O','D',8,0})|
+ Aadd(pola,{'CZAS_O','C',8,0})|
+ Aadd(indeksy,'stanowis')|
+ Aadd(klucze,'LP')|

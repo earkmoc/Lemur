@@ -1,0 +1,19 @@
+Tytu’y nieu§ywane
+5|22|1|78|3||||Zwolnij('TOWARY',1)|ON('TOWARY',4,'STAROCIE')|ON('TOWARYZ')|ON('DOKUM')|ON('FIRMY')|ON('MAGAZYNY')|
+Mark('TOWARYZ',ID,'*')|?|X|
+INDEKS|Indeks|@S10|
+NAZWA|Nazwa|@S37|
+CENA_Z|Cena w.|@Z 99999.99|
+STAN|Stan|@Z 999,999|
+STATUS|?|X|
+Max(STAN_MIN-STAN,0)|Za ma’o o|@Z 999,999|
+STAN_MIN|Stan min.|@Z 9999999|
+CENA_S|Cena s.1|@Z 99999.99|
+CENA_S2|Cena s.2|@Z 99999.99|
+CENA_S3|Cena s.3|@Z 99999.99|
+CENA_S4|Cena s.4|@Z 99999.99|
+CENA_S5|Cena s.5|@Z 99999.99|
+JM|j.m.|XXXXX|
+SWW|SWW/KU lub PKWiU|@S15|
+VAT|VAT|99|
+ID|ID||

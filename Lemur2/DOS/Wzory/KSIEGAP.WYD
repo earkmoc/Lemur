@@ -1,0 +1,27 @@
+EOL+Firma()+EOL|NRDOW|OPIS|DATA|0<>
+<@S200>
+
+Numer dowodu:W1<@S100>W0
+Opis:<@S60>  
+Data:<@S10>  
+-------------------------------------------------------------------------------------
+      Kwota         Nr i nazwa kolumny ksi‘gi
+-------------------------------------------------------------------------------------<>
+#Aadd(tabs,0)<>
++if((globalbuf:=PRZYCHOD1)=0,'',EOL+Transform(InccTab('tabs[1]',globalbuf),'999,999,999.99')+'       7. Sprzeda§ towar¢w i us’ug')<>  <@S200>
++if((globalbuf:=PRZYCHOD2)=0,'',EOL+Transform(InccTab('tabs[1]',globalbuf),'999,999,999.99')+'       8. Pozosta’e przychody')<>  <@S200>
++if((globalbuf:=ZAKUP_TOW)=0,'',EOL+Transform(InccTab('tabs[1]',globalbuf),'999,999,999.99')+'      10. Zakup towar¢w handlowych i materia’¢w')<>  <@S200>
++if((globalbuf:=KOSZTY_UB)=0,'',EOL+Transform(InccTab('tabs[1]',globalbuf),'999,999,999.99')+'      11. Koszty uboczne zakupu')<>  <@S200>
++if((globalbuf:=KOSZTY_RE)=0,'',EOL+Transform(InccTab('tabs[1]',globalbuf),'999,999,999.99')+'      12. Wydatki na reklam‘')<>  <@S200>
++if((globalbuf:=GOTOWKA  )=0,'',EOL+Transform(InccTab('tabs[1]',globalbuf),'999,999,999.99')+'      13. Wydatki na wynagrodzenia')<>  <@S200>
++if((globalbuf:=POZOSTALE)=0,'',EOL+Transform(InccTab('tabs[1]',globalbuf),'999,999,999.99')+'      14. Wydatki pozosta’e')<>  <@S200>
+  0<>  
+-------------------------------------------------------------------------------------<>
+DATA|LP|0<>  
+Za’†cznik¢w  Sporz†dzi’  Sprawdzi’  Zatwierdzi’                Zaksi‘gowano    Podpis
+                                                        Data   Ksi‘ga PR (LP)        
+     0       A.Moch      A.Moch     A.Moch          <XXXXXXXXXX>  <@Z 9999>  
+-------------------------------------------------------------------------------------
+  
+  
+  

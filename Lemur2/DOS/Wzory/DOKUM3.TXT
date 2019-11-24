@@ -1,0 +1,12 @@
+Dokumenty kontrahenta
+11|22|1|78|3|end|||DBSetOrder(4)|KontrUzup(FIRMY->ID_F)|ON('DOKSPL')|
+BLOKADA|;?|X|
+TYP|   ;Typ|XXX|
+PadR(RTrim(INDEKS)+if(Empty(NUMERFD),'',','+NUMERFD),20)|     ;Numer|@S14|
+WARTOSC|       ;Wartož|@Z 999,999.99|
+DATAW|Data wy-;stawienia|@S10|
+DOKSPL->(GetPole(1,'Str(FIRMY->ID_F)+Str(ROB->ID)+PadL("1",10)','KWOTA'))|Sp’ata 1|@Z 999,999.99|
+DOKSPL->(GetPole(1,'Str(FIRMY->ID_F)+Str(ROB->ID)+PadL("2",10)','KWOTA'))|Sp’ata 2|@Z 999,999.99|
+DATAT|Termin;zap’aty|@S10|
+WPLACONO|      ;Wp’acono|@Z 999,999.99|
+WARTOSC-WPLACONO|       ;Pozostaje|@Z 999,999.99|

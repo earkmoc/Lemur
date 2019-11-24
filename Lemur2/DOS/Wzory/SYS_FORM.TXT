@@ -1,0 +1,18 @@
+form_name|pole_lp|pole_name|pole_var|pole_pic|pole_row|pole_col|valid_func|valid_para|help_func|help_para|
+Formularz |Lp|Nazwa pola          |Zawartoûç |Picture|R |C |NrV|Params VALID        |NrH|Params HELP|
+XXXXXXXXXX|99|XXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXXXX|XXXXXXXXXXXXX|99|99|999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|999|@S70|
+5|1|22|78|1|
+Dane "SYSTEMU FORMULARZY"
+
+73|W|Wydruk|SysForm_W('sys_form.wyd')|
+9|F|Formularz = Enter|sys_form.frm,Formularz modyfikacji danych,nie|
+10|D|Dopisz|sys_form.frm,Dopisywanie danych,nie|
+6|K|Kasuj|usuwasz tÜ pozycjë|
+11|U|Usu§|Usuwasz definicjë formularza|
+7|S|Szukaj|nr,1,1,3,2|
+8|I|Indeks|wedíug nazw formularzy,1,wedíug nazw p¢l,2|
+13|A|Auto|sys_form,1,1,1|
+21|R|Ren||
+22|C|Copy|ROBOCZY,ROB|
+5|ESC|ESCape|
+9|ENTER||sys_form.frm,Formularz modyfikacji danych,nie|

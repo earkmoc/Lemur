@@ -1,0 +1,25 @@
+Wybrany tytuí: nr dok., data, przych¢d, rozch¢d
+5|22|1|78|3||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|
+DOKUM->(GetPole(1,'ID_D','BLOKADA'))|?|X|
+DOKUM->(GetPole(1,'ID_D','TYP'))|Typ|XXX|
+DOKUM->(GetPole(1,'ID_D','INDEKS'))|Numer|@S7|
+DOKUM->(GetPole(1,'ID_D','DATAS'))|Data s.|@S10|
+DOKUM->(GetPole(1,'ID_D','INDEKS_F'))|Kont.|@S10|
+CENA_DOK|Cena|@Z 999.99|
+ILOSC_DOK|Iloûç|@Z 9999|
+PRZYCHOD|Przych|@Z 99999|
+ROZCHOD|Rozch|@Z 99999|
+PRZYCHOD-ROZCHOD|Saldo|@Z 999999|
+Grosz(CENA_DOK*PRZYCHOD)|Wartoûç przych.|@Z 999999.99|
+Grosz(CENA_DOK*ROZCHOD)|Wartoûç rozch.|@Z 999999.99|
+Grosz(CENA_DOK*(PRZYCHOD-ROZCHOD))|Wartoûç salda|@Z 999999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RW ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RWJ',ILOSC_DOK,0)|Wydano na RW|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RW ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RWJ',CENA_DOK*ILOSC_DOK,0)|Wartoûç netto|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='PW ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='PWJ',ILOSC_DOK,0)|Zwr¢cono na PZ|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='PW ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='PWJ',CENA_DOK*ILOSC_DOK,0)|Wartoûç netto|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FV ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FJ ',ILOSC_DOK,0)|Faktury FV|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FV ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FJ ',CENA_DOK*ILOSC_DOK,0)|Wartoûç netto|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FVK' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FJK',ILOSC_DOK,0)|Faktury korugujÜce|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FVK' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='FJK',CENA_DOK*ILOSC_DOK,0)|Wartoûç netto|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RW ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RWJ',ILOSC_DOK,-ILOSC_DOK)|Stan|@Z 999,999.99|
+if(AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RW ' .or. AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))='RWJ',CENA_DOK*ILOSC_DOK,CENA_DOK*(-ILOSC_DOK))|Wartoûç netto|@Z 999,999.99|

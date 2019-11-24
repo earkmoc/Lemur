@@ -1,0 +1,4 @@
+firma, .,
+zapofi, .,
+wysylka, h:\Arrakis3,
+zapowy, d:\Arrakis3,

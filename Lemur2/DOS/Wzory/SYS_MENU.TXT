@@ -1,0 +1,16 @@
+KOD_MENU|LP_OPCJI|N_OPCJI|F_SYSTEMU|P_SYSTEMU|R_OPCJI|C_OPCJI|P_SYSTEMU|
+Kod|LP|Nazwa opcji|FS|Parametr|R|C|Parametr|
+99|99|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|999|XXXXXXXXXXXXXXXXXXXXXXXXXXX|99|99||
+5|1|22|78|1|
+DANE "SYSTEMU MENU"
+
+14|F|Formularz = Enter|sys_menu,Parametry opcji menu|
+64|D|Dopisz|
+65|U|Usun|usuwasz t† pozycj‘|
+7|S|Szukaj|nr,1,1,3,2|
+8|I|Indeks|w/g kodu menu,1,w/g nazwy opcji,2,bez sortowania,0|
+1|T|Test|
+33|Z|Zmiana|
+|C|Copy|KopiaMenu(',ROB')|
+5|ESC|ESC - wyjžcie|
+14|ENTER| |sys_menu,Parametry opcji menu|

@@ -1,0 +1,13 @@
+NUMER|PSEUDO|NIP|NAZWA|KOD_POCZT|MIASTO|ULICA|BRANZA|SKR_POCZT|KRAJ|
+Numer;|Pseudo;|NIP;|Nazwa;|Kod;poczt.|Miasto;|Ulica;|Bran§a;|Skrytka;poczt.|Kraj;|
+@Z 99999|@S10|@S15|@S37|@S6|@S10|@S14|@S10|@S8|@S10|
+3|1|22|78|4|
+Plan kont i Kartoteka kontrahent¢w
+
+5|Esc|Esc=wyjžcie|
+14|F|Formularz|KNORDPOL,Dane konta|
+15|D|Dopisz|KNORDPOL,Nowe konto,,,54|KNORDPOL->NUMER:=if(GetLast(15,5)<99999,GetLast(15,5)+1,0)|
+6|U|Usu¤|usuwasz tego kontrahenta|
+7|S|Szukaj|nr,1,5,2,6,3,3,4,4|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+57|ENTER|Wyb¢r=ENTER|dalej,2,NUMER,7,PSEUDO,8,NIP,9,NAZWA,10,KOD_POCZT+' '+AllTrim(MIASTO)+'; '+ULICA+Space(100),11|

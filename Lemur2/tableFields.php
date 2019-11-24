@@ -1,6 +1,6 @@
 <?php
 
-$tabelaNazwa=strtolower((@$firma&&!stripos($tabela,'_')?"{$firma}_{$tabela}":$tabela));
+$tabelaNazwa=strtolower((@$firma&&(!stripos($tabela,'_')||stripos($tabela,'_X'))?"{$firma}_{$tabela}":$tabela));
 
 if	( ($tabela<>'osoby')
 	&&($widok<>'osoby')
@@ -29,8 +29,8 @@ while($r=mysqli_fetch_row($w))
 	$struktura=StripSlashes($r[2]);
 	$struktura=explode(';',$struktura);
 	$struktura=$struktura[0];
-	$struktura=str_replace('TYPE=MyISAM','ENGINE=MyISAM  DEFAULT CHARSET=latin1',$struktura);
-	$struktura=str_replace("CREATE TABLE $tabela","CREATE TABLE $tabelaNazwa",$struktura);
+	$struktura=str_ireplace('TYPE=MyISAM','ENGINE=MyISAM  DEFAULT CHARSET=latin1',$struktura);
+	$struktura=str_ireplace("CREATE TABLE $tabela","CREATE TABLE $tabelaNazwa",$struktura);
 
 	$i=0;
 	foreach($wiersze as $wiersz) {
@@ -96,8 +96,8 @@ while($r=mysqli_fetch_row($w))
 	}
 }
 
-$from=str_replace('osoba_id',$ido,$from);
-$from=str_replace('from '.$tabela,'from '.$tabelaNazwa,$from);
+$from=str_ireplace('osoba_id',$ido,$from);
+$from=str_ireplace('from '.$tabela,'from '.$tabelaNazwa,$from);
 
 //jeśli w where jest coś w stylu "where ID=[0]", to wytnij wszystko po "where" i polegaj na "mandatory"
 if (strpos(trim($from),']')!==false)

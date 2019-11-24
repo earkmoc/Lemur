@@ -1,0 +1,8 @@
+Aadd(pola,{'ID_D','N',10,0})|
+Aadd(pola,{'ID_F','N',10,0})|
+Aadd(pola,{'WPLATY','N',12,2})|
+Aadd(pola,{'ILE','N',5,0})|
+Aadd(pola,{'DATAOW','D',8,0})|
+Aadd(pola,{'UWAGIOW','C',70,0})|
+Aadd(indeksy,'analizar')|
+Aadd(klucze,'ID_D')|

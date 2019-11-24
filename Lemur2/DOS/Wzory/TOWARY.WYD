@@ -1,0 +1,17 @@
+Firma('max3.txt')|Date()|Time()|DBE_Tyt|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+-------------------------------------------------------------------------- ceny zakupu ------- ceny sprzedaßy ----
+  LP Nazwa                                                  Stan  j.m.    cena   wartoûç       cena   wartoûç  VAT
+------------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|NAZWA|InccTab('tabs[1]',STAN)|JM|CENA_Z|InccTab('tabs[2]',STAN*CENA_Z)|CENA_S|InccTab('tabs[3]',STAN*CENA_S)|if(!(VAT>=0),'zw.',AllS(VAT,'@Z 99'+Chr(37)))<>
+{999|@S52|@Z 999,999|XXXXX|@Z 99999.99|@Z 999,999.99|@Z 99999.99|@Z 999,999.99|XXX}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]<>  
+------------------------------------------------------------------------------------------------------------------
+                                              Razem:<9999,999,999|999999999999999999,999.99|999999999999,999.99>
+ 0<>  
+koniec.

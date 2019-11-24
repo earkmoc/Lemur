@@ -91,7 +91,7 @@ $_SESSION["{$baza}Menu"]='';
 <div class="table-responsive" id="menu2">
 <table class="table table-hover table-bordered">
 <tr><th><a id="2" href="">2. Kartoteki</a></th></tr>
-<tr><td><a id="2a" href="">a) Kontrahenci</td></tr>
+<tr><td><a id="2a" href="../DOS/?Wzory=FIRMY&firma=<?php echo $firma;?>">a) Kontrahenci</td></tr>
 <tr><td><a id="2b" href="">b) Notatki</td></tr>
 <tr><td><a id="2c" href="">c) Karty tytu³ów</td></tr>
 <tr><td><a id="2d" href="">d) Tytu³y - syntetyka</td></tr>
@@ -100,8 +100,9 @@ $_SESSION["{$baza}Menu"]='';
 <tr><td style="border-bottom: 1px solid white"><a id="2g" href="">g) Kontrahenci nieu¿ywani</td></tr>
 <tr><td><a id="2h" href="">h) Tytu³y u¿ywane</td></tr>
 <tr><td style="border-bottom: 1px solid white"><a id="2i" href="">i) Tytu³y nieu¿ywane</td></tr>
-<tr><td><a id="2j" href="">j) Sposoby zap³at</td></tr>
-<tr><td style="border-bottom: 1px solid white"><a id="2k" href="">k) Osoby uprawnione</td></tr>
+<tr><td><a id="2j" href="../DOS/?Wzory=SPOZAP&firma=<?php echo $firma;?>">j) Sposoby zap³at</td></tr>
+<tr><td style="border-bottom: 1px solid white">
+        <a id="2k" href="../DOS/?Wzory=OSOBY_X&firma=<?php echo $firma;?>">k) Osoby uprawnione</td></tr>
 <tr><td><a id="2l" href="../TypyDokumentow/?firma=<?php echo $firma;?>">l) Typy dokumentów</td></tr>
 <tr><td><a id="2m" href="../Parametry/?firma=<?php echo $firma;?>">m) Parametry programu</td></tr>
 <tr><td><a id="2n" href="../SrodkiTransportu/?firma=<?php echo $firma;?>">n) ¦rodki transportu</td></tr>

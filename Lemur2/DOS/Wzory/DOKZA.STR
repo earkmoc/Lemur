@@ -1,0 +1,9 @@
+Aadd(pola,{'ID_F','N',10,0})|
+Aadd(pola,{'ID','N',10,0})|
+Aadd(pola,{'DATAW','D',8,0})|
+Aadd(pola,{'KWOTA','N',12,2})|
+Aadd(pola,{'UWAGI','C',70,0})|
+Aadd(indeksy,'dokza_1')|
+Aadd(indeksy,'dokza_2')|
+Aadd(klucze,'ID_F')|
+Aadd(klucze,'ID')|

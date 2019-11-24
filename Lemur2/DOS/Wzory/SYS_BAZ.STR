@@ -1,0 +1,11 @@
+ Aadd(pola,{'DBF_NAME','C',8,0})|
+ Aadd(pola,{'DBF_LP','N',2,0})|
+ Aadd(pola,{'DBF_FIELD','C',10,0})|
+ Aadd(pola,{'DBF_TYPE','C',1,0})|
+ Aadd(pola,{'DBF_LEN','N',3,0})|
+ Aadd(pola,{'DBF_DEC','N',1,0})|
+ Aadd(pola,{'DBF_OPIS','C',50,0})|
+ Aadd(indeksy,'sys_baz1')|
+ Aadd(indeksy,'sys_baz2')|
+ Aadd(klucze,'Upper(DBF_NAME)+STR(DBF_LP)')|
+ Aadd(klucze,'Upper(DBF_FIELD)')|

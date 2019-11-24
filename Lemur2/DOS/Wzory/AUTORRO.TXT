@@ -1,0 +1,17 @@
+Rozliczenia autor¢w
+5|22|1|78|1|e|D||DBSetOrder(1)|ON('FIRMY')|ON('TOWARY')|ON('MAGAZYNY')|ON('DOKUM')|ON('DOKTYPY')|ON('SPEC')|ON('TOWARK')|ON('TOWARKS')|
+ID|  ;LP|999|
+TOWARY->(GetPole(1,'ID_T','NAZWA'))|Indeks;towaru|@S40|
+FIRMY->(GetPole(1,'ID_A','NAZWA1'))|Indeks;autora|@S28|
+DATA_1|Data;pocz.||
+DATA_2|Data;ko§c.||
+DATA_W|Data;rozlicz.||
+DATA_U|Data;umowy||
+ILOSC_W|Iloûç;wydana|@Z 999,999|
+ILOSC_B|Ile do;bibliotek|@Z 999,999|
+ILOSC_A|Ile dla;autor¢w|@Z 999,999|
+ILOSC_Z|Ile ;zwrot¢w|@Z 999,999|
+ILOSC_R|Ile ;rozlicza|@Z 999,999|
+ILOSC_S|Ile ;sprzedano|@Z 999,999|
+ILOSC_T|Ile ;rozliczono|@Z 999,999|
+INDEKS|Nr;rozlicz|@S7|

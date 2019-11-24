@@ -1,0 +1,26 @@
+EOL+Firma('max3.txt')|Date()|Time()|0<>
+<@S350>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Specyfikacje zaznaczonych dokument¢w
+============================================================================================
+                                                                  Symbol SWW/KU             
+ LP   Nazwa towaru/Usíugi                                         lub    PKWiU  j.m.   Iloûç
+============================================================================================<>
+#DBSetOrder(4)|DBGoTop()|Ustaw('drukuj_while','!Eof()')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|AllTrim(TOWARY->(GetPole(1,'ROB->ID_T','NAZWA')))+Replicate(' .',50)|
+TOWARY->SWW|TOWARY->JM|
+InccTab('tabs[1]',ILOSC)|RABAT|CENA|
+InccTab('tabs[2]',Grosz(ILOSC*CENA))|CVAT(TOWARY->VAT)|
+InccTab('tabs[3]',Grosz(0.01*NVAT(TOWARY->VAT)*Grosz(ILOSC*CENA)))|
+InccTab('tabs[4]',Grosz(ILOSC*CENA)+Grosz(0.01*NVAT(TOWARY->VAT)*Grosz(ILOSC*CENA)))|
+InccTab('tabs[5]',ILOSC*TOWARY->MASA)|
+InccTab('tabs[6]',Paczki(ILOSC,TOWARY->W_PACZCE))<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXXXXXXX|XXXXX|999999}
+PadR(AllTrim(Zera_won(AllS(tabs[5],'@Z 999,999,999.999')))+'/'+AllS(tabs[6])+' ',20,'-')|0<>  
+-----<XXXXXXXXXXXXXXXXXXXX>------------------------------------------------------------------<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]<>  
+                                                                              Razem:<999,999>
+ 0<>  
+koniec.

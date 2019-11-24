@@ -1,0 +1,19 @@
+Firma('max3.txt')|Date()|Time()|DwieLinie(DBE_Tyt,60,3)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+------------------------------------------------------------------------------
+  LP Nazwa                                         Iloûç    Cena s. Wartoûç s.
+------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+PadR(TOWARY->(GetPole(1,'ANALIZA4->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY')),50)|
+InccTab('tabs[1]',ILOSC)|CENA|InccTab('tabs[2]',WARTOSC)<>
+{999|@S43|@Z 999999,999|@Z 9999.99|@Z 999,999.99|@Z 9999.99|@Z 999,999.99|@Z 9999,999.99|@Z 99999.99%}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[2]-tabs[3]|100*if(tabs[3]=0,0,(tabs[2]-tabs[3])/tabs[3])<>  
+------------------------------------------------------------------------------
+                                          Razem:<999999,999|999,999,999,999.99>
+ 0<>  
+koniec.

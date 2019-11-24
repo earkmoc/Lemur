@@ -1,0 +1,21 @@
+1|30| |DATA|.t.|!ANULOWANO|Time()|Date()|0|firma|CMonth(DATA)+Str(Year(DATA))|0<>
+LP|DtoA(DATA)|NRDOW|k1:=D2L(FIRMA,50)|k2:=D2L(ADRES,20)|OPIS|PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM|EOL+Space(27)+SubStr(k1,51)|SubStr(k2,21)<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM<>
+PRZYCHOD1|PRZYCHOD2|PRZYCHOD3|ZAKUP_TOW|KOSZTY_UB|KOSZTY_RE|GOTOWKA|POZOSTALE|RAZEM<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+      <   >                                                        <    >  
+  <>  
+  
+         PODATKOWA KSIêGA PRZYCHOD£W I ROZCHOD£W za<@S20> r.
++----+--------+-----------+-----------------------------------------------------------------------+----------------+----------+---------+------------+-------------+------------+----------------------------------------------+
+≥    ≥        ≥   Numer   ≥                        Kontrahent                                     ≥ Opis           ≥  Sprzedaß≥Pozostaíe≥    Razem   ≥Zakup towar¢w≥    Koszty  ≥          W Y D A T K I   ( K O S Z T Y )     ≥
+≥    ≥        ≥   dowodu  ≥-----------------------------------------------------------------------≥ zdarzenia      ≥ towar¢w i≥przychody≥   przych¢d ≥handlowych i ≥    uboczne ≥----------------------------------------------≥
+≥  LP≥  Data  ≥ ksiëgowego≥  imië i nazwisko ( firma )                       ≥    adres           ≥ gospodarczego  ≥  i usíug ≥  ( 8 )  ≥  ( 7 + 8 ) ≥ materiaí¢w  ≥    zakupu  ≥ reklama  ≥wynagrodz.≥ pozostaíe≥razem wydatki≥
++----+--------+-----------+--------------------------------------------------+--------------------+----------------+----------+---------+------------+-------------+------------+----------------------------------------------+<>
+{9999|@S10|@S11|@S50|@S20|@S16|@Z 999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99|@S79|@S60}
++----+--------+-----------+--------------------------------------------------+--------------------+----------------+----------+---------+------------+-------------+------------+----------+----------+----------+-------------+<>  
+                                                                                                   Suma strony :<99,999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99>  
+                                                                                             Poprzednie strony :<99,999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99>  
+                                                                                                         Razem :<99,999,999.99|@Z 99,999.99|@Z 9,999,999.99|@Z 99,999,999.99|@Z 9,999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|@Z 99,999,999.99>  
+  <@S50>

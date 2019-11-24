@@ -1,0 +1,6 @@
+ 0<>EAN;ILOSC;CENA_Z;WARTOSCBR_CALA<>
+#ON('SPEC')|DBSetOrder(1)|DBSeek(DOKUM->ID)|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|
+Ustaw('drukuj_for','ILOSC>0')<>
+AllTrim(GetPoleS(1,'SPEC->ID_T','ISBN','TOWARY'))+CHR(59)+AllS(ILOSC)+CHR(59)+AllS(CENA)+CHR(59)+AllS(DOKUM->WARTOSC)<>
+{@S999}

@@ -1,0 +1,14 @@
+TYP|INDEKS|NAZWA1|KOD|MIASTO|ADRES|TELEFON|OSOBA|NIP|REGON|BANK|KONTO|
+?|Indeks|Nazwa|Kod|Miasto|Adres|Telefon|Osoba|NIP|REGON|BANK|KONTO|
+X|||XXXXXX|@S20|@S30|@S20|@S20|@S13|@S9|@S20|@S20|
+4|1|22|78|2||||
+Kontrahenci
+
+5|Esc|Escape|
+|D|Dopisz=ENTER|if(NewSysDopisz("FIRMY,Nowa pozycja",,,"FIRMY->ID_F:=GetLast(1,1)+1,FIRMY->MIASTO:='œ¢d¦'"),PLID(FIRMY->ID_F),)|
+|S|Szukaj|SysMySeek('2,2,3,3',nr)|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('FIRMY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,5,ID_F,7,INDEKS,8,NIP,9,PadR(AllTrim(NAZWA1)+' '+AllTrim(NAZWA2)+' '+AllTrim(NAZWA3);99),10,KOD+' '+AllTrim(MIASTO)+'; ul.'+ADRES,11|
+57|ENTER||       dalej,5,ID_F,7,INDEKS,8,NIP,9,PadR(AllTrim(NAZWA1)+' '+AllTrim(NAZWA2)+' '+AllTrim(NAZWA3);99),10,KOD+' '+AllTrim(MIASTO)+'; ul.'+ADRES,11|
+|TAB||CSay(0,0,Len(INDEKS),INDEKS,jasny)|

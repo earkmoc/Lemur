@@ -1,0 +1,9 @@
+#globalbuf:=DBF_NAME|Ustaw('drukuj_while','globalbuf=DBF_NAME.and.!(DBF_LP>=90)')<>
+"Aadd(pola,"+Chr(123)+"'"+AllTrim(DBF_FIELD)+"','"+AllTrim(DBF_TYPE)+"',"+AllS(DBF_LEN)+","+AllS(DBF_DEC)+Chr(125)+Chr(41)+Chr(124)<>
+{@S90}
+#globalbuf1:=RecNo()|Ustaw('drukuj_while','globalbuf=DBF_NAME')<>
+"Aadd(indeksy,'"+AllTrim(DBF_FIELD)+"')"+Chr(124)<>
+{@S90}
+#DBGoTo(globalbuf1)|Ustaw('drukuj_while','globalbuf=DBF_NAME')<>
+"Aadd(klucze,'"+AllTrim(DBF_OPIS)+"')"+Chr(124)<>
+{@S90}

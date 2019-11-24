@@ -1,0 +1,8 @@
+TOWARY->(GetPole(-1,'ROB->ID_T','INDEKS','TOWARY',,,1,,,'STAROCIE\TOWARY'))|TOWARY->(GetPole(-1,'ROB->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY'))|CENA|ILOSC|Grosz(CENA*ILOSC)|ID_T|ILOSC*TOWARY->MASA|Paczki(ILOSC,TOWARY->W_PACZCE)|
+Indeks|Nazwa|Cena|Ilož|Wartož|ID_T|Masa towaru|Paczki|
+@S10|@S46|@Z 99999.99|@Z 99999|@Z 999,999.99||||
+12|1|22|78|1||||DokumZLicz(" 842";"ShowMasy()")|
+Pozycje powy§szego dokumentu
+
+5|Esc|Esc - wyjžcie|
+pozycja|||CSay(mr-1,1,mc,AllS(RecNo()) + '. ' + TOWARY->(GetPole(-1,'ROB->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY')),jasny)|

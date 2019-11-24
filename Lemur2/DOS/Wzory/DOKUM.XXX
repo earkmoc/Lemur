@@ -1,0 +1,58 @@
+AllTrim(DOKTYPY->(GetPole(1,'DOKUM->TYP','NAZWA')))|INDEKS|
+EOL+PadR(Firma('max3.txt',,1,1),40+112-42)|DATAW|EOL+Firma('max3.txt',,2)|
+NAZWA1|
+if(Empty(NAZWA2),'',EOL+Space(16)+NAZWA2)|
+if(Empty(NAZWA3),'',EOL+Space(16)+NAZWA3)|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)|NIP|NABYWCA|0<>
+<@S50> W1Nr<@S20>  W0 
+          
+Sprzedawca:<@S500>ú¢d¶, dnia:<@S10>  <@S500>    
+               
+   Kontrahent :<@S100>  <@S100>  <@S100>  
+        Adres :<@S100>  
+          NIP :<@S100>                                <        >  
+==================================================================================================================================
+                                                                         Cena     Cena                      
+                                                       Symbol            detal    detal  Ra-  Cena     Wartoûç    Podatek  Wartoûç
+ LP   Nazwa towaru/Usíugi                              PKWiU   j.m.Iloûç brutto   netto  bat  netto     netto     %  kwota  brutto
+========================================================================================= % =======================================<>
+#ON('ROB')|DBSetOrder(1)|DBGoTop()|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|TOWARY->(GetPole(1,'ROB->ID_T','NAZWA'))|TOWARY->SWW|TOWARY->JM|ILOSC|
+TOWARY->CENA_B|CENABEZR|RABAT|CENA|Grosz(ILOSC*CENA)|CVAT(TOWARY->VAT,1)|
+Grosz(Grosz(ILOSC*CENA)*NVAT(TOWARY->VAT,1)*0.01)|
+Brutto(Grosz(ILOSC*CENA),NVAT(TOWARY->VAT,1))|
+InccTab('tabs[1]',ILOSC*TOWARY->MASA)|
+InccTab('tabs[2]',Paczki(ILOSC,TOWARY->W_PACZCE))|
+InccTab('tabs[3]',Paczki(ILOSC,TOWARY->W_PACZCE,,1))<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXX|XXXX|9999|9999.99|9999.99|@Z 99|9999.99|9999999.99|99|99999.99|99999.99}
+#Jest_baza('DOKUM')<>
+  0<>  
+-----------------------------------------------------------------------------------------------------------------------------------<>
++WARTOSC-(VAT22+VAT7+VAT23+VAT8+VAT5)|VAT22+VAT7+VAT23+VAT8+VAT5|WARTOSC<>  
+                                                                                            Razem:<9999,999.99|9999,999.99|99999.99>
++PadR(ZlGr(Abs(WARTOSC),1),100)<>  
+Síownie:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++DATAT<>
+              ======================================
+ Termin:<XXXXXXXXXX>
++NETTO1()|CVAT1()|VAT1()|NETTO1()+VAT1()<>
+                                                                         W tym:<9999,999.99|XXX|9999.99|99999.99>
++PadR(if(tabs[1]>0,'úÜczna masa (b. opakowa§): '+PadR(AllTrim(Zera_won(AllS(tabs[1],'@Z 999,999,999.999')))+ ' kg',20),''),42)<>  
+  <@S99>
++NETTO2()|CVAT2()|VAT2()|NETTO2()+VAT2()<>
+                                                     <@Z 9999,999.99|XXX|@Z 9999.99|@Z 99999.99>
++PadR(if(tabs[1]>0,'             Iloûç paczek: '+PadR(AllS(tabs[2]),20),''),42)<>  
+  <@S99>
++NETTO3()|CVAT3()|VAT3()|NETTO3()+VAT3()<>
+                                                     <@Z 9999,999.99|XXX|@Z 9999.99|@Z 99999.99>
++PadR(if(tabs[1]>0,'     Iloûç peínych paczek: '+PadR(AllS(tabs[3]),20),''),42)<>  
+  <@S99>
++NETTO4()|CVAT4()|VAT4()|NETTO4()+VAT4()<>
+                                                     <@Z 9999,999.99|XXX|@Z 9999.99|@Z 99999.99>
+if(DOKUM->TYP=='RW '.and.SaRabatyZero(),EOL+ReadWzor('opis_rw.txt'),'')<>  
+<@S500>
+if(DzienVAT0(),EOL+ReadWzor('opis_VAT.txt'),'')|0<>  
+<@S500>  
+  
+         Otrzymaí:                                                                              Wydaí:                      

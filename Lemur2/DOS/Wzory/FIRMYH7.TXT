@@ -1,0 +1,13 @@
+ID_F|TYP|INDEKS|NAZWA1|NAZWA2|NAZWA3|KOD|MIASTO|ADRES|TELEFON|OSOBA|NIP|REGON|BANK|KONTO|
+ID|?|Indeks|Nazwa|Nazwa|Nazwa|Kod|Miasto|Adres|Telefon|Osoba|NIP|REGON|BANK|KONTO|
+9999|X||@S45|@S15|@S15|XXXXXX|@S20|@S30|@S20|@S20|@S13|@S9|@S20|@S20|
+5|1|22|78|3|
+Kontrahenci
+
+5|Esc|Escape|
+|D|Dopisz=ENTER|if(NewSysDopisz("FIRMY,Nowa pozycja",,,"FIRMY->ID_F:=GetLast(1,1)+1"),PLID(FIRMY->ID_F),)|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('FIRMY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,1,ID_F,5|
+57|ENTER||dalej,1,ID_F,5|

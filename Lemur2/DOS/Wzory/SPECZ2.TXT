@@ -1,0 +1,7 @@
+TOWARY->(GetPole(-1,'ROB2->ID_T','INDEKS','TOWARY',,,1,,,'STAROCIE\TOWARY'))|TOWARY->(GetPole(-1,'ROB2->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY'))|CENA|ILOSC|Grosz(CENA*ILOSC)|ID_T|
+Indeks|Nazwa|Cena|Iloûç|Wartoûç|ID_T|
+@S10|@S46|@Z 99999.99|@Z 99999|@Z 999,999.99||
+12|1|22|78|1|
+Pozycje powyßszego dokumentu 
+
+5|Esc|Esc - wyjûcie|

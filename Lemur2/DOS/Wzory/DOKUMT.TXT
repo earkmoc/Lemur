@@ -1,0 +1,15 @@
+Dokumenty
+11|22|1|78|3|end|
+BLOKADA|;?|X|
+TYP|   ;Typ|XXX|
+INDEKS|     ;Numer|@S17|
+INDEKS_F|          ;Kontrahent|@S10|
+WARTOSC|       ;Wartoûç|9999999.99|
+DtoA(DATAW)|Data wy-;stawienia|@S8|
+DtoA(DATAS)|Data sp-;rzedaßy|@S8|
+DtoA(DATAO)|Data ot-;rzymania|@S8|
+DtoA(DATAT)|Termin;zapíaty|@S8|
+SPOSOB|Spos¢b;zapíaty||
+WPLACONO|      ;Wpíacono||
+WARTOSC-WPLACONO|       ;Pozostaje||
+NABYWCA|        ;Kontrahent||

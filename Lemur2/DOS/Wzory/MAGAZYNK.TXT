@@ -1,0 +1,10 @@
+Tytuíy na stanie powyßszego kontrahenta
+11|22|1|78|1||||ON('DOKUM')|Jest_baza('ROB')|CreateIndex(kolumny[1],,1)|DBGoTop()|
+GetPoleS(1,'ID_T','NAZWA','TOWARY')|Tytuí;|@S60|
+ILOSC|Iloûç;|@Z 99,999|
+       CENA_Z|Cena p;netto|@Z 999.99|
+         CVAT(GetPoleS(1,'ID_T','VAT','TOWARY'))|VAT|XXX|
+Brutto(CENA_Z,GetPoleS(1,'ID_T','VAT','TOWARY'))|Cena p.;brutto|@Z 9999.99|
+       CENA_Z*ILOSC|Wartoûç;netto|@Z 999,999,999.99|
+Brutto(CENA_Z,GetPoleS(1,'ID_T','VAT','TOWARY'))*ILOSC|Wartoûç;brutto|@Z 999,999,999.99|
+              GetPoleS(1,'ID_T','MASA','TOWARY')*ILOSC|Masa;|@Z 999,999.999|

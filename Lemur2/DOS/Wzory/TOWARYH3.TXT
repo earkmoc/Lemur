@@ -1,0 +1,13 @@
+ID|INDEKS|NAZWA|CENA_Z|CENA_S|JM|SWW|VAT|
+ID|Indeks|Nazwa|Cena z.|Cena s.|j.m.|SWW|VAT|
+||@S35|@Z 99999.99|@Z 99999.99|XXXXX|XXXXX|99|
+5|1|22|78|1|
+Towary
+
+5|Esc|Esc - wyjžcie|
+|I|Indeks|Indeks({ 'LP', 'Indeks', 'Nazwa' })|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('TOWARY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,1,ID,2,CENA_S,3|
+57|ENTER||dalej,1,ID,2,CENA_S,3|

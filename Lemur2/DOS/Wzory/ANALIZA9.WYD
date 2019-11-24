@@ -1,0 +1,24 @@
+Firma()|Date()|Time()|DBE_Tyt|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+--------------------------------------------------------------------------
+  LP ? Typ Numer               Data s. Kontrahent    Przych¢d    Rozch¢d
+--------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|DOKUM->(GetPole(1,'ID_D','BLOKADA'))|DOKUM->(GetPole(1,'ID_D','TYP'))|
+DOKUM->(GetPole(1,'ID_D','INDEKS'))|DOKUM->(GetPole(1,'ID_D','DATAS'))|
+FIRMY->(GetPole(1,"DOKUM->(GetPole(1,'ID_D','NABYWCA'))",'INDEKS'))|
+InccTab('tabs[1]',PRZYCHOD)|
+InccTab('tabs[2]',ROZCHOD)|
+InccTab('tabs[3]',PRZYCHOD-ROZCHOD)<>
+{999|X|XXX|@S18|@S8|@S10|@Z 9999,999.99|@Z 9999,999.99|}
+#DBGoTop()<>
++tabs[1]|tabs[2]<>  
+--------------------------------------------------------------------------
+                                           Razem:<9999,999.99|9999,999.99>
++Max(tabs[3],0)|Max(-tabs[3],0)<>  
+                                           Saldo:<@Z 9999,999.99|@Z 9999,999.99>
+ 0<>  
+koniec.

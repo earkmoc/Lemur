@@ -1,0 +1,17 @@
+TOWARY->(GetPole(1,'ID_T','NAZWA'))|RABAT|CENABEZR|ILOSC|Grosz(CENA*ILOSC)|CENA|Grosz(CENABEZR*ILOSC)|TOWARY->VAT|Brutto(CENA,TOWARY->VAT)|Brutto(ILOSC*CENA,TOWARY->VAT)|ILOSC*TOWARY->MASA|Paczki(ILOSC,TOWARY->W_PACZCE)|
+     ;Nazwa|  ;R%|Cena bez; rabatu|     ;Ilož|Wartož;z rabatem|Cena z;rabatem|Wartož;bez rabatu|Stawka;VAT|Cena;brutto|Wartož;brutto|Masa;towaru|Ilož;paczek|
+@S40|@Z 99|@Z 99999.99|@Z 99999|@Z 999,999.99|@Z 9999.99|@Z 999,999.99|99%|@Z 999.99|@Z 999,999.99|@Z 999999|@Z 999999|
+12|1|22|78|1||||LastZero(if(Eof(),68,))|DokumZLicz(" 842";"ShowNab(' 929'),ShowMasy('1052')")|TowUstawCe:=DOKUM->TOWCENNIK|TowUstawRa:=DOKUM->TOWRABAT|TowUstawRE:=0|rr[2]:=rr[2]-1|
+Pozycje powy§szego dokumentu
+
+|Esc|Esc - wyjžcie|Zwolnij('TOWARYBU'),Jest_baza('ROB'),DokumLicz('ROB->ID_T','VAT')|
+6|U|Usu¤|usuwasz t† pozycj‘|
+|I|Import|DokumImport()|
+|R|Rabaty|DokumRabat(" 842")|
+|C|Ceny|DokumCeny(" 842")|
+|S|Szukaj|SysMySeek('',nr)|
+14|F|Formularz|SPEC2,,,,73,DokumZLicz(" 842";"ShowMasy('1052')"),,,6|
+15|D|Dopisz=ENTER|SPEC2,,,,73,DokumZLicz(" 842";"ShowMasy('1052')"),,,2,|ROB->ID_D:=DOKUM->ID,ROB->ID_T:=-1,ROB->RABAT:=TowUstawRA|
+15|ENTER||SPEC2,,,,73,DokumZLicz(" 842";"ShowMasy('1052')"),,,2,|ROB->ID_D:=DOKUM->ID,ROB->ID_T:=-1,ROB->RABAT:=TowUstawRA|
+pozycja|||CSay(mr-1,1,mc,AllS(RecNo()) + '. ' + TOWARY->(GetPole(1,'ID_T','NAZWA')),jasny)|
+|X|X=Sort |CreateIndex(kolumny[nr],,1),zmiana:=.t.|

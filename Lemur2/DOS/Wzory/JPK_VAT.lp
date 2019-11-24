@@ -1,0 +1,1 @@
+		<LpSprzedazy>$lp</LpSprzedazy>

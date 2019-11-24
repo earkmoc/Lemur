@@ -1,0 +1,15 @@
+TYP|NAZWA|NUMER|MAGAZYNG|MAGAZYNP|TYP_F|MASKA|WZORWYDR|GENERUJ_W1|GENERUJ_D1|Generuj_G1|
+Typ|Nazwa|Nast‘pny Nr|MG|MP|?|Maska|Wz¢r|Warunek|TYP|Akcja|
+XXX|@S48||@Z 9|@Z 9|||||||
+5|1|22|78|1||||ON("DOKUM")|ON("FIRMY")|
+Typy dokument¢w
+
+5|Esc|Esc - wyjžcie|
+23|C|Copy|DOKTYPY,Nowa pozycja|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Opis(cat_wzorow+AllTrim(WZORWYDR)+'.wyd')|
+|P|Pozycje|SubBase("DOKUM,dokumt.txt,ROBOCZY,2,DOKTYPY->TYP,DOKTYPY->TYP==TYP")|
+|F|Formularz|NewSysForm('DOKTYPY,Dane bie§†cej pozycji')|
+15|D|Dopisz=ENTER|DOKTYPY,Nowa pozycja|
+15|ENTER||DOKTYPY,Nowa pozycja|

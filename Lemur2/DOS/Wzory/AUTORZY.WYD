@@ -1,0 +1,55 @@
+DATA_W|
+FIRMY->(GetPole(1,'AUTORZY->ID_A','UWAGI1'))|
+FIRMY->UWAGI2|
+"ulica: "+AllTrim(FIRMY->ADRES)|
+"kod: "+FIRMY->KOD+" miejscowoûç: "+AllTrim(FIRMY->MIASTO)|
+FIRMY->UWAGI3|
+FIRMY->UWAGI4|
+FIRMY->UWAGI5|0<>
+wystawca:                                                                                                    ú¢d¶, dnia:<99.99.99>  
+  <@S500>  
+  <@S500>  
+  <@S500>  
+  <@S500>  
+  <@S500>  
+  <@S500>  
+  <@S500>  
+                                                                                                                             dla:
+                                                                                       KSIê°Y MúYN Dom Wydawniczy Michaí Koli§ski               
+                                                                                                   90-345 ú¢d¶, ul.Ksiëßy Míyn 14
+                                                                                                                NIP: 727-114-19-63
+
+                                 RACHUNEK<>
+DATA_U|DATA_R|WARTOSC|AllS(CENA,'999,999.99')|AllS(ILOSC,'999,999')|
+TOWARY->(GetPole(1,'AUTORZY->ID_T','NAZWA'))|DATA_1|DATA_2|0<>  
+  
+Wystawiony zgodnie z umowÜ z dnia<X> i rozliczeniem z<X>  
+  
+Kwota rachunku:<999,999.99>  
+Jest ona iloczynem kwoty<@S99> PLN i<@S99> (liczby sprzedanych egzemplarzy
+ksiÜßki:<@S100>  
+w okresie:<X> -<X>)  
+  <>
+WARTOSCB|PROCENTK|WARTOSCK|WARTOSCD|PROCENTP|WARTOSCP|WARTOSCW|0<>  
+Kwota brutto:<99999,999.99>  
+Koszty uzyskania przychodu (<99%>):<999,999.99>  
+Doch¢d:<99999999999,999.99>  
+Podatek (<99%>):<999,999.99>  
+Do wypíaty:<9999999,999.99>  
+
+
+Kwotë powyßszÜ otrzymaíem got¢wkÜ.
+  
+                                                                                          Podpis: ..............................<>
+if(Empty(FIRMY->BANK+FIRMY->RACH),'',EOL+"Kwotë powyßszÜ proszë przekazaç na konto:")|
+FIRMY->BANK|FIRMY->RACH|
+if(Empty(FIRMY->BANK+FIRMY->RACH),'',"Podpis: ..............................")|0<>  
+   <@S100>  
+   <@S100>  
+   <@S100>  
+  
+                                                                                         <@S100>  
+
+
+Podatek dochodowy zapíaci KSIê°Y MúYN Dom Wydawniczy Michaí Koli§ski               
+                                                                                         

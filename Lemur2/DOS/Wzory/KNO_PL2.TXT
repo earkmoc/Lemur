@@ -1,0 +1,15 @@
+WT|KONTO|TRESC|
+Z|Konto|Nazwa|
+A|@S18|@S53|
+5|1|22|78|2|
+Plan kont - syntetyka + analityka
+
+5|Esc|Escape|
+74|Z|Znak|KNORDPOL,WT,*,24|
+6|U|Usu¤|usuwasz to konto|
+14|F|Formularz=ENTER|KNORDPOL,Dane konta|
+15|D|Dopisz|KNORDPOL,Dane konta,,,54|KNORDPOL->NUMER:=0|
+18|W|Wydruk|w_plan.txt,,Plan kont|
+7|S|Szukaj|nr,2,1,3,2|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+14|ENTER||KNORDPOL,Dane konta|

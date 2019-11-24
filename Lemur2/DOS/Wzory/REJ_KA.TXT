@@ -1,0 +1,19 @@
+LP|DtoA(D3)|NRK|NUMER|PRZEDMIOT|K10|K11|OTWARTY|K24|NAZWA|NRKONT|PSKONT|K24|
+  LP|Data|NRK|Numer|Trež|Przych¢d|Rozch¢d|?|Konto p.|Kontrahent|Numer|Pseudo|Konto p-stawne|
+9999|||@S6|@S15|@Z 999,999.99|@Z 999,999.99|||||||
+5|1|22|78|1|1|D||ON('FIRMY')|
+Kasa
+
+5|Esc|Escape|
+23|C|Copy|REJ_KA,Kopia pozycji kasy,,,,,,,1|(baza)->LP:=GetLast(1,1)+1,(baza)->NUMER:=Left((baza)->NUMER;2),(baza)->NRK:='',(baza)->OTWARTY:=' '|
+|U|Usu¤|if(OTWARTY#' ',Alarm('Dokument zamkni‘ty'),Kasuj('usuwasz t† pozycj‘'))|
+7|S|Szukaj|nr,1,1|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Wydruk(if(K10#0,'KP','KW')+'.wyd',,,,,1)|
+|L|Lista|Wydruk('rej_ka.wyd','REJ_KA')|
+|R|Renum|Renum('D3','LP','Data')|
+15|D|Dopisz=ENTER|REJ_KA,Nowa pozycja kasy,,,,,,,1|(baza)->D1:=Date(),(baza)->D2:=Date(),(baza)->D3:=Date(),(baza)->D4:=Date(),(baza)->LP:=GetLast(1,1)+1|
+|F|Formularz|if(OTWARTY#' ',NewSysForm('REJ_KA,Zamkni‘ta pozycja kasy',.t.),NewSysForm('REJ_KA,Pozycja kasy,,,,,,,3'))|
+15|ENTER||REJ_KA,Nowa pozycja kasy,,,,,,,1|(baza)->D1:=Date(),(baza)->D2:=Date(),(baza)->D3:=Date(),(baza)->D4:=Date(),(baza)->LP:=GetLast(1,1)+1|
+66|||&cat_wzorow+'imp_clka.txt'|
+|||if(OTWARTY#' ',Alarm('Dokument zamkni‘ty'),AppendRecord('ROZLICZ';{K24;AllTrim(PRZEDMIOT)+', '+NUMER;Val(NRK);D3;;K11;K10;'RK';;;Date()})),Blokuj_R(),REJ_KA->OTWARTY:='z',PressKey('d¢’')|

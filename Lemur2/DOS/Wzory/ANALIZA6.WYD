@@ -1,0 +1,28 @@
+Firma('max3.txt')|Date()|Time()|Dwielinie(DBE_Tyt,65,3)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+-------------------------------------------------------------------------------------------------------------------------------------
+  LP ? Typ Numer                 Data s. Kontrahent        Wartoûç       Wpíacono      Pozostaje  Termin Dni zwíoki Odsetki (24%/rok)
+-------------------------------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+DOKUM->(GetPole(1,'ID_D','BLOKADA'))|
+DOKUM->(GetPole(1,'ID_D','TYP'))|
+DOKUM->(GetPole(1,'ID_D','INDEKS'))|
+DOKUM->(GetPole(1,'ID_D','DATAS'))|
+DOKUM->(GetPole(1,"ID_D",'INDEKS_F'))|
+InccTab('tabs[1]',DOKUM->(GetPole(1,'ID_D','WARTOSC')))|
+InccTab('tabs[2]',DOKUM->(GetPole(1,'ID_D','WPLACONO')))|
+InccTab('tabs[3]',DOKUM->(GetPole(1,'ID_D','WARTOSC-WPLACONO')))|
+DOKUM->(GetPole(1,'ID_D','if(WARTOSC-WPLACONO=0,Space(8),DATAT)'))|
+DOKUM->(GetPole(1,'ID_D','if(WARTOSC-WPLACONO=0,0,Max(Date()-DATAT,0))'))|
+InccTab('tabs[4]',DOKUM->(GetPole(1,'ID_D','if(WARTOSC-WPLACONO=0,0,0.24/365*Max(Date()-DATAT,0)*(WARTOSC-WPLACONO))')))<>
+{999|X|XXX|@S18|@S10|@S10|@Z 999,999,999.99|@Z 999,999,999.99|@Z 999,999,999.99|@S8|@Z 999999|@Z 999,999,999.99}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]<>  
+-------------------------------------------------------------------------------------------------------------------------------------
+                                                 Razem:<999,999.99|999,999,999.99|999,999,999.99|9999999999999999999,999,999.99>
+ 0<>  
+koniec.

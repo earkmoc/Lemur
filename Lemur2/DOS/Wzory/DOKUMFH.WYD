@@ -1,0 +1,69 @@
+DATAS|
+EOL+Firma(,,1,1)|
+DATAW|
+EOL+Firma(,,2)|
+if(Empty(NIP),'Rachunek uproszczony','    '+AllTrim(DOKTYPY->(GetPole(1,'DOKUM->TYP','NAZWA'))))|
+Alltrim(INDEKS)+"W0  "|NAZWA1|
+if(Empty(NAZWA2),'',EOL+Space(10)+NAZWA2)|
+if(Empty(NAZWA3),'',EOL+Space(10)+NAZWA3)|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)|NIP|SPOSOB|DATAT|0<>
+[111]Sprzedawca:                                                                                      miesiÜc sprzedaßy:<@S30>G
+<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>                                                       Data wystawienia:<@S10>
+<@S500>  H
+  
+  <@S50> W1Nr<@S100>
+G  
+Nabywca :<@S100>  <@S100>  <@S100>  H
+  Adres :<@S100>  
+    NIP :<@S100>  
+Odbiorca: j.w.                                                                                                 G< >H  
+òr.trans:                                                                                                      G< >H  
+[111]=====================================================================================================================================
+                                                               Symbol              Ra-  Cena    Wartoûç      Podatek      Wartoûç    
+ LP   Nazwa towaru/Usíugi                                      PKWiU  j.m.   Iloûç bat  netto    netto     %    kwota     brutto     
+=====================================================================================================================================<>
+#ON('SPEC')|DBSetOrder(1)|DBSeek(DOKUM->ID)|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|Ustaw('drukuj_for','ILOSC#0')|
+Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|AllTrim(TOWARY->(GetPole(1,'SPEC->ID_T','NAZWA')))+Replicate(' .',50)|
+TOWARY->SWW|TOWARY->JM|ILOSC|RABAT|CENA|Grosz(ILOSC*CENA)|CVAT(TOWARY->VAT)|
+Grosz(0.01*NVAT(TOWARY->VAT)*Grosz(ILOSC*CENA))|
+Grosz(ILOSC*CENA)+Grosz(0.01*NVAT(TOWARY->VAT)*Grosz(ILOSC*CENA))|
+InccTab('tabs[1]',ILOSC*TOWARY->MASA)|
+InccTab('tabs[2]',Paczki(ILOSC,TOWARY->W_PACZCE))<>
+{[222]999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXX|XXXX|999999|@Z 99%|999.99|9999,999.99|XXX|         |            }
+#Jest_baza('DOKUM')<>
+  0<>  
+-------------------------------------------------------------------------------------------------------------------------------------<>
++if(WARTOSC>0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC)<>  
+[  1]G          Do<XXXXXXXXXX|999,999,999.99>
++WARTOSC-(VAT22+VAT7)|VAT22+VAT7|WARTOSC<>
+                                                   Razem:<9999,999.99|99,999,999.99|99999,999.99>
++PadR(ZlGr(Abs(WARTOSC),1),100)<>  
+             Síownie:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++if(WARTOSC>0,'Zapíacono',' Zwr¢cono')+':'|Abs(WPLACONO)<>
+H  ======================================
+          <XXXXXXXXXX|999,999,999.99>
++NETTO22|CVAT(22)|VAT22|NETTO22+VAT22<>
+                                                   W tym:<9999,999.99|XXX|99,999.99|99999,999.99>
++if(WARTOSC>0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC-WPLACONO)<>  
+Pozostaío do<XXXXXXXX|999,999,999.99>
++NETTO7|CVAT(7)|VAT7|NETTO7+VAT7<>
+                                                         <9999,999.99|XXX|99,999.99|99999,999.99>
++SPOSOB<>  
+      Spos¢b zapíaty:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++NETTO0|CVAT(0)|0|NETTO0<>
+                                                   <9999,999.99|XXX|99,999.99|99999,999.99>
++PadR("wedíug comiesiëcznych rozlicze§",100)<>  
+                     <XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++NETTOZW|"zw."|0|NETTOZW<>
+  <9999,999.99|XXX|99,999.99|99999,999.99>
++PadR("7 dni od przygotowania rozliczenia",100)<>  
+              Termin:<@S50> 
+ODEBRAL|WYSTAWIL|AllTrim(Zera_won(AllS(tabs[1],'@Z 999,999,999.999')))+'/'+AllS(tabs[2])|0<>  
+[  3]
+         Imië, nazwisko i podpis osoby                                                      Imië, nazwisko i podpis osoby
+     uprawnionej do otrzymania faktury VAT                                             uprawnionej do wystawienia faktury VAT
+                                                               
+          <@S30>                                                       <@S30>  
+          .......................                                                               .......................<XXXXXXXXXXXXXXXXXXXX>

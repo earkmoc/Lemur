@@ -1,0 +1,17 @@
+DBF_NAME|DBF_LP|DBF_FIELD|DBF_TYPE|DBF_LEN|DBF_DEC|DBF_OPIS|
+Baza|LP|Pole|T|Len|D|P|Opis|
+XXXXXXXX|99|XXXXXXXXXX|X|999|9|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+5|1|22|78|1|
+DANE "SYSTEMU BAZ"
+
+5|P|Popraw|sysbaz_f.txt||tak|
+6|D|Dopisz|sysbaz_f.txt|Dopisywanie nowego pola bazy danych|nie|
+1|K|Kasuj|usuwasz t† pozycj‘|
+2|S|Szukaj|nr|1|1|3|2|
+3|I|Indeks|w/g nazwy bazy danych|w/g nazwy pola bazy|1|2|
+7|W|Wydruk|sysbaz_w.txt|
+8|A|Auto|
+9|R|Ren|
+10|U|Usu¤|
+4|ESC|ESCape|
+5|ENTER||sysbaz_f.txt||nie|

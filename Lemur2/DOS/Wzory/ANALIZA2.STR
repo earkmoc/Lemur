@@ -1,0 +1,11 @@
+Aadd(pola,{'ID_F','N',10,0})|
+Aadd(pola,{'STAN','N',12,3})|
+Aadd(pola,{'SPRZEDAZ','N',12,3})|
+Aadd(pola,{'SPRZEDAZ1','N',12,3})|
+Aadd(pola,{'SPRZEDAZ2','N',12,3})|
+Aadd(pola,{'SPRZEDAZ3','N',12,3})|
+Aadd(pola,{'SPRZEDAZ4','N',12,3})|
+Aadd(pola,{'SPRZEDAZ5','N',12,3})|
+Aadd(pola,{'SPRZEDAZ6','N',12,3})|
+Aadd(indeksy,'analiza2')|
+Aadd(klucze,'ID_F')|

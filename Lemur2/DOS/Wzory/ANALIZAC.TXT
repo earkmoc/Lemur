@@ -1,0 +1,16 @@
+Mark('ANALIZAZ',ID_F,'*')|FIRMY->(GetPole(1,'ID_F','INDEKS'))|FIRMY->(GetPole(-1,'ID_F','NAZWA1'))|FIRMY->(GetPole(-1,'ID_F','MIASTO'))|DtoA(DATA)|
+Z|Indeks|Nazwa|Miasto|Data ost|
+X|@S10|@S38|@S9|
+5|1|22|78|2||||GetIni()|ON('FIRMY')|ON('MAGAZYNY')|ON('DOKUM')|ON('ANALIZAZ')|
+Daty ostatnich dokument¢w kontrahent¢w dawno bez RWC, PWC
+
+5|Esc|Esc|
+7|S|Szukaj|nr|
+|Z|Znak|Mark('ANALIZAZ',ID_F)|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|T|Total|ShowDBES()|
+|W|Wydruk|Drukuj()|
+|F|Formularz|FIRMY->(NewSysForm('FIRMY,Dane bie§†cej pozycji,,,,,,,2'))|
+|A|Aktualizacja=ENTER|DokAnak('ANALIZAK,Podaj parametry procedury,,,,,,,2','RWC,PWC','Kontrahenci bez dokumentu',1,TypyKonSpc)|
+|ENTER||DokAnak('ANALIZAK,Podaj parametry procedury,,,,,,,2','RWC,PWC','Kontrahenci bez dokumentu',1,TypyKonSpc)|
+|G|Generuj|GenRW('ANALIZAZ')|

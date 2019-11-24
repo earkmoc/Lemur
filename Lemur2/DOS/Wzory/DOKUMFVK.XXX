@@ -1,0 +1,169 @@
+DATAW|
+if(Empty(NIP),'Rachunek uproszczony korygujÜcy',AllTrim(DOKTYPY->(GetPole(1,'DOKUM->TYP','NAZWA'))))|
+Alltrim(INDEKS)+"W0  "|EOL+Firma()|NAZWA1|
+if(Empty(NAZWA2),'',EOL+Space(16)+NAZWA2)|
+if(Empty(NAZWA3),'',EOL+Space(16)+NAZWA3)|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)|NIP|NABYWCA|
+AllTrim(NUMERFD)|DATAO|DATAS|0<>
+[111]                                                      ú¢d¶, dnia:<@S10>  
+  
+  <@S50> W1Nr<@S100>
+G  
+
+Sprzedawca:<@S500>    H
+
+      Nabywca :<@S100>  <@S100>  <@S100>    H
+        Adres :<@S100>  
+          NIP :<@S100>                          < >  
+
+Faktura korygowana Nr:<@S20>, z dnia<@S10>  
+  
+Data sprzedaßy:<@S10>  
+
+[222]Byío: (tylko korygowane pozycje)
+[111]=====================================================================================================================================
+                                                               Symbol              Ra-  Cena    Wartoûç      Podatek      Wartoûç    
+ LP   Nazwa towaru/Usíugi                                      PKWiU    j.m. Iloûç bat  netto    netto     %    kwota     brutto     
+=====================================================================================================================================<>
+#ON('ROB')|DBSetOrder(1)|DBGoTop()|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|
+Ustaw('drukuj_for','!(ILOSC>=0)')|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)<>
+lp|                    AllTrim(GetPoleS(1,'ROB->ID_T','NAZWA','TOWARY'))+Replicate(' .',50)|
+                               GetPoleS(1,'ROB->ID_T','SWW','TOWARY')|
+                               GetPoleS(1,'ROB->ID_T','JM','TOWARY')|
+-ILOSC|RABAT|CENA|Grosz(-ILOSC*CENA)|
+                           CVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)|
+    VAT(Grosz(-ILOSC*CENA),NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1))|
+ Brutto(Grosz(-ILOSC*CENA),NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1))|
+tabs[1]:=tabs[1]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)=23,Grosz(-ILOSC*CENA),0)|
+tabs[2]:=tabs[2]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)=22,Grosz(-ILOSC*CENA),0)|
+tabs[3]:=tabs[3]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 8,Grosz(-ILOSC*CENA),0)|
+tabs[4]:=tabs[4]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 7,Grosz(-ILOSC*CENA),0)|
+tabs[5]:=tabs[5]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 5,Grosz(-ILOSC*CENA),0)|
+tabs[6]:=tabs[6]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 0,Grosz(-ILOSC*CENA),0)|
+tabs[7]:=tabs[7]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)=-1,Grosz(-ILOSC*CENA),0)|
+tabs[8]:=tabs[8]+Grosz(-ILOSC*CENA)<>
+{[222]999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXX|XXX|999999|@Z 99%|999.99|9999,999.99|999|99,999.99|99999,999.99}
++tabs[8]|Grosz(tabs[1]*0.23)+Grosz(tabs[2]*0.22)+Grosz(tabs[3]*0.08)+Grosz(tabs[4]*0.07)+Grosz(tabs[5]*0.05)|
+tabs[8]+Grosz(tabs[1]*0.23)+Grosz(tabs[2]*0.22)+Grosz(tabs[3]*0.08)+Grosz(tabs[4]*0.07)+Grosz(tabs[5]*0.05)<>  
+------------------------------------------------------------------------------------------------------------------------------------
+                                                                                       Razem:<9999,999.99|999999,999.99|99999,999.99>
+  0<>  
+                                                                                       W tym: ======================================<>
++tabs[1]|23|Grosz(tabs[1]*0.23)|tabs[1]+Grosz(tabs[1]*0.23)|druk_on:=(tabs[1]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[2]|22|Grosz(tabs[2]*0.22)|tabs[2]+Grosz(tabs[2]*0.22)|druk_on:=(tabs[2]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[3]|8|Grosz(tabs[3]*0.08)|tabs[3]+Grosz(tabs[3]*0.08)|druk_on:=(tabs[3]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[4]|7|Grosz(tabs[4]*0.07)|tabs[4]+Grosz(tabs[4]*0.07)|druk_on:=(tabs[4]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[5]|5|Grosz(tabs[5]*0.05)|tabs[5]+Grosz(tabs[5]*0.05)|druk_on:=(tabs[5]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[6]|0|0|tabs[6]|druk_on:=(tabs[6]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[7]|"zw."|0|tabs[7]|druk_on:=(tabs[7]>0)<>  
+                                                                                             <9999,999.99|XXX|99,999.99|99999,999.99>
+#druk_on:=.t.<>
+  0<>  
+Powinno byç: (tylko korygowane pozycje)
+=====================================================================================================================================
+                                                               Symbol              Ra-  Cena    Wartoûç      Podatek      Wartoûç    
+ LP   Nazwa towaru/Usíugi                                      PKWiU    j.m. Iloûç bat  netto    netto     %    kwota     brutto     
+=====================================================================================================================================<>
+#DBGoTop()|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|
+Ustaw('drukuj_for','(ILOSC>=0)')|
+tabs[1]:=0|
+tabs[2]:=0|
+tabs[3]:=0|
+tabs[4]:=0|
+tabs[5]:=0|
+tabs[6]:=0|
+tabs[7]:=0|
+tabs[8]:=0<>
+lp|                    AllTrim(GetPoleS(1,'ROB->ID_T','NAZWA','TOWARY'))+Replicate(' .',50)|
+                               GetPoleS(1,'ROB->ID_T','SWW','TOWARY')|
+                               GetPoleS(1,'ROB->ID_T','JM','TOWARY')|
+ILOSC|RABAT|CENA|Grosz(ILOSC*CENA)|
+                          CVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)|
+    VAT(Grosz(ILOSC*CENA),NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1))|
+ Brutto(Grosz(ILOSC*CENA),NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1))|
+tabs[1]:=tabs[1]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)=23,Grosz(ILOSC*CENA),0)|
+tabs[2]:=tabs[2]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)=22,Grosz(ILOSC*CENA),0)|
+tabs[3]:=tabs[3]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 8,Grosz(ILOSC*CENA),0)|
+tabs[4]:=tabs[4]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 7,Grosz(ILOSC*CENA),0)|
+tabs[5]:=tabs[5]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 5,Grosz(ILOSC*CENA),0)|
+tabs[6]:=tabs[6]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)= 0,Grosz(ILOSC*CENA),0)|
+tabs[7]:=tabs[7]+if(NVAT(GetPoleS(1,'ROB->ID_T','VAT','TOWARY'),1)=-1,Grosz(ILOSC*CENA),0)|
+tabs[8]:=tabs[8]+Grosz(ILOSC*CENA)<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXX|XXX|999999|@Z 99%|999.99|9999,999.99|XXX|99,999.99|99999,999.99|}
++tabs[8]|Grosz(tabs[1]*0.23)+Grosz(tabs[2]*0.22)+Grosz(tabs[3]*0.08)+Grosz(tabs[4]*0.07)+Grosz(tabs[5]*0.05)|
+tabs[8]+Grosz(tabs[1]*0.23)+Grosz(tabs[2]*0.22)+Grosz(tabs[3]*0.08)+Grosz(tabs[4]*0.07)+Grosz(tabs[5]*0.05)<>  
+------------------------------------------------------------------------------------------------------------------------------------
+                                                                                       Razem:<9999,999.99|999999,999.99|99999,999.99>
+  0<>  
+                                                                                       W tym: ======================================<>
++tabs[1]|23|Grosz(tabs[1]*0.23)|tabs[1]+Grosz(tabs[1]*0.23)|druk_on:=(tabs[1]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[2]|22|Grosz(tabs[2]*0.22)|tabs[2]+Grosz(tabs[2]*0.22)|druk_on:=(tabs[2]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[3]|8|Grosz(tabs[3]*0.08)|tabs[3]+Grosz(tabs[3]*0.08)|druk_on:=(tabs[3]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[4]|7|Grosz(tabs[4]*0.07)|tabs[4]+Grosz(tabs[4]*0.07)|druk_on:=(tabs[4]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[5]|5|Grosz(tabs[5]*0.05)|tabs[5]+Grosz(tabs[5]*0.05)|druk_on:=(tabs[5]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[6]|0|0|tabs[6]|druk_on:=(tabs[6]>0)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[7]|"zw."|0|tabs[7]|druk_on:=(tabs[7]>0)<>  
+                                                                                             <9999,999.99|XXX|99,999.99|99999,999.99>
+#druk_on:=.t.<>
+#Jest_baza('DOKUM')<>
+UWAGI<>  
+[  1]Tytuí korekty:<@S100>
+if(WARTOSC-(VAT23+VAT22+VAT8+VAT7+VAT5)>=0,'zwiëkszenia','zmniejszenia')|Abs(WARTOSC-(VAT23+VAT22+VAT8+VAT7+VAT5))<>  
+Kwota<@S20> wartoûci bez podatku:<999,999.99>
+if(VAT22+VAT7>=0,'zwiëkszenia','zmniejszenia')|Abs(VAT22+VAT7)<>  
+Kwota<@S20> wartoûci podatku VAT:<999,999.99>
+  0<>  
+------------------------------------------------------------------------------------------------------------------------------------<>
++if(WARTOSC>=0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC)<>  
+          Do<XXXXXXXXXX|999,999,999.99>
++WARTOSC-(VAT23+VAT22+VAT8+VAT7+VAT5)|VAT23+VAT22+VAT8+VAT7+VAT5|WARTOSC<>
+                                                   Razem:<9999,999.99|999999,999.99|99999,999.99>
++PadR(ZlGr(Abs(WARTOSC),1),100)<>  
+             Síownie:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++if(WARTOSC>0,'Zapíacono',' Zwr¢cono')+':'|Abs(WPLACONO)<>
+  ======================================
+          <XXXXXXXXXX|999,999,999.99>
++NETTO1()|CVAT1()|VAT1()|NETTO1()+VAT1()<>
+                                                   W tym:<9999,999.99|999|99,999.99|99999,999.99>
++if(WARTOSC>=0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC-WPLACONO)<>  
+Pozostaío do<XXXXXXXX|999,999,999.99>
++NETTO2()|CVAT2()|VAT2()|NETTO2()+VAT2()<>
+                                                         <@Z 9999,999.99|@Z 999|@Z 99,999.99|@Z 99999,999.99>
++SPOSOB<>  
+      Spos¢b zapíaty:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++NETTO3()|CVAT3()|VAT3()|NETTO3()+VAT3()<>
+                                                   <@Z 9999,999.99|@Z 999|@Z 99,999.99|@Z 99999,999.99>
++DATAT<>  
+              Termin:<XXXXXXXXXX>
++NETTO4()|CVAT4()|VAT4()|NETTO4()+VAT4()<>
+                                                             <@Z 9999,999.99|@Z XXX|@Z 99,999.99|@Z 99999,999.99>
+SPACE(30)|WYSTAWIL|0<>  
+[  3]
+         Podpis osoby uprawnionej                                                               Podpis osoby uprawnionej
+     do otrzymania korekty faktury VAT :                                                   do wystawienia korekty faktury VAT :
+
+          <@S30>                                                       <@S30>  
+          .......................                                                               .......................
+

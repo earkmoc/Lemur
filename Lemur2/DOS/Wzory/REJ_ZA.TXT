@@ -1,0 +1,20 @@
+LP|NUMER|NAZWA|K9|DtoA(D3)|K9-K26|D4|K26|K9|K31|K25|NRKONT|PSKONT|D1|D2|D3|SubStr(PRZEDMIOT,24,8)|K20|
+LP|Numer|Nazwa|Wartoûç|Data|Do zapíaty|Termin|Wpíacono|Wartoûç|Z marßÜ|Uwagi|Numer|Pseudo|Data podatku|Data wystawienia|Data otrzymania|Nr "PZ"|Podatek VAT|
+9999|@S13|@S30|@Z 999,999.99|@S8|@Z 999,999.99|@S8|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|||||||||
+5|1|22|78|1|1|
+Rejestr zakup¢w towar¢w
+
+5|Esc|Escape|
+15|D|Dopisz|REJ_ZA,Nowa pozycja rejestru zakup¢w towar¢w,,,,,,,2|REJ_ZA->D1:=Date(),REJ_ZA->D2:=CtoD(''),REJ_ZA->D3:=CtoD(''),REJ_ZA->D4:=Date(),REJ_ZA->LP:=GetLast(1,1)+1|
+|U|Usu§|UsunDz('usuwasz tÜ pozycjë',D3)|
+7|S|Szukaj|nr,1,1,10,2,11,3|
+|I|Import|Autodekret('importPZ.txt',,'FZ')|
+|R|Ren|Renum('D3','LP','Data otrzymania')|
+|~||Opis('importPZ.txt')|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Wydruk('rej_za.wyd','rej_za')|
+|W||RunMenu(18,,'e',,'Wybierz wariant wydruku :',1)|
+|F|Formularz=ENTER|FormDz('REJ_ZA,Pozycja rejestru zakup¢w towar¢w',D3)|
+           |ENTER||FormDz('REJ_ZA,Pozycja rejestru zakup¢w towar¢w',D3)|
+|TAB||Znacz('NUMER')|
+19|!||Wyczyûciç tabelë ?|

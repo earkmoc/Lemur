@@ -1,0 +1,5 @@
+Aadd(pola,{'ID_F','N',10,0})|
+Aadd(pola,{'WARTOSC','N',12,2})|
+Aadd(pola,{'NETTO','N',12,2})|
+Aadd(indeksy,'analiza5')|
+Aadd(klucze,'ID_F')|

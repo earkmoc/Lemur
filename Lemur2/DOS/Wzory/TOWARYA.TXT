@@ -1,0 +1,13 @@
+INDEKS|NAZWA|MAGAZYNY->(GetPole(1,'"         0"+Str(ID)','ILOSC'))|CENA_Z|CENA_S|JM|SWW|VAT|
+Indeks|Nazwa|Ilož G.|Cena z.|Cena s.|j.m.|SWW|VAT|
+|@S40|||99999.99|XXXXX|XXXXX|99|
+5|1|22|78|2|
+Towary
+
+5|Esc|Esc - wyjžcie|
+|D|Dopisz|if(NewSysDopisz("TOWARY,Nowa pozycja",,,"TOWARY->ID:=GetLast(1,1)+1,TOWARY->JM:=PadR('egz.';10),TOWARY->SWW:=PadR('2712-1';15)"),PLID(TOWARY->ID),)|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('TOWARY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,3,ID,1,INDEKS,2,NAZWA,3,CENA_S,4|
+57|ENTER||dalej,3,ID,1,INDEKS,2,NAZWA,3,CENA_S,4|

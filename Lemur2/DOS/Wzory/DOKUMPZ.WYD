@@ -1,0 +1,52 @@
+DATAW|AllTrim(DOKTYPY->(GetPole(1,'DOKUM->TYP','NAZWA')))|INDEKS|EOL+Firma('max3.txt')|
+NAZWA1|
+if(Empty(NAZWA2),'',EOL+Space(16)+NAZWA2)|
+if(Empty(NAZWA3),'',EOL+Space(16)+NAZWA3)|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)|NIP|NABYWCA|DATAS|0<>
+                                                      ú¢d¶, dnia:<@S10>  
+  
+W1  <@S50> Nr<@S20>  W0 
+
+<@S300>  
+  
+     Dostawca :<@S100>  <@S100>  <@S100>  
+        Adres :<@S100>  
+          NIP :<@S100>                                         <        >  
+
+Data przyjëcia:<@S10>  
+========================================================================================================================================
+                                                        Symbol SWW/KU                    Cena      Wartoûç      Podatek      Wartoûç    
+ LP   Nazwa towaru/Usíugi                  Indeks        lub   PKWiU  j.m.   Iloûç       netto      netto     %    kwota     brutto     
+========================================================================================================================================<>
+#ON('SPEC')|DBSetOrder(1)|DBSeek(DOKUM->ID)|Ustaw('drukuj_while','ID_D=DOKUM->ID')<>
+lp|TOWARY->(GetPole(1,'SPEC->ID_T','NAZWA'))|TOWARY->INDEKS|TOWARY->SWW|TOWARY->JM|ILOSC|CENA|Grosz(ILOSC*CENA)|TOWARY->VAT|Grosz(0.01*TOWARY->VAT*Grosz(ILOSC*CENA))|Grosz(ILOSC*CENA)+Grosz(0.01*TOWARY->VAT*Grosz(ILOSC*CENA))<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXXXXXXX|XXXXXXXXXXXXX|XXXXX|999999.99|999,999.99|9999,999.99|999|99,999.99|99999,999.99}
+#Jest_baza('DOKUM')<>
+  0<>  
+--------------------------------------------------------------------------------------------------------------------------------------<>
++if(WARTOSC>0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC)<>  
+          Do<XXXXXXXXXX|999,999,999.99>
++WARTOSC-(VAT22+VAT7)|VAT22+VAT7|WARTOSC<>
+                                                      Razem:<9999,999.99|999999,999.99|99999,999.99>
++PadR(ZlGr(Abs(WARTOSC),1),100)<>  
+             Síownie:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++if(WARTOSC>0,'Zapíacono',' Zwr¢cono')+':'|Abs(WPLACONO)<>
+     ======================================
+          <XXXXXXXXXX|999,999,999.99>
++NETTO22|22|VAT22|NETTO22+VAT22<>
+                                                      W tym:<9999,999.99|999|99,999.99|99999,999.99>
++if(WARTOSC>0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC-WPLACONO)<>  
+Pozostaío do<XXXXXXXX|999,999,999.99>
++NETTO7|7|VAT7|NETTO7+VAT7<>
+                                                            <9999,999.99|999|99,999.99|99999,999.99>
++SPOSOB<>  
+      Spos¢b zapíaty:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++NETTO0|0|0|NETTO0<>
+                                                      <9999,999.99|999|99,999.99|99999,999.99>
++DATAT<>  
+              Termin:<XXXXXXXXXX>
++NETTOZW|"zw."|0|NETTOZW<>
+                                                                <9999,999.99|XXX|99,999.99|99999,999.99>
+ 0<>  
+  
+         Otrzymaí:                                                                              Wydaí:                  

@@ -1,0 +1,25 @@
+INDEKS|ZALICZKI|KOREKTY|ZALICZKI+KOREKTY|NALEZNOSCI|NALEZNOSCI-(ZALICZKI+KOREKTY)|KOD|MIASTO|ADRES|TELEFON|OSOBA|NIP|REGON|BANK|RACH|NAZWA2|NAZWA3|ID_F|
+Indeks|Zaliczki|Korekty|Zal.+kor.|Nale§nožci|Do sp’aty|Kod|Miasto|Adres|Telefon|Osoba|NIP|REGON|BANK|RACH|Nazwa|Nazwa|ID|
+|@Z 99,999.99|@Z 99,999.99|@Z 999,999.99|@Z 999,999.99|@Z 999,999.99|XXXXXX|@S20|@S30||@S12|@S13|@S9|@S30|@S40|@S35|@S15||
+5|1|21|78|1|
+Kontrahenci
+
+5|Esc|Esc=wyjžcie |
+|U|Usu¤ |Kasuj()|
+|S|Szukaj |SysMySeek('1,2',nr)|
+|I|Indeks |Indeks({ 'LP', 'Indeks', 'Nazwa', 'Adres', 'NIP' })|
+|X|X=Sortuj |CreateIndex(kolumny[nr])|
+|W|Wydruk |Drukuj(if(Alarm('Wydruk nale§nožci ?',tk)=1,'firmyr',))|
+|T|Towary |SubBase("MAGAZYNY,magazynk.txt,ROBOCZY,1,Str(FIRMY->ID_F),FIRMY->ID_F==ID",,,,,"CreateIndex(kolumny[2],,1),DBGoTop()")|
+|F|Formularz |NewSysForm('FIRMY,Dane bie§†cej pozycji,,,,,,,2')|
+|D|Dopisz |if(NewSysDopisz("FIRMY,Nowa pozycja",,,"FIRMY->ID_F:=GetLast(1,1)+1"),PLID(FIRMY->ID_F),)|
+|R|Rozlicz=ENTER |SubBase("DOKUM,dokum2.txt,ROBOCZY,7,Str(FIRMY->ID_F),FIRMY->ID_F==NABYWCA")|
+|ENTER||          SubBase("DOKUM,dokum2.txt,ROBOCZY,7,Str(FIRMY->ID_F),FIRMY->ID_F==NABYWCA")|
+|O|dOkumenty |    SubBase("DOKUM,dokum3.txt,ROBOCZY,4,Str(FIRMY->ID_F),FIRMY->ID_F==NABYWCA")|
+|Q|Q=total |TotDBES()|
+|C|Copy |if(NewSysDopisz("FIRMY,Nowa pozycja (kopia istniej†cej)",1,,"FIRMY->ID_F:=GetLast(1,1)+1"),PLID(FIRMY->ID_F),)|
+|Z|Zaliczki |SubBase("DOKZA,dokza.txt,ROBOCZY,1,FIRMY->ID_F,FIRMY->ID_F==ID_F")|
+|K|Korekty |SubBase("DOKUM,dokumk.txt,ROBOCZY,7,Str(FIRMY->ID_F),FIRMY->ID_F==NABYWCA")|
+|0|0|DBEval({;;Blokuj_R(),FIRMY->ZALICZKI:=0})
+|1|1|DBEval({;;Blokuj_R(),FIRMY->KOREKTY:=0})
+|2|2|DBEval({;;Blokuj_R(),FIRMY->NALEZNOSCI:=0})

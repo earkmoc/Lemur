@@ -1,0 +1,22 @@
+LP|NUMER|NAZWA|K11|DtoA(D2)|K11-K21|D4|K21|K11|K24|NRKONT|PSKONT|D1|D2|D3|K23|K11-K23|PRZEDMIOT|
+LP|Numer dok.|Nazwa kontrahenta|Wartoûç|Data sp.|Do zapíaty|Termin|Wpíacono|Wartoûç|Uwagi|Numer|Pseudo|Data podatku|Data wystawienia|Data sprzedaßy|VAT|Netto|P-miot|
+9999|@S12|@S32|@Z 999,999.99|@S8|@Z 9999,999.99|@S10|@Z 9999,999.99|@Z 9999,999.99||||||||||
+5|1|22|78|1|4|
+Rejestr sprzedaßy
+
+5|Esc|Esc|
+23|D|Dopisz|REJ_SP,Nowa pozycja rejestru sprzedaßy,,,,,,,2|REJ_SP->D1:=Date(),REJ_SP->D2:=CtoD(''),REJ_SP->D3:=CtoD(''),REJ_SP->D4:=Date(),REJ_SP->LP:=GetLast(1,1)+1|
+|U|Usu§|UsunDz('usuwasz tÜ pozycjë',D3)|
+|I|Import|Autodekret(if(Alarm('FIRMA (TAK) czy WYSYúKA (NIE) ?',tk)=1,'importWZ.txt','importWW.txt'),,'FV,FVK,FH,FHK,FI,FIK,FJ,FJK,RU,RUK,RUJ')|
+|R|Ren|Renum('D2','LP','Data sprzedaßy')|
+7|S|Szukaj|nr,1,1,9,2,10,3|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Wydruk('rej_sp.wyd','rej_sp',,,4)|
+|J|JPK_VAT|if(Ustaw("WydInit","")=NIL,Drukuj('jpk_vat',,'C:\Users\dell\Desktop\WYDRUKI\JPK_KM.XML'),)|
+|F|Formularz=ENTER|FormDz('REJ_SP,Pozycja rejestru sprzedaßy',D3)|
+           |ENTER||FormDz('REJ_SP,Pozycja rejestru sprzedaßy',D3)|
+|TAB||Znacz('NUMER')|
+|W||RunMenu(15,,'e',,'Wybierz wariant wydruku :',1)|
+|!||Opis('importWZ.txt')|
+|@||Opis('importWW.txt')|
+19|!||Wyczyûciç tabelë ?|

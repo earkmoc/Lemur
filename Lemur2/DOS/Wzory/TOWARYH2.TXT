@@ -1,0 +1,14 @@
+ID|INDEKS|NAZWA|CENA_Z|CENA_S|STAN|Max(STAN_MIN-STAN,0)|STAN_MIN|JM|SWW|VAT|
+ID|Indeks|Nazwa|Cena z.|Cena s.|Stan|Za ma’o o|Stan min.|j.m.|SWW|VAT|
+9999|@S10|@S35|@Z 99999.99|@Z 99999.99|@Z 999,999|@Z 999,999|@Z 9999999|XXXXX|XXXXX|99|
+5|1|22|78|3||||DBSetOrder(4)|
+Tytu’y do karty tytu’u
+
+5|Esc|Esc - wyjžcie|
+|I|Indeks|Indeks({ 'LP', 'Indeks', 'Nazwa' })|
+7|S|Szukaj|nr,2,2,3,3|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('TOWARY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,0,ID,2|
+57|ENTER||dalej,0,ID,2|
+

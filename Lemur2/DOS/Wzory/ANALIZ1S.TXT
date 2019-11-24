@@ -1,0 +1,14 @@
+ID_F|FIRMY->(GetPole(1,'ID_F','MIASTO'))|FIRMY->(GetPole(1,'ID_F','INDEKS'))|FIRMY->NAZWA1|STAN|STAN-MAGAZYNY->(GetPole(1,'Str(ID_F,10)+Str(ID_T,10)','ILOSC'))|
+Nr|Miasto|Indeks|Nazwa|Stan|Stan O - Stan F|
+9999|@S10|@S15|@S30|@Z 999,999|@Z 999999|
+5|1|22|78|1|
+Wybrany tytu’: stan, sprz. narastaj†co, žr./m-c
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|T|Total|ShowDBES()|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Drukuj()|
+|A|Aktualizacja=ENTER|DokAna1s('ANALIZ1S,Podaj parametry procedury,,,,,,,2','FV,RU,FVK,RUK','Stan towaru')|
+|ENTER||DokAna1s('ANALIZ1S,Podaj parametry procedury,,,,,,,2','FV,RU,FVK,RUK','Stan towaru')|
+31|Q||nr|

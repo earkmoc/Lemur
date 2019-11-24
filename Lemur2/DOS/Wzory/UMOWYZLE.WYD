@@ -1,0 +1,36 @@
+DATA_U|
+AllTrim(FIRMY->(GetPole(1,'UMOWYZLE->ID_A','NAZWA1')))|AllTrim(FIRMY->MIASTO)|
+AllTrim(FIRMY->ADRES)|AllTrim(ZLECAJACY)|TRESC1|TRESC2|TRESC3|WARTOSCB|DATA_T|
+WYKONAWCA|ZLECAJACY|0<>
+          W1Umowa o dzieíoW0
+
+Zawarta w úodzi, w dniu<X>  
+
+Stronami umowy sÜ:
+
+1.<@S500>, zam.<@S100>, ul.<@S100>  
+   zwany dalej WykonawcÜ.
+2. KSIê°Y MúYN Dom Wydawniczy Michaí Koli§ski. z siedzibÜ w úodzi, przy ul. Ksiëßy Míyn 14,
+   reprezentowana przez<@S100>, zwana dalej ZleceniodawcÜ.
+
+
+Przedmiotem umowy jest wykonanie przez Wykonawcë:
+  <@S100>  
+  <@S100>  
+  <@S100>  
+
+Wynagrodzenie za powyßsze czynnoûci strony ustaliíy na kwotë<999,999.99> PLN.
+
+Termin wykonania:<X>  
+
+
+
+
+   Wykonawca                                                      Zleceniodawca
+    
+  <XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>                              <XXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>  
+  ...............................                               ..............................
+
+            KSIê°Y MúYN Dom Wydawniczy Michaí Koli§ski   
+                                                                                                   90-345 ú¢d¶, ul.Ksiëßy Míyn 14
+                                                                                                                NIP: 727-114-19-63

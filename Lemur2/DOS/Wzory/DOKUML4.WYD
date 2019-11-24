@@ -1,0 +1,35 @@
+""+Firma('max3.txt')|Date()|Time()|FIRMY->NAZWA1|FIRMY->NAZWA2|FIRMY->NAZWA3|globalbuf2|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Dane dla:<@S200>  
+         <@S200>  
+         <@S200>  
+
+Zestawienie rachunk¢w i um¢w zlece§ za rok<9999>  
+-----------------------------------------------------------------------------
+                             Koszty                   Podatek
+                            uzyskania                 dochodowy
+                  Wartoûç   przychodu
+ LP   Data         brutto  %       kwota     Doch¢d  %     kwota   Do wypíaty
+-----------------------------------------------------------------------------<>
+#Ustaw('globalbuf1',RecNo())|
+DBGoTop()|
+Ustaw('drukuj_while','!Eof()')|
+Ustaw('drukuj_for','Year(DATAW)=globalbuf2.and.("ara"$TYP.or."umz"$TYP)')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|DATAW|
+InccTab('tabs[1]',NETTO22)|
+NETTO7|
+InccTab('tabs[2]',NETTO0)|
+InccTab('tabs[3]',NETTOZW)|
+VAT22|
+InccTab('tabs[4]',VAT7)|
+InccTab('tabs[5]',WARTOSC)<>
+{99|XXXXXXXXXX|@Z 999,999.99|@Z 99%|@Z 999,999.99|@Z 999,999.99|@Z 99%|@Z 999,999.99|@Z 999,999.99}
+#DBGo(globalbuf1)<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]<>  
+-----------------------------------------------------------------------------
+        Razem:<@Z 999,999.99|@Z 9999999,999.99|@Z 999,999.99|@Z 9999999,999.99|@Z 999,999.99>
+ 0<>  
+koniec.

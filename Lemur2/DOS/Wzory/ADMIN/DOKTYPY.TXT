@@ -1,0 +1,16 @@
+TYP|NAZWA|if(Left(MASKA,1)=='=',RunCommand(SubStr(MASKA,2)),PadR(AllTrim(AllS(NUMER)+MASKA),10))|MAGAZYNG|MAGAZYNP|EXPORT|TYP_F|MASKA|WZORWYDR|
+Typ|Nazwa|Nast‘pny Nr|MG|MP|E|Gen|Maska|Wz¢r|
+XXX|@S48||@Z 9|@Z 9|||||
+5|1|22|78|1||||ON("DOKUM")|ON("FIRMY")|
+Typy dokument¢w
+
+5|Esc|Esc - wyjžcie|
+15|D|Dopisz|DOKTYPY,Nowa pozycja|
+23|C|Copy|DOKTYPY,Nowa pozycja|
+6|U|Usu¤|usuwasz ten typ dokumentu|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Opis(cat_wzorow+AllTrim(WZORWYDR)+'.wyd')|
+|F|Formularz|NewSysForm('DOKTYPY,Dane bie§†cej pozycji')|
+|P|Pozycje=ENTER|SubBase("DOKUM,dokumt.txt,ROBOCZY,2,DOKTYPY->TYP,DOKTYPY->TYP==TYP")|
+|ENTER||SubBase("DOKUM,dokumt.txt,ROBOCZY,2,DOKTYPY->TYP,DOKTYPY->TYP==TYP")|

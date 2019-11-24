@@ -1,0 +1,21 @@
+1|47| |data|1||Time()|Date()|0|firma|memvar->data2|data3|data4|0<>
+memvar->lp|DOK|NR|DATA|LP|PZ|if(!Empty(WINIEN),KWOTA,0)|if(!Empty(MA),KWOTA,0)|WINIEN|MA|NAZ1|NAZ2|OPIS<>
+if(!Empty(WINIEN),KWOTA,0)|if(!Empty(MA),KWOTA,0)<>
+if(!Empty(WINIEN),KWOTA,0)|if(!Empty(MA),KWOTA,0)<>
+if(!Empty(WINIEN),KWOTA,0)|if(!Empty(MA),KWOTA,0)<>
+Space(2) + "NarastajÜco okres drukowany:" + Transform(tab_aa[1],'9999,999,999.99') + Transform(tab_aa[2],'9999,999,999.99') + EOL + EOL + "PStrona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+Czas :<@S8>                                                      Data :<@S8>  
+  <>  
+  
+                                Dziennik   
+M  
+Okres obliczeniowy: 01.01.98 -<@S8>, okres drukowany:<@S8> -<@S8>  
+--------------------------------------------------------------------------------------------------------------------------+
+  LP  |Dk| Nr |  Data  | Lp | Pz |     Kwota Wn |     Kwota Ma | Konto WN | Konto MA | Dow¢d    | Treûç | Opis wydarzenia |
+--------------------------------------------------------------------------------------------------------------------------+-1<>
+{99999|XX|9999|99999999|9999|9999|@Z 999,999,999.99|@Z 999,999,999.99|XXXXXXXXXX|XXXXXXXXXX|XXXXXXXXXX|XXXXXXX|XXXXXXXXXXXXXXXXX}
+-0--------------------------------------------------------------------------------------------------------------------------+<>  
+                     Suma strony:<999,999,999.99|999,999,999.99>  
+Okres obliczeniowy do tej strony:<999,999,999.99|999,999,999.99>  
+  NarastajÜco okres obliczeniowy:<999,999,999.99|999,999,999.99>  
+  <@S250>

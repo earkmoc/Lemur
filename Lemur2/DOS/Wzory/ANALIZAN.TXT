@@ -1,0 +1,12 @@
+Nak’ady tytu’¢w w poszczeg¢lnych latach
+5|22|1|78|1||||GetIni()|ON('TOWARY')|Jest_baza('ANALIZAN')|CreateIndex(kolumny[1])|DBGoTop()|
+GetPole(1,'ANALIZAN->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY')|Nazwa||
+ROK1|&AllS(Year(data1))|@Z 999,999|
+ROK2|&AllS(Year(data1)+1)|@Z 999,999|
+ROK3|&AllS(Year(data1)+2)|@Z 999,999|
+ROK4|&AllS(Year(data1)+3)|@Z 999,999|
+ROK5|&AllS(Year(data1)+4)|@Z 999,999|
+ROK6|&AllS(Year(data1)+5)|@Z 999,999|
+ROK7|&AllS(Year(data1)+6)|@Z 999,999|
+ROK8|&AllS(Year(data1)+7)|@Z 999,999|
+ROK9|&AllS(Year(data1)+8)|@Z 999,999|

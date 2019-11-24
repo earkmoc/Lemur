@@ -1,0 +1,13 @@
+Pozycje powy§szej karty
+12|22|1|78|1|e|||DBSetOrder(1)|
+ID|LP|999|
+DATA|Data||
+ISBN|ISBN|@S15|
+WYDANIE|Wydanie|@Z 999|
+RZUT|Rzut|@Z 999|
+CENA|Cena|@Z 999.99|
+NAKLAD|Nak’ad|@Z 999,999|
+PadR(if(DRUKSR=0,'',FIRMY->(GetPole(1,'DRUKSR','INDEKS'))),15)|Druk žrodk¢w|
+PadR(if(DRUKOK=0,'',FIRMY->(GetPole(1,'DRUKOK','INDEKS'))),15)|Druk ok’adki|
+ARKUSZ|Arkusz|
+UWAGI|Uwagi|

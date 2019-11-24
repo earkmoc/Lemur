@@ -1,0 +1,15 @@
+Poprawianie danych
+F1 - pomoc
+1|2|3|4|5|6|7|
+Baza :|LP :|Pole :|Typ :|Len :|Dec :|Opis :|
+XXXXXXXX|99|@K XXXXXXXXXX|!|999|9|@K XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+1|2|3|4|5|6|7|
+1|2|3|4|5|6|7|
+9|7|17|70|3|
+1|4|
+1|25|
+3|4|
+3|24|
+3|34|
+3|47|
+5|4|

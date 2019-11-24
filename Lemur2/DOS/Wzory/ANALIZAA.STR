@@ -1,0 +1,9 @@
+Aadd(pola,{'ID_T','N',10,0})|
+Aadd(pola,{'STAN','N',12,3})|
+Aadd(pola,{'SPRZEDAZ','N',12,3})|
+Aadd(pola,{'SREDNIO','N',12,3})|
+Aadd(pola,{'ILEDOK','N',6,0})|
+Aadd(pola,{'DATAP','D',8,0})|
+Aadd(pola,{'DATAK','D',8,0})|
+Aadd(indeksy,'analizaa')|
+Aadd(klucze,'ID_T')|

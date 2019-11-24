@@ -1,0 +1,26 @@
+""+Firma('max3.txt')|Date()|Time()|FIRMY->INDEKS|FIRMY->NAZWA1|DBE_Tyt|0<>
+<@S500>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Indeks:<@S15>  
+ Nazwa:<@S50>  
+
+  <@S150>  
+-------------------------------------------------------------------+- Ceny sprzedaßy -+--- Wartoûç -+--- Wartoûç -+-------+
+  LP Nazwa                                                  Stan   | netto VAT brutto |     netto   |    brutto   |  Masa |
+-------------------------------------------------------------------+------------------+-------------+-------------+-------+<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Ustaw('drukuj_for','(ILOSC#0)')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|PadR(TOWARY->(GetPole(1,'ID_T','NAZWA')),60)|
+InccTab('tabs[1]',ILOSC)|CENA_Z|
+         CVAT(GetPoleS(1,'ID_T','VAT','TOWARY'))|
+Brutto(CENA_Z,GetPoleS(1,'ID_T','VAT','TOWARY'))|
+InccTab('tabs[2]',Grosz(CENA_Z*ILOSC))|
+InccTab('tabs[3]',Brutto(CENA_Z,GetPoleS(1,'ID_T','VAT','TOWARY'))*ILOSC)|
+InccTab('tabs[4]',              GetPoleS(1,'ID_T','MASA','TOWARY')*ILOSC)<>
+{999|@S51|@Z 99,999,999|@Z 999.99|XXX|@Z 999.99|@Z 999,999,999.99|@Z 999,999,999.99|@Z 999?999}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]<>  
+---------------------------------------------------------------------------------------------------------------------------
+                                                Razem:<9999,999,999|9999999999999999999999999,999.99|9999999,999.99|999?999>
+ 0<>  
+koniec.

@@ -41,9 +41,6 @@
 						<li><span>=</span><b>15</b> oznacza dane o warto¶ciach <span>równych</span> <b>15</b>
 						<li><span><=</span><b>15</b> oznacza dane o warto¶ciach <span>mniejszych lub równych</span> <b>15</b>
 						<li><span>*</span><b>15</b> oznacza dane o warto¶ciach <span>koñcz±cych siê</span> cyframi <b>15</b> (znak <span>*</span> zastêpuje dowolny ci±g znaków)
-						<li><span>&</span><b>kolejny warunek</b> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "i" (and)
-						<li><span>|</span><b>kolejny warunek</b> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "lub" (or)
-						<li><span>!</span><b>kolejny warunek</b> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "nie" (not)
 						<li><b>10</b><span>::</span><b>15</b> oznacza dane o warto¶ciach <span>z zakresu</span>: od <b>10</b> (w³±cznie) do <b>15</b> (w³±cznie)
 						<hr>
 						Na koñcu pola "Szukaj" mo¿na stosowaæ znak <span>*</span>, np.:
@@ -54,6 +51,13 @@
 						<li><span>>="</span><b>2016-12-01</b><span>"</span> oznacza dane o datach <span>równych lub pó¼niejszych</span> ni¿ <b>2016-12-01</b>
 						<li><span><>""</span> oznacza dane o warto¶ciach <span>niepustych</span>
 						<li><span>=""</span> oznacza dane o warto¶ciach <span>pustych</span>
+						<hr>
+						Okre¶lone w powy¿szy sposób <span>warunki</span> mo¿na zaprzeczaæ lub ³±czyæ z kolejnymi warunkami, np.:
+						<li><span>!warunek</span> oznacza warunek przeciwny, czyli z przedrostkiem logicznym "nie" (not)
+						<li><span>&kolejny warunek</span> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "i" (and)
+						<li><span>|kolejny warunek</span> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "lub" (or)
+						<li><span>&!kolejny warunek</span> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "i nie" (and not)
+						<li><span>|!kolejny warunek</span> oznacza dodanie kolejnego warunku do ju¿ istniej±cego z ³±cznikiem logicznym "lub nie" (or not)
 						<hr>
 						Zaznaczaj±c odpowiednie pole wyboru mo¿na posortowaæ dane:
 						<li><span class="glyphicon glyphicon-sort-by-attributes"></span> oznacza sortowanie <span>rosn±co</span>
@@ -82,6 +86,7 @@
 		$row=(!@$row||1*$row<1?1:$row);
 		$col=(!@$col||1*$col<1?1:$col);
 
+		echo "var wzor='$wzor';\n";
 		echo "var firma='$firma';\n";
 		echo "var tabela='$tabela';\n";
 		echo "var widok='$widok';\n";
@@ -160,6 +165,7 @@ echo '</thead>';
         ].join('');
     }
 	function ParametryRefresh(params) {
+		params['wzor']=wzor;
 		params['firma']=firma;
 		params['tabela']=tabela;
 		params['widok']=widok;

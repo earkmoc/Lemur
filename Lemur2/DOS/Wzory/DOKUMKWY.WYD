@@ -1,0 +1,79 @@
++Int(Abs(WARTOSC))|100*(Abs(WARTOSC)-Int(Abs(WARTOSC)))|Space(99)|Int(Abs(WARTOSC))|100*(Abs(WARTOSC)-Int(Abs(WARTOSC)))<>
+P  <99999999999999|9999|@S12|9999999|9999>
++PadR(ZlGr(Abs(WARTOSC)),100)|Space(100)|PadR(ZlGr(Abs(WARTOSC)),100)<>  
+
+M         <@S37|@S15|@S37>
++EOL+PadR(LTrim(SubStr(ZlGr(Abs(WARTOSC)),38)),100)|Space(100)|PadR(LTrim(SubStr(ZlGr(Abs(WARTOSC)),38)),100)<>  <@S48|@S15|@S48>
++0<>  
+
+
+
+
+
+
+PIèTEK TRZYNASTEGO Firma s.c.                      PIèTEK TRZYNASTEGO Firma s.c.      
+Michaí Koli§ski i Michaí Wiercioch                 Michaí Koli§ski i Michaí Wiercioch 
+90-009 ú¢d¶, ul. Sienkiewicza 61                   90-009 ú¢d¶, ul. Sienkiewicza 61
+
+
+Bank: BIG Bank GDA•SKI S.A. Oddziaí ú¢d¶           Bank: BIG Bank GDA•SKI S.A. Oddziaí ú¢d¶    
+Rachunek: 11601061-66413001                        Rachunek: 11601061-66413001
+
+
+
+
+
+P
+<>
++Int(Abs(WARTOSC))|100*(Abs(WARTOSC)-Int(Abs(WARTOSC)))|Space(99)|Int(Abs(WARTOSC))|100*(Abs(WARTOSC)-Int(Abs(WARTOSC)))<>
+  <99999999999999|9999|@S12|9999999|9999>
++PadR(ZlGr(Abs(WARTOSC)),100)|Space(100)|PadR(ZlGr(Abs(WARTOSC)),100)<>  
+
+M         <@S37|@S15|@S37>
++EOL+PadR(LTrim(SubStr(ZlGr(Abs(WARTOSC)),38)),100)|Space(100)|PadR(LTrim(SubStr(ZlGr(Abs(WARTOSC)),38)),100)<>  <@S48|@S15|@S48>
++0<>  
+
+
+
+
+
+
+PIèTEK TRZYNASTEGO Firma s.c.                      PIèTEK TRZYNASTEGO Firma s.c.      
+Michaí Koli§ski i Michaí Wiercioch                 Michaí Koli§ski i Michaí Wiercioch 
+90-009 ú¢d¶, ul. Sienkiewicza 61                   90-009 ú¢d¶, ul. Sienkiewicza 61
+
+
+Bank: BIG Bank GDA•SKI S.A. Oddziaí ú¢d¶           Bank: BIG Bank GDA•SKI S.A. Oddziaí ú¢d¶    
+Rachunek: 11601061-66413001                        Rachunek: 11601061-66413001
+
+
+
+
+
+
+
+P
+<>
+Int(Abs(WARTOSC))|100*(Abs(WARTOSC)-Int(Abs(WARTOSC)))|
+PadR(ZlGr(Abs(WARTOSC)),100)|
+PadR(LTrim(SubStr(ZlGr(Abs(WARTOSC)),49)),100)|
+NAZWA1|
+NAZWA2|
+NAZWA3|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)<>
+
+
+
+
+P                       <9999999999>  <99>  M
+                             <@S48>  
+                     <@S48>  
+PiÜtek                       
+Trzynastego                  
+Firma s.c.                                                      -----------------
+Michaí Koli§ski
+Michaí Wiercioch    <@S100>  
+90-009 ú¢d¶         <@S100>  
+Sienkiewicza 61     <@S100>  
+                    <@S100>
++0<>  

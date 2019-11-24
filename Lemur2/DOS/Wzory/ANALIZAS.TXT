@@ -1,0 +1,18 @@
+ID_T|TOWARY->(GetPole(1,'ID_T','NAZWA'))|STAN|STANJEST|STANJEST-STAN|ID_F|CENA_Z|
+  ;ID|     ;Nazwa|Powinno ;by (1)|Stan;jest (2)|Za du§o;(2)-(1)|    ;ID_F|      ;CENA_Z|
+999|@S40|@Z 999,999|@Z 999,999|@Z 999,999|||
+5|1|22|78|3||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|Jest_baza('ANALIZAS')|CreateIndex(kolumny[2])|DBGoTop()|
+Wybrany kontrahent: stan na dzie¤ ...
+
+|Esc|Esc|DBEFiltr('RunCommand(kolumny[6])#0, R¢§nica # 0',,,1),won:=.t.|
+7|S|Szukaj|nr|
+|T|Total|ShowDBES()|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|globalbuf:=RecNo(),Drukuj(if(Alarm('Wydruk stan¢w ?',tk)=1,'analizss',NIL)),DBGoTo(globalbuf)|
+|P|Popraw|DokAnaP('Poprawi stany bie§†ce wed’ug tej analizy?')|
+|A|Aktualizacja=ENTER|DBEFiltr('RunCommand(kolumny[6])#0, R¢§nica # 0',,,1),DokAnAS('ANALIZAS,Podaj parametry procedury,,,,,,,2','RW,FH,FHK,FV,RU,FVK,RUK','Stan u kontrahenta')|
+|B|Bez dobrych|DBEFiltr('RunCommand(kolumny[6])#0, R¢§nica # 0')|
+|ENTER||DBEFiltr('RunCommand(kolumny[6])#0, R¢§nica # 0',,,1),DokAnAS('ANALIZAS,Podaj parametry procedury,,,,,,,2','RUK','Stan u kontrahenta')|
+31|Q||nr|
+73|1||MAGAZYNY->ILOSC:=(baza)->STAN|
+73|2||MAGAZYNY->(DBAppend()),MAGAZYNY->ID:=ID_F,MAGAZYNY->ID_T:=ID_T,MAGAZYNY->CENA_Z:=CENA_Z,MAGAZYNY->DATA_Z:=Date(),Presskey('d¢’')|

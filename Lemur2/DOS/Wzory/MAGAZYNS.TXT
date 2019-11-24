@@ -1,0 +1,14 @@
+GetPole(1,'ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY')|CENA_Z|ILOSC|ILOSC|Grosz(CENA_Z*ILOSC)|GetPole(1,'ID_T','CENA_S','TOWARY',,,1,,,'STAROCIE\TOWARY')|RunCommand(kolumny[6])*ILOSC|GetPole(1,'ID_T','MASA','TOWARY',,,1,,,'STAROCIE\TOWARY')*ILOSC|
+Nazwa|Cena z|Ilož|Ilož|Wartož z.|Cena s1.|Wartož s1.|Masa|
+@S60|@Z 999.99|@Z 99999|@Z 999,999,999|@Z 999,999,999.99|@Z 999.99|@Z 999,999,999.99|@Z 999,999.999|
+11|1|22|78|1||||ON('DOKUM')|Jest_baza('ROB')|DBSetOrder(2)|Scal_ROB(4)|CreateIndex(kolumny[1],,1)|DBGoTop()|
+Tytu’y syntetycznie na stanie powy§szego kontrahenta
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr],,1)|
+|W|Wydruk|Drukuj('magazynk')|
+|D|Do inwentaryzacji|Wydruk('magazyns.wyd')|
+|T|Total|TotDBES()|
+|ENTER|dOkumenty=ENTER|SubBase("SPEC,specm.txt,BUFOR,2,ROB->ID_T,ROB->ID_T=ID_T,,,,,,,,DokFor(-99)",.t.,,,6,'CreateIndex(kolumny[4],,1),DBGoTop()')|
+|O||SubBase("SPEC,specm.txt,BUFOR,2,ROB->ID_T,ROB->ID_T=ID_T,,,,,,,,DokFor(-99)",.t.,,,6,'CreateIndex(kolumny[4],,1),DBGoTop()')|

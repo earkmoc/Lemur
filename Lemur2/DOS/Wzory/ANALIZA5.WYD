@@ -1,0 +1,17 @@
+Firma('max3.txt')|Date()|Time()|DwieLinie(DBE_Tyt,65,3)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+----------------------------------------------------------------------------
+  LP   Nr Nazwa                                    Miasto            Wartoûç
+----------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)<>
+lp|ID_F|DOKUM->(GetPole(4,'Str(ID_F)','NAZWA1'))|DOKUM->(GetPole(4,'Str(ID_F)','MIASTO'))|InccTab('tabs[1]',WARTOSC)<>
+{999|9999|@S40|@S10|@Z 999,999,999.99}
+#DBGoTop()<>
++tabs[1]<>  
+----------------------------------------------------------------------------
+                                                           Razem:<999,999.99>
+ 0<>  
+koniec.

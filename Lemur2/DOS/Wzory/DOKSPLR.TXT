@@ -1,0 +1,6 @@
+Sp’aty dokumentu
+12|22|1|78|3|end|
+ID|LP
+DATAW|Data
+KWOTA|Kwota|@Z 999,99,999.99|
+UWAGI|Uwagi|@S35|

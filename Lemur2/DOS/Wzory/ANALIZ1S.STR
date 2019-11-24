@@ -1,0 +1,11 @@
+Aadd(pola,{'ID_F','N',10,0})|
+Aadd(pola,{'STAN','N',10,3})|
+Aadd(pola,{'SPRZEDAZ','N',10,3})|
+Aadd(pola,{'SREDNIO','N',10,3})|
+Aadd(pola,{'ILEDOK','N',6,0})|
+Aadd(pola,{'DATAP','D',8,0})|
+Aadd(pola,{'DATAK','D',8,0})|
+Aadd(pola,{'SPRZEDAZW','N',10,3})|
+Aadd(pola,{'ID_T','N',10,0})|
+Aadd(indeksy,'analiz1s')|
+Aadd(klucze,'ID_F')|

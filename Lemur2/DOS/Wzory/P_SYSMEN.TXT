@@ -1,0 +1,15 @@
+Poprawianie danych
+F1 - pomoc
+1|2|3|4|5|6|7|
+Kod menu :|LP :|Nazwa opcji :|Wiersz  :|Kolumna :|Numer funkcji systemu :|Parametr funkcji :|
+99|99|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|99|99|999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+1|2|3|4|5|6|7|
+1|2|3|4|5|6|7|
+9|7|19|77|3|
+1|4|
+2|10|
+3|1|
+4|5|
+5|5|
+6|1|
+7|1|

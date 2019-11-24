@@ -1,0 +1,26 @@
+
+ Aadd(pola,{'LP','N',10,0})|
+ Aadd(pola,{'NUMER','C',30,0})|
+ Aadd(pola,{'D1','D',8,0})|
+ Aadd(pola,{'D2','D',8,0})|
+ Aadd(pola,{'D3','D',8,0})|
+ Aadd(pola,{'D4','D',8,0})|
+ Aadd(pola,{'PRZEDMIOT','C',30,0})|
+ Aadd(pola,{'NIP','C',15,0})|
+ Aadd(pola,{'NAZWA','C',120,0})|
+ Aadd(pola,{'ADRES','C',70,0})|
+ Aadd(pola,{'K10','N',15,2})|
+ Aadd(pola,{'K11','N',15,2})|
+ Aadd(pola,{'K24','C',20,0})|
+ Aadd(pola,{'NRKONT','N',10,0})|
+ Aadd(pola,{'PSKONT','C',15,0})|
+ Aadd(pola,{'NRK','C',3,0})|
+ Aadd(pola,{'OTWARTY','C',1,0})|
+ Aadd(indeksy,'rej_ka1')|
+ Aadd(indeksy,'rej_ka2')|
+ Aadd(indeksy,'rej_ka3')|
+ Aadd(indeksy,'rej_ka4')|
+ Aadd(klucze,'LP')|
+ Aadd(klucze,'NRKONT')|
+ Aadd(klucze,'Upper(PSKONT)')|
+ Aadd(klucze,'DtoS(D3)+Str(LP)')|

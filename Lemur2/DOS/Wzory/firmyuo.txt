@@ -1,0 +1,11 @@
+Ustaw('global_ta1',ODBIORCA)|
+Ustaw('global_ta2',IndexOrd())|
+Ustaw('global_ta3',RecNo())|
+globalbuf:=if( global_ta1=0,Space(50),FIRMY->(GetPole(1,'global_ta1','NAZWA1')))|
+globalbuf1:=if(global_ta1=0,Space(50),FIRMY->(GetPole(1,'global_ta1','NAZWA2')))|
+globalbuf2:=if(global_ta1=0,Space(50),FIRMY->(GetPole(1,'global_ta1','NAZWA3')))|
+globalbuf3:=if(global_ta1=0,Space(50),FIRMY->(GetPole(1,'global_ta1','KOD')))|
+globalbuf4:=if(global_ta1=0,Space(50),FIRMY->(GetPole(1,'global_ta1','MIASTO')))|
+globalbuf5:=if(global_ta1=0,Space(50),FIRMY->(GetPole(1,'global_ta1','ADRES')))|
+DBSetOrder(global_ta2)|
+DBGoTo(global_ta3)

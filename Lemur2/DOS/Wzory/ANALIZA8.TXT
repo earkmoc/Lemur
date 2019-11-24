@@ -1,0 +1,9 @@
+Obroty w magazynie wartožciowo
+5|22|1|78|1||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|
+TOWARY->(GetPole(1,'ID_T','INDEKS'))|Indeks|@S10|
+TOWARY->(GetPole(1,'ID_T','NAZWA'))|Nazwa|@S21|
+BO|B.O.|@Z 9999,999.99|
+PRZYCHOD|IN|@Z 9999,999.99|
+ROZCHOD|OUT|@Z 9999,999.99|
+BZ|B.Z.|@Z 9999,999.99|
+TOWARY->(GetPole(1,'ID_T','CENA_Z'))|Cena z.|@Z 9999.99|

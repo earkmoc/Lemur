@@ -1,0 +1,14 @@
+TOWARY->(GetPole(-1,'ANALIZAA->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY'))|STAN|SPRZEDAZ|SREDNIO|Abs(Round(if(STAN#0,SPRZEDAZ/STAN,if(STAN=SPRZEDAZ,0,999)),3))|ILEDOK|DATAP|DATAK|
+Nazwa|Stan|Sprz.|˜r./mc|Wska¦nik|Ile dok.|Data min|Data max|
+@S50|@Z 99,999|@Z 99,999|@Z 99,999|@Z 999.999|@Z 99,999|||
+5|1|22|78|1||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|Jest_baza('ANALIZAA')|CreateIndex(kolumny[1])|DBGoTop()|
+Wybrany kontrahent: stan, sprz. narastaj†co, žr./m-c
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|T|Total|ShowDBES()|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|GetIni(,,@global_tab),GetPole(1,'Val(global_tab[2])','ID_F','FIRMY'),Drukuj(if(Alarm('Wybierz wariant:',{'Ze wska¦nikami','Z masami'})#2,,'analizz'))|
+|O|dOkumenty|GetIni(,,@global_tab),GetPole(1,'Val(global_tab[2])','ID_F','FIRMY'),SubBase("SPEC,specmm.txt,BUFOR,2,ANALIZAA->ID_T,ANALIZAA->ID_T=ID_T,,,,,,,,DokFor(-99)",.t.,,,0,'CreateIndex(kolumny[4],,1),DBGoTop()')|
+|A|Aktualizacja=ENTER|Zwolnij(baza),ON(baza),DokAnaa('ANALIZAA,Podaj parametry procedury,,,,,,,2','FV,RU,FVK,RUK','Sprzeda§ kontrahenta wed’ug tytu’¢w'),Jest_baza('ANALIZAA'),CreateIndex(kolumny[1]),DBGoTop()|
+|ENTER||Zwolnij(baza),ON(baza),DokAnaa('ANALIZAA,Podaj parametry procedury,,,,,,,2','FV,RU,FVK,RUK','Sprzeda§ kontrahenta wed’ug tytu’¢w'),Jest_baza('ANALIZAA'),CreateIndex(kolumny[1]),DBGoTop()|

@@ -1,0 +1,27 @@
+Firma('max3.txt')|Date()|Time()|DBE_Tyt|
+FIRMY->NAZWA1 + AllTrim( FIRMY->NAZWA2 ) + AllTrim( FIRMY->NAZWA3)|
+FIRMY->(KOD + ' ' + AllTrim( MIASTO ) + ', ' + AllTrim( ADRES ))|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+  <@S150>  
+  <@S150>  
+----------------------------------- Data -------- Termin ----------------------------
+ ? Typ Nr           Wartoûç        wystaw.        zapíaty       Wpíacono    Pozostaje
+-------------------------------------------------------------------------------------<>
+#DBGoTop()|
+Ustaw('drukuj_while','!Eof()')|
+Ustaw('drukuj_for','WPLACONO#WARTOSC.and.TYP#"INW".and.TYP#"IN"')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+BLOKADA|TYP|INDEKS|
+InccTab('tabs[1]',WARTOSC)|Space(10)|DATAW|Space(10)|DATAT|
+InccTab('tabs[2]',WPLACONO)|
+InccTab('tabs[3]',WARTOSC-WPLACONO)<>
+{X|XXX|XXXXXXXXXXXX|@Z 999,999.99|XX|XXXXXXXXXX|XX|XXXXXXXXXX|@Z 999999,999.99|@Z 99999,999.99}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]<>  
+---------------------------------------------------------------------------------------
+         Razem:<999,999,999.99|9999999999999999999999,999,999,999,999.99|99999,999.99>
+ 0<>  
+koniec.

@@ -1,0 +1,19 @@
+1|34| |DATA|Month(DATA)|!ANULOWANO|Time()|Date()|0|firma|CMonth(DATA)+Str(Year(DATA))|0<>
+LP|DATA|FIRMA|PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM<>
+PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM<>
+PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM<>
+PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+Czas :<@S8>                                     Data :<@S10>  
+  <>  
+  
+PODATKOWA KSIêGA PRZYCHOD£W I ROZCHOD£W za<@S20> r.
++----+----------+------------------------------------------------------------+-------------+-------------+ 
+   LP    Data     Kontrahent                                                   Przychody       Wydatki   
++----+----------+------------------------------------------------------------+-------------+-------------+<>
+{9999|XXXXXXXXXX|@S200|99,999,999.99|99,999,999.99}
++----+----------+------------------------------------------------------------+-------------+-------------+<>  
+                                                                Suma strony :<99,999,999.99|99,999,999.99>  
+                                                          Poprzednia strona :<99,999,999.99|99,999,999.99>  
+                                                                      Razem :<99,999,999.99|99,999,999.99>  
+  <@S50>

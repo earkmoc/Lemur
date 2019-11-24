@@ -1,0 +1,20 @@
+2|47| |DATA|Month(DATA)|!ANULOWANO|Time()|Date()|0|firma|Str(Year(DATA))|0<>
+MemVar->LP|PadC(SubStr(DtoC(DATA),4),8)|PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM|PRZYCHOD3-(ZAKUP_TOW+KOSZTY_UB+RAZEM)<>
+PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM|PRZYCHOD3-(ZAKUP_TOW+KOSZTY_UB+RAZEM)<>
+PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM|PRZYCHOD3-(ZAKUP_TOW+KOSZTY_UB+RAZEM)<>
+PRZYCHOD3|ZAKUP_TOW+KOSZTY_UB+RAZEM|PRZYCHOD3-(ZAKUP_TOW+KOSZTY_UB+RAZEM)<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+Czas :<@S8>                                     Data :<@S10>  
+  <>  
+  
+PODATKOWA KSIêGA PRZYCHOD£W I ROZCHOD£W za<@S20> r.
++----+--------+-------------+-------------+-------------+
+   LP  Data      Przychody      Wydatki        Doch¢d    
++----+--------+-------------+-------------+-------------+<>
+{9999|XXXXXXXX|99,999,999.99|99,999,999.99|99,999,999.99}
++----+--------+-------------+-------------+-------------+<>  
+ Suma strony :<99,999,999.99|99,999,999.99|99,999,999.99>  
+ Pop. strona :<99,999,999.99|99,999,999.99|99,999,999.99>  
+       Razem :<99,999,999.99|99,999,999.99|99,999,999.99>  
+  
+  <@S50>

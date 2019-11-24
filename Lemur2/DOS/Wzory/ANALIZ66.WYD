@@ -1,0 +1,28 @@
+Firma('max3.txt')|Date()|Time()|Dwielinie(DBE_Tyt,65,3)|konwertON:=.t.<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+----------------------------------------------------------------------------------------
+                    Data      Data       Wartoûç       Wartoûç     Wartoûç      Kontrahent 
+  LP Typ Numer    wystawienia sprzedaßy  Netto   VAT%  VAT kwota   Brutto  NIP             Nazwa
+----------------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+DOKUM->(GetPole(1,'ID_D','TYP'))|
+PadL(AllTrim(DOKUM->(GetPole(1,'ID_D','INDEKS'))),10)|
+DtoA(DOKUM->(GetPole(1,'ID_D','DATAW')))|
+DtoA(DOKUM->(GetPole(1,'ID_D','DATAS')))|
+InccTab('tabs[1]',DOKUM->(GetPole(1,'ID_D','WARTOSC-VAT7-VAT22-VAT23-VAT8-VAT5')))|
+DOKUM->(GetPole(1,'ID_D','cvat(round(100*(VAT7+VAT22+VAT23+VAT8+VAT5)/(WARTOSC-VAT7-VAT22-VAT23-VAT8-VAT5),0))'))|
+InccTab('tabs[2]',DOKUM->(GetPole(1,'ID_D','VAT7+VAT22+VAT23+VAT8+VAT5')))|
+InccTab('tabs[3]',DOKUM->(GetPole(1,'ID_D','WARTOSC')))|
+DOKUM->(GetPole(1,"ID_D",'NIP'))|
+DOKUM->(GetPole(1,"ID_D",'NAZWA1'))<>
+{999|XXX|@S10|@S10|@S10|999,999.99|XXX|999,999.99|999,999.99|@S15|@S150}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]<>  
+----------------------------------------------------------------------------------------
+                               Razem:<999,999.99|999,999,999.99|999,999.99>
+konwertON:=.f.<>  
+koniec.

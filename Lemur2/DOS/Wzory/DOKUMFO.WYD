@@ -1,0 +1,83 @@
+DATAS|
+EOL+Firma(,,1,1)|
+DATAW|
+EOL+Firma(,,2)|
+if(Empty(NIP),'Rachunek uproszczony','    '+AllTrim(DOKTYPY->(GetPole(1,'DOKUM->TYP','NAZWA'))))|
+Alltrim(INDEKS)+"W0  "|NAZWA1|
+if(Empty(NAZWA2),'',EOL+Space(10)+NAZWA2)|
+if(Empty(NAZWA3),'',EOL+Space(10)+NAZWA3)|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)|NIP|SPOSOB|DATAT|0<>
+[111]Sprzedawca:                                                                                         Data sprzedaßy:<@S30>G
+<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>                                                       Data wystawienia:<@S10>
+<@S500>  H
+  
+  <@S50> W1Nr<@S100>
+G  
+Nabywca :<@S100>  <@S100>  <@S100>  H
+  Adres :<@S100>  
+    NIP :<@S100>  
+Odbiorca: j.w.                                                                                  Spos¢b zapíaty:G<@S100>H  
+òr.trans:                                                                                       Termin zapíaty:G<@S100>H  
+[111]
+===================================================================================================================
+                                                               Symbol              Ra-  Cena    Wartoûç Podatek VAT
+ LP   Nazwa towaru/Usíugi                                      PKWiU   j.m.  Iloûç bat  netto    netto     %
+===================================================================================================================<>
+#ON('SPEC')|DBSetOrder(1)|DBSeek(DOKUM->ID)|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|Ustaw('drukuj_for','ILOSC#0')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|                    AllTrim(GetPoleS(1,'SPEC->ID_T','NAZWA','TOWARY'))+Replicate(' .',50)|
+                               GetPoleS(1,'SPEC->ID_T','SWW','TOWARY')|
+                               GetPoleS(1,'SPEC->ID_T','JM','TOWARY')|
+ILOSC|RABAT|CENA|Grosz(ILOSC*CENA)|
+                          'np.'|
+       0*VAT(Grosz(ILOSC*CENA),GetPoleS(1,'SPEC->ID_T','VAT','TOWARY'))|
+    0*Brutto(Grosz(ILOSC*CENA),GetPoleS(1,'SPEC->ID_T','VAT','TOWARY'))|
+InccTab('tabs[1]',       ILOSC*GetPoleS(1,'SPEC->ID_T','MASA','TOWARY'))|
+InccTab('tabs[2]',Paczki(ILOSC,GetPoleS(1,'SPEC->ID_T','W_PACZCE','TOWARY')))|
+InccTab('tabs[3]',Paczki(ILOSC,GetPoleS(1,'SPEC->ID_T','W_PACZCE','TOWARY'),,1))<>
+{[222]999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXX|XXXX|999999|@Z 99%|@Z 999.99|@Z 9999,999.99|XXX|         |            }
+#Jest_baza('DOKUM')<>
+  0<>  
+-------------------------------------------------------------------------------------------------------------------<>
++if(WARTOSC>0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC)<>  
+[  1]G          Do<XXXXXXXXXX|999,999,999.99>
++WARTOSC-(VAT22+VAT7+VAT23+VAT8+VAT5)|VAT22+VAT7+VAT23+VAT8+VAT5|0<>
+                                                   Razem:<9999,999.99|@Z 99,999,999.99|@Z 99999,999.99>
++PadR(ZlGr(Abs(WARTOSC),1),100)<>  
+             Síownie:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++if(WARTOSC>0,'Zapíacono',' Zwr¢cono')+':'|Abs(WPLACONO)<>
+H  =====================
+          <XXXXXXXXXX|999,999,999.99>
++NETTO1()|'np.'|VAT1()|0<>
+                                                   W tym:<9999,999.99|XXX|@Z 99,999.99|@Z 99999,999.99>
++if(WARTOSC>0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC-WPLACONO)<>  
+Pozostaío do<XXXXXXXX|999,999,999.99>
++NETTO2()|CVAT2()|VAT2()|NETTO2()+VAT2()<>
+                                                         <@Z 9999,999.99|XXX|@Z 99,999.99|@Z 99999,999.99>
++SPOSOB<>  
+      Spos¢b zapíaty:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++NETTO3()|CVAT3()|VAT3()|NETTO3()+VAT3()<>
+                                                   <@Z 9999,999.99|XXX|@Z 99,999.99|@Z 99999,999.99>
++DATAT<>  
+              Termin:<XXXXXXXXXX> 
++NETTO4()|CVAT4()|VAT4()|NETTO4()+VAT4()<>
+                                                             <@Z 9999,999.99|XXX|@Z 99,999.99|@Z 99999,999.99>
++if(tabs[1]>0,'úÜczna masa (b. opakowa§): '+PadR(AllTrim(Zera_won(AllS(tabs[1],'@Z 999,999,999.999')))+ ' kg',20),'')<>  
+  <@S99>
++NETTO5()|CVAT5()|VAT5()|NETTO5()+VAT5()<>
+                                           <@Z 9999,999.99|XXX|@Z 99,999.99|@Z 99999,999.99>
++UWAGI<>    
+  
+  <@S80> 
++UWAGI2<>  
+  <@S80> 
+if(DzienVAT0(),EOL+ReadWzor('opis_VAT.txt'),'')<>  
+<@S500>
+ODEBRAL|WYSTAWIL|0<>  
+[  3]
+         Imië, nazwisko i podpis osoby                                                      Imië, nazwisko i podpis osoby
+     uprawnionej do otrzymania faktury VAT                                             uprawnionej do wystawienia faktury VAT
+                                                               
+          <@S30>                                                       <@S30>  
+          .......................                                                               .......................

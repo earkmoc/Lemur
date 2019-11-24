@@ -1,0 +1,49 @@
+""+Firma()|DATA_W|
+SubStr(x:=FIRMY->(GetPole(1,'AUTORRO->ID_A','UWAGI1')),At(':',x)+2)|
+AllTrim(FIRMY->ADRES)|
+FIRMY->KOD+' '+AllTrim(FIRMY->MIASTO)|
+INDEKS<>
+<@S500>  
+
+                                                                                                            œ¢d¦, dnia:<99.99.99>  
+
+Dla:
+  <@S500>  
+  <@S500>  
+  <@S500>  
+  
+                            ROZLICZENIE Nr<@S15>
+DATA_U|
+AllS(ILOSC_W,'999,999')|
+TOWARY->(GetPole(1,'AUTORRO->ID_T','NAZWA'))|0<>  
+  
+Uprzejmie informujemy, i§ od dnia podpisania umowy, tj.<X>  
+do dnia dzisiejszego wydaližmy ’†cznie<@S10> egz.
+ksi†§ki:<@S100>  
+  <>
+AllS(ILOSC_B,'999,999')|0<>  
+Zgodnie z umow† i w’ažciwymi przepisami (obowi†zkowe egzemplarze biblioteczne
+oraz promocja), wydano<@S20> egzemplarzy.
+  <>
+AllS(ILOSC_A,'999,999')|0<>  
+Autorowi przekazano<@S20> egz. autorskich.
+  <>
+AllS(ILOSC_Z,'999,999')|0<>  
+Brak¢w zwr¢cono<@S20> egz.
+
+
+  <>
+AllS(ILOSC_R,'999,999')|0<>  
+œ†cznie rozliczeniu podlega<@S20> egz.
+  <>
+DATA_1|DATA_2|AllS(ILOSC_S,'999,999')|0<>  
+W okresie:<X> -<X> sprzeda§ wynios’a<@S20> egz.
+  <>
+AllS(ILOSC_T,'999,999')|0<>  
+Rozliczono ’†cznie<@S20> egz.
+
+
+                                                                                                          Z powa§aniem
+
+
+                                                                                           Micha’ Koli¤ski     Micha’ Wiercioch

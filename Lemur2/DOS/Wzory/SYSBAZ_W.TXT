@@ -1,0 +1,11 @@
+Czas :<99.99.99>                                      Data :<99.99.99>
+  
+                           System baz danych<>
+                                      <>
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+   Baza  |LP|    Pole  |T|Len|D| Opis
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+{XXXXXXXX|99|XXXXXXXXXX|X|999|9|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX}  
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+
+

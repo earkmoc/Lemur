@@ -147,12 +147,14 @@ function ShowField($field,$row,$dane,$szerokoscPola,$link)
 	}
 }
 
-function ShowLabel($field,$row,$dane,$szerokoscOpisu,$right)
+function ShowLabel($field,$row,$dane,$szerokoscOpisu,$right,$musi=False)
 {
-	if (( ($row==0)
-		||($field['gridrow']==$row)
-		)
-	   &&($field['gridLabel']*1>0)
+	if ( ( ($row==0)
+		 ||($field['gridrow']==$row)
+		 )
+	   &&( ($field['gridLabel']*1>0)
+		 ||$musi
+		 )
 	   )
 	{
 		echo "\n".'		<div class="col-md-'
@@ -210,7 +212,7 @@ else
 	foreach($fields as $field) 
 	{
 		echo "\n".'<div class="row">';
-		ShowLabel($field,0,$dane,$szerokoscOpisu,true);
+		ShowLabel($field,0,$dane,$szerokoscOpisu,true,true);
 		ShowField($field,0,$dane,$szerokoscPola,$link);
 		echo "\n".'</div>';
 	}

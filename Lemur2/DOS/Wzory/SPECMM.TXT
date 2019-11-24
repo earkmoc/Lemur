@@ -1,0 +1,10 @@
+Dokumenty powy§szego podmagazynu i towaru
+11|22|1|78|2|
+AllTrim(DOKUM->(GetPole(1,'ID_D','BLOKADA')))+DOKUM->(GetPole(1,'-ID_D','BLOKADA'))|O|X|
+AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))|Typ|XXX|
+AllTrim(DOKUM->(GetPole(1,'ID_D','INDEKS')))+DOKUM->(GetPole(1,'-ID_D','INDEKS'))|Numer|@S18|
+DOKUM->(GetPole(1,'ID_D','DATAS'))+DOKUM->(GetPole(1,'-ID_D','DATAS'))|Data s.||
+CENA|Cena s.|99999.99|
+ILOSC|Ilož|99999|
+CENA*ILOSC|Wartož|999,999.99|
+AllTrim(DOKUM->(GetPole(1,'ID_D','TYP_F')))+DOKUM->(GetPole(1,'-ID_D','TYP_F'))|T|X|

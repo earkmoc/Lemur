@@ -1,0 +1,3 @@
+Sposoby zap’at
+4|22|1|78|1|
+NAZWA|Nazwa sposobu zap’aty|@S20|

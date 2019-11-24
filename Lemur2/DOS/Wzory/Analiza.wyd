@@ -1,0 +1,36 @@
+#KonwertOn:=.t.|bz:=.t.<>
+StrTran(Firma('max3.txt'),'','')|Date()|Time()|DwieLinie(DBE_Tyt,60,3)|SubStr(DBE_TYT,At('okresu',DBE_TYT)+8)|SubStr(DBE_TYT,35)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+  
+  <@S250>  
+------------------------------------------------------------+-----------------------------------------------+-------------------------------------------------+
+                                                            |      Okres<XXXXXXXXXXXXXXXXXXXXXXX>            |      Narastaj†co<XXXXXXXXXXXXXXXXXXXXXXXX>       |
+                                                            +-----------------------------------------------+-------------------------------------------------+
+                                                            |             Zap’acono     Stawka              | Nak’ad  Nak’ad  Nak’ad   Sprze-  Zap’a- Do roz- |
+  LP Nazwa                                                  |   Sprzedano za sztuk  (%1) pr¢g (%2) Prowizja |  (1)      (2)   razem     dane    cone  liczenia|
+------------------------------------------------------------+-----------------------------------------------+-------------------------------------------------+<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Ustaw('drukuj_for','1=1 .or. STAWKA_1#0 .or. STAWKA_2#0')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+TOWARY->(GetPole(1,'ANALIZA4->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY'))|
+InccTab('tabs[1]',SPRZWZAPL)|
+InccTab('tabs[2]',ZAPLACONE)|
+STAWKA_1|
+TOWARY->ILOSC_DP2|
+STAWKA_2|
+InccTab('tabs[3]',PROWIZJA1+PROWIZJA2)|
+InccTab('tabs[4]',NAKLADLIC1)|
+InccTab('tabs[5]',NAKLADLIC2)|
+InccTab('tabs[6]',NAKLADLICZ)|
+InccTab('tabs[7]',ILOSC)|
+InccTab('tabs[8]',ZAPLNARAST)|
+InccTab('tabs[9]',NAKLADLICZ-ZAPLNARAST)<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|999999|999999|99999.99|9999|99.99|99999.99|999,999|999,999|999,999|999,999|999,999|99,999,999}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]|tabs[6]|tabs[7]|tabs[8]|tabs[9]<>  
+---------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                          Razem:<999,999|99,999|999999999999999999999,999.99|999,999|999,999|999,999|999,999|999,999|99,999,999>
+#KonwertOn:=.f.|PRI:=globalbuf|bz:=NIL<>
+ 0<>  
+koniec.

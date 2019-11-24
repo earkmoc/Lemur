@@ -1,0 +1,5 @@
+Aadd(pola,{ 'LINIA', 'C',  10, 0 })|
+Aadd(pola,{ 'TYP'  , 'C',   3, 0 })|
+Aadd(pola,{ 'TRESC', 'C', 254, 0 })|
+Aadd(indeksy,'druk_pre')|
+Aadd(klucze,'LINIA')|

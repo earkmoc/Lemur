@@ -1,0 +1,11 @@
+Wybrany tytuí: stan, sprz. narastajÜco, ûr./m-c
+5|22|1|78|1||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|Jest_baza('ANALIZA1')|CreateIndex(kolumny[1])|DBGoTop()|
+DOKUM->(GetPole(4,'Str(ID_F)','INDEKS_F'))|      ;Indeks|@S15|
+DOKUM->(GetPole(4,'Str(ID_F)','MIASTO'))|      ;Miasto|@S15|
+STAN|    ;Stan|@Z 9999999,999|
+SPRZEDAZ|    Iloûç;sprzedana|@Z 9999999,999|
+Round(SREDNIO,0)|          ;òrednio/mc|@Z 9999999,999|
+ILEDOK|      Ile;dokument¢w|@Z 999999|
+DATAP|Data;min||
+DATAK|Data;max||
+SPRZEDAZW|        Wartoûç;sprzedaßy netto|@Z 9999,999.99|

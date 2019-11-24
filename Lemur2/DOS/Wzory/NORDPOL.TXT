@@ -1,0 +1,18 @@
+ZNAK|DOK|NR|DATA|LP|PZ|KWOTA|WINIEN|MA|NAZ1|NAZ2|OPIS|NAZ1|
+Z|Dk|Nr|Data ks.|Lp|Pz|Kwota|Wn|Ma|Dow¢d|Treûç|Opis wydarzenia|Dow¢d|
+X|XX|9999|99999999|9999|9999|9999,999.99|@S10|@S10|@S7|@S30|@S45||
+5|1|22|78|1|end|
+Dziennik gí¢wny
+
+5|Esc|Escape|
+7|S|Szukaj|nr,2,1,4,2,8,3,9,4|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|U|Usu§|UsunDz('usuwasz tÜ pozycjë')|
+74|Z|Znak|NORDPOL,ZNAK,*,24|
+73|K|Kasuj|OperujZnaki('NORDPOL,ZNAK,*,UsunDz(),Skasowaç ciÜgíy blok zaznaczonych pozycji?',1)|
+73|R|Renumeruj|RenumDK('RENPAR,Podaj parametry renumeracji', 'DOK+Str(NR)+Str(LP)')|
+8|I|Indeks|a) typy dokument¢w i daty,1,b) daty i typy dokument¢w + NR + LP + PZ,2,c) WINIEN oraz daty i typy dokument¢w,3,d) MA oraz daty i typy dokument¢w,4,e) naturalna kolejnoûç wprowadzania,0|
+73|W|Wydruk|Wydruk(,,,, 2 )|
+18|D|Druk|w_nordpo.txt,7,,Lista dekret¢w z zakresu numer¢w dokument¢w : ,NR, za okres : ,,DATA|
+|F|Formularz=ENTER|FormDz('BABA,Dekret')|
+|ENTER||FormDz('BABA,Dekret')|

@@ -1,0 +1,29 @@
+""+Firma('max3.txt')|Date()|Time()|DBE_Tyt|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+----------------------Data------ Data------Termin-----Wartoûç-----Koszty--------------------Podatek----------------
+ LP Kontrahent     wystawienia   umowy    wykonania    brutto     uzyskania        Doch¢d   dochodowy    Do wypíaty
+------------------------------------------------------------------przychodu----------------------------------------<>
+#Ustaw('globalbuf1',ID_A)|
+Ustaw('globalbuf2',RecNo())|
+DBGoTop()|
+Ustaw('drukuj_while','!Eof()')|
+Ustaw('drukuj_for','globalbuf1=ID_A')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|FIRMY->(GetPole(1,'ID_A','INDEKS'))|DATA_W|DATA_U|DATA_T|
+InccTab('tabs[1]',WARTOSCB)|
+PROCENTK|
+InccTab('tabs[2]',WARTOSCK)|
+InccTab('tabs[3]',WARTOSCD)|
+PROCENTP|
+InccTab('tabs[4]',WARTOSCP)|
+InccTab('tabs[5]',WARTOSCW)<>
+{99|XXXXXXXXXXXXXXX|XXXXXXXX|XXXXXXXX|XXXXXXXX|@Z 999,999.99|@Z 99%|@Z 999,999.99|@Z 999,999.99|@Z 99%|@Z 999,999.99|@Z 999,999.99}
+#DBGo(globalbuf2)<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]<>  
+-------------------------------------------------------------------------------------------------------------------
+                                              Razem:<@Z 999,999.99|@Z 9999999,999.99|@Z 999,999.99|@Z 9999999,999.99|@Z 999,999.99>
+ 0<>  
+koniec.

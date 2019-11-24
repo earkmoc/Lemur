@@ -1,0 +1,22 @@
+""+Firma('max3.txt')|Date()|Time()|FIRMY->NAZWA1|FIRMY->NAZWA2|FIRMY->NAZWA3|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Dane dla:<@S200>  
+         <@S200>  
+         <@S200>  
+
+Zaliczki
+-----------------------------------------------------------------------------
+ LP   Data          Kwota   Uwagi
+-----------------------------------------------------------------------------<>
+#Ustaw('globalbuf1',RecNo())|DBGoTop()|Ustaw('drukuj_while','!Eof()')|
+Aadd(tabs,0)|<>
+lp|DATAW|InccTab('tabs[1]',KWOTA)|UWAGI<>
+{99|XXXXXXXXXX|@Z 999,999.99|@S50}
+#DBGo(globalbuf1)<>
++tabs[1]<>  
+-----------------------------------------------------------------------------
+        Razem:<@Z 999,999.99>
+ 0<>  
+koniec.

@@ -1,0 +1,23 @@
+Firma('max3.txt')|Date()|Time()|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+ 
+Cennik na wybrane tytu’yM
+-----------------------------------------------------------------------+Sugerowana-+Cena brutto+---+Sugerowana-+Cena netto
+  LP Nazwa                                                j.m.   rabat |cena brutto|po rabacie |VAT|cena netto |po rabacie 
+------------------------------------------------------------------(%)--+-----------+-----------+---+-----------+-----------<>
+#DBGoTop()|
+Ustaw('drukuj_while','!Eof()')|
+Ustaw('drukuj_for',"Mark('TOWARYZN',ID,'*')=='*'")<>
+lp|NAZWA|JM|
+globalbuf|
+FieldGet(FieldPos('CENA_B'+if(Between(globalbuf1,2,5),AllS(globalbuf1),'')))|
+Upust(FieldGet(FieldPos('CENA_B'+if(Between(globalbuf1,2,5),AllS(globalbuf1),''))),globalbuf)|
+CVAT(VAT)|
+FieldGet(FieldPos('CENA_S'+if(Between(globalbuf1,2,5),AllS(globalbuf1),'')))|
+Upust(FieldGet(FieldPos('CENA_S'+if(Between(globalbuf1,2,5),AllS(globalbuf1),''))),globalbuf)<>
+{999|@S52|XXXXX|@Z 9999?99|@Z 9999,999.99|@Z 9999,999.99|XXX|@Z 9999,999.99|@Z 9999,999.99}
+#DBGoTop()<>
+ 0<>  
+---------------------------------------------------------------------------------------------------------------------------
+Pkoniec.

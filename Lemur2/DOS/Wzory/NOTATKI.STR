@@ -1,0 +1,6 @@
+Aadd(pola,{'DATAW','D',8,0})|
+Aadd(pola,{'DATAM','D',8,0})|
+Aadd(pola,{'NAZWA','C',20,0})|
+Aadd(pola,{'TRESC','M',10,0})|
+Aadd(indeksy,'notatki')|
+Aadd(klucze,'DtoS(DATAW)')|

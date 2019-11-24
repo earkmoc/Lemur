@@ -1,0 +1,58 @@
+AllTrim(DOKTYPY->(GetPole(1,'DOKUM->TYP','NAZWA')))|INDEKS|
+EOL+PadR(Firma('max3.txt',,1,1),40+112-42)|DATAW|EOL+Firma('max3.txt',,2)|
+NAZWA1|
+if(Empty(NAZWA2),'',EOL+Space(16)+NAZWA2)|
+if(Empty(NAZWA3),'',EOL+Space(16)+NAZWA3)|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)|NIP|NABYWCA|0<>
+<@S50> W1Nr<@S20>  W0 
+          
+Sprzedawca:<@S500>ú¢d¶, dnia:<@S10>  <@S500>    
+                                                                           ============ C R O M A ===========         
+   Kontrahent :<@S100>  <@S100>  <@S100>  
+        Adres :<@S100>  
+          NIP :<@S100>                                <        >  
+====================================================================================================================================
+                                                        Symbol             Cena     Ra-     Cena      Wartoûç      Podatek    Wartoûç
+ LP   Nazwa towaru/Usíugi                               PKWiU   j.m.Iloûç  detal    bat     netto      netto     %    kwota   brutto
+=================================================================================== % ==============================================<>
+#ON('ROB')|DBSetOrder(4)|DBGoTop()|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|TOWARY->(GetPole(1,'ROB->ID_T','NAZWA'))|TOWARY->SWW|TOWARY->JM|ILOSC|
+CENABEZR|RABAT|CENA|Grosz(ILOSC*CENA)|TOWARY->VAT|
+Grosz(0.01*TOWARY->VAT*Grosz(ILOSC*CENA))|
+Grosz(ILOSC*CENA)+Grosz(0.01*TOWARY->VAT*Grosz(ILOSC*CENA))|
+InccTab('tabs[1]',ILOSC*TOWARY->MASA)|
+InccTab('tabs[2]',Paczki(ILOSC,TOWARY->W_PACZCE))|
+InccTab('tabs[3]',Paczki(ILOSC,TOWARY->W_PACZCE,,1))<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXX|XXXX|9999|99999.99|@Z 9999|999,999.99|9999,999.99|999|99,999.99|99999.99}
+#Jest_baza('DOKUM')<>
+  0<>  
+------------------------------------------------------------------------------------------------------------------------------------<>
++WARTOSC-(VAT22+VAT7)|VAT22+VAT7|WARTOSC<>  
+                                                                                           Razem:<9999,999.99|999999,999.99|99999.99>
++PadR(ZlGr(Abs(WARTOSC),1),100)<>  
+Síownie:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++DATAT<>
+                ======================================
+ Termin:<XXXXXXXXXX>
++NETTO22|22|VAT22|NETTO22+VAT22<>
+                                                                         W tym:<9999,999.99|999|99,999.99|99999.99>
++PadR(if(tabs[1]>0,'úÜczna masa (b. opakowa§): '+PadR(AllTrim(Zera_won(AllS(tabs[1],'@Z 999,999,999.999')))+ ' kg',20),''),42)<>  
+  <@S99>
++NETTO7|7|VAT7|NETTO7+VAT7<>
+                                                    <9999,999.99|999|99,999.99|99999.99>
++PadR(if(tabs[1]>0,'             Iloûç paczek: '+PadR(AllS(tabs[2]),20),''),42)<>  
+  <@S99>
++NETTO0|0|0|NETTO0<>
+                                                    <9999,999.99|999|99,999.99|99999.99>
++PadR(if(tabs[1]>0,'     Iloûç peínych paczek: '+PadR(AllS(tabs[3]),20),''),42)<>  
+  <@S99>
++NETTOZW|"zw."|0|NETTOZW<>
+                                                    <9999,999.99|XXX|99,999.99|99999.99>
+if(DOKUM->TYP=='RW '.and.SaRabatyZero(),EOL+ReadWzor('opis_rw.txt'),'')|0<>  
+<@S500>
+
+
+Prosimy o wprowadzenie tego towaru na konto wydzielone - Croma.  
+  
+         Otrzymaí:                                                                              Wydaí:                      

@@ -1,0 +1,12 @@
+Aadd(pola,{'ID_D','N',10,0})|
+Aadd(pola,{'ID_T','N',10,0})|
+Aadd(pola,{'CENA','N',12,2})|
+Aadd(pola,{'ILOSC','N',12,3})|
+Aadd(pola,{'RABAT','N',2,0})|
+Aadd(pola,{'CENABEZR','N',12,2})|
+Aadd(indeksy,'spec_1')|
+Aadd(indeksy,'spec_2')|
+Aadd(indeksy,'spec_3')|
+Aadd(klucze,'ID_D')|
+Aadd(klucze,'ID_T')|
+Aadd(klucze,'Str(ID_D)+Str(ID_T)+Str(CENA)')|

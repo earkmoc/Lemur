@@ -1,0 +1,7 @@
+ Aadd(pola,{'NAZWA','C',20,0})|
+ Aadd(pola,{'DATA1','D',8,0})|
+ Aadd(pola,{'DATA2','D',8,0})|
+ Aadd(indeksy,'zaokres1')|
+ Aadd(indeksy,'zaokres2')|
+ Aadd(klucze,'DATA2')|
+ Aadd(klucze,'DATA1')|

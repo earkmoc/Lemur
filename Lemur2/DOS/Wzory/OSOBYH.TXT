@@ -1,0 +1,3 @@
+Osoby uprawnione
+4|22|1|78|1|
+NAZWA|Dane osoby uprawnionej|@S30|

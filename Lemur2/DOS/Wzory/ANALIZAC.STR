@@ -1,0 +1,4 @@
+Aadd(pola,{'ID_F','N',10,0})|
+Aadd(pola,{'DATA','D',8,0})|
+Aadd(indeksy,'analizac')|
+Aadd(klucze,'ID_F')|

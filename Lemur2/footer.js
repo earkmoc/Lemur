@@ -114,7 +114,7 @@ $(document).keydown(function(e)
 			return true;
 		} else 
 		{
-			$('#mainForm').attr('action','szukaj.php?col='+col+'&firma='+firma);
+			$('#mainForm').attr('action','szukaj.php?col='+col+'&firma='+firma+'&wzor='+wzor);
 			$('#mainForm').submit();
 			return false;
 		}

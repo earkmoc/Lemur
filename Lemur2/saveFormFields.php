@@ -1,10 +1,11 @@
 <?php
 
+$wzor=$_GET['Wzory'];
 $firma=$_GET['firma'];
 
 $drugiRaz=true;
 require("setup.php");
-$tabelaNazwa=strtolower((@$firma&&!stripos($tabela,'_')?"{$firma}_{$tabela}":$tabela));
+$tabelaNazwa=strtolower((@$firma&&(!stripos($tabela,'_')||stripos($tabela,'_X'))?"{$firma}_{$tabela}":$tabela));
 
 $set='';
 $where='';
@@ -98,6 +99,6 @@ else
 {
 	if(!$noHeader)
 	{
-		header("Location:../Tabela/?firma=$firma");
+		header("Location:../Tabela/?".($wzor?"Wzory=$wzor&":'')."firma=$firma");
 	}
 }

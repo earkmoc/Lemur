@@ -1,0 +1,11 @@
+Zestawienie sprzeda§y w okresie:
+5|22|1|78|3||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|
+DOKUM->(GetPole(1,"ID_D",'INDEKS_F'))|Kontrahent|@S10|
+DOKUM->(GetPole(1,'ID_D','BLOKADA'))|?|X|
+DOKUM->(GetPole(1,'ID_D','TYP'))|Typ|XXX|
+DOKUM->(GetPole(1,'ID_D','INDEKS'))|Numer|@S10|
+DtoA(DOKUM->(GetPole(1,'ID_D','DATAS')))|Data s.|@S10|
+DOKUM->(GetPole(1,'ID_D','WARTOSC-VAT7-VAT22-VAT23-VAT8-VAT5'))|Netto|@Z 999,999.99|
+DOKUM->(GetPole(1,'ID_D','cvat(round(100*(VAT7+VAT22+VAT23+VAT8+VAT5)/(WARTOSC-VAT7-VAT22-VAT23-VAT8-VAT5),0))'))|VAT%|XXX|
+DOKUM->(GetPole(1,'ID_D','VAT7+VAT22+VAT23+VAT8+VAT5'))|VAT|@Z 999,999.99|
+DOKUM->(GetPole(1,'ID_D','WARTOSC'))|Brutto|@Z 999,999.99|

@@ -1,0 +1,5 @@
+                Raport r¢§nic w strukturze bazy <XXXXXXXXXXXXXXXXXXX>
+  
+ Nazwa      C   N       D
+******************************************************************************
+{XXXXXXXXXX|X|999999|9999999}

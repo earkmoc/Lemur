@@ -1,0 +1,27 @@
+1|40|ZAKR_KP,Parametry raportu kasowego|D3|.t.||
+Time()|Date()|EOL+Firma('max3.txt')|NRK|data1|data2|strona|0<>
+MemVar->LP|D3|NUMER|NAZWA|PRZEDMIOT|K10|K11|K24|0<>
+K10|K11|0<>
+K10|K11|0<>
+K10|K11|0<>
+if(koniec,bun1,9999999999.99)|
+if(koniec,tab_sum[1]+bun1-tab_sum[2],9999999999.99)|
+if(koniec,tab_sum[1]+bun1,9999999999.99)|
+if(koniec,tab_sum[1]+bun1,9999999999.99)|0<>
+        <>                                            Data :<@S10>    
+  <@S500>  
+  
+  
+ Raport kasowy Nr<@S100> za okres od<@S10> do<@S10>             Str.<999>M
+          ------------------------------------------------------------------------------------------------------------------------------------------
+            LP   Data     Dow¢d      Treûç                                    Za co                     Przych¢d         Rozch¢d      Konto przec.
+          ------------------------------------------------------------------------------------------------------------------------------------------<>  
+{@R          9999|XXXXXXXXXX|XXXXXXXXXX|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXXXXXXXXXXXXXX|999,999,999.99|99999,999,999.99|@S30R   }
+          ------------------------------------------------------------------------------------------------------------------------------------------<>  
+                  Podpisy                                                        Obroty    strony :<99,999,999.99|99999,999,999.99>    Iloûç< | >  
+             Kasjer   Kontroler                                                              dnia :<99,999,999.99|99999,999,999.99> zaíÜcznik¢w 
+                                                                                 Stan   poprzedni :<99,999,999.99>                      KP
+                  Ksiëgowano                                                     kasy      obecny :                <999,999,999.99>  
+           dzie§ rej.  strona  pozycje  podpis                                               SUMA :<99,999,999.99>  <999,999,999.99>     KW
+  
+P

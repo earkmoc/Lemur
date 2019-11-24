@@ -1,0 +1,15 @@
+Dokumenty kontrahenta
+5|22|1|78|3||||DBSetOrder(4)|ON('DOKSPL')|ON('FIRMY')|
+BLOKADA|;?|X|
+TYP|   ;Typ|XXX|
+PadR(RTrim(INDEKS)+if(Empty(NUMERFD),'',','+NUMERFD),20)|     ;Numer|@S20|
+INDEKS_F|          ;Kontrahent|
+WARTOSC|       ;Do wypíaty|@Z 9999,999.99|
+DATAW|Data wy-;stawienia|@S10|
+NETTO22|Wartoûç;brutto|@Z 9999,999.99|
+NETTO7|Koszty;u.p. %|@Z 999.99%|
+NETTO0|Koszty;kwota|@Z 999,999.99|
+NETTOZW|     ;Doch¢d|@Z 999,999.99|
+VAT22|Podatek;doch. %|@Z 999.99%|
+VAT7|Podatek;doch. kwota|@Z 999,999.99|
+NABYWCA|  Nr    ;Kontrahent||

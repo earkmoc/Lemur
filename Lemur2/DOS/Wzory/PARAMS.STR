@@ -1,0 +1,6 @@
+Aadd(pola,{'ID','C',10,0})|
+Aadd(pola,{'NAZWA','C',100,0})|
+Aadd(pola,{'TYP','C',1,0})|
+Aadd(pola,{'WARTOSC','C',100,0})|
+Aadd(indeksy,'params')|
+Aadd(klucze,'Upper(ID)')|

@@ -1,0 +1,13 @@
+TYP|NAZWA|NUMER|MAGAZYNG|MAGAZYNP|TYP_F|MASKA|WZORWYDR|
+Typ|Nazwa|Nast‘pny Nr|MG|MP|?|Maska|Wz¢r|
+XXX|@S48||9|9||||
+5|1|22|78|1|
+Typy dokument¢w
+
+5|Esc|Esc - wyjžcie|
+15|D|Dopisz|DOKTYPY,Nowa pozycja|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('DOKTYPY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,2,TYP,1,DokMaska(),3|
+57|ENTER||dalej,3,TYP,1,DokMaska(),3|

@@ -1,0 +1,11 @@
+Dokumenty nierozliczone
+11|22|1|78|3|end|||DBSetOrder(4)|ON('DOKSPL')|
+PadR(RTrim(INDEKS)+if(Empty(NUMERFD),'',','+NUMERFD),20)|     ;Numer|@S10|
+WARTOSC|       ;Wartož|999,999.99|
+WARTOSC-WPLACONO|       ;Pozostaje|999,999.99|
+DtoA(DATAW)|Data;wystaw.|@S10|
+DtoA(DATAT)|Termin;zap’aty|@S10|
+DOKSPL->(GetPole(1,'Str(ROB->NABYWCA)+Str(ROB->ID)+PadL("1",10)','KWOTA'))|Rata 1|@Z 999,999|
+DOKSPL->(GetPole(1,'Str(ROB->NABYWCA)+Str(ROB->ID)+PadL("2",10)','KWOTA'))|Rata 2|@Z 999,999|
+if(Date()>DATAT,WARTOSC-WPLACONO,0)|Przeter-;minowane|@Z 999,999.99|
+TYP|   ;Typ|XXX|

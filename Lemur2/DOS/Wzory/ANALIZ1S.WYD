@@ -1,0 +1,20 @@
+Date()|Time()|DBE_Tyt|0<>
+Wydawnictwo "LITERATURA" S.C.
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+-------------------------------------------------------
+  LP   Nr Miasto                Indeks             Stan  
+-------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)<>
+lp|ID_F|
+FIRMY->(GetPole(1,'ID_F','MIASTO'))|
+FIRMY->(GetPole(1,'ID_F','INDEKS'))|
+InccTab('tabs[1]',STAN)<>
+{999|9999|@S21|@S15|@Z 999,999}
+#DBGoTop()<>
++tabs[1]<>  
+-------------------------------------------------------
+                                         Razem:<999,999>
+ 0<>  
+koniec.

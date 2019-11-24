@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?> 
+<JPK xmlns="http://jpk.mf.gov.pl/wzor/2017/11/13/1113/" xmlns:etd="http://crd.gov.pl/xml/schematy/dziedzinowe/mf/2016/01/25/eD/DefinicjeTypy/"> 
+<Naglowek> 
+<KodFormularza kodSystemowy="JPK_VAT (3)" wersjaSchemy="1-1">JPK_VAT</KodFormularza> 
+<WariantFormularza>3</WariantFormularza> 
+	<CelZlozenia>0</CelZlozenia>
+	<DataWytworzeniaJPK>DataCzas</DataWytworzeniaJPK>
+	<DataOd>OdDaty</DataOd>
+	<DataDo>DoDaty</DataDo>
+	<NazwaSystemu>Handel</NazwaSystemu>
+</Naglowek>
+<Podmiot1>
+	<NIP>7271141963</NIP>
+	<PelnaNazwa>KSIĘŻY MŁYN Dom Wydawniczy Michał Koliński</PelnaNazwa>
+</Podmiot1>

@@ -1,0 +1,26 @@
+Firma('max3.txt')|Date()|Time()|Dwielinie(DBE_Tyt,65,3)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+----------------------------------------------------------------------------
+  LP ? Typ Numer        Cena    Data s.  Kontrahent  Przych¢d     Rozch¢d
+----------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|DOKUM->(GetPole(1,'ID_D','BLOKADA'))|DOKUM->(GetPole(1,'ID_D','TYP'))|
+DOKUM->(GetPole(1,'ID_D','INDEKS'))|
+CENA_DOK|
+DOKUM->(GetPole(1,'ID_D','DATAS'))|
+DOKUM->(GetPole(1,'ID_D','INDEKS_F'))|
+InccTab('tabs[1]',PRZYCHOD)|
+InccTab('tabs[2]',ROZCHOD)|
+InccTab('tabs[3]',PRZYCHOD-ROZCHOD)<>
+{999|X|XXX|@S11|999.99|@S10|@S10|@Z 9999999,999|@Z 9999999,999|}
+#DBGoTop()<>
++tabs[1]|tabs[2]<>  
+----------------------------------------------------------------------------
+                                             Razem:<9999999,999|9999999,999>
++Max(tabs[3],0)|Max(-tabs[3],0)<>  
+                                             Saldo:<@Z 9999999,999|@Z 9999999,999>
+ 0<>  
+koniec.

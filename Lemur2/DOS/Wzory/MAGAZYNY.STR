@@ -1,0 +1,11 @@
+Aadd(pola,{'ID','N',10,0})|
+Aadd(pola,{'ID_T','N',10,0})|
+Aadd(pola,{'ILOSC','N',12,3})|
+Aadd(pola,{'CENA_Z','N',12,2})|
+Aadd(pola,{'DATA_Z','D',8,0})|
+Aadd(indeksy,'magazyn1')|
+Aadd(indeksy,'magazyn2')|
+Aadd(indeksy,'magazyn3')|
+Aadd(klucze,'Str(ID)+Str(ID_T)+DtoS(DATA_Z)')|
+Aadd(klucze,'Str(ID_T)+Str(ID)+Str(CENA_Z)')|
+Aadd(klucze,'Str(ID_T)+Str(CENA_Z)+Str(ID)')|

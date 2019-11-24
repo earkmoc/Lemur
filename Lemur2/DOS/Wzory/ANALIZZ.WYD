@@ -1,0 +1,27 @@
+""+Firma('max3.txt')|Date()|Time()|FIRMY->INDEKS|FIRMY->NAZWA1|Dwielinie(DBE_Tyt,65,3)|0<>
+<@S500>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Indeks:<@S15>  
+ Nazwa:<@S50>  
+
+  <@S150>  
+-----------------------------------------------------------------------------------------------------------------------------+
+  LP Nazwa                                                Cena        Stan  Masa     Wartoûç     Sprzedaß  Masa    Wartoûç
+-----------------------------------------------------------------------------------------------------------------------------+<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Ustaw('drukuj_for','(STAN#0)')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|PadR(TOWARY->(GetPole(1,'ID_T','NAZWA')),60)|TOWARY->CENA_S|
+InccTab('tabs[1]',STAN)|
+InccTab('tabs[2]',Grosz(TOWARY->MASA*STAN))|
+InccTab('tabs[3]',Grosz(TOWARY->CENA_S*STAN))|
+InccTab('tabs[4]',SPRZEDAZ)|
+InccTab('tabs[5]',Grosz(TOWARY->MASA*SPRZEDAZ))|
+InccTab('tabs[6]',Grosz(TOWARY->CENA_S*SPRZEDAZ))|
+{999|@S51|@Z 999.99|@Z 99,999,999|@Z 999?999|@Z 9999,999.99|@Z 99,999,999|@Z 999?999|@Z 9999,999.99}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]|tabs[6]<>  
+-----------------------------------------------------------------------------------------------------------------------------+
+                                                         Razem:<@Z 99,999,999|@Z 999?999|@Z 9999,999.99|@Z 99,999,999|@Z 999?999|@Z 9999,999.99>
+ 0<>  
+koniec.

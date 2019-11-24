@@ -1,0 +1,29 @@
+Sprzeda§ towar¢w: indeks, ilož, cena, wartož
+5|22|1|78|1||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|Jest_baza('ANALIZA4')|CreateIndex(kolumny[1])|DBGoTop()|
+TOWARY->(GetPole(-1,'ANALIZA4->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY'))|Nazwa|@S50|
+ILOSC|Sprzeda§;narast.|@Z 9999,999|
+CENA*ILOSC|Wartož sp.;narastaj†co|@Z 9999,999.99|
+ZAPLACONE|Zap’acono;za sztuk|@Z 99,999|
+PROWIZJA1+PROWIZJA2|Suma;prowizji|@Z 999,999.99|
+ILOSC_1|Zap’acono;za sztuk 1|@Z 99999|
+STAWKA_1|Wed’ug;stawki 1|@Z 999.99|
+PROWIZJA1|          ;Prowizja 1|@Z 999,999.99|
+ILOSC_2|Zap’acono;za sztuk 2|@Z 99999|
+STAWKA_2|Wed’ug;stawki 2|@Z 999.99|
+PROWIZJA2|          ;Prowizja 2|@Z 999,999.99|
+SPRZWZAPL|Sprzeda§;w okresie zap’at|@Z 999,999|
+CENA*SPRZWZAPL|Wartož sprzeda§y;w okresie zap’at|@Z 999,999.99|
+ZAPLATYW|Zap’aty;w okresie|@Z 999,999.99|
+ZAPLATYN|Zap’aty;narastaj†co|@Z 999,999.99|
+NAKLAD|Nak’ad;z kart|@Z 9999,999|
+NAKLADLICZ|Nak’ad;liczony|@Z 999,999|
+NAKLADLIC1|Nak’ad;liczony 1|@Z 999,999|
+NAKLADLIC2|Nak’ad;liczony 2|@Z 999,999|
+ZAPLNARAST|Zap’acono;narastaj†co|@Z 999,999|
+NAKLADLICZ-ZAPLNARAST|Do;rozliczenia|@Z 9999,999|
+CENA|Cena;sprzeda§y|@Z 999.99|
+WARTOSC|Wartož;sprzeda§y|@Z 9999,999.99|
+TOWARY->(GetPole(-1,'ID_T','CENA_Z'))|Cena;zakupu|@Z 9999.99|
+Grosz(TOWARY->(GetPole(-1,'ID_T','CENA_Z'))*ILOSC)|Wartož;zakupu|@Z 9999,999.99|
+WARTOSC-Grosz(TOWARY->(GetPole(-1,'ID_T','CENA_Z'))*ILOSC)|Kwota;zysku|@Z 9999,999.99|
+if(Grosz(TOWARY->(GetPole(-1,'ID_T','CENA_Z'))*ILOSC)=0,0,100*(WARTOSC-Grosz(TOWARY->CENA_Z*ILOSC))/Grosz(TOWARY->CENA_Z*ILOSC))|Procent;zysku|@Z 9999.99%|

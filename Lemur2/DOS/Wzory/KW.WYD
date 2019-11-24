@@ -1,0 +1,33 @@
+EOL+Firma('max3.txt',,1,1)|EOL+Firma('max3.txt',,2,2)|EOL+Firma('max3.txt',,3,3)|D3|EOL+Firma('max3.txt',,4)|NUMER|NAZWA|ADRES|NIP|NRKONT|PRZEDMIOT|K11|
+kk:=SlownieZlGr(K11,50)|
+SubStr(kk,51)|SubStr(kk,101)|SubStr(kk,151)|0<>
+  <>
+  <>
+  <>
+@P
+  
+<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>      miejscowoûç: ú¢d¶  
+<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>  
+<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX> data wystawienia:<XXXXXXXX>r.  
+<@S300>  
+  
+                   W1Dokument<@S30>W0  
+  
+        Komu  :<@S100>  
+        Adres :<@S100>  
+          NIP :<@S100>          Numer kontrahenta:<@Z 99999>  
+
+Treûç:<@S30>     Kwota:<999,999.99> zí.
+----------------------------------------------------------------
+Síownie: <@S50>  
+         <@S50>  
+         <@S50>  
+         <@S50>  
+                                                  Kwotë powyßszÜ
+   
+ wystawií:                                wypíaciíem:     otrzymaíem:
+                        Rap.Kasowy
+                        Nr.........
+                        poz........
+                                               
+                                                                                  

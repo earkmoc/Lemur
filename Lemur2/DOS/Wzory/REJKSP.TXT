@@ -1,0 +1,20 @@
+LP|NUMER|NAZWA|K11|DtoA(D2)|K11-K21|D4|K21|K11|K24|NRKONT|PSKONT|D1|D2|D3|K23|K11-K23|PRZEDMIOT|
+LP|Numer dok.|Nazwa kontrahenta|Wartoûç|Data|Do zapíaty|Termin|Wpíacono|Wartoûç|Uwagi|Numer|Pseudo|Data podatku|Data wystawienia|Data sprzedaßy|VAT|Netto|P-miot|
+9999|@S12|@S32|@Z 999,999.99|@S8|@Z 9999,999.99|@S10|@Z 9999,999.99|@Z 9999,999.99||||||||||
+5|1|22|78|1|1||||ON('DOKSPL')|Jest_baza('REJKSP')|DBSetOrder(4)|DBGoTop()|
+Rejestr sprzedaßy VAT
+
+5|Esc|Escape|
+23|D|Dopisz|REJ_SP,Nowa pozycja rejestru sprzedaßy,,,,,,,2|REJKSP->D1:=Date(),REJKSP->D2:=CtoD(''),REJKSP->D3:=CtoD(''),REJKSP->D4:=Date(),REJKSP->LP:=GetLast(1,1)+1|
+|U|Usu§|UsunDz('usuwasz tÜ pozycjë',D3)|
+|I|Import|RunMenu(67,,'e',,'Wybierz wariant importu :',1)|
+|R|Ren|Renum('D1','LP','Data podatku')|
+|~||Opis('import2Z.txt')|
+7|S|Szukaj|nr,1,1,9,2,10,3|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Wydruk('rejksp.wyd','rejksp')|
+|W||RunMenu(15,,'e',,'Wybierz wariant wydruku :',1)|
+|F|Formularz=ENTER|FormDz('REJ_SP,Pozycja rejestru sprzedaßy',D3)|
+           |ENTER||FormDz('REJ_SP,Pozycja rejestru sprzedaßy',D3)|
+|TAB||Znacz('NUMER')|
+19|!||Wyczyûciç tabelë ?|

@@ -1,0 +1,26 @@
+Firma('max3.txt')|Date()|Time()|TOWARY->INDEKS|TOWARY->NAZWA|DBE_Tyt|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Indeks:<@S15>  
+ Nazwa:<@S50>  
+
+  <@S150>  
+--------------------------------------------------------------------------------
+  LP  ? Typ Numer                Kontrahent   Data s.   Cena s. Iloûç   Wartoûç
+--------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+AllTrim(DOKUM->(GetPole(1,'ID_D','BLOKADA')))+DOKUM->(GetPole(1,'-ID_D','BLOKADA'))|
+AllTrim(DOKUM->(GetPole(1,'ID_D','TYP')))+DOKUM->(GetPole(1,'-ID_D','TYP'))|
+AllTrim(DOKUM->(GetPole(1,'ID_D','INDEKS')))+DOKUM->(GetPole(1,'-ID_D','INDEKS'))|
+GetPole(1,'Val(global_tab[2])','INDEKS','FIRMY')|
+DOKUM->(GetPole(1,'ID_D','DATAS'))+DOKUM->(GetPole(1,'-ID_D','DATAS'))|
+CENA|InccTab('tabs[1]',ILOSC)|InccTab('tabs[2]',Grosz(CENA*ILOSC))<>
+{9999|X|XXX|@S20|@S10|@S10|99999.99|99999|999,999.99}
+#DBGoTop()<>
++tabs[1]|tabs[2]<>  
+--------------------------------------------------------------------------------
+                                                         Razem:<99999|999,999.99>
+ 0<>  
+koniec.

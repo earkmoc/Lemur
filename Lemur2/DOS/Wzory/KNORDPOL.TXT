@@ -1,0 +1,16 @@
+WT|KONTO|PSEUDO|TRESC|
+Z|Konto|Pseudo|Nazwa|
+A|@S10|@S10|@S47|
+5|1|22|78|2|
+Plan kont
+
+5|Esc|Escape|
+74|Z|Znak|KNORDPOL,WT,*,24|
+6|U|Usu¤|usuwasz to konto|
+14|F|Formularz|KNORDPOL,Dane konta|
+15|D|Dopisz|KNORDPOL,Dane konta,,,54|KNORDPOL->NUMER:=0|
+1|I|Import|28||e|e|Wybierz wariant importu :|stemko.txt|
+18|W|Wydruk|w_plan.txt,,Plan kont|
+7|S|Szukaj|nr,2,1,3,6,4,2|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+56|ENTER|ENTER=wyb¢r|KONTO|

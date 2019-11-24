@@ -1,0 +1,28 @@
+Firma('max3.txt')|Date()|Time()|Dwielinie(DBE_Tyt,65,3)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+-----------------------------------------------------------------------------------------------------------------
+         Dokument                                                               Data      Data          Wartoûç
+  LP   typ     Numer      Kontrahent                                        wystawienia   wpíaty   U     wpíaty
+-----------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|
+Ustaw('drukuj_while','!Eof()')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+DOKUM->(GetPole(1,'ID_D','BLOKADA'))|
+DOKUM->(GetPole(1,'ID_D','TYP'))|
+DOKUM->(GetPole(1,'ID_D','INDEKS'))|
+FIRMY->(GetPole(1,"DOKUM->NABYWCA",'NAZWA1'))|
+DOKUM->(GetPole(1,'ID_D','DATAW'))|
+DATAOW|
+UWAGIOW|
+InccTab('tabs[1]',WPLATY)<>
+{999|X|XXX|@S14|@S50|@S10|@S10|@S1|@Z 9,999,999.99}
+#DBGoTop()<>
++tabs[1]<>  
+-----------------------------------------------------------------------------------------------------------------
+                                                                                                  Razem:<9,999.99>
+ 0<>  
+koniec.

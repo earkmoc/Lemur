@@ -1,0 +1,24 @@
+Dokumenty "RW"
+5|22|1|78|3|end|D||ONP('DOKUMZ',,,,.t.)|Zwolnij('DOKUMZ')|ON('DOKUMZ')|
+BLOKADA|;?|X|
+TYP|   ;Typ|XXX|
+PadR(RTrim(INDEKS)+if(Empty(NUMERFD),'',','+NUMERFD),20)|     ;Numer|@S20|
+INDEKS_F|          ;Kontrahent|@S30|
+WARTOSC|       ;Wartoûç|@Z 9999999.99|
+DtoA(DATAW)|Data wy-;stawienia|@S10|
+Mark('DOKUMZ',ID,'*')|M|X|
+DtoA(DATAO)|Data ot-;rzymania|@S10|
+DtoA(DATAT)|Termin;zapíaty|@S10|
+SPOSOB|Spos¢b;zapíaty||
+WPLACONO|      ;Wpíacono|@Z |
+WARTOSC-WPLACONO|       ;Pozostaje|@Z |
+NETTOCZ|Wartoûç;w c.z.n.|@Z |
+NETTO22+NETTO7+NETTO0+NETTOZW-NETTOCZ|Zysk;netto|@Z |
+if(NETTOCZ=0,0,100*(NETTO22+NETTO7+NETTO0+NETTOZW-NETTOCZ)/NETTOCZ)|Zysk;%|@Z 99999.99%|
+NABYWCA|  Nr    ;Kontrahent||
+NAZWA1|   ;Nazwa||
+KOD|   ;Kod||
+MIASTO|      ;Miasto|@S13|
+ADRES|     ;Adres|@S22|
+NIP|   ;NIP|@S13|
+DtoA(DATAS)|Data sp-;rzedaßy|@S10|

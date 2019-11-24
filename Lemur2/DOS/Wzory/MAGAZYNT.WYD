@@ -1,0 +1,20 @@
+Firma('max3.txt')|Date()|Time()|TOWARY->INDEKS|TOWARY->NAZWA|DBE_Tyt|0<>
+<@S500>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Indeks:<@S15>  
+ Nazwa:<@S50>  
+
+  <@S150>  
+-----------------------------------------------------------------------
+  LP   Nr Podmagazyn                                            Iloûç
+-----------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Ustaw('drukuj_for','(ILOSC#0)')|Aadd(tabs,0)<>
+lp|ID|FIRMY->(GetPole(1,'ID','NAZWA1'))|InccTab('tabs[1]',ILOSC)<>
+{999|9999|@S50|@Z 9999999.99}
+#DBGoTop()<>
+tabs[1]<>  
+-----------------------------------------------------------------------
+                                                    Razem:<99999,999.99>
+ 0<>  
+koniec.

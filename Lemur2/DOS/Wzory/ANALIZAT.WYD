@@ -1,0 +1,50 @@
+Firma('max3.txt')|Date()|Time()|'Ewidencja p’atnožci (forma p’atnožci: za pobraniem) za okres: '+SubStr(DBE_Tyt,19)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  M
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     Data wp’ywu  Faktura              Data                       Kontrahent                                                                                             Kwota       Kwota      Kwota
+  LP nale§nožci                     wystawienia NIP           Nazwa                                              Adres                                                   Netto        VAT       Brutto
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Ustaw('drukuj_for','(DOKUM->(GetPole(1,"ID_D","SPOSOB"))="za pobraniem")')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+DATAOW|
+DOKUM->(GetPole(1,'ID_D','BLOKADA'))|
+DOKUM->TYP|
+DOKUM->INDEKS|
+DOKUM->DATAW|
+DOKUM->NIP|
+DOKUM->NAZWA1|
+DOKUM->(KOD+' '+AllTrim(MIASTO)+', '+ADRES)|
+InccTab('tabs[1]',DOKUM->(WARTOSC-VAT22-VAT7))|
+InccTab('tabs[2]',DOKUM->(VAT22+VAT7))|
+InccTab('tabs[3]',DOKUM->WARTOSC)<>
+{999|@S10|X|XXX|@S14|@S10|@S13|@S50|@S50|@Z 9,999,999.99|@Z 99,999.99|@Z 9,999,999.99}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]<>  
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+                                                                                                                                                             Razem:<9,999,999.99|99999.99|99,999,999.99>
+#DBSelectArea('DOKUM')|DBGoTop()<>
+#globalbuf:=0|globalbuf1:=0<>
+#DBEval(;; globalbuf:=globalbuf+if((DOKUM->WARTOSC!=WPLACONO .and. DOKUM->SPOSOB="za pobraniem" .and. !((DOKUM->DATAS)>=CtoD(SubStr(DBE_Tyt,19,10)))),1,0), 'MARK' ;;)<>
+#DBEval(;; globalbuf1:=globalbuf1+if((DOKUM->WARTOSC!=WPLACONO .and. DOKUM->SPOSOB="za pobraniem" .and. !((DOKUM->DATAS)>=CtoD(SubStr(DBE_Tyt,19,10)))),DOKUM->WARTOSC,0), 'MARK' ;;)<>
+AllS(globalbuf)|AllS(globalbuf1,'999,999,999.99')|0<>  
+Z miesi‘cy poprzednich do rozliczenia pozosta’o<XXXXXXX> faktur z form† p’atnožci za pobraniem na kwot‘<@S20> z’<>
+#globalbuf2:=0|globalbuf3:=0<>
+#DBEval(;; globalbuf2:=globalbuf2+if((DOKUM->SPOSOB="za pobraniem" .and. ((DOKUM->DATAS)>=CtoD(SubStr(DBE_Tyt,19,10))) .and. !((DOKUM->DATAS)>CtoD(SubStr(DBE_Tyt,30,10)))),1,0), 'MARK' ;;)<>
+#DBEval(;; globalbuf3:=globalbuf3+if((DOKUM->SPOSOB="za pobraniem" .and. ((DOKUM->DATAS)>=CtoD(SubStr(DBE_Tyt,19,10))) .and. !((DOKUM->DATAS)>CtoD(SubStr(DBE_Tyt,30,10)))),DOKUM->WARTOSC,0), 'MARK' ;;)<>
+SubStr(DBE_Tyt,19,21)|AllS(globalbuf2)|AllS(globalbuf3,'999,999,999.99')|0<>  
+- W okresie<@S21> wystawiono ’†cznie<@S10> faktur z form† p’atnožci za pobraniem na kwot‘<@S20> z’<>
+#ON('DOKSPL')<>
+#globalbuf4:=0|globalbuf5:=0<>
+#DBSelectArea('DOKSPL')|DBEval(;; globalbuf4:=globalbuf4+if((DOKSPL->DATAW>=CtoD(SubStr(DBE_Tyt,19,10))) .and. !(DOKSPL->DATAW>CtoD(SubStr(DBE_Tyt,30,10))) .and. (DOKUM->(GetPole(1,'DOKSPL->ID_D','SPOSOB'))="za pobraniem"),1,0), 'MARK' ;;)<>
+#DBSelectArea('DOKSPL')|DBEval(;; globalbuf5:=globalbuf5+if((DOKSPL->DATAW>=CtoD(SubStr(DBE_Tyt,19,10))) .and. !(DOKSPL->DATAW>CtoD(SubStr(DBE_Tyt,30,10))) .and. (DOKUM->(GetPole(1,'DOKSPL->ID_D','SPOSOB'))="za pobraniem"),DOKSPL->KWOTA,0), 'MARK' ;;)<>
+SubStr(DBE_Tyt,19,21)|AllS(globalbuf4)|AllS(globalbuf5,'999,999,999.99')|0<>  
+- W okresie<@S21> zap’acono<@S10> faktur na kwot‘<@S20> z’<>
+#DBSelectArea('ANALIZAR')<>
+AllS(globalbuf+globalbuf2-globalbuf4)|AllS(globalbuf1+globalbuf3-globalbuf5,'999,999,999.99')|0<>  
+- Do rozliczenia w kolejnych miesi†cach pozostaje<@S10> faktur na kwot‘<@S20> z’<>
+  0<>
+  P 
+koniec.

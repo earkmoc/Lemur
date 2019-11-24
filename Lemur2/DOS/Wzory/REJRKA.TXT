@@ -1,0 +1,18 @@
+LP|DtoA(D3)|NRK|NUMER|PRZEDMIOT|K10|K11|OTWARTY|K24|NAZWA|NRKONT|PSKONT|K24|
+  LP|Data|NRK|Numer|Trež|Przych¢d|Rozch¢d|?|Konto p.|Kontrahent|Numer|Pseudo|Konto p-stawne|
+@Z 9999|||@S6|@S15|@Z 999,999.99|@Z 999,999.99|||||||
+5|1|22|78|1|1|A||GetIni()|ON('FIRMY')|
+Kasa
+
+5|Esc|Escape|
+|U|Usu¤|Kasuj('usuwasz t† pozycj‘')|
+7|S|Szukaj|nr,1,1|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Wydruk(if(K10#0,'KP','KW')+'.wyd',,,,,1)|
+|L|Lista|Wydruk('rejrka.wyd','REJRKA')|
+|R|Renum|Renum('D3','LP','Data',,,,1)|
+|T|Total|ShowDBES()|
+|A|Aktualizacja=Enter|DokAnaRK('ANALIZA6,Podaj parametry procedury,,,,,,,4','','Rozliczenia')|
+|Enter||DokAnaRK('ANALIZA6,Podaj parametry procedury,,,,,,,4','','Rozliczenia')|
+66|||&cat_wzorow+'imp_clka.txt'|
+|||if(OTWARTY#' ',Alarm('Dokument zamkni‘ty'),AppendRecord('ROZLICZ';{K24;AllTrim(PRZEDMIOT)+', '+NUMER;Val(NRK);D3;;K11;K10;'RK';;;Date()})),Blokuj_R(),REJ_KA->OTWARTY:='z',PressKey('d¢’')|

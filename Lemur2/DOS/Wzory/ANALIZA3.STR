@@ -1,0 +1,5 @@
+Aadd(pola,{'ID_D','N',10,0})|
+Aadd(pola,{'PRZYCHOD','N',12,3})|
+Aadd(pola,{'ROZCHOD','N',12,3})|
+Aadd(pola,{'ILOSC_DOK','N',12,3})|
+Aadd(pola,{'CENA_DOK','N',12,2})|

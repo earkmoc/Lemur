@@ -6,6 +6,7 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 
 // ----------------------------------------------
 
+$wzor=$_GET['wzor'];
 $firma=$_GET['firma'];
 $tabela=$_GET['tabela'];
 $widok=$_GET['widok'];
@@ -152,9 +153,17 @@ $wynik['offset']=$_GET['offset'];
 
 $filtr = explode('where',$fromwhere)[1];
 $filtr=(json_encode($filtr)?$filtr:'');
-$wynik['filtr']=(($filtr=='')||($filtr=='1')||(strpos($filtr,'(1)'))?'':"<b>Filtr</b>: $filtr");//"<b>Filtr</b>: wszystko"
+$filtr=str_ireplace($wzor.'.','',$filtr);
+$filtr=str_ireplace($firma.'_','',$filtr);
+//$filtr=str_ireplace(' like ',' jak ',$filtr);
+$wynik['filtr']=(($filtr=='')||($filtr=='1')||(strpos($filtr,'(1)'))?'':"<b>Filtr</b>: $filtr");
 
 $sortowanie=explode('order by',$orderBy)[1];
+$sortowanie=str_replace(strtolower($wzor).'.','',$sortowanie);
+$sortowanie=str_replace(strtolower($firma).'_','',$sortowanie);
+//$sortowanie=str_replace(' asc',' rosnąco',$sortowanie);
+//$sortowanie=str_replace(' desc',' malejąco',$sortowanie);
+$sortowanie=str_replace(',ID','',$sortowanie);
 $wynik['sort'].=(($sortowanie=='')?'':"<b>Sortowanie</b>: $sortowanie");
 
 //$_SESSION['wynik']=$wynik;

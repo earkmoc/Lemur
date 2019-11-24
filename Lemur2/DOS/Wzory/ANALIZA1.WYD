@@ -1,0 +1,20 @@
+Firma('max3.txt')|Date()|Time()|Dwielinie(DBE_Tyt,65,3)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+------------------------------------------------------------------------------------------------------------
+  LP   Nr Miasto                Indeks               Stan      Sprzeda§  ˜rednio/mc   dok. Data min Data max
+------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|ID_F|
+DOKUM->(GetPole(4,'Str(ID_F)','MIASTO'))|
+DOKUM->(GetPole(4,'Str(ID_F)','INDEKS_F'))|
+STAN|SPRZEDAZ|Round(SREDNIO,0)|ILEDOK|DATAP|DATAK|InccTab('tabs[1]',STAN)|InccTab('tabs[2]',SPRZEDAZ)|InccTab('tabs[3]',SREDNIO)<>
+{999|9999|@S21|@S15|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 999999|@S8|@S8}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]<>  
+------------------------------------------------------------------------------------------------------------
+                                         Razem:<9999999,999|9999999,999|9999999,999>
+ 0<>  
+koniec.

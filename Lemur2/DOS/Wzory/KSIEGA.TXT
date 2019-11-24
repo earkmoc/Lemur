@@ -1,0 +1,12 @@
+Ksi‘ga Przychod¢w i Rozchod¢w
+5|22|1|78|3|1|
+if(ANULOWANO,'A',' ')|A|X|
+LP|LP|999999|
+DATA|Data||
+NRDOW|Nr dow.ks.|@S10|
+FIRMA|Kontrahent|@S10|
+PRZYCHOD3|Przychody|@Z 9999,999.99
+RAZEM+ZAKUP_TOW+KOSZTY_UB|Wydatki|@Z 9999,999.99
+FIRMA|Nazwa kontrahenta|@S60|
+ADRES|Adres||@S60|
+OPIS|Opis zdarzenia gospodarczego|@S60|

@@ -1,0 +1,12 @@
+NIP|NAZWA|BRANZA|SKR_POCZT|ULICA|KRAJ|KOD_POCZT|MIASTO|
+NIP|Nazwa|Bran§a|Skrytka p.|Ulica|Kraj|Kod poczt.|Miasto|
+@S15|@S20|@S10|@S8|@S10|@S10|@S10|@S10|
+4|1|22|78|1|
+Plan kont i Kartoteka kontrahent¢w
+
+5|Esc|Esc=wyjžcie|
+14|F|Formularz|KNORDPOL,Dane konta|
+23|D|Dopisz|KNORDPOL,Dane konta,,,54|
+6|U|Usu¤|usuwasz tego kontrahenta|
+7|S|Szukaj|nr,1,3,2,4|
+57|ENTER|Wyb¢r=ENTER|plik,9,kno_ko4.txt|

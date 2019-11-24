@@ -1,0 +1,13 @@
+NUMER|OPIS|
+Nr|OPIS|
+999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|
+5|1|22|78|1|
+Opis funkcji systemu
+
+14|F|Formularz = ENTER|sys_func,Dane funkcji|
+15|D|Dopisz|sys_func,Dane funkcji|
+6|U|Usu¤|usuwasz dane o tej funkcji|
+7|S|Szukaj|nr,1,1,2,2|
+8|I|Indeks|wed’ug numer¢w,1,wed’ug nazw,2|
+14|ENTER| |sys_func,Dane funkcji|
+5|ESC|ESC - wyjžcie|

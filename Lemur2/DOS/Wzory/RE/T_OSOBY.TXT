@@ -1,0 +1,6 @@
+U§ytkownicy
+5|22|1|78|||||ON('STANOWIS')|
+PadC(AllTrim(NAZWA),29)|Imi‘ i Nazwisko lub stanowisko|
+DATA_O|  Data|
+CZAS_O|  Czas|
+STANOWIS->(GetPole(,"STAN_O","NAZWA"))|Komputer|@S20|

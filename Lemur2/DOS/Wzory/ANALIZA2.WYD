@@ -1,0 +1,28 @@
+Firma('max3.txt')|Date()|Time()|Dwielinie(DBE_Tyt,65,3)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+--------------------------------------------------------------------------------------------------------------------------------------------------
+  LP   Nr Miasto                   Indeks            Stan     Sprzeda§     sprz. 1     sprz. 2     sprz. 3     sprz. 4     sprz. 5     sprz. 6
+--------------------------------------------------------------------------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|ID_F|
+DOKUM->(GetPole(4,'Str(ID_F)','MIASTO'))|
+DOKUM->(GetPole(4,'Str(ID_F)','INDEKS_F'))|
+Incctab('tabs[1]',STAN)|
+Incctab('tabs[2]',SPRZEDAZ)|
+Incctab('tabs[3]',SPRZEDAZ1)|
+Incctab('tabs[4]',SPRZEDAZ2)|
+Incctab('tabs[5]',SPRZEDAZ3)|
+Incctab('tabs[6]',SPRZEDAZ4)|
+Incctab('tabs[7]',SPRZEDAZ5)|
+Incctab('tabs[8]',SPRZEDAZ6)<>
+{999|9999|@S24|@S15|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]|tabs[6]|tabs[7]|tabs[8]<>  
+--------------------------------------------------------------------------------------------------------------------------------------------------
+                                            Razem:<@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999|@Z 9999999,999>
+ 0<>  
+koniec.

@@ -1,0 +1,10 @@
+DOKUM->(GetPole(1,'ID_D','BLOKADA'))|DOKUM->(GetPole(1,'ID_D','TYP'))|DOKUM->(GetPole(1,'ID_D','INDEKS'))|FIRMY->(GetPole(1,'DOKUM->NABYWCA','INDEKS'))|DOKUM->(GetPole(1,'ID_D','TYP_F'))|DOKUM->(GetPole(1,'ID_D','DATAS'))|CENA|ILOSC|CENA*ILOSC|
+O|Typ|Nr dokumentu|Kontrahent|T|Data s.|Cena s.|Iloûç|Wartoûç|
+X|XXX|@S13||X||99999.99|99999|99,999.99|
+11|1|22|78|2|
+Dokumenty operujÜce na powyßszym towarze
+
+5|Esc|Esc - wyjûcie|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr],,1)|
+|W|Wydruk|Drukuj('spect')|

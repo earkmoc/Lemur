@@ -1,0 +1,19 @@
+P’atnožci w okresie: nr dok., data, wartož
+5|22|1|78|7|end|||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|Jest_baza('ANALIZAR')|CreateIndex(kolumny[1])|DBGoTop()|
+DATAOW|Data;wp’aty|
+DOKUM->(GetPole(1,"ID_D",'INDEKS_F'))|         ;Kontrahent|@S10|
+DOKUM->(GetPole(1,'ID_D','TYP'))|   ;Typ|XXX|
+AllTrim(DOKUM->(GetPole(1,'ID_D','INDEKS')))|     ;Numer|@S8|
+DOKUM->(GetPole(1,'ID_D','WPLACONO'))|Wp’acono na;dokumencie|@Z 9999,999.99|
+WPLATY|Wp’acono na;rozliczenia|@Z 9999,999.99|
+ILE|Ile;raz|@Z 999|
+if((DOKUM->(GetPole(1,'ID_D','WPLACONO'))-WPLATY)#0,'*',' ')| ;D|
+DtoA(DOKUM->(GetPole(1,'ID_D','DATAS')))| Data  ;sprzeda§|@S8|
+UWAGIOW|    ;Uwagi|@S5|
+DOKUM->(GetPole(1,'ID_D','WPLACONO'))-WPLATY|      ;Delta|@Z 9999,999.99|
+DOKUM->(GetPole(1,'ID_D','if(WARTOSC-WPLACONO=0,Space(8),DtoA(DATAT))'))|     ;Termin|@S8|
+DOKUM->(GetPole(1,'ID_D','WARTOSC'))|       ;Wartož|@Z 999,999,999.99|
+DOKUM->(GetPole(1,'ID_D','WARTOSC-WPLACONO'))|         ;Pozostaje|@Z 999,999,999.99|
+DOKUM->(GetPole(1,'ID_D','if(WARTOSC-WPLACONO=0,0,Max(Date()-DATAT,0))'))|          ;Dni zw’oki|@Z 999999|
+DOKUM->(GetPole(1,'ID_D','if(WARTOSC-WPLACONO=0,0,0.24/365*Max(Date()-DATAT,0)*(WARTOSC-WPLACONO))'))|                 ;Odsetki (24%/rok)|@Z 999,999,999.99|
+DOKUM->(GetPole(1,'ID_D','SPOSOB'))|Sposób;zap³aty|@S20|

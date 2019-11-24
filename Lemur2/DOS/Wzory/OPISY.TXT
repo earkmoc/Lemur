@@ -1,0 +1,13 @@
+OPIS|
+Opis|
+@S50|
+5|1|22|78|1|
+Typowe przedmioty opodatkowania
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr,1,1|
+15|D|Dopisz|OPISY,Dane pozycji,,,54|
+6|U|Usu¤|usuwasz t† pozycj‘|
+14|F|Formularz|OPISY,Dane pozycji|
+18|W|Wydruk|w_opisy.txt,,Typowe przedmioty opodatkowania|
+56|ENTER|ENTER=wyb¢r pozycji|OPIS|

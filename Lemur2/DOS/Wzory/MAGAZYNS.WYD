@@ -1,0 +1,23 @@
+2|47| ||PadR(TOWARY->(GetPole(1,'ID_T','INDEKS')),60)|ILOSC#0|""+Firma('max3.txt')|Date()|Time()|FIRMY->INDEKS|FIRMY->NAZWA1|DBE_Tyt|0<>
+lp|PadR(GetPole(1,'ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY'),60)|GetPole(1,'ID_T','CENA_Z','TOWARY',,,1,,,'STAROCIE\TOWARY')|ILOSC|Grosz(GetPole(1,'ID_T','CENA_Z','TOWARY',,,1,,,'STAROCIE\TOWARY')*ILOSC)<>
+ILOSC|Grosz(GetPole(1,'ID_T','CENA_Z','TOWARY',,,1,,,'STAROCIE\TOWARY')*ILOSC)<>
+ILOSC|Grosz(GetPole(1,'ID_T','CENA_Z','TOWARY',,,1,,,'STAROCIE\TOWARY')*ILOSC)<>
+ILOSC|Grosz(GetPole(1,'ID_T','CENA_Z','TOWARY',,,1,,,'STAROCIE\TOWARY')*ILOSC)<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+<@S500>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Indeks:<@S15>  
+ Nazwa:<@S50>  
+
+  <@S150>  
+---------------------------------------------------------------+----------------------+
+  LP Nazwa                                            Cena zak.|  Stan        Wartoûç |
+---------------------------------------------------------------+----------------------+<>
+{999|@S51|@Z 999.99|@Z 99,999,999|@Z 9999,999.99}
+--------------------------------------------------------------------------------------<>  
+                                                  Suma strony:<999,999,999|9999,999.99>  
+                                                  Pop. strona:<999,999,999|9999,999.99>  
+                                                       Razem :<999,999,999|9999,999.99>  
+
+  <@S50>

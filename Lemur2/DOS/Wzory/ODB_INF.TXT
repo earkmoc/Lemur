@@ -1,0 +1,13 @@
+OPIS|
+Opis|
+@S50|
+5|1|22|78|1|
+Typowe opisy dekret¢w
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr,1,1|
+15|D|Dopisz|OPISY,Dane opisu dekretu,,,54|
+6|U|Usu¤|usuwasz ten opis dokumentu|
+14|F|Formularz|OPISY,Dane opisu dekretu|
+18|W|Wydruk|w_opisy.txt,,Typowe opisy dekret¢w|
+56|ENTER|ENTER=wyb¢r opisu|OPIS|

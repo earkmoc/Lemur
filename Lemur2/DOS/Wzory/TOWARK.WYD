@@ -1,0 +1,36 @@
+ID|
+TOWARY->(GetPole(1,'ID_T','NAZWA'))|
+if(ID_A1=0,'',FIRMY->(GetPole(1,'ID_A1','NAZWA1')))|
+if(ID_A2=0,'',FIRMY->(GetPole(1,'ID_A2','NAZWA1')))|
+if(ID_A3=0,'',FIRMY->(GetPole(1,'ID_A3','NAZWA1')))|
+if(ID_A4=0,'',FIRMY->(GetPole(1,'ID_A4','NAZWA1')))|
+DATA_ZU|
+DATA_WU|
+DATA_OR|
+WARTOSC|0<>
+W1Karta tytuíu: Nr<99999>  W0
+
+Tytuí :<@S100>  
+Autor1:<@S100>  
+Autor2:<@S100>  
+Autor3:<@S100>  
+Autor4:<@S100>  
+  
+        Data zawarcia umowy:<X>  
+     Data wygaûniëcia umowy:<X>  
+Data ostatniego rozliczenia:<X>  
+   Wartoûç do rozliczenia:<999,999.99>  
+======================================================================================================================
+ LP     Data    ISBN        Wydanie Rzut Cena   Nakíad   Wartoûç  Druk ûrodk¢w    Druk okíadki Arkusz Uwagi
+======================================================================================================================<>
+#ON('TOWARKS')|DBSetOrder(1)|DBSeek(Str(TOWARK->ID))|Ustaw('drukuj_while','ID_K=TOWARK->ID')|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|DATA|ISBN|WYDANIE|RZUT|CENA|InccTab('tabs[1]',NAKLAD)|InccTab('tabs[2]',Grosz(CENA*NAKLAD))|
+PadR(if(TOWARKS->DRUKSR=0,'',FIRMY->(GetPole(1,'TOWARKS->DRUKSR','INDEKS'))),15)|
+PadR(if(TOWARKS->DRUKOK=0,'',FIRMY->(GetPole(1,'TOWARKS->DRUKOK','INDEKS'))),15)|
+TOWARKS->ARKUSZ|TOWARKS->UWAGI<>
+{999|XXXXXXXXXX|XXXXXXXXXXXXXXX|999|999|999.99|999,999|999,999.99|@S100|@S100|@S100|@S16}
+#Jest_baza('TOWARK')<>
++tabs[1]|tabs[2]<>  
+----------------------------------------------------------------------------------------------------------------------
+                                        Razem:<999,999|999,999.99>
+  0<>

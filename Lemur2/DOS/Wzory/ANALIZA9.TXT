@@ -1,0 +1,13 @@
+DOKUM->(GetPole(1,'ID_D','BLOKADA'))|DOKUM->(GetPole(1,'ID_D','TYP'))|DOKUM->(GetPole(1,'ID_D','INDEKS'))|DOKUM->(GetPole(1,'ID_D','DATAS'))|FIRMY->(GetPole(1,"DOKUM->(GetPole(1,'ID_D','NABYWCA'))",'INDEKS'))|PRZYCHOD|ROZCHOD|PRZYCHOD-ROZCHOD|
+?|Typ|Numer|Data s.|Kontrahent|Przych¢d|Rozch¢d|Saldo|
+X|XXX|@S10|@S8||@Z 9999,999.99|@Z 9999,999.99|@Z 9999,999.99|
+5|1|22|78|1||||GetIni()|ON('FIRMY')|ON('DOKTYPY')|ON('TOWARY')|ON('MAGAZYNY')|ON('SPEC')|ON('DOKUM')|
+Wybrany tytu’: nr dok., data, przych¢d, rozch¢d
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|T|Total|ShowDBES()|
+|W|Wydruk|Drukuj()|
+|A|Aktualizacja=ENTER|DokAna9('ANALIZA9,Podaj parametry procedury,,,,,,,7','PW,FZ','FV,RU,FVK,RUK','Obroty wartožciowo towaru','')|
+|ENTER||DokAna9('ANALIZA9,Podaj parametry procedury,,,,,,,7','PW,FZ','FV,RU,FVK,RUK','Obroty wartožciowo towaru','')|

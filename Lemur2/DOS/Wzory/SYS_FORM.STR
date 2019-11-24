@@ -1,0 +1,15 @@
+ Aadd(pola,{'form_name','C',10,0})|
+ Aadd(pola,{'pole_lp','N',2,0})|
+ Aadd(pola,{'pole_name','C',50,0})|
+ Aadd(pola,{'pole_var','C',30,0})|
+ Aadd(pola,{'pole_pic','C',80,0})|
+ Aadd(pola,{'pole_row','N',2,0})|
+ Aadd(pola,{'pole_col','N',2,0})|
+ Aadd(pola,{'valid_func','N',3,0})|
+ Aadd(pola,{'valid_para','C',100,0})|
+ Aadd(pola,{'help_func','N',3,0})|
+ Aadd(pola,{'help_para','C',100,0})|
+ Aadd(indeksy,'sys_for1')|
+ Aadd(indeksy,'sys_for2')|
+ Aadd(klucze,'form_name+Str(pole_lp,2)')|
+ Aadd(klucze,'pole_name')|

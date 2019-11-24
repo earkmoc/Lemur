@@ -1,0 +1,7 @@
+Notatki
+5|22|1|78|1|
+DATAW|Data;wpisu||
+if(DATAM#DATAW,DATAM,Space(10))|Data;zmiany||
+NAZWA|     ;Nazwa|@KS16|
+PadR(StrTran(TRESC,EOL,' '),30)|     ;Treûç|@S30|
+PadR(StrTran(TRESC,EOL,' '),500)|Peína;treûç|@S78|

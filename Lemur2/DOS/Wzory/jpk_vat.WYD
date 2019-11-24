@@ -1,0 +1,30 @@
+#szy:=maz+lat|sna:=bezpl+bezpl|konwertON:=.f.<>
+StrTran(StrTran(StrTran(ReadWzor("JPK_VAT.nag",'',.t.),'OdDaty',SubStr(DtoS(REJ_SP->D1),0,4)+'-'+SubStr(DtoS(REJ_SP->D1),5,2)+'-01'),'DoDaty',SubStr(DtoS(ODPMR(Month(REJ_SP->D1),Year(REJ_SP->D1))),0,4)+'-'+SubStr(DtoS(ODPMR(Month(REJ_SP->D1),Year(REJ_SP->D1))),5,2)+'-'+SubStr(DtoS(ODPMR(Month(REJ_SP->D1),Year(REJ_SP->D1))),7,2)),'DataCzas',SubStr(DtoS(Date()),0,4)+'-'+SubStr(DtoS(Date()),5,2)+'-'+SubStr(DtoS(Date()),7,2)+'T'+Time())<>
+<@S1500>
+#Select('REJ_SP')|DBSetOrder(4)|DBSeek(Left(DtoS(REJ_SP->D2),6),.t.)|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|konwertON:=.t.<>
+ReadWzor("JPK_VAT.swp",'',.t.)|
+StrTran(ReadWzor("JPK_VAT.lp",'',.t.),'$lp',AllS(MemVar->LP))|
+StrTran(ReadWzor("JPK_VAT.nip",'',.t.),'$nip',AllTrim(if(AllTrim(NIP)=='','1111111111',StrTran(NIP,'-',''))))|
+StrTran(ReadWzor("JPK_VAT.naz",'',.t.),'$nazwa',AllTrim(StrTran(StrTran(NAZWA,chr(136),'l'),'&',' and ')))|
+StrTran(ReadWzor("JPK_VAT.adr",'',.t.),'$adres',AllTrim(ADRES))|
+StrTran(ReadWzor("JPK_VAT.num",'',.t.),'$numer',AllTrim(NUMER))|
+StrTran(ReadWzor("JPK_VAT.dat",'',.t.),'$data',SubStr(DtoS(D1),0,4)+'-'+SubStr(DtoS(D1),5,2)+'-'+SubStr(DtoS(D1),7,2))|
+if(K22=0,'',StrTran(ReadWzor("JPK_VATz.net",'',.t.),'$vat',AllS(K22)))|
+if(K16+K17=0,'',StrTran(ReadWzor("JPK_VAT0.net",'',.t.),'$netto',AllS(K16+K17)))|
+if(K27=0,'',StrTran(ReadWzor("JPK_VAT5.net",'',.t.),'$netto',AllS(K27)))|
+if(K28=0,'',StrTran(ReadWzor("JPK_VAT5.vat",'',.t.),'$vat',AllS(K28)))|
+if(K14=0,'',StrTran(ReadWzor("JPK_VAT8.net",'',.t.),'$netto',AllS(K14)))|
+if(K15=0,'',StrTran(ReadWzor("JPK_VAT8.vat",'',.t.),'$vat',AllS(K15)))|
+if(K12+K25=0,'',StrTran(ReadWzor("JPK_VAT.net",'',.t.),'$netto',AllS(K12+K25)))|
+if(K13+K26=0,'',StrTran(ReadWzor("JPK_VAT.vat",'',.t.),'$vat',AllS(K13+K26)))|
+ReadWzor("JPK_VAT.swk",'',.t.)|
+InccTab('tabs[1]',1)|
+InccTab('tabs[2]',K23)<>
+{@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999|@S999}
++ReadWzor("JPK_VAT.scp",'',.t.)|
+StrTran(ReadWzor("JPK_VAT.lws",'',.t.),'$lws',AllS(tabs[1]))|
+StrTran(ReadWzor("JPK_VAT.spn",'',.t.),'$spn',AllS(tabs[2]))|
+ReadWzor("JPK_VAT.sck",'',.t.)|
+ReadWzor("JPK_VAT.end",'',.t.)<>
+<@S999|@S999|@S999|@S999|@S999|@S999>
+konwertON:=.f.|mClose()|RunCommand('run cmd /C c:\Archiwum\repairKM.bat')<>

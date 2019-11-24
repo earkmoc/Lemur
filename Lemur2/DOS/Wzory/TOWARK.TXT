@@ -1,0 +1,16 @@
+Karty tytuí¢w
+5|22|1|78|2||||ON('DOKUM')|ON('TOWARY')|ON('MAGAZYNY')|ON('FIRMY')|Jest_baza('TOWARK')|CreateIndex(kolumny[2])|DBGoTop()|
+ID| LP;   |999|
+GetPole(1,'TOWARK->ID_T','NAZWA','TOWARY',,,,,,'STAROCIE\TOWARY')|Nazwa;tytuíu|@S40|
+FIRMY->(GetPole(1,'TOWARK->ID_A1','NAZWA1'))|Nazwa;autora|@S28|
+DATA_ZU|Data u.;zawarcie||
+DATA_WU|Data u.;wygaûnie||
+DATA_OR|Data r.;ostatnie||
+WARTOSC|Kwota do;rozlicz.|999,999.99|
+PadR(if(ID_A2=0,'',FIRMY->(GetPole(1,'ID_A2','INDEKS'))),10)|Indeks;autora 2||
+PadR(if(ID_A3=0,'',FIRMY->(GetPole(1,'ID_A3','INDEKS'))),10)|Indeks;autora 3||
+PadR(if(ID_A4=0,'',FIRMY->(GetPole(1,'ID_A4','INDEKS'))),10)|Indeks;autora 4||
+DATA_1|Data p.;ost. rozl.||
+DATA_2|Data k.;ost. rozl.||
+ILOSC_RD|Iloûç;rozl. dotÜd|@Z 999,999|
+ISBN|ISBN||

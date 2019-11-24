@@ -1,0 +1,12 @@
+Aadd(pola,{'ID_T','N',10,0})|
+Aadd(pola,{'ROK1','N',12,3})|
+Aadd(pola,{'ROK2','N',12,3})|
+Aadd(pola,{'ROK3','N',12,3})|
+Aadd(pola,{'ROK4','N',12,3})|
+Aadd(pola,{'ROK5','N',12,3})|
+Aadd(pola,{'ROK6','N',12,3})|
+Aadd(pola,{'ROK7','N',12,3})|
+Aadd(pola,{'ROK8','N',12,3})|
+Aadd(pola,{'ROK9','N',12,3})|
+Aadd(indeksy,'analizan')|
+Aadd(klucze,'ID_T')|

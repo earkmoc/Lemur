@@ -1,0 +1,11 @@
+NAZWA|DATA1|DATA2|
+Nazwa okresu|Od daty|Do daty|
+|||
+5|1|22|78|1|end|
+Zamkni‘te okresy sprawozdawcze
+
+5|Esc|Esc - wyjžcie|
+23|D|Dopisz=Enter|ZAOKRESY,Podaj dane zamykanego okresu sprawozdawczego,,,,,,,2|
+23|Enter||ZAOKRESY,Podaj dane zamykanego okresu sprawozdawczego,,,,,,,2|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|.U||Kasuj('usuwasz t† pozycj‘')|

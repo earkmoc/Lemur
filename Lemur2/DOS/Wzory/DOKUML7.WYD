@@ -1,0 +1,46 @@
+""+Firma('max3.txt')|Date()|Time()|globalbuf2|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+Zestawienie rachunk¢w i um¢w zlece§ za rok<9999>  
+-----------------------------------------------------------------------------------------------------------------
+                                                 Koszty          Koszty        
+                                                uzyskania       uzyskania                  Podatek
+                                     Wartoûç    przychodu       przychodu                  dochodowy
+  LP Kontrahent      Typ   Data       brutto   50%   kwota   inne %   kwota     Doch¢d    %     kwota  Do wypíaty
+-----------------------------------------------------------------------------------------------------------------<>
+#Ustaw('globalbuf1',RecNo())|
+Ustaw('globalbuf','')|
+DBSetOrder(4)|
+DBGoTop()|
+Ustaw('globalbuf3',INDEKS_F)|
+Ustaw('drukuj_while','!Eof()')|
+Ustaw('drukuj_for','Year(DATAW)=globalbuf2.and.("ara"$TYP.or."umz"$TYP)')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|
+PodSuma(INDEKS_F,"                          podsuma:.(@Z 999,999.99^@Z 99999999,999.99^@Z 9999999,999.99^@Z 999,999.99^@Z 9999999,999.99^@Z 999,999.99).")|
+PodSuma1(1,"          w tym koszty 50 procent:.(@Z 999,999.99^@Z 99999999,999.99^@Z 9999999,999.99^@Z 999,999.99^@Z 9999999,999.99^@Z 999,999.99).")|
+PodSuma2(1," w tym koszty z inny procentem:.(@Z 999,999.99^@Z 99999999,999.99^@Z 9999999,999.99^@Z 999,999.99^@Z 9999999,999.99^@Z 999,999.99).")<>
+PodSuma(INDEKS_F,,'NETTO22^if(NETTO7=50,NETTO0,0)^if(NETTO7=50,0,NETTO0)^NETTOZW^VAT7^WARTOSC',25)|
+if(NETTO7=50,PodSuma1(1,,'NETTO22^if(NETTO7=50,NETTO0,0)^if(NETTO7=50,0,NETTO0)^NETTOZW^VAT7^WARTOSC',25),)|
+if(NETTO7#50,PodSuma2(1,,'NETTO22^if(NETTO7=50,NETTO0,0)^if(NETTO7=50,0,NETTO0)^NETTOZW^VAT7^WARTOSC',25),)|
+lp|if(globalbuf=INDEKS_F,Space(Len(globalbuf)),globalbuf:=INDEKS_F)|TYP|DATAW|
+InccTab('tabs[1]',NETTO22)|
+if(NETTO7=50,NETTO7,0)|
+InccTab('tabs[2]',if(NETTO7=50,NETTO0,0))|
+if(NETTO7=50,0,NETTO7)|
+InccTab('tabs[3]',if(NETTO7=50,0,NETTO0))|
+InccTab('tabs[4]',NETTOZW)|
+VAT22|
+InccTab('tabs[5]',VAT7)|
+InccTab('tabs[6]',WARTOSC)<>
+{@S999|@S999|@S999|999|@S99|XXX|@S10|@Z 99,999.99|@Z 999%|@Z 999,999.99|@Z 99%|@Z 999,999.99|@Z 999,999.99|@Z 99%|@Z 999,999.99|@Z 999,999.99}
+#DBGo(globalbuf1)<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]|tabs[6]<>  
+-----------------------------------------------------------------------------------------------------------------
+                            Razem:<@Z 999,999.99|@Z 99999999,999.99|@Z 9999999,999.99|@Z 999,999.99|@Z 9999999,999.99|@Z 999,999.99>
+PodSuma1(2,,'NETTO22^if(NETTO7=50,NETTO0,0)^if(NETTO7=50,0,NETTO0)^NETTOZW^VAT7^WARTOSC',,EOL)<>  
+<@S999>
+PodSuma2(2,,'NETTO22^if(NETTO7=50,NETTO0,0)^if(NETTO7=50,0,NETTO0)^NETTOZW^VAT7^WARTOSC',,'')<>  
+<@S999>
+ 0<>  
+koniec.

@@ -1,0 +1,14 @@
+Aadd(pola,{'ID','N',10,0})|
+Aadd(pola,{'ID_K','N',10,0})|
+Aadd(pola,{'DATA','D',8,0})|
+Aadd(pola,{'ISBN','C',17,0})|
+Aadd(pola,{'WYDANIE','N',3,0})|
+Aadd(pola,{'RZUT','N',3,0})|
+Aadd(pola,{'CENA','N',10,2})|
+Aadd(pola,{'NAKLAD','N',10,0})|
+Aadd(pola,{'DRUKSR','N',10,0})|
+Aadd(pola,{'DRUKOK','N',10,0})|
+Aadd(pola,{'ARKUSZ','C',3,0})|
+Aadd(pola,{'UWAGI','C',80,0})|
+Aadd(indeksy,'towarks1')|
+Aadd(klucze,'Str(ID_K)+Str(ID)')|

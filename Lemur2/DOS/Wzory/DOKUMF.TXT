@@ -1,0 +1,23 @@
+Dokumenty
+5|22|1|78|3|end|D||
+BLOKADA|;?|X|
+TYP|   ;Typ|XXX|
+PadR(RTrim(INDEKS)+if(Empty(NUMERFD),'',','+NUMERFD),20)|     ;Numer|@S20|
+INDEKS_F|          ;Kontrahent|@S20|
+WARTOSC|       ;Wartoûç|@Z 9999999.99|
+DATAW|Data wy-;stawienia|@S10|
+DATAO|Data ot-;rzymania|@S10|
+DATAT|Termin;zapíaty|@S10|
+SPOSOB|Spos¢b;zapíaty||
+WPLACONO|      ;Wpíacono|@Z |
+WARTOSC-WPLACONO|       ;Pozostaje|@Z |
+NETTOCZ|Wartoûç;w c.z.n.|@Z |
+NETTO22+NETTO7+NETTO0+NETTOZW-NETTOCZ|Zysk;netto|@Z |
+if(NETTOCZ=0,0,100*(NETTO22+NETTO7+NETTO0+NETTOZW-NETTOCZ)/NETTOCZ)|Zysk;%|@Z 99999.99%|
+NABYWCA|  Nr    ;Kontrahent||
+NAZWA1|   ;Nazwa||
+KOD|   ;Kod||
+MIASTO|      ;Miasto|@S13|
+ADRES|     ;Adres|@S22|
+NIP|   ;NIP|@S13|
+DATAS|Data sp-;rzedaßy|@S10|

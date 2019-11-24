@@ -1,0 +1,16 @@
+Umowy o dzieío, rachunki
+5|22|1|78|1|e|D||DBSetOrder(1)|ON('DOKUM')|ON('FIRMY')|
+ID|  ;LP|999|
+FIRMY->(GetPole(1,'ID_A','NAZWA1'))|Nazwa;kontrahenta|@S28|
+DATA_W|Data;wystaw.||
+DATA_U|Data;umowy||
+DATA_T|Termin;wykona.||
+WARTOSCB|Wartoûç;brutto|@Z 999,999.99|
+PROCENTK|Kosz;-ty|@Z 999%|
+WARTOSCK|Koszty;kwota|@Z 999,999.99|
+WARTOSCD|Doch¢d;kwota|@Z 999,999.99|
+PROCENTP|Poda;-tek|@Z 999%|
+WARTOSCP|Podatek;kwota|@Z 999,999.99|
+WARTOSCW|Do;wypíaty|@Z 999,999.99|
+WYKONAWCA|       ;Wykonawca||
+ZLECAJACY|       ;Zlecajcy||

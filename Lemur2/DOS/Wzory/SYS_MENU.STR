@@ -1,0 +1,12 @@
+ Aadd(pola,{'Kod_menu','N',2,0})|
+ Aadd(pola,{'Lp_opcji','N',2,0})|
+ Aadd(pola,{'N_opcji','C',50,0})|
+ Aadd(pola,{'R_opcji','N',2,0})|
+ Aadd(pola,{'C_opcji','N',2,0})|
+ Aadd(pola,{'F_systemu','N',3,0})|
+ Aadd(pola,{'P_systemu','C',150,0})|
+ Aadd(pola,{'V_systemu','C',50,0})|
+ Aadd(indeksy,'sys_men1')|
+ Aadd(indeksy,'sys_men2')|
+ Aadd(klucze,'Str(Kod_menu,2)+Str(Lp_opcji,2)')|
+ Aadd(klucze,'Left(N_opcji,5)')|

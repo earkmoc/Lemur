@@ -1,0 +1,15 @@
+Aadd(pola,{'ID_D','N',10,0})|
+Aadd(pola,{'ID_T','N',10,0})|
+Aadd(pola,{'CENA','N',12,2})|
+Aadd(pola,{'ILOSC','N',12,3})|
+Aadd(pola,{'RABAT','N',2,0})|
+Aadd(pola,{'CENABEZR','N',12,2})|
+Aadd(pola,{'NAZWA','C',60,0})|
+Aadd(indeksy,'specs_1')|
+Aadd(indeksy,'specs_2')|
+Aadd(indeksy,'specs_3')|
+Aadd(indeksy,'specs_4')|
+Aadd(klucze,'ID_D')|
+Aadd(klucze,'ID_T')|
+Aadd(klucze,'Str(ID_D)+Str(ID_T)+Str(CENA)')|
+Aadd(klucze,'Upper(NAZWA)')|

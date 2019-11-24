@@ -1,0 +1,15 @@
+Firma('max3.txt')|Date()|Time()|DBE_Tyt|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+----------------------------------------------------------------------------
+  LP   Nr Nazwa                                    Miasto            Data
+----------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')<>
+lp|ID_F|DOKUM->(GetPole(4,'Str(ID_F)','NAZWA1'))|DOKUM->(GetPole(4,'Str(ID_F)','MIASTO'))|DATA<>
+{999|9999|@S40|@S10|XXXXXXXX}
+#DBGoTop()<>
+ 0<>  
+----------------------------------------------------------------------------
+koniec.

@@ -1,0 +1,14 @@
+FIRMY->(GetPole(1,'ID_F','INDEKS'))|FIRMY->(GetPole(-1,'ID_F','NAZWA1'))|FIRMY->(GetPole(-1,'ID_F','MIASTO'))|DATA|
+Indeks|Nazwa|Miasto|Data ost|
+@S10|@S40|@S9||
+5|1|22|78|1||||GetIni()|ON('FIRMY')|ON('MAGAZYNY')|ON('DOKUM')|
+Daty ostatnich faktur kontrahent¢w dawno bez faktury
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|T|Total|ShowDBES()|
+|W|Wydruk|Drukuj()|
+|F|Formularz|FIRMY->(NewSysForm('FIRMY,Dane bie§†cej pozycji,,,,,,,2'))|
+|A|Aktualizacja=ENTER|DokAnak('ANALIZAK,Podaj parametry procedury,,,,,,,2','FV,RU','Kontrahenci bez faktury')|
+|ENTER||DokAnak('ANALIZAK,Podaj parametry procedury,,,,,,,2','FV,RU','Kontrahenci bez faktury')|

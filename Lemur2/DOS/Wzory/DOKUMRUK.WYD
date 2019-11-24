@@ -1,0 +1,132 @@
+DATAW|AllTrim(DOKTYPY->(GetPole(1,'DOKUM->TYP','NAZWA')))|INDEKS|EOL+Firma()|
+NAZWA1|
+if(Empty(NAZWA2),'',EOL+Space(16)+NAZWA2)|
+if(Empty(NAZWA3),'',EOL+Space(16)+NAZWA3)|
+KOD+" "+AllTrim(MIASTO)+", ul."+AllTrim(ADRES)|NIP|NABYWCA|
+AllTrim(NUMERFD)|DATAO|DATAS|0<>
+[1 1]                                                      ú¢d¶, dnia:<@S10>  
+  
+  <@S50> Nr<@S20>  
+
+
+Sprzedawca:<@S500>  
+
+      Nabywca :<@S100>  <@S100>  <@S100>  
+        Adres :<@S100>  
+          NIP :<@S100>                          Numer nabywcy:<@Z 99999>  
+
+Rachunek korygowany Nr:<@S20>, z dnia<@S10>  
+  
+Data sprzedaßy:<@S10>  
+
+[222]Byío:
+[111]=====================================================================================================================================
+    |                                                  |Symbol SWW/KU|     |      |Ra-| Cena |  Wartoûç  |   Podatek   |  Wartoûç   |
+ LP | Nazwa towaru/Usíugi                              | lub   PKWiU |j.m. | Iloûç|bat| netto|   netto   | % |  kwota  |  brutto    |
+=====================================================================================================================================<>
+#ON('SPEC')|DBSetOrder(1)|DBSeek(DOKUM->ID)|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|
+Ustaw('drukuj_for','!(ILOSC>=0)')|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)|
+Aadd(tabs,0)<>
+lp|TOWARY->(GetPole(1,'SPEC->ID_T','NAZWA'))|TOWARY->SWW|TOWARY->JM|
+-ILOSC|RABAT|CENA|Grosz(-ILOSC*CENA)|TOWARY->VAT|
+Grosz(0.01*TOWARY->VAT*Grosz(-ILOSC*CENA))|
+Grosz(-ILOSC*CENA)+Grosz(0.01*TOWARY->VAT*Grosz(-ILOSC*CENA))|
+tabs[1]:=tabs[1]+if(TOWARY->VAT=22,Grosz(-ILOSC*CENA),0)|
+tabs[2]:=tabs[2]+if(TOWARY->VAT= 7,Grosz(-ILOSC*CENA),0)|
+tabs[3]:=tabs[3]+if(TOWARY->VAT= 0,Grosz(-ILOSC*CENA),0)|
+tabs[4]:=tabs[4]+if(TOWARY->VAT=-1,Grosz(-ILOSC*CENA),0)|
+tabs[5]:=tabs[5]+Grosz(-ILOSC*CENA)<>
+{[222]999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXXXXXXX|XXXXX|999999|@Z 99%|999.99|9999,999.99|999|99,999.99|99999,999.99}
++tabs[5]|Grosz(tabs[1]*0.22)+Grosz(tabs[2]*0.07)|tabs[5]+Grosz(tabs[1]*0.22)+Grosz(tabs[2]*0.07)<>  
+------------------------------------------------------------------------------------------------------------------------------------
+                                                                                       Razem:<9999,999.99|999999,999.99|99999,999.99>
++tabs[1]|22|Grosz(tabs[1]*0.22)|tabs[1]+Grosz(tabs[1]*0.22)<>  
+                                                                                              ======================================
+                                                                                       W tym:<9999,999.99|999|99,999.99|99999,999.99>
++tabs[2]|7|Grosz(tabs[2]*0.22)|tabs[2]+Grosz(tabs[2]*0.07)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[3]|0|0|tabs[3]<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[4]|"zw."|0|tabs[4]<>  
+                                                                                             <9999,999.99|XXX|99,999.99|99999,999.99>
+  0<>  
+Powinno byç:
+=====================================================================================================================================
+    |                                                  |Symbol SWW/KU|     |      |Ra-| Cena |  Wartoûç  |   Podatek   |  Wartoûç   |
+ LP | Nazwa towaru/Usíugi                              | lub   PKWiU |j.m. | Iloûç|bat| netto|   netto   | % |  kwota  |  brutto    |
+=====================================================================================================================================<>
+#DBSeek(DOKUM->ID)|
+Ustaw('drukuj_while','ID_D=DOKUM->ID')|
+Ustaw('drukuj_for','(ILOSC>=0)')|
+tabs[1]:=0|
+tabs[2]:=0|
+tabs[3]:=0|
+tabs[4]:=0|
+tabs[5]:=0<>
+lp|TOWARY->(GetPole(1,'SPEC->ID_T','NAZWA'))|TOWARY->SWW|TOWARY->JM|
+ILOSC|RABAT|CENA|Grosz(ILOSC*CENA)|TOWARY->VAT|
+Grosz(0.01*TOWARY->VAT*Grosz(ILOSC*CENA))|
+Grosz(ILOSC*CENA)+Grosz(0.01*TOWARY->VAT*Grosz(ILOSC*CENA))|
+tabs[1]:=tabs[1]+if(TOWARY->VAT=22,Grosz(ILOSC*CENA),0)|
+tabs[2]:=tabs[2]+if(TOWARY->VAT= 7,Grosz(ILOSC*CENA),0)|
+tabs[3]:=tabs[3]+if(TOWARY->VAT= 0,Grosz(ILOSC*CENA),0)|
+tabs[4]:=tabs[4]+if(TOWARY->VAT=-1,Grosz(ILOSC*CENA),0)|
+tabs[5]:=tabs[5]+Grosz(ILOSC*CENA)<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|XXXXXXXXXXXXX|XXXXX|999999|@Z 99%|999.99|9999,999.99|999|99,999.99|99999,999.99|}
++tabs[5]|Grosz(tabs[1]*0.22)+Grosz(tabs[2]*0.07)|tabs[5]+Grosz(tabs[1]*0.22)+Grosz(tabs[2]*0.07)<>  
+------------------------------------------------------------------------------------------------------------------------------------
+                                                                                       Razem:<9999,999.99|999999,999.99|99999,999.99>
++tabs[1]|22|Grosz(tabs[1]*0.22)|tabs[1]+Grosz(tabs[1]*0.22)<>  
+                                                                                              ======================================
+                                                                                       W tym:<9999,999.99|999|99,999.99|99999,999.99>
++tabs[2]|7|Grosz(tabs[2]*0.22)|tabs[2]+Grosz(tabs[2]*0.07)<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[3]|0|0|tabs[3]<>  
+                                                                                             <9999,999.99|999|99,999.99|99999,999.99>
++tabs[4]|"zw."|0|tabs[4]<>  
+                                                                                             <9999,999.99|XXX|99,999.99|99999,999.99>
+#Jest_baza('DOKUM')<>
+UWAGI<>  
+[  1]Tytuí korekty:<@S100>
+if(WARTOSC-(VAT22+VAT7)>=0,'zwiëkszenia','zmniejszenia')|Abs(WARTOSC-(VAT22+VAT7))<>  
+Kwota<@S20> wartoûci bez podatku:<999,999.99>
+if(VAT22+VAT7>=0,'zwiëkszenia','zmniejszenia')|Abs(VAT22+VAT7)<>  
+Kwota<@S20> wartoûci podatku VAT:<999,999.99>
+  0<>  
+------------------------------------------------------------------------------------------------------------------------------------<>
++if(WARTOSC>=0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC)<>  
+          Do<XXXXXXXXXX|999,999,999.99>
++WARTOSC-(VAT22+VAT7)|VAT22+VAT7|WARTOSC<>
+                                                   Razem:<9999,999.99|999999,999.99|99999,999.99>
++PadR(ZlGr(Abs(WARTOSC),1),100)<>  
+             Síownie:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++if(WARTOSC>0,'Zapíacono',' Zwr¢cono')+':'|Abs(WPLACONO)<>
+  ======================================
+          <XXXXXXXXXX|999,999,999.99>
++NETTO22|22|VAT22|NETTO22+VAT22<>
+                                                   W tym:<9999,999.99|999|99,999.99|99999,999.99>
++if(WARTOSC>=0,'zapíaty',' zwrotu')+':'|Abs(WARTOSC-WPLACONO)<>  
+Pozostaío do<XXXXXXXX|999,999,999.99>
++NETTO7|7|VAT7|NETTO7+VAT7<>
+                                                         <9999,999.99|999|99,999.99|99999,999.99>
++SPOSOB<>  
+      Spos¢b zapíaty:<XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX>
++NETTO0|0|0|NETTO0<>
+                                                   <9999,999.99|999|99,999.99|99999,999.99>
++DATAT<>  
+              Termin:<XXXXXXXXXX>
++NETTOZW|"zw."|0|NETTOZW<>
+                                                             <9999,999.99|XXX|99,999.99|99999,999.99>
+ODEBRAL|WYSTAWIL|0<>  
+[  3]
+         Podpis osoby uprawnionej                                                               Podpis osoby uprawnionej
+     do otrzymania korekty faktury VAT :                                                   do wystawienia korekty faktury VAT :
+
+          <@S30>                                                       <@S30>  
+          .......................                                                               .......................
+          imië, nazwisko i podpis                                                               imië, nazwisko i podpis

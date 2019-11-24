@@ -1,0 +1,13 @@
+ID|INDEKS|NAZWA|CENA_Z|CENA_S|JM|SWW|VAT|
+ID|Indeks|Nazwa|Cena z.|Cena s.|j.m.|SWW|VAT|
+9999|@S10|@S35|@Z 99999.99|@Z 99999.99|XXXXX|XXXXX|99|
+4|1|22|78|3||||DBSetOrder(4)|
+Towary
+
+5|Esc|Esc - wyjžcie|
+|I|Indeks|Indeks({ 'LP', 'Indeks', 'Nazwa' })|
+7|S|Szukaj|nr,2,2,3,3|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('TOWARY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,2,ID,1,TOWARK->(GetPole(2;'TOWARY->ID';'DATA_ZU')),6,TOWARK->DATA_OR,5,TOWARK->DATA_1,3,TOWARK->DATA_2,4,TOWARK->PROW_KWOTA,8,TOWARK->ID_A1,2|
+57|ENTER||dalej,2,ID,1,TOWARK->(GetPole(2;'TOWARY->ID';'DATA_ZU')),6,TOWARK->DATA_OR,5,TOWARK->DATA_1,3,TOWARK->DATA_2,4,TOWARK->PROW_KWOTA,8,TOWARK->ID_A1,2|

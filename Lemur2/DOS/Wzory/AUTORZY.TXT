@@ -1,0 +1,20 @@
+Rachunki autor¢w
+5|22|1|78|1|e|D||DBSetOrder(1)|ON('FIRMY')|ON('TOWARY')|ON('MAGAZYNY')|ON('DOKUM')|ON('DOKTYPY')|ON('SPEC')|ON('TOWARK')|
+ID|  ;LP|999|
+TOWARY->(GetPole(1,'ID_T','NAZWA'))|Indeks;towaru|@S40|
+FIRMY->(GetPole(1,'ID_A','NAZWA1'))|Indeks;autora|@S28|
+CENA|Cena;towaru|@Z 999.99|
+ILOSC|Iloûç;towaru|@Z 999,999|
+WARTOSC|Kwota;rachunku|@Z 999,999.99|
+DATA_1|Data;pocz.||
+DATA_2|Data;ko§c.||
+DATA_W|Data;wystaw.||
+DATA_U|Data;umowy||
+DATA_R|Data;rozlicz.||
+WARTOSCB|Wartoûç;brutto|@Z 999,999.99|
+PROCENTK|Kosz;-ty|@Z 999%|
+WARTOSCK|Koszty;kwota|@Z 999,999.99|
+WARTOSCD|Doch¢d;kwota|@Z 999,999.99|
+PROCENTP|Poda;-tek|@Z 999%|
+WARTOSCP|Podatek;kwota|@Z 999,999.99|
+WARTOSCW|Do;wypíaty|@Z 999,999.99|

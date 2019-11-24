@@ -1,0 +1,12 @@
+TYP|ID_F|INDEKS|NAZWA1|KOD|MIASTO|ADRES|TELEFON|OSOBA|NIP|REGON|BANK|KONTO|
+?|ID|Indeks|Nazwa|Kod|Miasto|Adres|Telefon|Osoba|NIP|REGON|BANK|KONTO|
+X|9999||@S15|XXXXXX|@S20|@S30|@S20|@S20|@S13|@S9|@S20|@S20|
+4|1|22|78|3||2|||DBSetOrder(2)|
+Kontrahenci
+
+5|Esc|Escape|
+7|S|Szukaj|nr,3,2,4,3|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('FIRMY,Dane bie§†cej pozycji')|
+57|W|Wyb¢r=ENTER|dalej,1,ID_F,9|
+57|ENTER||dalej,1,ID_F,9|

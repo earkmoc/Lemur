@@ -1,0 +1,11 @@
+Tytuíy - analityka
+5|22|1|78|1||||ON("FIRMY")|ON("TOWARY")|ON("DOKUM")|
+GetPole(1,'ID','INDEKS','FIRMY',,,1,,,'STAROCIE\FIRMY')|Magazyn|@S11|
+GetPole(1,'ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY')|Nazwa|@S53|
+ILOSC|Stan|@Z 999999|
+CENA_Z|Cena z.|@Z 999.99|
+DATA_Z|Data z.||
+Grosz(CENA_Z*ILOSC)|Wartoûç z.|@Z 99999,999.99|
+ID|ID||
+ID_T|ID_T||
+ILOSC|Stan|@Z|

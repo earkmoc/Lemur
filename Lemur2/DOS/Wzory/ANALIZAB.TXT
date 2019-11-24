@@ -1,0 +1,14 @@
+ID_T|TOWARY->(GetPole(1,'ID_T','NAZWA'))|ILESIEDA+ILOSC|ILESIEDA|ILEDOKUM|ILOSC|ILESIEDA+ILOSC|ID_T|CENA|
+ID;To|     ;Nazwa|Ilož;po kor.| Ile ;si‘ da| Ile to ;dokument¢w|Korek-;ta o X|Ilož;po kor.|ID;To|    ;Cena|
+9999|@S77|@Z 999,999|@Z 999,999|@Z 999,999|@Z 999,999|@Z 999,999|9999|@Z 999,999.99|
+5|1|22|78|2||||ON('SPEC')|ON('DOKUM')|ON('TOWARY')|ON('FIRMY')|
+Sprawdzenie czy si‘ da skorygowa dokument KOR
+
+5|Esc|Esc - wyjžcie|
+7|S|Szukaj|nr|
+|T|Total|ShowDBES()|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|O|dOkumenty|SubBase("ANALIZAP,spect.txt,BUFOR,1,Str(ANALIZAB->ID_T),ANALIZAB->ID_T=ID_T,",,,,,"CreateIndex(kolumny[6],,1),DBGoTop()")|
+|A|Aktualizacja=ENTER|DokAnAB('ANALIZAB,Podaj parametry procedury,,,,,,,2','FV,FH','FVK,FHK')|
+|ENTER||DokAnAB('ANALIZAB,Podaj parametry procedury,,,,,,,2','FV,FH','FVK,FHK')|
+31|Q||nr|

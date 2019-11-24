@@ -1,0 +1,24 @@
+2|12| |DATA|Month(DATA)|!ANULOWANO|Time()|Date()|0|firma|data1|data2|inds_makr:='8'<>
+Right(DtoC(DATA),7)|MemVar->lps|if(MemVar->lps=1,0,tab_ss[4]/(MemVar->lps-1))|PRZYCHOD3|ZAKUP_TOW|RAZEM|PRZYCHOD3-RAZEM-ZAKUP_TOW|tab_aa[4]/lps<>
+PRZYCHOD3|ZAKUP_TOW|RAZEM|PRZYCHOD3-RAZEM-ZAKUP_TOW|0<>
+PRZYCHOD3|ZAKUP_TOW|RAZEM|PRZYCHOD3-RAZEM-ZAKUP_TOW|0<>
+PRZYCHOD3|ZAKUP_TOW|RAZEM|PRZYCHOD3-RAZEM-ZAKUP_TOW|0<>
+"Strona Nr " + AllS( strona ) + if( koniec, " koniec.", "" )|0<>
+Czas :<@S8>                            Data :<@S8>  
+  <>  
+  
+         PODATKOWA KSIêGA PRZYCHOD£W I ROZCHOD£W
+
+za okres <@S8> r. - <@S8> r.M
++-------+--+--------+-----------+-------------+-------------+----------+
+≥       ≥  ≥        ≥   Razem   ≥Zakup towar¢w≥ K O S Z T Y ≥   Doch¢d ≥
+≥       ≥  ≥        ≥  przych¢d ≥handlowych i ≥             ≥    lub   ≥
+≥  Data ≥lp≥ûrednio ≥ ( 7 + 8 ) ≥ materiaí¢w  ≥razem wydatki≥   Strata ≥
++-------+-----------+-----------+-------------+-------------+----------+<>
+{XXXXXXX|99|9,999.99|9999,999.99|99,999,999.99|99,999,999.99|999,999.99|999,999.99}
++-------+-----------+-----------+-------------+-------------+----------+<>  
+              Strona<9999,999.99|99,999,999.99|99,999,999.99|999,999.99>  
+              Poprz.<9999,999.99|99,999,999.99|99,999,999.99|999,999.99>  
+              Razem <9999,999.99|99,999,999.99|99,999,999.99|999,999.99>  
+  
+P<@S50>  

@@ -1,0 +1,11 @@
+BLOKADA|TYP|INDEKS|INDEKS_F|WARTOSC|DATAW|DATAS|DATAO|DATAT|SPOSOB|WPLACONO|WARTOSC-WPLACONO|NABYWCA|
+;?|   ;Typ|     ;Numer|          ;Kontrahent|       ;Wartoûç|Data wy-;stawienia|Data sp-;rzedaßy|Data ot-;rzymania|Termin;zapíaty|Spos¢b;zapíaty|Wpíacono|Pozostaje|Kontrahent|
+X|XXX|@S17|@S10|9999999.99|99999|99999|99999|99999|||||
+5|1|22|78|3|end|
+Dokumenty
+
+5|Esc|Escape|
+7|S|Szukaj|nr|
+|F|Formularz|NewSysForm('DOKUM,Dane bießÜcej pozycji,,,,,,,9',BLOKADA=" ")|
+5|W|Wyb¢r=ENTER|
+5|ENTER||

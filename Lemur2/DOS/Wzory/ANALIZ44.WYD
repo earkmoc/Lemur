@@ -1,0 +1,31 @@
+Firma('max3.txt')|Date()|Time()|DwieLinie(DBE_Tyt,60,3)|SubStr(DBE_TYT,At('okresu',DBE_TYT)+8)|SubStr(DBE_TYT,35)|0<>
+<@S300>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S250>  
+------------------------------------------------------------+------------------------------------------+------------------------------
+                                                            |      Okres<XXXXXXXXXXXXXXXXXXXXXXX>       | Okres<XXXXXXXXXXXXXXXXXXXXXXXX>  
+                                                            +------------------------------------------+------------------------------
+                                                            |             Zap’acono   Stawka           |        Sprze-  Zap’a- Do roz-
+  LP Nazwa                                                  |   Sprzedano za sztuk  (1)   (2) Prowizja | Nak’ad  dane    cone liczenia
+------------------------------------------------------------+------------------------------------------+------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Ustaw('drukuj_for','1=1 .or. STAWKA_1#0 .or. STAWKA_2#0')|
+Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|
+TOWARY->(GetPole(1,'ANALIZA4->ID_T','NAZWA','TOWARY',,,1,,,'STAROCIE\TOWARY'))|
+InccTab('tabs[1]',SPRZWZAPL)|
+InccTab('tabs[2]',ZAPLACONE)|
+TOWARY->PROWIZJA|
+TOWARY->PROWIZJA2|
+InccTab('tabs[3]',PROWIZJA1+PROWIZJA2)|
+InccTab('tabs[4]',NAKLADLICZ)|
+InccTab('tabs[5]',ILOSC)|
+InccTab('tabs[6]',ZAPLNARAST)|
+InccTab('tabs[7]',NAKLADLICZ-ZAPLNARAST)<>
+{999|XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX|@Z 999999|@Z 999999|@Z 99999.99|@Z 99.99|@Z 99999.99|@Z 999,999|@Z 99,999|@Z 99,999|@Z 9999,999}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]|tabs[4]|tabs[5]|tabs[6]|tabs[7]<>  
+--------------------------------------------------------------------------------------------------------------------------------------
+                                                          Razem:<@Z 999,999|@Z 99,999|@Z 9999999999999999,999.99|@Z 999,999|@Z 99,999|@Z 99,999|@Z 9999,999>
+ 0<>  
+koniec.

@@ -1,0 +1,12 @@
+TOWARY->(GetPole(1,'ID_T','NAZWA'))|RABAT|CENABEZR|ILOSC|Grosz(CENA*ILOSC)|CENA|
+     ;Nazwa|  ;R%|Cena bez; rabatu|     ;Ilož|       ;Wartož|Cena z;rabatem|
+@S40|@Z 99|@Z 9999.99|@Z 99999|@Z 999,999.99|@Z 9999.99|
+5|1|22|78|1|
+Pozycje korygowanego dokumentu
+
+|Esc|Esc - wyjžcie|DokumLicz('ROB->ID_T','VAT',.f.)|
+6|U|Usu¤|usuwasz t† pozycj‘|
+15|D|Dopisz|SPEC2,,,,73,ROB->CENA:=Grosz(((100-RABAT)*0.01)*CENABEZR),,,2,|ROB->ID_D:=DOKUM->ID|
+73|I|Import|DokumImport()|
+14|F|Formularz=ENTER|SPEC2,,,,73,ROB->CENA:=Grosz(((100-RABAT)*0.01)*CENABEZR),,,4|
+14|ENTER||SPEC2,,,,73,ROB->CENA:=Grosz(((100-RABAT)*0.01)*CENABEZR),,,4|

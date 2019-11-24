@@ -1,0 +1,10 @@
+ID|FIRMY->(GetPole(1,'ROB->ID','NAZWA1','FIRMY',,,1,,,'STAROCIE\FIRMY'))|CENA_Z|ILOSC|Grosz(CENA_Z*ILOSC)|DATA_Z|
+ Nr|magazyn|Cena|Iloûç|Wartoûç|Data z.|
+@Z 9999||@Z 999.99|@Z 9999,999|@Z 999,999.99||
+11|1|22|78|1||||DBEFiltr('ID<>0.and.ILOSC<>0, (bez MZ, STAN<>0)')|
+Stan powyßszego towaru w magazynach
+
+5|Esc|Esc - wyjûcie|
+7|S|Szukaj|nr|
+|X|X=Sortuj|CreateIndex(kolumny[nr],,1)|
+|W|Wydruk|Drukuj('magazynt')|

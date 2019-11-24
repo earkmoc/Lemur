@@ -1,0 +1,6 @@
+Stanowiska
+5|22|1|78||
+LP|LP|
+NAZWA|Nazwa|@S45
+DATA_O|Data|
+CZAS_O|Czas|

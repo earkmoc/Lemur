@@ -1,0 +1,12 @@
+NAZWA|IloscMG(1)|IloscMG(2)|STAN_MIN|CENA_S|CENA_Z|JM|SWW|VAT|
+Nazwa|I. G|IP|IO|Cena s|Cena z.|j.m.|PKWiU|VAT|
+@S49|@Z 9999|@Z 999|@Z 9999|@Z 999.99|@Z 99999.99|XXXXX|XXXXX|99|
+5|1|22|78|1||||DBSetOrder(3)|if(TowUstawOU,DBGoTo(TowUstawRE),)|
+Towary w podmagazynie
+
+5|Esc|Esc - wyjžcie|
+|S|Szukaj|SysMySeek('1,3',nr)|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|F|Formularz|NewSysForm('TOWARY,Dane bie§†cej pozycji')|
+|W|Wyb¢r=ENTER|TowUstawRE:=RecNo(),Set_Gety("dalej,5,ID,1,INDEKS,2,NAZWA,3,if(!Empty(RABAT)%Val(RABAT)%0),7")
+|ENTER||TowUstawRE:=RecNo(),Set_Gety("dalej,5,ID,1,INDEKS,2,NAZWA,3,if(!Empty(RABAT)%Val(RABAT)%0),7")|

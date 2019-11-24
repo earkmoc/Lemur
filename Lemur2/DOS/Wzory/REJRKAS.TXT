@@ -1,0 +1,16 @@
+LP|D3|NUMER|PRZEDMIOT|K10|K11|K24|NAZWA|NRKONT|PSKONT|
+LP|Data|Numer|Treûç|Przych¢d|Rozch¢d|Konto p.|Kontrahent|Numer|Pseudo|
+99999||@S13|@S15|@Z 999,999.99|@Z 999,999.99|||||
+5|1|22|78|1|1|
+Kasa
+
+5|Esc|Escape|
+15|D|Dopisz|REJ_KAS,Nowa pozycja kasy,,,,,,,2|(baza)->D1:=Date(),(baza)->D2:=Date(),(baza)->D3:=Date(),(baza)->D4:=Date(),(baza)->NRK:=GetLast(16,1),(baza)->LP:=GetLast(1,1)+1|
+|U|Usu§|if(Left(REJ_KAS->K24,4)=='FISK',Alarm('Dokument FISKALNY !!!'),Kasuj('usuwasz tÜ pozycjë'))|
+19|C|C|Wyczyûciç tabelë ?|||||rozruch.txt|
+7|S|Szukaj|nr,1,1|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+1|W|Wydruki|64||e||Wybierz wariant wydruku :|
+|R|R|Renum('D3','LP','Data')|
+|F|Form=ENTER|if(Left(K24,4)=='FISK',NewSysForm('REJ_KAS,Pozycja FISKALNA kasy',.t.),NewSysForm('REJ_KAS,Pozycja kasy'))|
+|ENTER||if(Left(K24,4)=='FISK',NewSysForm('REJ_KAS,Pozycja FISKALNA kasy',.t.),NewSysForm('REJ_KAS,Pozycja kasy'))|

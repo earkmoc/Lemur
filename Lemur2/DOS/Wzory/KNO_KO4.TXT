@@ -1,0 +1,9 @@
+SubStr(NAZWA; 1;30),15,
+SubStr(NAZWA;31;30),16,
+SubStr(NAZWA;61;30),17,
+SubStr(NAZWA;91;30),18,
+SubStr(BANK;  1;30),20,
+SubStr(BANK; 31;30),21,
+SubStr(BANK; 61;30),22,
+SubStr(RACH;  1;30),24,
+SubStr(RACH; 31;30),25|

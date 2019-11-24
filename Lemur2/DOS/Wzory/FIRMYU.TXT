@@ -1,0 +1,17 @@
+Mark('FIRMYZ',ID_F,'*')|TYP|INDEKS|NAZWA1|KOD|MIASTO|ADRES|TELEFON|OSOBA|NIP|REGON|BANK|RACH|NAZWA2|NAZWA3|ID_F|
+Z|?|Indeks|Nazwa|Kod|Miasto|Adres|Telefon|Osoba|NIP|REGON|BANK|RACH|Nazwa|Nazwa|ID|
+X|X||@S50|XXXXXX|@S20|@S30||@S12|@S13|@S9|@S30|@S40|@S35|@S15||
+5|1|22|78|3||||DBSetOrder(2)|DBGoTop()|ON('FIRMYZ')|ON('MAGAZYNY')|ON('TOWARY')|
+Kontrahenci u§ywani
+
+5|Esc|Escape|
+|Z|Znak|Mark('FIRMYZ',ID_F)|
+|T|Transfer|Transfer('STAROCIE','FIRMY','FIRMYZ','ID_F')|
+|U|Usu¤|Kasuj()|
+|S|Szukaj|SysMySeek('3,2,4,3,7,4,10,5',nr)|
+|I|Indeks|Indeks({ 'LP', 'Indeks', 'Nazwa', 'Adres', 'NIP' })|
+|X|X=Sortuj|CreateIndex(kolumny[nr])|
+|W|Wydruk|Drukuj()|
+|Y|tYtu’y|SubBase("MAGAZYNY,magazynk.txt,ROBOCZY,1,Str(FIRMY->ID_F),FIRMY->ID_F==ID",,,,,"CreateIndex(kolumny[2],,1),DBGoTop()")|
+|F|Form|NewSysForm('FIRMY,Dane bie§†cej pozycji,,,,,,,2')|
+|R|Rozlicz|SubBase("DOKUM,dokum2.txt,ROBOCZY,7,Str(FIRMY->ID_F),FIRMY->ID_F==NABYWCA")|

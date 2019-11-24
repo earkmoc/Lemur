@@ -1,0 +1,7 @@
+
+
+
+5|1|22|78|1|
+Baza danych "ROZLICZ"
+
+5|Esc|Esc - wyjžcie|

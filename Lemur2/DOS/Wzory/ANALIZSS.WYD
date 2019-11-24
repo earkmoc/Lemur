@@ -1,0 +1,20 @@
+Firma('max3.txt')|Date()|Time()|Dwielinie(DBE_Tyt,65,3)|0<>
+<@S500>  
+Data i czas wydruku:<@S10>, <@S8>  
+
+  <@S150>  
+-------------------------------------------------------------------------------------------------
+  LP Nazwa                                                       Powinno byç     Jest     R¢ßnica
+-------------------------------------------------------------------------------------------------<>
+#DBGoTop()|Ustaw('drukuj_while','!Eof()')|Aadd(tabs,0)|Aadd(tabs,0)|Aadd(tabs,0)<>
+lp|TOWARY->(GetPole(1,'ID_T','NAZWA'))|
+InccTab('tabs[1]',STAN)|
+InccTab('tabs[2]',STANJEST)|
+InccTab('tabs[3]',STANJEST-STAN)<>
+{999|@S60|@Z 999,999?999|@Z 999,999?999|@Z 999,999?999}
+#DBGoTop()<>
++tabs[1]|tabs[2]|tabs[3]<>  
+-------------------------------------------------------------------------------------------------
+                                                           Razem:<999,999?999|999,999?999|999,999?999>
+ 0<>  
+koniec.
