@@ -5,12 +5,13 @@ $idPoprzedni=($_GET['id']);
 $_POST['CZAS']=date('Y-m-d H:i:s');
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveFormFields.php");
 
-if($idPoprzedni<0)
+if(false&&($idPoprzedni<0))
 {
 	$idPoprzedni=abs($idPoprzedni);
-	$bazaPoprzednia=mysqli_fetch_row(mysqli_query($link, $q="
+	$tmp=mysqli_fetch_row(mysqli_query($link, $q="
 		select PSKONT from Lemur2.klienci where ID=$idPoprzedni
-	"))[0];
+	"));
+	$bazaPoprzednia=$tmp[0];
 
 	//źródło skryptów musi być aktualne
 	mysqli_query($link,$q="
@@ -60,7 +61,8 @@ if($idPoprzedni<0)
 	");
 }
 
-if	( ($_POST['PSKONT']<>'Batory')
+if	(false
+    &&($_POST['PSKONT']<>'Batory')
 	&&($_POST['PSKONT']<>'Filutek')
 	)
 {

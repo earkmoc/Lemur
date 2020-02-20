@@ -3,13 +3,14 @@
 require("setup.php");
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/saveTablePosition.php");
 
-$folder=mysqli_fetch_row(mysqli_query($link, "
+$tmp=mysqli_fetch_row(mysqli_query($link, "
 select PSKONT 
   from $tabela 
  where ID=$id
-"))[0];
+")); 
+$folder=$tmp[0];
 
-if(in_array(strtoupper($folder),array('SYS','MYSQL','LEMUR','LEMUR2')))
+if(in_array(strtoupper($folder),array('SYS','MYSQL','LEMUR2')))
 {
 	die('Nie usuwaj tego folderu!!!');
 }

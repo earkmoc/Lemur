@@ -122,11 +122,12 @@ if($addWithNot)
 
 if($addWithAnd||$addWithOr)
 {
-	$obecnyWarunek=mysqli_fetch_row(mysqli_query($link,$q="
+	$tmp=mysqli_fetch_row(mysqli_query($link,$q="
 	select WARUNKI
 	  from tabeles
 	 where ID=$idTabeles
-	"))[0];
+	"));
+	$obecnyWarunek=$tmp[0];
 	if($obecnyWarunek)
 	{
 		$obecnyWarunek=AddSlashes($obecnyWarunek);
@@ -134,9 +135,11 @@ if($addWithAnd||$addWithOr)
 	}
 }
 
+$warunek=str_replace($tabelaNazwa,'<firma_tabela>',$warunek);
 if($sortuj!='')
 {
 	$sortuj=($sortuj=='0'?'':$sortuj.",$tabelaNazwa.ID");
+	$sortuj=str_replace($tabelaNazwa,'<firma_tabela>',$sortuj);
 	mysqli_query($link,$q="
 		update tabeles
 		   set WARUNKI=if('$warunek'<>'','$warunek',WARUNKI)

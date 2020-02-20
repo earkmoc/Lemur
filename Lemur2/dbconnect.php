@@ -19,7 +19,8 @@ else
 	$baza='amoch67_wp';
 }
 
-if(!$linkLemur = mysqli_connect('p:'.$host, $user, $pass, $baza))
+//if(!$linkLemur = mysqli_connect('p:'.$host, $user, $pass, $baza))
+if(@!$linkLemur = mysqli_connect($host, $user, $pass, $baza))
 {
     echo "Error: Unable to connect to MySQL." . PHP_EOL;
     echo "Debugging errno: " . mysqli_connect_errno() . PHP_EOL;
@@ -29,7 +30,8 @@ if(!$linkLemur = mysqli_connect('p:'.$host, $user, $pass, $baza))
 
 //$bazaLinku=explode('/',$_SERVER['REQUEST_URI'])[1];
 @$baza=($innaBaza?$innaBaza:$baza);
-if(!@$link = mysqli_connect('p:'.$host, $user, $pass, $baza))
+//if(!@$link = mysqli_connect('p:'.$host, $user, $pass, $baza))
+if(!@$link = mysqli_connect($host, $user, $pass, $baza))
 {
 	$link=mysql_connect($host,$user,$pass);
 	if(!$link)
@@ -82,17 +84,16 @@ if(!@$link = mysqli_connect('p:'.$host, $user, $pass, $baza))
 //mysqli_query($link,$q="SET GLOBAL slow_query_log=1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 //mysqli_query($link,$q="SET GLOBAL long_query_time=1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
-//$chs='latin2';
-//$col='utf8_polish_ci';
-//$col='latin2_general_ci';	//domyœlna collacja dla porównañ pól tabel z tekstami, np. : if(opldod.TYPOPER='o'
+$chs=($dev?'latin1':'utf8');
+$col=($dev?'latin1_swedish_ci':'utf8_polish_ci');	//domyœlna collacja dla porównañ pól tabel z tekstami, np. : if(opldod.TYPOPER='o'
 
-//mysqli_query($link,$q='SET CHARACTER SET '.$chs); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-//mysqli_query($link,$q='SET character_set_client='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-//mysqli_query($link,$q='SET character_set_connection='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-//mysqli_query($link,$q='SET character_set_database='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-//mysqli_query($link,$q='SET character_set_results='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-//mysqli_query($link,$q='SET character_set_server='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET CHARACTER SET '.$chs); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET character_set_client='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET character_set_connection='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET character_set_database='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET character_set_results='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET character_set_server='.$chs, $db); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
-//mysqli_query($link,$q='SET collation_connection = '.$col); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-//mysqli_query($link,$q='SET collation_database = '.$col); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
-//mysqli_query($link,$q='SET collation_server = '.$col); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET collation_connection = '.$col); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET collation_database = '.$col); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
+mysqli_query($link,$q='SET collation_server = '.$col); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}

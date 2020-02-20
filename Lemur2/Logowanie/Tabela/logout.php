@@ -3,11 +3,12 @@
 require("setup.php");
 
 $ido=@$_SESSION['osoba_id'];
-@$user=mysqli_fetch_row(mysqli_query($link, $q="
+$tmp=mysqli_fetch_row(mysqli_query($link, $q="
 	select USER
 	  from $tabela 
 	 where ID='$ido'
-"))[0];
+"));
+@$user=$tmp[0];
 
 $title="Wylogowanie u¿ytkownika ".($user?"\"$user\"":'');
 $buttons=array();

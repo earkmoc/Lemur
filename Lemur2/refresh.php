@@ -41,6 +41,9 @@ if($idTabeles)
 					  where ID_TABELE='$idTabeli'
 						and ID_OSOBY='$ido'
 		"));
+		$tabelaNazwa=strtolower((@$firma&&(!stripos($tabela,'_')||stripos($tabela,'_X'))?"{$firma}_{$tabela}":$tabela));
+		$r[0]=str_replace('<firma_tabela>',$tabelaNazwa,$r[0]);
+		$r[1]=str_replace('<firma_tabela>',$tabelaNazwa,$r[1]);
 		$_GET['search']=StripSlashes($r[0]);
 		$_GET['search']=($_GET['search']?$_GET['search']:1);
 		$_GET['search']=(($_GET['mandatory']&&($_GET['mandatory']!='1'))?"(".$_GET['search'].") and ($_GET[mandatory])":$_GET['search']);
@@ -74,11 +77,11 @@ if(strpos($from,'where'))
 	$fromwhere=str_replace('where',"where ({$_GET[search]}) and",$from);
 }
 
-$total=mysqli_fetch_row($w=mysqli_query($link,$q="
+$tmp=mysqli_fetch_row($w=mysqli_query($link,$q="
 	select count(*)
 	$fromwhere
 	$groupBy
-"))[0]; if(mysqli_error($link)) {echo ("Error: ".$_SESSION['error'].=mysqli_error($link).'<br>'.$q);}
+")); $total=$tmp[0]; if(mysqli_error($link)) {echo ("Error: ".$_SESSION['error'].=mysqli_error($link).'<br>'.$q);}
 
 $total=($groupBy?(mysqli_num_rows($w)==1?$total:mysqli_num_rows($w)):$total);
 
@@ -133,10 +136,47 @@ if($pola)
 			$column=$fields[$i];
 			if(strpos($column['format'],'@Z')!==false)
 			{
-				$v=($v*1==0?'':$v);
+				if($v*1==0)
+				{
+					$v='';
+				}
+				else
+				{
+					if(($x=strlen($v)-strpos($v, '.'))>3)	//ile miejsc od kropki do końca liczby
+					{
+						if($v==floor($v))					//.00000 => ______
+						{
+							$v=str_replace('.'.str_repeat('0', $x - 1), ' '.str_repeat('&nbsp;&nbsp;', $x - 1), $v);
+						}
+						else
+						{
+							$spaces='';
+							for($xx=0;$xx<$x;++$xx)
+							{
+								$c=substr($v, -1, 1);
+								if($c=='0')
+								{
+									$spaces.='&nbsp;&nbsp;';
+									$v=substr($v, 0, -1);
+								}
+								elseif($c=='.')
+								{
+									$spaces.=' ';
+									$v=substr($v, 0, -1);
+								}
+								else
+								{
+									break;
+								}
+							}
+							$v.=$spaces;
+						}
+					}
+//					$v=$x;
+				}
 			}
-			$r[$k]=StripSlashes(iconv('iso-8859-2', 'utf-8', $v));
-			//$r[$k]=StripSlashes($v);
+			$r[$k]=$v;	// $dev=false; => serwer
+			$r[$k]=StripSlashes(iconv('ISO-8859-2', 'UTF-8//IGNORE', $v));	//$dev=true
 			++$i;
 		}
 		$rows[]=$r;
@@ -151,14 +191,16 @@ $wynik['rows']=$rows;
 $wynik['pageSize']=$_GET['pageSize'];
 $wynik['offset']=$_GET['offset'];
 
-$filtr = explode('where',$fromwhere)[1];
+$filtr = explode('where',$fromwhere);
+$filtr = $filtr[1];
 $filtr=(json_encode($filtr)?$filtr:'');
 $filtr=str_ireplace($wzor.'.','',$filtr);
 $filtr=str_ireplace($firma.'_','',$filtr);
 //$filtr=str_ireplace(' like ',' jak ',$filtr);
 $wynik['filtr']=(($filtr=='')||($filtr=='1')||(strpos($filtr,'(1)'))?'':"<b>Filtr</b>: $filtr");
 
-$sortowanie=explode('order by',$orderBy)[1];
+$sortowanie=explode('order by',$orderBy);
+$sortowanie=$sortowanie[1];
 $sortowanie=str_replace(strtolower($wzor).'.','',$sortowanie);
 $sortowanie=str_replace(strtolower($firma).'_','',$sortowanie);
 //$sortowanie=str_replace(' asc',' rosnąco',$sortowanie);

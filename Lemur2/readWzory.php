@@ -29,6 +29,9 @@ if($r=mysqli_fetch_row(mysqli_query($linkLemur, "
 			$line=str_replace("\n","",$line);
 			$line=str_replace("\r","",$line);
 			$line=str_replace("’","³",$line);
+			$line=str_replace("¾","¶",$line);
+			$line=str_replace("«","æ",$line);
+			$line=str_replace("'","",$line);
 			++$i;
 			switch(true)
 			{
@@ -36,7 +39,7 @@ if($r=mysqli_fetch_row(mysqli_query($linkLemur, "
 					$wzory['title']=$line; 
 					$line1=$line;
 					break;
-				case $i==2: $line2=$line;
+				case $i==2: $line2=$line; break;
 				case $i==3: $line3=$line; 
 				case $i==5: $line5=$line;
 				case $i>2: 

@@ -21,7 +21,7 @@ $w=mysqli_query($linkLemur, "
 ");
 
 $from='';
-while($r=mysqli_fetch_row($w))
+while(@$r=mysqli_fetch_row($w))
 {
 	$idTabeli=$r[0];
 	$wiersze=explode("\n",stripSlashes($r[1]));
@@ -67,9 +67,9 @@ while($r=mysqli_fetch_row($w))
 		      }
 			  $pole=str_replace('osoba_id',$ido,$pole);
 			  $poleNum=str_replace(array('format(',',2)'),array('',''),$pole);
-		      //$nazwa=iconv ( 'iso-8859-2', 'utf-8', $kolumny[1]?$kolumny[1]:$kolumny[0]);
+		      $nazwa=iconv ( 'iso-8859-2', 'utf-8', $kolumny[1]?$kolumny[1]:$kolumny[0]);	// $dev=true
 		      $nazwa=(@$kolumny[1]?$kolumny[1]:ucfirst(strtolower($kolumny[0])));
-			  $align=(strpos(@$kolumny[3],'right')?'right':(strpos(@$kolumny[3],'center')?'center':'left'));
+			  $align=(strpos(@$kolumny[3],'right')||strpos(@$kolumny[2],'Z')?'right':(strpos(@$kolumny[3],'center')?'center':'left'));
 			  $visible=(@$kolumny[2]=='0'?'false':'true');
 			  //$visible=(((substr($pole,-4,4)=='CZAS')&&($ido!==1))?'false':$visible);
 			  $width=@$kolumny[2]*1;
@@ -102,7 +102,8 @@ $from=str_ireplace('from '.$tabela,'from '.$tabelaNazwa,$from);
 //jeśli w where jest coś w stylu "where ID=[0]", to wytnij wszystko po "where" i polegaj na "mandatory"
 if (strpos(trim($from),']')!==false)
 {
-	$from=explode('where',$from)[0];
+	$tmp=explode('where',$from);
+	$from=$tmp[0];
 }
 
 require_once("saveMenuPosition.php");
@@ -117,10 +118,10 @@ if (mysqli_num_rows(mysqli_query($link, $q="
 
 if(in_array($tabela,array('menu','schematy','schematys','rejestry','dnordpol','slownik')))
 {
-	if( mysqli_fetch_row(mysqli_query($link,"
+	$tmp=mysqli_fetch_row(mysqli_query($link,"
 			select count(*) from $tabelaNazwa
-		"))[0]==0
-	  )
+		"));
+	if($tmp[0]==0)
 	{
 		mysqli_query($link,"
 			insert into $tabelaNazwa select * from Lemur.$tabela
@@ -130,10 +131,10 @@ if(in_array($tabela,array('menu','schematy','schematys','rejestry','dnordpol','s
 
 if($tabela=='knordpol')
 {
-	if( mysqli_fetch_row(mysqli_query($link,"
+	$tmp=mysqli_fetch_row(mysqli_query($link,"
 			select count(*) from $tabelaNazwa
-		"))[0]==0
-	  )
+		"));
+	if($tmp[0]==0)
 	{
 		mysqli_query($link,"
 			insert into $tabelaNazwa select * from Lemur.$tabela where NAZWA=''
@@ -147,7 +148,7 @@ $w=mysqli_query($link,"
 	 where ID_TABELE='$idTabeli'
 	   and ID_OSOBY='$ido'
 ");
-while($r=mysqli_fetch_array($w)) {
+while(@$r=mysqli_fetch_array($w)) {
 	$str=$r['NR_STR'];
 	$row=$r['NR_ROW'];
 	$col=$r['NR_COL'];

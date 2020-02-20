@@ -35,7 +35,7 @@ $buttons[]=array('klawisz'=>'Left','nazwa'=>'','js'=>'Lewo()');
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"save.php?option='+$('a:focus').attr('id')+'&next=/Lemur2/Firmy");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
-$title=mysqli_fetch_row(mysqli_query($link,$q="select NAZWA from klienci where PSKONT='$firma'"))[0];
+$tmp=mysqli_fetch_row(mysqli_query($link,$q="select NAZWA from klienci where PSKONT='$firma'")); $title=iconv('UTF-8', 'ISO-8859-2', $tmp[0]);
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/header.tpl");
 
 $w=mysqli_query($link, $q="
@@ -92,9 +92,9 @@ $_SESSION["{$baza}Menu"]='';
 <table class="table table-hover table-bordered">
 <tr><th><a id="2" href="">2. Kartoteki</a></th></tr>
 <tr><td><a id="2a" href="../DOS/?Wzory=FIRMY&firma=<?php echo $firma;?>">a) Kontrahenci</td></tr>
-<tr><td><a id="2b" href="">b) Notatki</td></tr>
-<tr><td><a id="2c" href="">c) Karty tytu³ów</td></tr>
-<tr><td><a id="2d" href="">d) Tytu³y - syntetyka</td></tr>
+<tr><td><a id="2b" href="../DOS/?Wzory=NOTATKI&firma=<?php echo $firma;?>">b) Notatki</td></tr>
+<tr><td><a id="2c" href="../DOS/?Wzory=TOWARK&firma=<?php echo $firma;?>">c) Karty tytu³ów</td></tr>
+<tr><td><a id="2d" href="../DOS/?Wzory=TOWARY&firma=<?php echo $firma;?>">d) Tytu³y - syntetyka</td></tr>
 <tr><td style="border-bottom: 1px solid white"><a id="2e" href="">e) Tytu³y - analityka</td></tr>
 <tr><td><a id="2f" href="">f) Kontrahenci u¿ywani</td></tr>
 <tr><td style="border-bottom: 1px solid white"><a id="2g" href="">g) Kontrahenci nieu¿ywani</td></tr>

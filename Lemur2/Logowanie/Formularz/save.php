@@ -11,7 +11,7 @@ if($ido==1)
 else
 {
 	//die(print_r($_POST));
-	$user=trim(explode('-',$_POST['USER'])[0]);
+	$tmp=explode('-',$_POST['USER']); $user=trim($tmp[0]);
 	$w=mysqli_query($link,$q="select ID, NAZWA, PASS from $tabela where USER='$user' limit 1");
 	$r=mysqli_fetch_row($w);
 	if	(	$user
@@ -35,8 +35,9 @@ else
 
 		//zmiana lokalizacji tabeli klientów
 		require_once("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/funkcje.php");
+		$tmp=mysqli_fetch_row(mysqli_query($link,$q="select count(*) from Lemur2.klienci"));
 		if	( !FieldsOd($link, 'klienci', 1)
-			||(mysqli_fetch_row(mysqli_query($link,$q="select count(*) from Lemur2.klienci"))[0]==0)
+			||($tmp[0]==0)
 			)
 		{
 			mysqli_query($link,$q="create table if not exists klienci like Lemur.klienci");

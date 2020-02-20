@@ -1,4 +1,5 @@
 $(document).ready(function() {
+   $('input[name=INDEKS]').focus();
    $('input[name=NAZWA]').focus();
 });
 

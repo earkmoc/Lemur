@@ -18,7 +18,7 @@ $w=mysqli_query($linkLemur, $q="
 	 limit 1
 ");
 $i=0;
-while($r=mysqli_fetch_row($w))
+while(@$r=mysqli_fetch_row($w))
 {
 	$idTabeli=$r[0];
 	$wiersze=explode("\n",stripSlashes($r[1]));
@@ -42,12 +42,12 @@ while($r=mysqli_fetch_row($w))
 		$pass=(strpos($kolumny[2],'pass')!==false);
 		$checkbox=(strpos($kolumny[2],'checkbox')!==false);
 		$szerokosc=(str_replace('@Z','',$kolumny[2])*1);
-		$wysokosc=((explode('/',$kolumny[2])[1])*1);
-		$query=(explode('option:',$kolumny[2])[1]);
+		$tmp=explode('/',$kolumny[2]); $wysokosc=(($tmp[1])*1);
+		$tmp=explode('option:',$kolumny[2]); $query=($tmp[1]);
 		$style=(strpos($kolumny[3],'style')!==false?$kolumny[3]:'');
 		$align=(strpos($kolumny[3],'right')!==false?'right':'');
 		$grid=($kolumny[4]*1);
-		$gridLabel=(explode(',',$kolumny[4])[1]*1);
+		$tmp=explode(',',$kolumny[4]); $gridLabel=($tmp[1]*1);
 		$gridrow=($kolumny[5]*1);
 		$valid=$kolumny[6];
 		//$nazwa=iconv ( 'iso-8859-2', 'utf-8', $nazwa);

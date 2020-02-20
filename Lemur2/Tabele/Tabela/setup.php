@@ -5,7 +5,8 @@ require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 // ----------------------------------------------
 // Parametry widoku
 
-@$baza=($innaBaza?$innaBaza:$bazaLinku=explode('/',$_SERVER['REQUEST_URI'])[1]);
+$tmp=explode('/',$_SERVER['REQUEST_URI']);
+@$baza=($innaBaza?$innaBaza:$bazaLinku=$tmp[1]);
 
 $title=$baza.': Tabele';
 $tabela='tabele';
@@ -23,12 +24,12 @@ $usun="usun.php?$params'+GetID()+'";
 $buttons=array();
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>'../../');
 //$buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=wej¶cie','akcja'=>"saveTablePosition.php?next=http://{$_SERVER['HTTP_HOST']}/'+GetCol(2)+'/KPiR'+'");
-$buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=wej¶cie','akcja'=>$formularz);
-$buttons[]=array('klawisz'=>'AltF','nazwa'=>'Alt+Formularz','akcja'=>$formularz);
-$buttons[]=array('klawisz'=>'AltD','nazwa'=>'Alt+Dopisz','akcja'=>$dopisz);
-$buttons[]=array('klawisz'=>'AltC','nazwa'=>'Alt+Copy','akcja'=>$kopia);
-$buttons[]=array('klawisz'=>'AltS','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').modal('show')");
-//$buttons[]=array('klawisz'=>'AltU','nazwa'=>'Alt+Usuñ','atrybuty'=>" type='button' data-toggle='modal' data-target='#myModal'");
-$buttons[]=array('klawisz'=>'AltU','nazwa'=>'Alt+Usuñ','akcja'=>$usun);
+$buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=Formularz','akcja'=>$formularz);
+$buttons[]=array('klawisz'=>'F','nazwa'=>'','akcja'=>$formularz);
+$buttons[]=array('klawisz'=>'D','nazwa'=>'Dopisz','akcja'=>$dopisz);
+$buttons[]=array('klawisz'=>'C','nazwa'=>'Copy','akcja'=>$kopia);
+$buttons[]=array('klawisz'=>'S','nazwa'=>'Szukaj','js'=>"$('#modalSzukaj').modal('show')");
+//$buttons[]=array('klawisz'=>'U','nazwa'=>'Usuñ','atrybuty'=>" type='button' data-toggle='modal' data-target='#myModal'");
+$buttons[]=array('klawisz'=>'U','nazwa'=>'Usuñ','akcja'=>$usun);
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/navigationButtons.php");

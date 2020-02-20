@@ -11,9 +11,9 @@ $set='';
 $where='';
 foreach($_POST as $klucz => $wartosc)
 {
-   $wartosc=AddSlashes($wartosc);
    //echo "$klucz => $wartosc <br>";
-   //$wartosc=iconv ( 'utf-8', 'iso-8859-2', $wartosc);
+   //$wartosc=iconv('UTF-8', 'ISO-8859-2', $wartosc);	// def=false => serwer???
+   $wartosc=AddSlashes($wartosc);
    //$wartosc=Strip_Tags($wartosc);
 	if ($klucz=='ID') {
 		$id=$wartosc;

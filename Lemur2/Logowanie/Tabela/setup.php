@@ -6,7 +6,8 @@ mysqli_query($link, "update tabeles ID_OSOBY=1 where ID_OSOBY=0");
 // ----------------------------------------------
 // Parametry widoku
 
-@$baza=($innaBaza?$innaBaza:$bazaLinku=explode('/',$_SERVER['REQUEST_URI'])[1]);
+@$tmp=explode('/',$_SERVER['REQUEST_URI']);
+@$baza=($innaBaza?$innaBaza:$bazaLinku=$tmp[1]);
 
 $title=($ido==1?'U¿ytkownicy':'Logowanie');
 $tabela='osoby';
