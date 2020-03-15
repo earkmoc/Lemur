@@ -104,7 +104,8 @@ function ShowField($field,$row,$dane,$szerokoscPola,$link)
 
 				$bylSelected=false;
 				if	(	(substr($field['pole'],0,5)!='GDZIE')
-					&&	(substr($field['pole'],0,5)!='TYP')
+					&&	(substr($field['pole'],0,3)!='TYP')
+					&&	(substr($field['pole'],0,4)!='USER')
 					&&	!$bylSelected
 					)
 				{
