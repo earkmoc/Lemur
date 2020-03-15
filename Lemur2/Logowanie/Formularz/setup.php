@@ -70,6 +70,21 @@ if ($id<>0)
 		$dane['ID']=0;	//dopisanie nowej pozycji
 	}
 }
+else
+{
+	$dane=mysqli_fetch_array(mysqli_query($link, "
+	select *
+	  from $tabela
+	 where 1
+  order by ID
+	 limit 1
+	"));
+	foreach($dane as $k => $v)
+	{
+		//$dane[$k]=StripSlashes(iconv ( 'iso-8859-2', 'utf-8', $v));
+		$dane[$k]=StripSlashes($v);
+	}
+}
 
 //wszyscy musz± podaæ swoje dotychczasowe has³o, wyj±tkiem jest admin (1) w trybie zmiany danych u¿ytkownika
 if($ido!=1)
