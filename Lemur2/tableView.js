@@ -202,6 +202,11 @@ function Col(delta)
 	Focus();
 }
 
+function GetPageSize() 
+{
+	return $(".page-size").html();
+}
+
 function GetID() 
 {
 	return $("tr[data-index="+(row-1)+"] td div").html();

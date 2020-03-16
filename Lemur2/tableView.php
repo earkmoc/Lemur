@@ -93,7 +93,7 @@
 		echo "var str=$str;\n";
 		echo "var row=$row;\n";
 		echo "var col=$col;\n";
-		echo "var maxxrow=".(isset($id_d)?5:(($ido==10)?20:15)).";\n";
+		echo "var maxxrow=".(isset($id_d)?5:$_SESSION['pagesize']).";\n";		//init is in C:\wamp\www\Lemur2\Logowanie\Formularz\save.php [24]
 		echo "var mandatory=\"$mandatory\";\n";
 	?>
 </script>
@@ -109,7 +109,7 @@
 						data-side-pagination="server" 
 						data-pagination="true" 
 						data-page-number="<?php echo $str;?>" 
-						data-page-size="<?php echo (isset($id_d)?5:(($ido==10)?20:15));?>" 
+						data-page-size="<?php echo (isset($id_d)?5:$_SESSION['pagesize']);?>" 
 						data-page-list="[5,10,15,20,50,100,All]" 
 						data-response-handler="UzyskaneDane" 
 						data-mobile-responsive="true" 

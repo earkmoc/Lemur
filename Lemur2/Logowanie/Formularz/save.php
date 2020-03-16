@@ -21,6 +21,7 @@ else
 		$id=$r[0];
 		$_SESSION['osoba_id']=$r[0];
 		$_SESSION['osoba_upr']=$r[1];
+		$_SESSION['pagesize']=15;
 
 		$q="update $tabela SET CZAS=Now()";
 		if	(	($_POST['NX']<>'')

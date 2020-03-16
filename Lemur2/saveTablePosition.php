@@ -2,9 +2,15 @@
 
 error_reporting(E_ERROR | E_PARSE | E_WARNING);
 
-if ($_GET['next'])
+if (@$_GET['next'])
 {
 	require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
+}
+
+if (@$_GET['pagesize'])
+{
+	@session_start();
+	$_SESSION['pagesize']=$_GET['pagesize'];
 }
 
 if(@$tableInit)
