@@ -158,10 +158,11 @@ function ShowLabel($field,$row,$dane,$szerokoscOpisu,$right,$musi=False)
 		 )
 	   )
 	{
+		//	.($right?' style="text-align:right; padding-left:5px; padding-right:3px; padding-top:7px; padding-bottom:7px;"':'')
 		echo "\n".'		<div class="col-md-'
 			.((($szerokoscOpisu*1)>0)?$szerokoscOpisu:($field['gridLabel']*1>0?$field['gridLabel']:($field['grid']*1>0?$field['grid']:$szerokoscOpisu)))
 			.' nag"'
-			.($right?' style="text-align:right; padding-left:5px; padding-right:3px; padding-top:7px; padding-bottom:7px;"':'')
+			.' style="text-align:left; padding-left:5px; padding-right:3px; padding-top:7px; padding-bottom:7px;"'
 			.' >'
 			.($field['nazwa'])
 			.((substr($field['nazwa'],-1,1)==':')?'':':')

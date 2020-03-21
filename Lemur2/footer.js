@@ -109,15 +109,13 @@ $(document).keydown(function(e)
 
 	if(szukanie)
 	{
-		if($klawisz!='Enter')
-		{
-			return true;
-		} else 
+		if($klawisz=='Enter')
 		{
 			$('#mainForm').attr('action','szukaj.php?col='+col+'&firma='+firma+'&wzor='+wzor);
 			$('#mainForm').submit();
 			return false;
 		}
+		return true;
 	}
 
 	switch ($klawisz) {
