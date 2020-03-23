@@ -33,7 +33,8 @@ $buttons[]=array('klawisz'=>'Right','nazwa'=>'','js'=>'Prawo()');
 $buttons[]=array('klawisz'=>'Left','nazwa'=>'','js'=>'Lewo()');
 /*  */
 $buttons[]=array('klawisz'=>'Esc','nazwa'=>'Esc=wyj¶cie','akcja'=>"save.php?option='+$('a:focus').attr('id')+'&next=/Lemur2/Firmy");
-$buttons[]=array('klawisz'=>'','nazwa'=>'Enter=wybór', 'akcja'=>"'+$('td').filter(function(){return ($(this).css('background-color')=='rgb(255, 255, 255)');}).find('a').attr('href')+'");
+$buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=wybór', 'js'=>"$('td').filter(function(){return ($(this).css('background-color')=='rgb(255, 255, 255)');}).find('a')[0].click()");
+//$buttons[]=array('klawisz'=>'Enter','nazwa'=>'Enter=wybór', 'akcja'=>"'+$('td').filter(function(){return ($(this).css('background-color')=='rgb(255, 255, 255)');}).find('a').attr('href')+'");
 
 require("{$_SERVER['DOCUMENT_ROOT']}/Lemur2/dbconnect.php");
 $tmp=mysqli_fetch_row(mysqli_query($link,$q="select NAZWA from klienci where PSKONT='$firma'")); $title=iconv('UTF-8', 'ISO-8859-2', $tmp[0]);
