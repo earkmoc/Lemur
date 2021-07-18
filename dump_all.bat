@@ -1,4 +1,7 @@
 call dump.bat Lemur2
+call dump.bat WM
+call dump.bat AM2019
+call dump.bat AM2018
 call dump.bat KsiezyMlyn
 call dump.bat Filutek
 call dump.bat Inez2016a
