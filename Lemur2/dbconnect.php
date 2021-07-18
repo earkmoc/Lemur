@@ -4,7 +4,7 @@ $ido=@$_SESSION['osoba_id'];
 
 date_default_timezone_set('Europe/Warsaw');
 
-$dev=true;
+$dev=false;
 $host='localhost';
 if($dev)
 {
@@ -84,7 +84,7 @@ if(!@$link = mysqli_connect($host, $user, $pass, $baza))
 //mysqli_query($link,$q="SET GLOBAL slow_query_log=1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 //mysqli_query($link,$q="SET GLOBAL long_query_time=1"); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}
 
-$chs=($dev?'latin1':'utf8');
+$chs='utf8';
 $col=($dev?'latin1_swedish_ci':'utf8_polish_ci');	//domyœlna collacja dla porównañ pól tabel z tekstami, np. : if(opldod.TYPOPER='o'
 
 mysqli_query($link,$q='SET CHARACTER SET '.$chs); if (mysqli_error($link)) {die(mysqli_error($link).'<br>'.$q);}

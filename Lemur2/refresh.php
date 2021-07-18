@@ -175,8 +175,14 @@ if($pola)
 //					$v=$x;
 				}
 			}
-			$r[$k]=$v;	// $dev=false; => serwer
-			$r[$k]=StripSlashes(iconv('ISO-8859-2', 'UTF-8//IGNORE', $v));	//$dev=true
+			//$r[$k]=StripSlashes(iconv('ISO-8859-1', 'UTF-8//IGNORE', $v));
+			//$r[$k]=StripSlashes(iconv('ISO-8859-2', 'UTF-8//IGNORE', $v));
+			//$r[$k]=StripSlashes(iconv('ISO-8859-2', 'ISO-8859-1//IGNORE', $v));
+			//$r[$k]=StripSlashes(iconv('UTF-8', 'ISO-8859-2//IGNORE', $v));
+			//$r[$k]=StripSlashes(iconv('UTF-8', 'ISO-8859-1//IGNORE', $v));
+			//$r[$k]=StripSlashes(iconv('UTF-8', 'UTF-8//IGNORE', $v));
+			//$r[$k]=StripSlashes($v);
+			$r[$k]=$v;
 			++$i;
 		}
 		$rows[]=$r;

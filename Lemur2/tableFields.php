@@ -67,7 +67,7 @@ while(@$r=mysqli_fetch_row($w))
 		      }
 			  $pole=str_replace('osoba_id',$ido,$pole);
 			  $poleNum=str_replace(array('format(',',2)'),array('',''),$pole);
-		      $nazwa=iconv ( 'iso-8859-2', 'utf-8', $kolumny[1]?$kolumny[1]:$kolumny[0]);	// $dev=true
+		      $nazwa=iconv ( 'iso-8859-2', 'utf-8', $kolumny[1]?$kolumny[1]:$kolumny[0]);	// $dev=false; => serwer
 		      $nazwa=(@$kolumny[1]?$kolumny[1]:ucfirst(strtolower($kolumny[0])));
 			  $align=(strpos(@$kolumny[3],'right')||strpos(@$kolumny[2],'Z')?'right':(strpos(@$kolumny[3],'center')?'center':'left'));
 			  $visible=(@$kolumny[2]=='0'?'false':'true');
