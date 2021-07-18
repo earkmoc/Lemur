@@ -247,7 +247,8 @@ while($r=mysqli_fetch_row($w))
 <tr><td><a href="<?php echo "../JPK2/JPK_FA.php?baza=$baza";?>" id="9i">i) JPK_FA (1)</td></tr>
 <tr><td><a href="<?php echo "../JPK2/?baza=$baza";?>" id="9j">j) JPK_VAT (2)</td></tr>
 <tr><td><a href="<?php echo "../JPK_VAT3/?baza=$baza";?>" id="9k">k) JPK_VAT (3)</td></tr>
-<tr><td><a href="<?php echo "../JPK_PKPIR/?baza=$baza";?>" id="9l">l) JPK_PKPIR (1)</td></tr>
+<tr><td><a href="<?php echo "../JPK_V7M/?baza=$baza";?>" id="9l">l) JPK_V7M (1)</td></tr>
+<tr><td><a href="<?php echo "../JPK_PKPIR/?baza=$baza";?>" id="9m">m) JPK_PKPIR (1)</td></tr>
 </table>
 </div>
 		
